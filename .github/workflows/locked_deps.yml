@@ -128,121 +128,18 @@ jobs:
 
       - name: Checks the kitchen sink via ${{ matrix.exec_cmd }}
         run: |
-          echo "--- PRE-FLIGHT ENV (GEM_*, BUNDLE_*) ---"
-          env | sort | grep -E '^(GEM_|BUNDLE_)' || true
           echo "--- PRE-FLIGHT bundle env ---"
           bundle env || true
           echo "--- PRE-FLIGHT ruby gem env ---"
           ruby -e "require 'rubygems'; puts 'Gem.dir=' + Gem.dir; puts 'Gem.path=' + Gem.path.join(':')"
           echo "--- PRE-FLIGHT bundle check ---"
           bundle check || true
-          echo "--- PRE-FLIGHT bundler settings snapshot ---"
-          ruby -e "require 'bundler'; puts 'Bundler.settings[:path]=' + Bundler.settings[:path].inspect; puts 'Bundler.settings[\"path.system\"]=' + Bundler.settings['path.system'].inspect; puts 'Bundler.bundle_path=' + Bundler.bundle_path.to_s; puts 'Bundler.rubygems.installed_specs=' + Bundler.rubygems.installed_specs.size.to_s"
-          echo "--- PRE-FLIGHT rubygems spec snapshot ---"
-          ruby -e "require 'rubygems'; puts 'Gem::Specification.stubs=' + Gem::Specification.stubs.size.to_s; %w[kettle-dev rake].each { |g| specs = Gem::Specification.stubs.select { |s| s.name == g }; puts g + ': ' + specs.map(&:full_name).join(', ') }"
-          echo "--- PRE-FLIGHT rubygems spec dirs ---"
-          ruby -e "require 'rubygems'; puts 'Gem::Specification.dirs=' + Gem::Specification.dirs.join(':')"
-          echo "--- PRE-FLIGHT bundler definition specs ---"
-          ruby -e "require 'bundler'; Bundler.definition.specs; puts 'Bundler.definition.specs ok'" || true
-          echo "--- PRE-FLIGHT RUBYOPT -rbundler/setup ---"
-          RUBYOPT="-rbundler/setup" ruby -e "require 'bundler'; puts 'Bundler.setup via RUBYOPT ok'" || true
-          echo "--- PRE-FLIGHT ruby -rbundler/setup -S rake ---"
-          ruby -rbundler/setup -S rake -T || true
-          echo "--- PRE-FLIGHT bundle shim ---"
-          ruby -e "require 'rubygems'; path = Gem.bin_path('bundler','bundle'); puts 'bundle path=' + path; puts File.read(path)" || true
-          echo "--- PRE-FLIGHT bundle exec sanity (debug) ---"
-          BUNDLE_DEBUG=1 BUNDLE_VERBOSE=1 bundle exec ruby -e "require 'bundler'; puts 'Bundler.default_gemfile=' + Bundler.default_gemfile.to_s; puts 'Bundler.default_lockfile=' + Bundler.default_lockfile.to_s" || true
-          echo "--- PRE-FLIGHT bundler/setup sanity ---"
-          BUNDLE_PATH="" ruby -rbundler/setup -e "require 'bundler'; puts 'Bundler.default_gemfile=' + Bundler.default_gemfile.to_s; puts 'Bundler.default_lockfile=' + Bundler.default_lockfile.to_s" || true
           echo "--- PRE-FLIGHT bundle exec env snapshot ---"
           bundle exec env | sort | grep -E '^(GEM_|BUNDLE_)' || true
-          echo "--- PRE-FLIGHT bundle exec env snapshot (BUNDLER_ORIG_*) ---"
-          bundle exec env | sort | grep -E '^(BUNDLER_ORIG_|GEM_|BUNDLE_)' || true
-          echo "--- PRE-FLIGHT bundle exec rubygems/bundler snapshot ---"
-          bundle exec ruby -e "require 'rubygems'; require 'bundler'; puts 'Gem.path=' + Gem.path.join(':'); puts 'Bundler.rubygems.installed_specs=' + Bundler.rubygems.installed_specs.size.to_s" || true
-          echo "--- PRE-FLIGHT bundle exec rubygems spec dirs ---"
-          bundle exec ruby -e "require 'rubygems'; puts 'Gem::Specification.dirs=' + Gem::Specification.dirs.join(':')"
-          echo "--- PRE-FLIGHT bundle exec source flags ---"
-          bundle exec ruby -e "require 'bundler'; sources = Bundler.definition.sources.rubygems_sources; sources.each { |s| allow_local = s.instance_variable_get(:@allow_local); allow_remote = s.instance_variable_get(:@allow_remote); allow_cached = s.instance_variable_get(:@allow_cached); remotes = s.remotes.map(&:to_s); puts 'source=' + s.to_s + ' allow_local=' + allow_local.to_s + ' allow_remote=' + allow_remote.to_s + ' allow_cached=' + allow_cached.to_s + ' remotes=' + remotes.join(',') }" || true
-          echo "--- PRE-FLIGHT bundle exec stub counts ---"
-          bundle exec ruby -e "require 'rubygems'; puts 'Gem::Specification.stubs=' + Gem::Specification.stubs.size.to_s; puts 'Gem::Specification.default_stubs=' + Gem::Specification.default_stubs.size.to_s" || true
-          echo "--- PRE-FLIGHT bundle exec gem presence snapshot ---"
-          bundle exec ruby -e "require 'rubygems'; require 'bundler'; specs = Bundler.rubygems.installed_specs; %w[kettle-dev rake bundler-audit].each { |g| hits = specs.select { |s| s.name == g }; hits.each { |s| path = s.full_gem_path; missing = s.respond_to?(:installation_missing?) ? s.installation_missing? : 'n/a'; puts g + ': ' + s.full_name + ' missing=' + missing.to_s + ' path=' + path } }" || true
-          echo "--- PRE-FLIGHT bundle exec definition.specs ---"
-          bundle exec ruby -e "require 'bundler'; begin; Bundler.definition.specs; puts 'Bundler.definition.specs ok (bundle exec)'; rescue => e; warn e.class.to_s + ': ' + e.message; warn e.backtrace.first(10).join(\"\\n\"); end" || true
-          echo "--- PRE-FLIGHT bundle exec locked spec sources ---"
-          bundle exec ruby -e "require 'bundler'; names = %w[kettle-dev rake rexml logger]; locked = Bundler.definition.instance_variable_get(:@locked_specs); names.each do |name| spec = locked[name]&.first; unless spec; puts name + ': locked spec missing'; next; end; src = spec.source; allow_local = src.instance_variable_get(:@allow_local) rescue 'n/a'; allow_remote = src.instance_variable_get(:@allow_remote) rescue 'n/a'; allow_cached = src.instance_variable_get(:@allow_cached) rescue 'n/a'; remotes = src.respond_to?(:remotes) ? src.remotes.map(&:to_s).join(',') : 'n/a'; matches = src.respond_to?(:specs) ? src.specs.search([name, spec.version]) : []; puts name + ': source=' + src.class.name + ' allow_local=' + allow_local.to_s + ' allow_remote=' + allow_remote.to_s + ' allow_cached=' + allow_cached.to_s + ' remotes=' + remotes + ' matches=' + matches.size.to_s; end" || true
-          echo "--- PRE-FLIGHT bundle exec kernel_load probe ---"
-          cat > .bundle_exec_probe <<'RUBY'
-          #!/usr/bin/env ruby
-          puts "bundle exec kernel_load probe ok"
-          RUBY
-          chmod +x .bundle_exec_probe
-          bundle exec ./.bundle_exec_probe || true
-          echo "--- PRE-FLIGHT bundle exec RUBYOPT trace setup ---"
-          cat > .rubygems_preflight_trace.rb <<'RUBY'
-          # frozen_string_literal: true
-          $stdout.sync = true
-          trace_file = ".rubygems_preflight_stubs.txt"
-          sample_names = %w[
-            kettle-dev rake bundler-audit appraisal2 rspec-core rspec backports
-            simplecov unicode-emoji thor version_gem
-          ]
-          puts "--- RUBYOPT TRACE (pre Bundler.setup) ---"
-          puts "RUBYOPT=#{ENV['RUBYOPT']}"
-          puts "GEM_HOME=#{ENV['GEM_HOME']}"
-          puts "GEM_PATH=#{ENV['GEM_PATH']}"
-          begin
-            require "rubygems"
-            puts "Gem.platforms=#{Gem.platforms.join(',')}"
-            puts "Gem::Platform.local=#{Gem::Platform.local}"
-            puts "Gem.path=#{Gem.path.join(':')}"
-            puts "Gem::Specification.dirs=#{Gem::Specification.dirs.join(':')}"
-            puts "Gem::Specification.stubs=#{Gem::Specification.stubs.size}"
-            sample_names.each do |name|
-              stubs = Gem::Specification.stubs.select { |s| s.name == name }
-              puts "#{name} stubs=#{stubs.map(&:full_name).join(',')}"
-            end
-            current = Gem::Specification.stubs.map(&:full_name).sort
-            if File.exist?(trace_file)
-              previous = File.read(trace_file).split("\n")
-              removed = previous - current
-              added = current - previous
-              puts "stubs delta removed=#{removed.size} added=#{added.size}"
-              puts "stubs removed sample=#{removed.first(10).join(',')}" unless removed.empty?
-              puts "stubs added sample=#{added.first(10).join(',')}" unless added.empty?
-            else
-              File.write(trace_file, current.join("\n"))
-              puts "stubs baseline written count=#{current.size}"
-            end
-          rescue => e
-            warn "trace error: #{e.class}: #{e.message}"
-          end
-          puts "--- END RUBYOPT TRACE ---"
-          RUBY
-          echo "--- PRE-FLIGHT bundle exec ruby (RUBYOPT trace) ---"
-          RUBYOPT="-r./.rubygems_preflight_trace.rb -rbundler/setup" bundle exec ruby -e "puts 'bundle exec ruby ok'" || true
-          echo "--- PRE-FLIGHT bundle exec rake (RUBYOPT trace) ---"
-          RUBYOPT="-r./.rubygems_preflight_trace.rb -rbundler/setup" bundle exec rake -T || true
-          echo "--- PRE-FLIGHT bundle exec rake path ---"
-          bundle exec ruby -e "require 'bundler'; path = Bundler.which('rake'); puts 'rake path=' + path.to_s; if path && File.exist?(path); puts File.read(path).lines.first(5).join; end" || true
+          echo "--- PRE-FLIGHT bundle exec platform summary ---"
+          bundle exec ruby -e "require 'bundler'; require 'rubygems'; puts 'Gem.platforms=' + Gem.platforms.join(','); puts 'Gem::Platform.local=' + Gem::Platform.local.to_s; puts 'Bundler.local_platform=' + Bundler.local_platform.to_s; puts 'Bundler.generic_local_platform=' + Bundler.generic_local_platform.to_s; locked = Bundler.definition.instance_variable_get(:@locked_specs); specs = locked.values.flatten.compact; missing = []; specs.each do |spec| src = spec.source; begin by_spec = src.specs.search(spec).empty?; rescue; by_spec = true; end; if by_spec; missing << spec; end; end; puts 'locked_specs=' + specs.size.to_s + ' missing_by_spec=' + missing.size.to_s; missing.first(20).each do |spec| stubs = Gem::Specification.stubs.select { |s| s.name == spec.name }.map(&:full_name); puts spec.name + ' locked_platform=' + spec.platform.to_s + ' locked_full=' + spec.full_name + ' installed_stubs=' + stubs.join(','); end" || true
+          echo "--- PRE-FLIGHT bundle exec locked spec platform check ---"
+          bundle exec ruby -e "require 'bundler'; names=%w[kettle-dev rake rexml logger]; locked=Bundler.definition.instance_variable_get(:@locked_specs); names.each do |name| spec=locked[name]&.first; unless spec; puts name + ': locked spec missing'; next; end; src=spec.source; by_spec=src.specs.search(spec).size; by_name=src.specs.search([name, spec.version]).size; puts name + ': locked_platform=' + spec.platform.to_s + ' locked_full=' + spec.full_name + ' search(spec)=' + by_spec.to_s + ' search(name,ver)=' + by_name.to_s; end" || true
           echo "--- PRE-FLIGHT bundle exec ruby -S rake ---"
           bundle exec ruby -S rake -T || true
-          echo "--- PRE-FLIGHT manual bundle exec env replay ---"
-          BUNDLE_BIN_PATH="$GEM_HOME/gems/bundler-4.0.5/exe/bundle" \
-            BUNDLE_GEMFILE="$BUNDLE_GEMFILE" \
-            BUNDLE_LOCKFILE="$BUNDLE_GEMFILE.lock" \
-            RUBYOPT="-rbundler/setup" \
-            ruby -e "require 'bundler'; puts 'Bundler.setup via manual env ok'" || true
-          echo "--- PRE-FLIGHT manual env replay (no BUNDLE_LOCKFILE) ---"
-          BUNDLE_BIN_PATH="$GEM_HOME/gems/bundler-4.0.5/exe/bundle" \
-            BUNDLE_GEMFILE="$BUNDLE_GEMFILE" \
-            BUNDLE_LOCKFILE="" \
-            RUBYOPT="-rbundler/setup" \
-            ruby -e "require 'bundler'; puts 'Bundler.setup ok (no BUNDLE_LOCKFILE)'" || true
-          echo "--- PRE-FLIGHT manual env replay (no BUNDLE_BIN_PATH) ---"
-          BUNDLE_GEMFILE="$BUNDLE_GEMFILE" \
-            BUNDLE_LOCKFILE="$BUNDLE_GEMFILE.lock" \
-            RUBYOPT="-rbundler/setup" \
-            ruby -e "require 'bundler'; puts 'Bundler.setup ok (no BUNDLE_BIN_PATH)'" || true
           bundle exec ${{ matrix.exec_cmd }}
