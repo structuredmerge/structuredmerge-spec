@@ -23,6 +23,7 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Changed
 
 - test against Prism v1.9.0
+- CI updated to use latest version of ore
 
 ### Deprecated
 
