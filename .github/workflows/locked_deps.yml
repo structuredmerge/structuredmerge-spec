@@ -177,6 +177,32 @@ jobs:
           RUBY
           chmod +x .bundle_exec_probe
           bundle exec ./.bundle_exec_probe || true
+          echo "--- PRE-FLIGHT bundle exec RUBYOPT trace setup ---"
+          cat > .rubygems_preflight_trace.rb <<'RUBY'
+          # frozen_string_literal: true
+          $stdout.sync = true
+          puts "--- RUBYOPT TRACE (pre Bundler.setup) ---"
+          puts "RUBYOPT=#{ENV['RUBYOPT']}"
+          puts "GEM_HOME=#{ENV['GEM_HOME']}"
+          puts "GEM_PATH=#{ENV['GEM_PATH']}"
+          begin
+            require "rubygems"
+            puts "Gem.path=#{Gem.path.join(':')}"
+            puts "Gem::Specification.dirs=#{Gem::Specification.dirs.join(':')}"
+            puts "Gem::Specification.stubs=#{Gem::Specification.stubs.size}"
+            %w[kettle-dev rake bundler-audit].each do |name|
+              stubs = Gem::Specification.stubs.select { |s| s.name == name }
+              puts "#{name} stubs=#{stubs.map(&:full_name).join(',')}"
+            end
+          rescue => e
+            warn "trace error: #{e.class}: #{e.message}"
+          end
+          puts "--- END RUBYOPT TRACE ---"
+          RUBY
+          echo "--- PRE-FLIGHT bundle exec ruby (RUBYOPT trace) ---"
+          RUBYOPT="-r./.rubygems_preflight_trace.rb -rbundler/setup" bundle exec ruby -e "puts 'bundle exec ruby ok'" || true
+          echo "--- PRE-FLIGHT bundle exec rake (RUBYOPT trace) ---"
+          RUBYOPT="-r./.rubygems_preflight_trace.rb -rbundler/setup" bundle exec rake -T || true
           echo "--- PRE-FLIGHT bundle exec rake path ---"
           bundle exec ruby -e "require 'bundler'; path = Bundler.which('rake'); puts 'rake path=' + path.to_s; if path && File.exist?(path); puts File.read(path).lines.first(5).join; end" || true
           echo "--- PRE-FLIGHT bundle exec ruby -S rake ---"
