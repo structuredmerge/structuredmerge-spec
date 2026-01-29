@@ -152,8 +152,8 @@ jobs:
           ruby -e "require 'rubygems'; path = Gem.bin_path('bundler','bundle'); puts 'bundle path=' + path; puts File.read(path)" || true
           echo "--- PRE-FLIGHT bundle exec sanity (debug) ---"
           BUNDLE_DEBUG=1 BUNDLE_VERBOSE=1 bundle exec ruby -e "require 'bundler'; puts 'Bundler.default_gemfile=' + Bundler.default_gemfile.to_s; puts 'Bundler.default_lockfile=' + Bundler.default_lockfile.to_s" || true
-          echo "--- PRE-FLIGHT bundle exec sanity (BUNDLE_PATH cleared) ---"
-          BUNDLE_PATH="" bundle exec ruby -e "require 'bundler'; puts 'Bundler.default_gemfile=' + Bundler.default_gemfile.to_s; puts 'Bundler.default_lockfile=' + Bundler.default_lockfile.to_s" || true
+          echo "--- PRE-FLIGHT bundler/setup sanity ---"
+          BUNDLE_PATH="" ruby -rbundler/setup -e "require 'bundler'; puts 'Bundler.default_gemfile=' + Bundler.default_gemfile.to_s; puts 'Bundler.default_lockfile=' + Bundler.default_lockfile.to_s" || true
           echo "--- PRE-FLIGHT bundle exec env snapshot ---"
           bundle exec env | sort | grep -E '^(GEM_|BUNDLE_)' || true
           echo "--- PRE-FLIGHT bundle exec env snapshot (BUNDLER_ORIG_*) ---"
@@ -170,6 +170,8 @@ jobs:
           bundle exec ruby -e "require 'rubygems'; require 'bundler'; specs = Bundler.rubygems.installed_specs; %w[kettle-dev rake bundler-audit].each { |g| hits = specs.select { |s| s.name == g }; hits.each { |s| path = s.full_gem_path; missing = s.respond_to?(:installation_missing?) ? s.installation_missing? : 'n/a'; puts g + ': ' + s.full_name + ' missing=' + missing.to_s + ' path=' + path } }" || true
           echo "--- PRE-FLIGHT bundle exec definition.specs ---"
           bundle exec ruby -e "require 'bundler'; begin; Bundler.definition.specs; puts 'Bundler.definition.specs ok (bundle exec)'; rescue => e; warn e.class.to_s + ': ' + e.message; warn e.backtrace.first(10).join(\"\\n\"); end" || true
+          echo "--- PRE-FLIGHT bundle exec locked spec sources ---"
+          bundle exec ruby -e "require 'bundler'; names = %w[kettle-dev rake rexml logger]; locked = Bundler.definition.instance_variable_get(:@locked_specs); names.each do |name| spec = locked[name]&.first; unless spec; puts name + ': locked spec missing'; next; end; src = spec.source; allow_local = src.instance_variable_get(:@allow_local) rescue 'n/a'; allow_remote = src.instance_variable_get(:@allow_remote) rescue 'n/a'; allow_cached = src.instance_variable_get(:@allow_cached) rescue 'n/a'; remotes = src.respond_to?(:remotes) ? src.remotes.map(&:to_s).join(',') : 'n/a'; matches = src.respond_to?(:specs) ? src.specs.search([name, spec.version]) : []; puts name + ': source=' + src.class.name + ' allow_local=' + allow_local.to_s + ' allow_remote=' + allow_remote.to_s + ' allow_cached=' + allow_cached.to_s + ' remotes=' + remotes + ' matches=' + matches.size.to_s; end" || true
           echo "--- PRE-FLIGHT bundle exec kernel_load probe ---"
           cat > .bundle_exec_probe <<'RUBY'
           #!/usr/bin/env ruby
