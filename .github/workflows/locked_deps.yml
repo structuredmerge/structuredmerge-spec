@@ -181,18 +181,37 @@ jobs:
           cat > .rubygems_preflight_trace.rb <<'RUBY'
           # frozen_string_literal: true
           $stdout.sync = true
+          trace_file = ".rubygems_preflight_stubs.txt"
+          sample_names = %w[
+            kettle-dev rake bundler-audit appraisal2 rspec-core rspec backports
+            simplecov unicode-emoji thor version_gem
+          ]
           puts "--- RUBYOPT TRACE (pre Bundler.setup) ---"
           puts "RUBYOPT=#{ENV['RUBYOPT']}"
           puts "GEM_HOME=#{ENV['GEM_HOME']}"
           puts "GEM_PATH=#{ENV['GEM_PATH']}"
           begin
             require "rubygems"
+            puts "Gem.platforms=#{Gem.platforms.join(',')}"
+            puts "Gem::Platform.local=#{Gem::Platform.local}"
             puts "Gem.path=#{Gem.path.join(':')}"
             puts "Gem::Specification.dirs=#{Gem::Specification.dirs.join(':')}"
             puts "Gem::Specification.stubs=#{Gem::Specification.stubs.size}"
-            %w[kettle-dev rake bundler-audit].each do |name|
+            sample_names.each do |name|
               stubs = Gem::Specification.stubs.select { |s| s.name == name }
               puts "#{name} stubs=#{stubs.map(&:full_name).join(',')}"
+            end
+            current = Gem::Specification.stubs.map(&:full_name).sort
+            if File.exist?(trace_file)
+              previous = File.read(trace_file).split("\n")
+              removed = previous - current
+              added = current - previous
+              puts "stubs delta removed=#{removed.size} added=#{added.size}"
+              puts "stubs removed sample=#{removed.first(10).join(',')}" unless removed.empty?
+              puts "stubs added sample=#{added.first(10).join(',')}" unless added.empty?
+            else
+              File.write(trace_file, current.join("\n"))
+              puts "stubs baseline written count=#{current.size}"
             end
           rescue => e
             warn "trace error: #{e.class}: #{e.message}"
