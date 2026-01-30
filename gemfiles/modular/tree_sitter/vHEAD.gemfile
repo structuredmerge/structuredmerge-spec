@@ -20,5 +20,5 @@ platform :mri do
     # path: "../../vendor/tree_stump"
     github: "pboling/tree_stump",
     branch: "tree_haver",
-    ref: "7501b84fdfa816c7c2a4d9986639cd9174630992"
+    ref: "249b81e6cba84d05a840e61fbbcd26b9e834d3c3"
 end
