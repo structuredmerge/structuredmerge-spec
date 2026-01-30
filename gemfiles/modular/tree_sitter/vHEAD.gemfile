@@ -1,5 +1,5 @@
 # FFI Backend - works on MRI, JRuby, and TruffleRuby
-gem "ffi", github: "ffi/ffi", branch: "master", require: false # DO NOT LOAD, because conflicts with MRI
+gem "ffi", github: "ffi/ffi", branch: "master", submodules: true, require: false # DO NOT LOAD, because conflicts with MRI
 gem "toml-rb", github: "emancu/toml-rb", branch: "master"
 gem "citrus", github: "mjackson/citrus", branch: "master"
 gem "toml", github: "jm/toml", branch: "master"
