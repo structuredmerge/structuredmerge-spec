@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe TreeHaver::Backends::MRI do
+RSpec.describe TreeHaver::Backends::MRI, :mri_backend do
   let(:backend) { described_class }
 
   before do

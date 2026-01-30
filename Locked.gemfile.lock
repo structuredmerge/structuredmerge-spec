@@ -116,7 +116,7 @@ DEPENDENCIES
   gitmoji-regex (~> 1.0, >= 1.0.3)
   kettle-dev (~> 1.2)
   kettle-soup-cover (~> 1.1, >= 1.1.1)
-  kettle-test (~> 1.0, >= 1.0.6)
+  kettle-test (~> 1.0, >= 1.0.7)
   rake (~> 13.0)
   require_bench (~> 1.0, >= 1.0.4)
   ruby-progressbar (~> 1.13)
@@ -170,4 +170,4 @@ CHECKSUMS
   version_gem (1.1.9) sha256=0c1a0962ae543c84a00889bb018d9f14d8f8af6029d26b295d98774e3d2eb9a4
 
 BUNDLED WITH
-  4.0.4
+  4.0.5

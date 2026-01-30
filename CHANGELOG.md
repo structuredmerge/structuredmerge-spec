@@ -31,6 +31,12 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- **Improved dependency handling and test robustness**:
+  - Added missing RSpec backend tags (`:parslet_backend`, `:citrus_backend`, etc.) to ensure tests are skipped when dependencies are unavailable.
+  - Enhanced `GrammarFinder` to support both `ENV.key?` and `ENV[var]` checks, fixing issues with environment stubbing in tests.
+  - Improved `GrammarFinder` spec reliability by using `allow(File).to receive(:exist?).and_call_original`.
+  - Configured RSpec to mark grammar-dependent tests as `pending` with helpful instructions when shared libraries are missing.
+  - Renamed `:toml_rb` tag to `:toml_rb_gem` for consistency across the codebase.
 - Documentation fixes related to gem family section
 
 ### Security

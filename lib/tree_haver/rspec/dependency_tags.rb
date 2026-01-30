@@ -1280,12 +1280,25 @@ RSpec.configure do |config|
   # When TREE_HAVER_BACKEND is explicitly set (but not using *_backend_only tags),
   # grammar checks are fine because TreeHaver.parser_for respects the env var.
   unless isolated_test_mode
-    config.filter_run_excluding(libtree_sitter: true) unless deps.libtree_sitter_available?
-    config.filter_run_excluding(bash_grammar: true) unless deps.tree_sitter_bash_available?
-    config.filter_run_excluding(toml_grammar: true) unless deps.tree_sitter_toml_available?
-    config.filter_run_excluding(json_grammar: true) unless deps.tree_sitter_json_available?
-    config.filter_run_excluding(jsonc_grammar: true) unless deps.tree_sitter_jsonc_available?
-    config.filter_run_excluding(rbs_grammar: true) unless deps.tree_sitter_rbs_available?
+    config.before(:each) do |example|
+      grammar_tags = {
+        bash_grammar: [:tree_sitter_bash_available?, "tree-sitter-bash"],
+        toml_grammar: [:tree_sitter_toml_available?, "tree-sitter-toml"],
+        json_grammar: [:tree_sitter_json_available?, "tree-sitter-json"],
+        jsonc_grammar: [:tree_sitter_jsonc_available?, "tree-sitter-jsonc"],
+        rbs_grammar: [:tree_sitter_rbs_available?, "tree-sitter-rbs"],
+        libtree_sitter: [:libtree_sitter_available?, "libtree-sitter"],
+      }
+
+      grammar_tags.each do |tag, (method, name)|
+        next unless example.metadata[tag]
+        unless deps.public_send(method)
+          env_var = "TREE_SITTER_#{tag.to_s.sub("_grammar", "").upcase}_PATH"
+          env_var = "TREE_SITTER_RUNTIME_LIB" if tag == :libtree_sitter
+          skip "#{name} grammar not available. Set #{env_var} to the path of the shared library."
+        end
+      end
+    end
   end
 
   # ============================================================
@@ -1301,10 +1314,21 @@ RSpec.configure do |config|
   # triggers grammar_works? and loads MRI. Skip when running isolated tests.
 
   unless isolated_test_mode
-    config.filter_run_excluding(toml_parsing: true) unless deps.any_toml_backend_available?
-    config.filter_run_excluding(markdown_parsing: true) unless deps.any_markdown_backend_available?
-    config.filter_run_excluding(rbs_parsing: true) unless deps.any_rbs_backend_available?
-    config.filter_run_excluding(native_parsing: true) unless deps.any_native_grammar_available?
+    config.before(:each) do |example|
+      parsing_tags = {
+        toml_parsing: [:any_toml_backend_available?, "TOML"],
+        markdown_parsing: [:any_markdown_backend_available?, "Markdown"],
+        rbs_parsing: [:any_rbs_backend_available?, "RBS"],
+        native_parsing: [:any_native_grammar_available?, "Native"],
+      }
+
+      parsing_tags.each do |tag, (method, name)|
+        next unless example.metadata[tag]
+        unless deps.public_send(method)
+          skip "#{name} parsing capability not available."
+        end
+      end
+    end
   end
 
   # ============================================================

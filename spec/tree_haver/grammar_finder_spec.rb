@@ -5,8 +5,8 @@ require "spec_helper"
 RSpec.describe TreeHaver::GrammarFinder do
   let(:finder) { described_class.new(:toml) }
 
+  # Clean up any cached state
   after do
-    # Clean up any cached state
     described_class.reset_runtime_check!
     TreeHaver.reset_backend!(to: :auto)
   end
@@ -145,63 +145,58 @@ RSpec.describe TreeHaver::GrammarFinder do
     context "with ENV override" do
       let(:env_path) { "/custom/path/libtree-sitter-toml.so" }
 
+      before do
+        allow(File).to receive(:exist?).and_call_original
+      end
+
       context "with valid path" do
-        before do
+        it "returns ENV path" do
+          local_finder = described_class.new(:toml)
           stub_env("TREE_SITTER_TOML_PATH" => env_path)
           allow(File).to receive(:exist?).with(env_path).and_return(true)
-          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).and_return(true)
-        end
-
-        it "returns ENV path" do
-          expect(finder.find_library_path).to eq(env_path)
+          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).with(env_path).and_return(true)
+          expect(local_finder.find_library_path).to eq(env_path)
         end
       end
 
       context "with empty ENV value" do
-        before do
-          stub_env("TREE_SITTER_TOML_PATH" => "")
-        end
-
         it "returns nil (explicitly disabled)" do
-          expect(finder.find_library_path).to be_nil
+          local_finder = described_class.new(:toml)
+          stub_env("TREE_SITTER_TOML_PATH" => "")
+          expect(local_finder.find_library_path).to be_nil
         end
       end
 
       context "with non-existent file" do
-        before do
+        it "raises NotAvailable" do
+          local_finder = described_class.new(:toml)
           stub_env("TREE_SITTER_TOML_PATH" => env_path)
           allow(File).to receive(:exist?).with(env_path).and_return(false)
-          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).and_return(true)
-        end
-
-        it "raises NotAvailable" do
+          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).with(env_path).and_return(true)
           expect {
-            finder.find_library_path
+            local_finder.find_library_path
           }.to raise_error(TreeHaver::NotAvailable, /file does not exist/)
         end
       end
 
       context "with unsafe path" do
-        before do
-          stub_env("TREE_SITTER_TOML_PATH" => env_path)
-          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).and_return(false)
-        end
-
         it "raises NotAvailable" do
+          local_finder = described_class.new(:toml)
+          stub_env("TREE_SITTER_TOML_PATH" => env_path)
+          allow(File).to receive(:exist?).with(env_path).and_return(true)
+          allow(TreeHaver::PathValidator).to receive(:safe_library_path?).with(env_path).and_return(false)
           expect {
-            finder.find_library_path
+            local_finder.find_library_path
           }.to raise_error(TreeHaver::NotAvailable, /failed security validation/)
         end
       end
 
       context "with whitespace in path" do
-        before do
-          stub_env("TREE_SITTER_TOML_PATH" => " #{env_path} ")
-        end
-
         it "raises NotAvailable with helpful message" do
+          local_finder = described_class.new(:toml)
+          stub_env("TREE_SITTER_TOML_PATH" => " #{env_path} ")
           expect {
-            finder.find_library_path
+            local_finder.find_library_path
           }.to raise_error(TreeHaver::NotAvailable, /leading or trailing whitespace/)
         end
       end

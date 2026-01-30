@@ -147,8 +147,9 @@ module TreeHaver
     def find_library_path
       # Check environment variable first (highest priority)
       # Use key? to distinguish between "not set" and "set to empty"
-      if ENV.key?(env_var_name)
-        env_path = ENV[env_var_name]
+      env_var = env_var_name
+      if ENV[env_var] || ENV.key?(env_var)
+        env_path = ENV[env_var]
 
         # :nocov: defensive - ENV.key? true with nil value is rare edge case
         if env_path.nil?

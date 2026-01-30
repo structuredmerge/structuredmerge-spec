@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe TreeHaver::Backends::Java do
+RSpec.describe TreeHaver::Backends::Java, :java_backend do
   let(:backend) { described_class }
 
   # Store original state

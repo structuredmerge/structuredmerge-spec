@@ -224,7 +224,7 @@ RSpec.describe TreeHaver::CitrusGrammarFinder do
     end
   end
 
-  describe "integration with real toml-rb gem", :toml_rb do
+  describe "integration with real toml-rb gem", :toml_rb_gem do
     let(:toml_finder) do
       described_class.new(
         language: :toml,

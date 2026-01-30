@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe TreeHaver::Backends::Citrus do
+RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
   let(:backend) { described_class }
 
   # Store original state to restore after tests

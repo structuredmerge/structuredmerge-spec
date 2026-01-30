@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe TreeHaver::Backends::Prism do
+RSpec.describe TreeHaver::Backends::Prism, :prism_backend do
   let(:backend) { described_class }
 
   # Store original state to restore after tests
