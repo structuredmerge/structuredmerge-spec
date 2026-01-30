@@ -19,5 +19,5 @@ platform :mri do
   gem "tree_stump",
     # path: "../../vendor/tree_stump"
     github: "pboling/tree_stump",
-    branch: "feat/upgrade-tree-sitter"
+    branch: "tree_haver"
 end
