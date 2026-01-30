@@ -39,6 +39,7 @@ platform :mri do
       require: false # DO NOT LOAD, because conflicts with FFI
     gem "tree_stump",
       github: "pboling/tree_stump",
-      branch: "tree_haver"
+      branch: "tree_haver",
+      ref: "7501b84fdfa816c7c2a4d9986639cd9174630992"
   end
 end
