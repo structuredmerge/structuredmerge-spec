@@ -6,6 +6,6 @@ gemspec :path => "../"
 
 eval_gemfile("modular/rspec.gemfile")
 
-eval_gemfile("modular/tree_sitter.gemfile")
+eval_gemfile("modular/tree_sitter/vHEAD.gemfile")
 
 eval_gemfile("modular/x_std_libs.gemfile")
