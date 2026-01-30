@@ -100,7 +100,7 @@ jobs:
           bundler: "${{ matrix.bundler }}"
           ore-install: true
           rv-git-ref: "main"
-          ore-git-ref: "fix/bundle-path-handling"
+          ore-git-ref: "v0.21.0"
           cache-version: "v3"
 
       - name: Diagnostic - Compare gemspec formats
