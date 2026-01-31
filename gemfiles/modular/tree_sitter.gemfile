@@ -42,7 +42,8 @@ platform :mri do
       github: "pboling/rb-sys",
       branch: "feat/ruby-version-patch-as-abi",
       ref: "d9f9557275627e5b8ebc5d659b04fb574526baed",
-      glob: "gem/rb_sys.gemspec"
+      glob: "gem/rb_sys.gemspec",
+      submodules: true
     gem "tree_stump",
       github: "pboling/tree_stump",
       branch: "tree_haver",
