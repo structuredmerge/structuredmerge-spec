@@ -10,11 +10,12 @@ GIT
 
 GIT
   remote: https://github.com/pboling/tree_stump.git
-  revision: d9b661cb15d6829fd9796d519f07833962744b2a
+  revision: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
+  ref: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
   branch: tree_haver
   specs:
     tree_stump (0.1.0)
-      rb_sys (~> 0.9.119)
+      rb_sys (~> 0.9.124)
 
 GIT
   remote: https://github.com/pboling/yard-junk.git
