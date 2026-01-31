@@ -70,6 +70,15 @@ jobs:
           setup-rust: "true"
           grammar-toml: "true"
 
+      - name: Clone git dependencies locally
+        run: |
+          mkdir -p deps
+          git clone https://github.com/pboling/rb-sys.git deps/rb-sys
+          git -C deps/rb-sys checkout d9f9557275627e5b8ebc5d659b04fb574526baed
+          git clone https://github.com/pboling/tree_stump.git deps/tree_stump
+          git -C deps/tree_stump checkout 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
+        working-directory: ${{ github.workspace }}
+
       - name: Setup Ruby & Gems via rv & ore
         uses: appraisal-rb/setup-ruby-flash@main
         with:
@@ -79,6 +88,21 @@ jobs:
           ore-install: true
           rv-git-ref: "v0.4.3"
           ore-git-ref: "v0.21.0"
+
+      - name: Modify modular Gemfile to use path dependencies
+        run: |
+          MODULAR_GEMFILE="${{ github.workspace }}/gemfiles/modular/tree_sitter.gemfile"
+          echo "Modifying $MODULAR_GEMFILE for path dependencies..."
+
+          # Replace tree_stump github: with path:
+          sed -i 's|gem "tree_stump", github: "pboling/tree_stump", branch: "tree_haver", ref: "0363593b8f34bd44f598ae7c3e217d7ec960fd2e"|gem "tree_stump", path: "deps/tree_stump"|g' "$MODULAR_GEMFILE"
+
+          # Replace rb_sys github: with path: (keeping glob for proper gemspec location)
+          sed -i 's|gem "rb_sys", github: "pboling/rb-sys", branch: "feat/ruby-version-patch-as-abi", ref: "d9f9557275627e5b8ebc5d659b04fb574526baed", glob: "gem/rb_sys.gemspec"|gem "rb_sys", path: "deps/rb-sys", glob: "gem/rb_sys.gemspec"|g' "$MODULAR_GEMFILE"
+
+          echo "Modified modular Gemfile content:"
+          cat "$MODULAR_GEMFILE"
+        working-directory: ${{ github.workspace }}
 
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # NOTE: This does not use the primary Gemfile at all.

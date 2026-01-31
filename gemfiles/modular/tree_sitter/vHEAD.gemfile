@@ -10,7 +10,7 @@ gem "unparser", github: "mbj/unparser", branch: "main"
 platform :mri do
   # MRI Backend
   gem "ruby_tree_sitter", github: "Faveod/ruby-tree-sitter", require: false # DO NOT LOAD, because conflicts with FFI
-  gem "markly", github: "ioquatix/markly"
+  gem "markly", github: "ioquatix/markly", submodules: true
   # Bundler fails on git submodules in commonmarker:
   # See: https://github.com/ruby/rubygems/issues/9001#issuecomment-3740868525
   # gem "commonmarker", github: "gjtorikian/commonmarker"

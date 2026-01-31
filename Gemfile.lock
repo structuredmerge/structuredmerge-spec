@@ -13,6 +13,7 @@ GIT
   remote: https://github.com/pboling/ruby-tree-sitter.git
   revision: c36cff9cbf55ca1512cc49d8739e4efc2ff0a962
   branch: tree_haver
+  submodules: true
   specs:
     ruby_tree_sitter (2.0.0)
       oppen (~> 1.0)
@@ -24,6 +25,7 @@ GIT
   revision: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
   ref: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
   branch: tree_haver
+  submodules: true
   specs:
     tree_stump (0.1.0)
       rb_sys (~> 0.9.124)
