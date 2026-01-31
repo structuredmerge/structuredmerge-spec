@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/pboling/rb-sys.git
+  revision: d9f9557275627e5b8ebc5d659b04fb574526baed
+  ref: d9f9557275627e5b8ebc5d659b04fb574526baed
+  branch: feat/ruby-version-patch-as-abi
+  specs:
+    rb_sys (0.9.124)
+      rake-compiler-dock (= 1.11.0)
+
+GIT
   remote: https://github.com/pboling/ruby-tree-sitter.git
   revision: c36cff9cbf55ca1512cc49d8739e4efc2ff0a962
   branch: tree_haver
@@ -172,10 +181,9 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rake-compiler-dock (1.11.0)
-    rb_sys (0.9.124)
-      rake-compiler-dock (= 1.11.0)
-    rbs (3.10.2)
+    rbs (3.10.3)
       logger
+      tsort
     rdoc (6.17.0)
       erb
       psych (>= 4.0.0)
@@ -294,7 +302,7 @@ GEM
     simplecov-rcov (0.3.7)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    sorbet-runtime (0.6.12904)
+    sorbet-runtime (0.6.12908)
     standard (1.53.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -393,6 +401,7 @@ DEPENDENCIES
   parslet
   prism (~> 1.6)
   rake (~> 13.0)
+  rb_sys!
   rbs (>= 3.10)
   rdoc (~> 6.11)
   reek (~> 6.5)
@@ -488,8 +497,8 @@ CHECKSUMS
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
   rake-compiler-dock (1.11.0) sha256=eab51f2cd533eb35cea6b624a75281f047123e70a64c58b607471bb49428f8c2
-  rb_sys (0.9.124) sha256=513476557b12eaf73764b3da9f8746024558fe8699bda785fb548c9aa3877ae7
-  rbs (3.10.2) sha256=bd8a5dc4c62f229f020146b61844a31f9c79e649449d212904a474eb79c846fc
+  rb_sys (0.9.124)
+  rbs (3.10.3) sha256=70627f3919016134d554e6c99195552ae3ef6020fe034c8e983facc9c192daa6
   rdoc (6.17.0) sha256=0f50d4e568fc98195f9bb155a9e8dff6c7feabfb515fb22ef6df1d12ad5a02b7
   reek (6.5.0) sha256=d26d3a492773b2bbc228888067a21afe33ac07954a17dbd64cdeae42c4c69be1
   regexp_parser (2.11.3) sha256=ca13f381a173b7a93450e53459075c9b76a10433caadcb2f1180f2c741fc55a4
@@ -530,7 +539,7 @@ CHECKSUMS
   simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov-rcov (0.3.7) sha256=372f50bf6df6b6350b7d0c840f2f8bdabe021861a43c26877b747c9ac96139fc
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  sorbet-runtime (0.6.12904) sha256=0bf2ea0d70de7f3896ec1db3fbdbe89be970ddc1b92406630fd7411a3a8b1bd0
+  sorbet-runtime (0.6.12908) sha256=229f43e76527b01c5291c00c43cc29ccebe437a87b34925c3ee250ebf23d328e
   standard (1.53.0) sha256=f3c9493385db7079d0abce6f7582f553122156997b81258cd361d3480eeacf9c
   standard-custom (1.0.2) sha256=424adc84179a074f1a2a309bb9cf7cd6bfdb2b6541f20c6bf9436c0ba22a652b
   standard-performance (1.9.0) sha256=49483d31be448292951d80e5e67cdcb576c2502103c7b40aec6f1b6e9c88e3f2

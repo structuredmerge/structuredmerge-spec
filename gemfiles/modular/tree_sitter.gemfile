@@ -32,11 +32,16 @@ platform :mri do
       require: false # DO NOT LOAD, because conflicts with FFI
     gem "tree_stump",
       path: "../../../tree_stump"
+    gem "rb_sys"
   else
     gem "ruby_tree_sitter",
       github: "pboling/ruby-tree-sitter",
       branch: "tree_haver",
       require: false # DO NOT LOAD, because conflicts with FFI
+    gem "rb_sys",
+      github: "pboling/rb-sys",
+      branch: "feat/ruby-version-patch-as-abi",
+      ref: "d9f9557275627e5b8ebc5d659b04fb574526baed"
     gem "tree_stump",
       github: "pboling/tree_stump",
       branch: "tree_haver",
