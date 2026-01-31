@@ -3,6 +3,7 @@ GIT
   revision: d9f9557275627e5b8ebc5d659b04fb574526baed
   ref: d9f9557275627e5b8ebc5d659b04fb574526baed
   branch: feat/ruby-version-patch-as-abi
+  glob: gem/rb_sys.gemspec
   specs:
     rb_sys (0.9.124)
       rake-compiler-dock (= 1.11.0)

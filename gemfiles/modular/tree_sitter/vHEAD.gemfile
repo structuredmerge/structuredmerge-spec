@@ -16,6 +16,11 @@ platform :mri do
   # gem "commonmarker", github: "gjtorikian/commonmarker"
   # gem "commonmarker" # Not yet compatible with ruby-head
   # Rust Backend
+  gem "rb_sys",
+    github: "pboling/rb-sys",
+    branch: "feat/ruby-version-patch-as-abi",
+    ref: "d9f9557275627e5b8ebc5d659b04fb574526baed",
+    glob: "gem/rb_sys.gemspec"
   gem "tree_stump",
     # path: "../../vendor/tree_stump"
     github: "pboling/tree_stump",
