@@ -40,6 +40,6 @@ platform :mri do
     gem "tree_stump",
       github: "pboling/tree_stump",
       branch: "tree_haver",
-      ref: "249b81e6cba84d05a840e61fbbcd26b9e834d3c3"
+      ref: "0363593b8f34bd44f598ae7c3e217d7ec960fd2e"
   end
 end
