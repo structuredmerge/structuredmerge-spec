@@ -55,19 +55,19 @@ end
 
 appraise "ruby-3-2" do
   eval_gemfile "modular/rspec.gemfile"
-  eval_gemfile "modular/tree_sitter.gemfile"
+  eval_gemfile "modular/tree_sitter/r3/libs.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
 appraise "ruby-3-3" do
   eval_gemfile "modular/rspec.gemfile"
-  eval_gemfile "modular/tree_sitter.gemfile"
+  eval_gemfile "modular/tree_sitter/r3/libs.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
 appraise "ruby-3-4" do
   eval_gemfile "modular/rspec.gemfile"
-  eval_gemfile "modular/tree_sitter.gemfile"
+  eval_gemfile "modular/tree_sitter/r3/libs.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 

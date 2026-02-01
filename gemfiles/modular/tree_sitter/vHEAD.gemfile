@@ -8,14 +8,18 @@ gem "prism", github: "ruby/prism", branch: "main"
 gem "unparser", github: "mbj/unparser", branch: "main"
 
 platform :mri do
-  # MRI Backend
-  gem "ruby_tree_sitter", github: "Faveod/ruby-tree-sitter", require: false # DO NOT LOAD, because conflicts with FFI
   gem "markly", github: "ioquatix/markly"
   # Bundler fails on git submodules in commonmarker:
   # See: https://github.com/ruby/rubygems/issues/9001#issuecomment-3740868525
   # gem "commonmarker", github: "gjtorikian/commonmarker"
   # gem "commonmarker" # Not yet compatible with ruby-head
   # Rust Backend
+
+  # MRI Backend
+  gem "ruby_tree_sitter",
+    github: "pboling/ruby-tree-sitter",
+    branch: "tree_haver",
+    require: false # DO NOT LOAD, because conflicts with FFI
   gem "tree_stump",
     # path: "../../vendor/tree_stump"
     github: "pboling/tree_stump",
