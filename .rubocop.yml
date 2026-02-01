@@ -18,6 +18,7 @@ AllCops:
     - spec/fixtures/**/*
     - tmp/**/*
     - vendor/**/*
+    - deps/**/*
 
 RBS:
   Enabled: true
