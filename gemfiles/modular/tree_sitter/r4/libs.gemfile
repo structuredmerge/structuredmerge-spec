@@ -1,0 +1,31 @@
+# FFI Backend - works on MRI, JRuby, and TruffleRuby
+gem "ffi", require: false # DO NOT LOAD, because conflicts with MRI
+gem "toml-rb"
+gem "citrus"
+gem "toml"
+gem "parslet"
+gem "prism", "~> 1.6"
+gem "unparser", "~> 0.8", ">= 0.8.1"
+
+platform :mri do
+  # On JRuby only the :java and :ffi backends are available.
+  # On Truffleruby it seems that no backends are available (yet)
+  # MRI only Parsers:
+  gem "commonmarker"
+  gem "markly", "~> 0.15", ">= 0.15.2"
+  gem "rbs", ">= 3.10"   # ruby >= 3.1.0
+
+  # MRI Backend
+  gem "ruby_tree_sitter", github: "Faveod/ruby-tree-sitter", require: false # DO NOT LOAD, because conflicts with FFI
+
+  # Bundler fails on git submodules in commonmarker:
+  # See: https://github.com/ruby/rubygems/issues/9001#issuecomment-3740868525
+  # gem "commonmarker", github: "gjtorikian/commonmarker"
+  # gem "commonmarker" # Not yet compatible with ruby-head
+  # Rust Backend
+  gem "tree_stump",
+    # path: "../../vendor/tree_stump"
+    github: "pboling/tree_stump",
+    branch: "tree_haver",
+    ref: "0363593b8f34bd44f598ae7c3e217d7ec960fd2e"
+end

@@ -22,12 +22,25 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
-- test against Prism v1.9.0
-- CI updated to use latest version of ore
-
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+### Security
+
+## [5.0.3] - 2026-01-30
+
+- TAG: [v5.0.3][5.0.3t]
+- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
+- BRANCH COVERAGE: 72.50% -- 862/1189 branches in 30 files
+- 94.78% documented
+
+### Changed
+
+- test against Prism v1.9.0
+- CI updated to use latest version of ore
 
 ### Fixed
 
@@ -38,8 +51,6 @@ Please file a bug if you notice a violation of semantic versioning.
   - Configured RSpec to mark grammar-dependent tests as `pending` with helpful instructions when shared libraries are missing.
   - Renamed `:toml_rb` tag to `:toml_rb_gem` for consistency across the codebase.
 - Documentation fixes related to gem family section
-
-### Security
 
 ## [5.0.2] - 2026-01-13
 
