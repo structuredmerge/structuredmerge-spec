@@ -737,4 +737,415 @@ Valid values: :auto, :mri, :rust, :ffi, :java, :citrus, :parslet, :prism, :psych
       <span class='ivar'>@impl</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Citrus.html" title="TreeHaver::Backends::Citrus (module)">Citrus</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Citrus/Parser.html" title="TreeHaver::Backends::Citrus::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Backends/Citrus/Parser.html#initialize-instance_method" title="TreeHaver::Backends::Citrus::Parser#initialize (method)">new</a></span></span>
       <span class='ivar'>@explicit_backend</span> <span class='op'>=</span> <span class='symbol'>:citrus</span>
     <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Parslet.html" title="TreeHaver::Backends::Parslet (module)">Parslet</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="Backends/Parslet.html#available%3F-class_method" title="TreeHaver::Backends::Parslet.available? (method)">available?</a></span></span>
-      <span class='ivar'>@impl</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Parslet.html" title="TreeHaver::Backends::Parslet (module)">Parslet</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Parslet/Parser.html" title="TreeHaver::Backends::Parslet::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Back
+      <span class='ivar'>@impl</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Parslet.html" title="TreeHaver::Backends::Parslet (module)">Parslet</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Backends/Parslet/Parser.html" title="TreeHaver::Backends::Parslet::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Backends/Parslet/Parser.html#initialize-instance_method" title="TreeHaver::Backends::Parslet::Parser#initialize (method)">new</a></span></span>
+      <span class='ivar'>@explicit_backend</span> <span class='op'>=</span> <span class='symbol'>:parslet</span>
+    <span class='kw'>else</span>
+      <span class='comment'># No fallback available, re-raise original error
+</span>      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="NotAvailable.html" title="TreeHaver::NotAvailable (class)">NotAvailable</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tree-sitter backend failed: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_error'>error</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>. </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Citrus/Parslet fallback not available. Install tree-sitter runtime, citrus gem, or parslet gem.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Explicit backend was requested, don&#39;t fallback
+</span>    <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="language=-instance_method">
+  
+    #<strong>language=</strong>(lang)  &#x21d2; <tt><span class='object_link'><a href="Language.html" title="TreeHaver::Language (module)">Language</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Set the language grammar for this parser</p>
+
+<p>The language must be compatible with the parser’s backend. If a mismatch<br />
+is detected (e.g., Citrus language on tree-sitter parser), the parser<br />
+will automatically switch to the correct backend.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Language.html" title="TreeHaver::Language (module)">Language</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_library'><span class='object_link'><a href="Language.html#from_library-class_method" title="TreeHaver::Language.from_library (method)">from_library</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/path/to/grammar.so</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>lang</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Language.html" title="TreeHaver::Language (module)">Language</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the language to use for parsing</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Language.html" title="TreeHaver::Language (module)">Language</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the language that was set</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/parser.rb', line 178</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_language='>language=</span><span class='lparen'>(</span><span class='id identifier rubyid_lang'>lang</span><span class='rparen'>)</span>
+  <span class='comment'># Auto-switch backend if language type doesn&#39;t match current parser
+</span>  <span class='comment'># This handles the case where Language.toml returns a Citrus/Parslet language
+</span>  <span class='comment'># but the parser was initialized with a tree-sitter backend
+</span>  <span class='id identifier rubyid_switch_backend_for_language'>switch_backend_for_language</span><span class='lparen'>(</span><span class='id identifier rubyid_lang'>lang</span><span class='rparen'>)</span>
+
+  <span class='comment'># Unwrap the language before passing to backend
+</span>  <span class='comment'># Backends receive raw language objects, never TreeHaver wrappers
+</span>  <span class='id identifier rubyid_inner_lang'>inner_lang</span> <span class='op'>=</span> <span class='id identifier rubyid_unwrap_language'>unwrap_language</span><span class='lparen'>(</span><span class='id identifier rubyid_lang'>lang</span><span class='rparen'>)</span>
+  <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='op'>=</span> <span class='id identifier rubyid_inner_lang'>inner_lang</span>
+
+  <span class='comment'># Store on base class for API compatibility
+</span>  <span class='ivar'>@language</span> <span class='op'>=</span> <span class='id identifier rubyid_lang'>lang</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse-instance_method">
+  
+    #<strong>parse</strong>(source)  &#x21d2; <tt><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Parse source code into a syntax tree</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_tree'>tree</span> <span class='op'>=</span> <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x = 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_tree'>tree</span><span class='period'>.</span><span class='id identifier rubyid_root_node'>root_node</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the source code to parse (should be UTF-8)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the parsed syntax tree</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+200
+201
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/parser.rb', line 200</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tree_impl'>tree_impl</span> <span class='op'>=</span> <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='comment'># Wrap backend tree with source so Node#text works
+</span>  <span class='const'><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Tree.html#initialize-instance_method" title="TreeHaver::Tree#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tree_impl'>tree_impl</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_string-instance_method">
+  
+    #<strong>parse_string</strong>(old_tree, source)  &#x21d2; <tt><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Parse source code into a syntax tree (with optional incremental parsing)</p>
+
+<p>This method provides API compatibility with ruby_tree_sitter which uses<br />
+<code>parse_string(old_tree, source)</code>.</p>
+
+<p>== Incremental Parsing</p>
+
+<p>tree-sitter supports <strong>incremental parsing</strong> where you can pass a previously<br />
+parsed tree along with edit information to efficiently re-parse only the<br />
+changed portions of source code. This is a major performance optimization<br />
+for editors and IDEs that need to re-parse on every keystroke.</p>
+
+<p>The workflow for incremental parsing is:</p>
+<ol>
+  <li>Parse the initial source: <code>tree = parser.parse_string(nil, source)</code></li>
+  <li>User edits the source (e.g., inserts a character)</li>
+  <li>Call <code>tree.edit(...)</code> to update the tree’s position data</li>
+  <li>Re-parse with the old tree: <code>new_tree = parser.parse_string(tree, new_source)</code></li>
+  <li>tree-sitter reuses unchanged nodes, only re-parsing affected regions</li>
+</ol>
+
+<p>TreeHaver passes through to the underlying backend if it supports incremental<br />
+parsing (MRI and Rust backends do). Check <code>TreeHaver.capabilities[:incremental]</code><br />
+to see if the current backend supports it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>First parse (no old tree)</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_tree'>tree</span> <span class='op'>=</span> <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_parse_string'>parse_string</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x = 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Incremental parse</p>
+</div></h5>
+      
+      <pre class="example code"><code>tree.edit(start_byte: 4, old_end_byte: 5, new_end_byte: 6, ...)
+new_tree = parser.parse_string(tree, &quot;x = 42&quot;)</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>old_tree</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>previously parsed tree for incremental parsing, or nil for fresh parse</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the source code to parse (should be UTF-8)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the parsed syntax tree</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://tree-sitter.github.io/tree-sitter/using-parsers#editing" target="_parent" title="tree-sitter incremental parsing docs">tree-sitter incremental parsing docs</a></li>
+    
+      <li><span class='object_link'><a href="Tree.html#edit-instance_method" title="TreeHaver::Tree#edit (method)">For marking edits before incremental re-parsing</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/parser.rb', line 239</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_string'>parse_string</span><span class='lparen'>(</span><span class='id identifier rubyid_old_tree'>old_tree</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='comment'># Pass through to backend if it supports incremental parsing
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_old_tree'>old_tree</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:parse_string</span><span class='rparen'>)</span>
+    <span class='comment'># Extract the underlying implementation from our Tree wrapper
+</span>    <span class='id identifier rubyid_old_impl'>old_impl</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_tree'>old_tree</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:inner_tree</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_old_tree'>old_tree</span><span class='period'>.</span><span class='id identifier rubyid_inner_tree'>inner_tree</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_old_tree'>old_tree</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:instance_variable_get</span><span class='rparen'>)</span>
+      <span class='comment'># Fallback for compatibility
+</span>      <span class='id identifier rubyid_old_tree'>old_tree</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@inner_tree</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_old_tree'>old_tree</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@impl</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_old_tree'>old_tree</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_old_tree'>old_tree</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_tree_impl'>tree_impl</span> <span class='op'>=</span> <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_parse_string'>parse_string</span><span class='lparen'>(</span><span class='id identifier rubyid_old_impl'>old_impl</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+    <span class='comment'># Wrap backend tree with source so Node#text works
+</span>    <span class='const'><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Tree.html#initialize-instance_method" title="TreeHaver::Tree#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tree_impl'>tree_impl</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:parse_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_tree_impl'>tree_impl</span> <span class='op'>=</span> <span class='ivar'>@impl</span><span class='period'>.</span><span class='id identifier rubyid_parse_string'>parse_string</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+    <span class='comment'># Wrap backend tree with source so Node#text works
+</span>    <span class='const'><span class='object_link'><a href="Tree.html" title="TreeHaver::Tree (class)">Tree</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Tree.html#initialize-instance_method" title="TreeHaver::Tree#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tree_impl'>tree_impl</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Fallback for backends that don&#39;t support parse_string
+</span>    <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sat Jan 31 22:07:43 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-4.0.1).
+</div>
+
+    </div>
+  </body>
+</html>

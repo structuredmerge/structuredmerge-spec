@@ -545,4 +545,199 @@ instances with controlled, predictable data.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/rspec/testable_node.rb', line 150</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><sp
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span>
+  <span class='label'>type:</span><span class='comma'>,</span>
+  <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>start_line:</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='label'>end_line:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>start_column:</span> <span class='int'>0</span><span class='comma'>,</span>
+  <span class='label'>end_column:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>start_byte:</span> <span class='int'>0</span><span class='comma'>,</span>
+  <span class='label'>end_byte:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>children:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='kw'>nil</span>
+<span class='rparen'>)</span>
+  <span class='comment'># Convert 1-based line to 0-based row
+</span>  <span class='id identifier rubyid_start_row'>start_row</span> <span class='op'>=</span> <span class='id identifier rubyid_start_line'>start_line</span> <span class='op'>-</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_end_row'>end_row</span> <span class='op'>=</span> <span class='id identifier rubyid_end_line'>end_line</span> <span class='op'>?</span> <span class='id identifier rubyid_end_line'>end_line</span> <span class='op'>-</span> <span class='int'>1</span> <span class='op'>:</span> <span class='id identifier rubyid_start_row'>start_row</span> <span class='op'>+</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'># Calculate end_column if not provided
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_end_column'>end_column</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_end_column'>end_column</span> <span class='op'>=</span> <span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='op'>&amp;.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>||</span> <span class='int'>0</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Build children as MockInnerNodes
+</span>  <span class='id identifier rubyid_child_nodes'>child_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_child_spec'>child_spec</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="MockInnerNode.html" title="TreeHaver::RSpec::MockInnerNode (class)">MockInnerNode</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MockInnerNode.html#initialize-instance_method" title="TreeHaver::RSpec::MockInnerNode#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_child_spec'>child_spec</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_inner'>inner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MockInnerNode.html" title="TreeHaver::RSpec::MockInnerNode (class)">MockInnerNode</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MockInnerNode.html#initialize-instance_method" title="TreeHaver::RSpec::MockInnerNode#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>type:</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+    <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span>
+    <span class='label'>start_byte:</span> <span class='id identifier rubyid_start_byte'>start_byte</span><span class='comma'>,</span>
+    <span class='label'>end_byte:</span> <span class='id identifier rubyid_end_byte'>end_byte</span><span class='comma'>,</span>
+    <span class='label'>start_row:</span> <span class='id identifier rubyid_start_row'>start_row</span><span class='comma'>,</span>
+    <span class='label'>start_column:</span> <span class='id identifier rubyid_start_column'>start_column</span><span class='comma'>,</span>
+    <span class='label'>end_row:</span> <span class='id identifier rubyid_end_row'>end_row</span><span class='comma'>,</span>
+    <span class='label'>end_column:</span> <span class='id identifier rubyid_end_column'>end_column</span><span class='comma'>,</span>
+    <span class='label'>children:</span> <span class='id identifier rubyid_child_nodes'>child_nodes</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
+
+  <span class='comment'># Create a real TreeHaver::Node wrapping our mock
+</span>  <span class='comment'># Pass source so TreeHaver::Node can extract text if needed
+</span>  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_inner'>inner</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span> <span class='op'>||</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_list-class_method">
+  
+    .<strong>create_list</strong>(*specs)  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="" title="TreeHaver::RSpec::TestableNode (class)">TestableNode</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create multiple nodes from an array of specifications.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>specs</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Array of node specifications</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="" title="TreeHaver::RSpec::TestableNode (class)">TestableNode</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/rspec/testable_node.rb', line 198</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_list'>create_list</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_specs'>specs</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_specs'>specs</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_spec'>spec</span><span class='op'>|</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="testable?-instance_method">
+  
+    #<strong>testable?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Check if this is a testable node (for test assertions)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>true</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+208
+209
+210</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/rspec/testable_node.rb', line 208</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_testable?'>testable?</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sat Jan 31 22:07:44 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-4.0.1).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -3,6 +3,7 @@
 /tmp/
 *.gem
 /vendor/
+/deps/
 
 # Bundler
 /vendor/bundle/
