@@ -79,6 +79,7 @@ end
 
 # Only run coverage on the latest version of Ruby
 appraise "coverage" do
+  # We could add cgi here to get rid of the warning from simplecov-rcov
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/optional.gemfile"
   eval_gemfile "modular/rspec.gemfile"
