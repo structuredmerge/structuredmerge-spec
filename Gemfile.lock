@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: https://github.com/pboling/tree_stump.git
-  revision: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
-  ref: 0363593b8f34bd44f598ae7c3e217d7ec960fd2e
+  revision: 4d83ba27eb37497d634984bcb06c19d4d80f2c2d
+  ref: 4d83ba27eb37497d634984bcb06c19d4d80f2c2d
   branch: tree_haver
   specs:
     tree_stump (0.1.0)
@@ -286,7 +286,7 @@ GEM
     simplecov-cobertura (3.1.0)
       rexml
       simplecov (~> 0.19)
-    simplecov-console (0.9.4)
+    simplecov-console (0.9.5)
       ansi
       simplecov
       terminal-table
@@ -526,7 +526,7 @@ CHECKSUMS
   silent_stream (1.0.12) sha256=377c43aa10033fe90c33b39ea8cd97d79f2d1c4856df598efc56f3091f3ae782
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-cobertura (3.1.0) sha256=6d7f38aa32c965ca2174b2e5bd88cb17138eaf629518854976ac50e628925dc5
-  simplecov-console (0.9.4) sha256=a5c7d0ae60e0307a77e0fadc532dd78c42e0b954af42483dcac003fe9187065b
+  simplecov-console (0.9.5) sha256=b1108bcfff5f210143e2b8301698c367b01586f20d25a73e95475a5df6fc6ff6
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
   simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov-rcov (0.3.7) sha256=372f50bf6df6b6350b7d0c840f2f8bdabe021861a43c26877b747c9ac96139fc
