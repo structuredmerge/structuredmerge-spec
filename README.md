@@ -92,8 +92,9 @@ tree = parser.parse(source_code)
 - **10 Parsing Backends** - Choose the right backend for your needs:
     - **Tree-sitter Backends** (high-performance, incremental parsing):
         - **MRI Backend**: Leverages [`ruby_tree_sitter`][ruby_tree_sitter] gem (C extension, fastest on MRI)
+            - **Note**: `ruby_tree_sitter` currently requires unreleased fixes in the `pboling` fork, `tree_haver` branch.
         - **Rust Backend**: Uses [`tree_stump`][tree_stump] gem (Rust with precompiled binaries)
-            - **Note**: `tree_stump` currently requires unreleased fixes in the `main` branch.
+            - **Note**: `tree_stump` currently requires unreleased fixes in the `pboling` fork, `tree_haver` branch.
         - **FFI Backend**: Pure Ruby FFI bindings to `libtree-sitter` (JRuby only; TruffleRuby's FFI doesn't support tree-sitter's struct-by-value returns)
         - **Java Backend**: Native Java integration for JRuby with [`java-tree-sitter`](https://github.com/tree-sitter/java-tree-sitter) / [`jtreesitter`][jtreesitter] grammar JARs
     - **Language-Specific Backends** (native parser integration):
@@ -132,8 +133,11 @@ In ruby\_tree\_sitter v2.0, all TreeSitter exceptions were changed to inherit fr
 | `TreeSitter::QueryCreationError`  | `TreeHaver::NotAvailable` | Query creation fails                         |
 
 ```ruby
-# Add to your Gemfile for MRI backend
-gem "ruby_tree_sitter", "~> 2.0"
+# MRI tree-sitter Backend
+gem "ruby_tree_sitter",
+    github: "pboling/ruby-tree-sitter",
+    branch: "tree_haver",
+    require: false # DO NOT LOAD, because conflicts with FFI
 ```
 
 #### Rust Backend (tree\_stump)
@@ -147,8 +151,11 @@ The Rust backend uses [tree\_stump][tree_stump], which is a Rust native extensio
   NOTE: `tree_stump` currently requires unreleased fixes in the `main` branch.
 
 ```ruby
-# Add to your Gemfile for Rust backend (MRI only)
-gem "tree_stump", github: "pboling/tree_stump", branch: "feat/upgrade-tree-sitter"
+# Rust tree-sitter backend (MRI only)
+gem "tree_stump",
+    # path: "../../vendor/tree_stump"
+    github: "pboling/tree_stump",
+    branch: "tree_haver"
 ```
 
 #### FFI Backend

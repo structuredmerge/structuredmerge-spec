@@ -22,6 +22,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- Update documentation on which fork/SHA to use for tree_stump & ruby_tree_sitter
+
 ### Deprecated
 
 ### Removed
