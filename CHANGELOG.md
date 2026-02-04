@@ -22,8 +22,6 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
-- Update documentation on which fork/SHA to use for tree_stump & ruby_tree_sitter
-
 ### Deprecated
 
 ### Removed
@@ -31,6 +29,17 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Fixed
 
 ### Security
+
+## [5.0.4] - 2026-02-04
+
+- TAG: [v5.0.4][5.0.4t]
+- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
+- BRANCH COVERAGE: 72.58% -- 863/1189 branches in 30 files
+- 94.78% documented
+
+### Changed
+
+- Update documentation on which fork/SHA to use for tree_stump & ruby_tree_sitter
 
 ## [5.0.3] - 2026-01-30
 
@@ -1306,7 +1315,9 @@ Despite the major version bump to 3.0.0 (following semver due to the breaking `L
 
 - Initial release
 
-[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.3...HEAD
+[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...HEAD
+[5.0.4]: https://github.com/kettle-rb/tree_haver/compare/v5.0.3...v5.0.4
+[5.0.4t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.4
 [5.0.3]: https://github.com/kettle-rb/tree_haver/compare/v5.0.2...v5.0.3
 [5.0.3t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.3
 [5.0.2]: https://github.com/kettle-rb/tree_haver/compare/v5.0.1...v5.0.2

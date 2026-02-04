@@ -135,9 +135,9 @@ In ruby\_tree\_sitter v2.0, all TreeSitter exceptions were changed to inherit fr
 ```ruby
 # MRI tree-sitter Backend
 gem "ruby_tree_sitter",
-    github: "pboling/ruby-tree-sitter",
-    branch: "tree_haver",
-    require: false # DO NOT LOAD, because conflicts with FFI
+  github: "pboling/ruby-tree-sitter",
+  branch: "tree_haver",
+  require: false # DO NOT LOAD, because conflicts with FFI
 ```
 
 #### Rust Backend (tree\_stump)
@@ -154,8 +154,8 @@ The Rust backend uses [tree\_stump][tree_stump], which is a Rust native extensio
 # Rust tree-sitter backend (MRI only)
 gem "tree_stump",
     # path: "../../vendor/tree_stump"
-    github: "pboling/tree_stump",
-    branch: "tree_haver"
+  github: "pboling/tree_stump",
+  branch: "tree_haver"
 ```
 
 #### FFI Backend
