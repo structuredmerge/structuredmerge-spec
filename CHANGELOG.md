@@ -22,6 +22,9 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- appraisal2 v3.0.2
+- kettle-test v1.0.10
+
 ### Deprecated
 
 ### Removed
