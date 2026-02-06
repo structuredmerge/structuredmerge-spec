@@ -58,7 +58,7 @@ concurrency:
 jobs:
   test:
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
-    name: Default rake task w/ main Gemfile.lock ${{ matrix.name_extra || '' }}
+    name: Default rake task w/ ${{ matrix.gemfile }}.gemfile.lock ${{ matrix.name_extra || '' }}
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     env:
