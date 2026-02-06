@@ -48,7 +48,7 @@ jobs:
             rubygems: latest
             bundler: latest
 
-          # truffleruby-24.1 (targets Ruby 3.3 compatibility)
+          # truffleruby-33.0 (targets Ruby 3.3 compatibility)
           - ruby: "truffleruby"
             appraisal: "current"
             exec_cmd: "rake magic"

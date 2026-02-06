@@ -50,6 +50,22 @@ jobs:
             rubygems: default
             bundler: default
 
+          # truffleruby-24.2 (targets Ruby 3.3 compatibility)
+          - ruby: "truffleruby-24.2"
+            appraisal: "current"
+            exec_cmd: "rake magic"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
+          # truffleruby-25.0
+          - ruby: "truffleruby-25.0"
+            appraisal: "current"
+            exec_cmd: "rake magic"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
     steps:
       - name: Checkout
         if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}
