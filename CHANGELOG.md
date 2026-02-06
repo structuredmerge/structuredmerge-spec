@@ -22,9 +22,6 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
-- Updated documentation on hostile takeover of RubyGems
-  - https://dev.to/galtzo/hostile-takeover-of-rubygems-my-thoughts-5hlo
-
 ### Deprecated
 
 ### Removed
@@ -32,6 +29,18 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Fixed
 
 ### Security
+
+## [5.0.5] - 2026-02-05
+
+- TAG: [v5.0.5][5.0.5t]
+- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
+- BRANCH COVERAGE: 72.75% -- 865/1189 branches in 30 files
+- 94.78% documented
+
+### Changed
+
+- Updated documentation on hostile takeover of RubyGems
+  - https://dev.to/galtzo/hostile-takeover-of-rubygems-my-thoughts-5hlo
 
 ## [5.0.4] - 2026-02-04
 
@@ -1318,7 +1327,9 @@ Despite the major version bump to 3.0.0 (following semver due to the breaking `L
 
 - Initial release
 
-[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...HEAD
+[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...HEAD
+[5.0.5]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...v5.0.5
+[5.0.5t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.5
 [5.0.4]: https://github.com/kettle-rb/tree_haver/compare/v5.0.3...v5.0.4
 [5.0.4t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.4
 [5.0.3]: https://github.com/kettle-rb/tree_haver/compare/v5.0.2...v5.0.3
