@@ -22,9 +22,6 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
-- appraisal2 v3.0.2
-- kettle-test v1.0.10
-
 ### Deprecated
 
 ### Removed
@@ -32,6 +29,23 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Fixed
 
 ### Security
+
+## [5.0.6] - 2026-02-06
+
+- TAG: [v5.0.6][5.0.6t]
+- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
+- BRANCH COVERAGE: 72.75% -- 865/1189 branches in 30 files
+- 94.78% documented
+
+### Added
+
+- Truffleruby 24.2, 25.0, 33.0 added to CI
+- Ruby 3.4 added to CI
+
+### Changed
+
+- appraisal2 v3.0.2
+- kettle-test v1.0.10
 
 ## [5.0.5] - 2026-02-05
 
@@ -1330,7 +1344,9 @@ Despite the major version bump to 3.0.0 (following semver due to the breaking `L
 
 - Initial release
 
-[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...HEAD
+[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.6...HEAD
+[5.0.6]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...v5.0.6
+[5.0.6t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.6
 [5.0.5]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...v5.0.5
 [5.0.5t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.5
 [5.0.4]: https://github.com/kettle-rb/tree_haver/compare/v5.0.3...v5.0.4
