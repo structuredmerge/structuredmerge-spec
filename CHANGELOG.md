@@ -30,7 +30,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Security
 
-## [5.0.6] - 2026-02-06
+## [5.0.5] - 2026-02-10
 
 - TAG: [v5.0.6][5.0.6t]
 - COVERAGE: 83.68% -- 2128/2543 lines in 30 files
@@ -44,18 +44,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
-- appraisal2 v3.0.2
+- appraisal2 v3.0.4, full support for ore in CI
 - kettle-test v1.0.10
-
-## [5.0.5] - 2026-02-05
-
-- TAG: [v5.0.5][5.0.5t]
-- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
-- BRANCH COVERAGE: 72.75% -- 865/1189 branches in 30 files
-- 94.78% documented
-
-### Changed
-
 - Updated documentation on hostile takeover of RubyGems
   - https://dev.to/galtzo/hostile-takeover-of-rubygems-my-thoughts-5hlo
 

@@ -99,9 +99,7 @@ jobs:
           rubygems: "${{ matrix.rubygems }}"
           bundler: "${{ matrix.bundler }}"
           ore-install: true
-          rv-git-ref: "v0.4.3"
-          ore-git-ref: "v0.21.0"
-          cache-version: "v3"
+          cache-version: "v4"
 
 #      - name: Diagnostic - Compare gemspec formats
 #        run: ruby bin/compare_gemspec_formats
