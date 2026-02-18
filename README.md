@@ -68,7 +68,7 @@ tree = parser.parse(source_code)
         - **MRI Backend**: Leverages [`ruby_tree_sitter`][ruby_tree_sitter] gem (C extension, fastest on MRI)
             - **Note**: `ruby_tree_sitter` currently requires unreleased fixes in the `pboling` fork, `tree_haver` branch.
         - **Rust Backend**: Uses [`tree_stump`][tree_stump] gem (Rust with precompiled binaries)
-            - **Note**: `tree_stump` currently requires unreleased fixes in the `pboling` fork, `tree_haver` branch.
+            - **Note**: Use `tree_stump` v0.2.0 or newer (fixes are released).
         - **FFI Backend**: Pure Ruby FFI bindings to `libtree-sitter` (JRuby only; TruffleRuby's FFI doesn't support tree-sitter's struct-by-value returns)
         - **Java Backend**: Native Java integration for JRuby with [`java-tree-sitter`](https://github.com/tree-sitter/java-tree-sitter) / [`jtreesitter`][jtreesitter] grammar JARs
     - **Language-Specific Backends** (native parser integration):
@@ -122,14 +122,10 @@ The Rust backend uses [tree\_stump][tree_stump], which is a Rust native extensio
 
 - **JRuby**: Cannot load native `.so` extensions (runs on JVM)
 - **TruffleRuby**: magnus/rb-sys are incompatible with TruffleRuby's C API emulation
-  NOTE: `tree_stump` currently requires unreleased fixes in the `main` branch.
 
 ```ruby
 # Rust tree-sitter backend (MRI only)
-gem "tree_stump",
-    # path: "../../vendor/tree_stump"
-  github: "pboling/tree_stump",
-  branch: "tree_haver"
+gem "tree_stump", "~> 0.2.0"
 ```
 
 #### FFI Backend
@@ -465,7 +461,7 @@ tree_haver supports multiple parsing backends, but not all backends work on all 
 
 **Note:** TreeHaver can use `ruby_tree_sitter` (MRI) or `tree_stump` (MRI) as backends, or `java-tree-sitter` / `jtreesitter` \>= 0.26.0 ([docs](https://tree-sitter.github.io/java-tree-sitter/), [maven][jtreesitter], [source](https://github.com/tree-sitter/java-tree-sitter), JRuby), or FFI on any backend, giving you TreeHaver's unified API, grammar discovery, and security features, plus full access to incremental parsing when using those backends.
 
-**Note:** `tree_stump` currently requires unreleased fixes in the `main` branch.
+**Note:** Use `tree_stump` v0.2.0 or newer (fixes are released).
 
 #### When to Use Each
 
@@ -490,7 +486,7 @@ tree_haver supports multiple parsing backends, but not all backends work on all 
 - You prefer Rust-based native extensions
 - You want precompiled binaries without system dependencies
 - You don't need TreeHaver's grammar discovery
-- **Note:** `tree_stump` currently requires unreleased fixes in the `main` branch.
+- **Note:** Use `tree_stump` v0.2.0 or newer (fixes are released).
 
 **Choose citrus or parslet directly when:**
 
@@ -841,8 +837,7 @@ TreeHaver.backend = :auto
 # Force a specific backend
 TreeHaver.backend = :mri     # Use ruby_tree_sitter (MRI only, C extension)
 TreeHaver.backend = :rust    # Use tree_stump (MRI, Rust extension with precompiled binaries)
-                             # Note: `tree_stump` currently requires unreleased fixes in the `main` branch.
-                             # See: https://github.com/joker1007/tree_stump
+                             # Note: Use tree_stump v0.2.0 or newer (fixes are released).
 TreeHaver.backend = :ffi     # Use FFI bindings (works on MRI and JRuby)
 TreeHaver.backend = :java    # Use Java bindings (JRuby only, coming soon)
 TreeHaver.backend = :citrus  # Use Citrus pure Ruby parser

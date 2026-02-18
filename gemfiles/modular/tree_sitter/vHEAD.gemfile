@@ -21,8 +21,7 @@ platform :mri do
     branch: "tree_haver",
     require: false # DO NOT LOAD, because conflicts with FFI
   gem "tree_stump",
-    # path: "../../vendor/tree_stump"
-    github: "pboling/tree_stump",
-    branch: "tree_haver",
-    ref: "4d83ba27eb37497d634984bcb06c19d4d80f2c2d"
+    github: "joker1007/tree_stump",
+    branch: "main",
+    ref: "5e84fd375a08c3304796f8081dd622096ff30694"
 end

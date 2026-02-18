@@ -26,6 +26,8 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Changed
 
 - appraisal2 v3.0.6
+- tree_stump v0.2.0
+  - fork no longer required, updates all applied upstream
 
 ### Deprecated
 
