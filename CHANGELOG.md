@@ -20,14 +20,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
-- Many more specs
-- AGENTS.md
-
 ### Changed
-
-- appraisal2 v3.0.6
-- tree_stump v0.2.0
-  - fork no longer required, updates all applied upstream
 
 ### Deprecated
 
@@ -37,21 +30,25 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Security
 
-## [5.0.5] - 2026-02-10
+## [5.0.5] - 2026-02-18
 
-- TAG: [v5.0.6][5.0.6t]
-- COVERAGE: 83.68% -- 2128/2543 lines in 30 files
-- BRANCH COVERAGE: 72.75% -- 865/1189 branches in 30 files
+- TAG: [v5.0.5][5.0.5t]
+- COVERAGE: 84.39% -- 2146/2543 lines in 30 files
+- BRANCH COVERAGE: 74.18% -- 882/1189 branches in 30 files
 - 94.78% documented
 
 ### Added
 
+- Many more specs
+- AGENTS.md
 - Truffleruby 24.2, 25.0, 33.0 added to CI
 - Ruby 3.4 added to CI
 
 ### Changed
 
-- appraisal2 v3.0.4, full support for ore in CI
+- appraisal2 v3.0.6
+- tree_stump v0.2.0
+  - fork no longer required, updates all applied upstream
 - kettle-test v1.0.10
 - Updated documentation on hostile takeover of RubyGems
   - https://dev.to/galtzo/hostile-takeover-of-rubygems-my-thoughts-5hlo
@@ -1341,7 +1338,7 @@ Despite the major version bump to 3.0.0 (following semver due to the breaking `L
 
 - Initial release
 
-[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.6...HEAD
+[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...HEAD
 [5.0.6]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...v5.0.6
 [5.0.6t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.6
 [5.0.5]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...v5.0.5

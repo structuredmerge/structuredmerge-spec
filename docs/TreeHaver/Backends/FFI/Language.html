@@ -1191,4 +1191,91 @@ Path and symbol uniquely identify a loaded language.</p>
 405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/back
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/ffi.rb', line 391</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_language_name'>language_name</span>
+  <span class='comment'># Try to derive from symbol (e.g., &quot;tree_sitter_toml&quot; -&gt; :toml)
+</span>  <span class='kw'>if</span> <span class='ivar'>@symbol</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='ivar'>@symbol</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^tree_sitter_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Try to derive from path (e.g., &quot;/path/to/libtree-sitter-toml.so&quot; -&gt; :toml)
+</span>  <span class='kw'>if</span> <span class='ivar'>@path</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../LibraryPathUtils.html" title="TreeHaver::LibraryPathUtils (module)">LibraryPathUtils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_derive_language_name_from_path'><span class='object_link'><a href="../../LibraryPathUtils.html#derive_language_name_from_path-class_method" title="TreeHaver::LibraryPathUtils.derive_language_name_from_path (method)">derive_language_name_from_path</a></span></span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='kw'>end</span>
+
+  <span class='symbol'>:unknown</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_ptr-instance_method">
+  
+    #<strong>to_ptr</strong>  &#x21d2; <tt>FFI::Pointer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Convert to FFI pointer for passing to native functions</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>FFI::Pointer</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+413
+414
+415</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/ffi.rb', line 413</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_ptr'>to_ptr</span>
+  <span class='ivar'>@pointer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Feb 18 04:00:40 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-4.0.1).
+</div>
+
+    </div>
+  </body>
+</html>
