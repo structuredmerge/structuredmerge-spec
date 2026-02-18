@@ -92,54 +92,14 @@ jobs:
           setup-rust: "true"
           grammar-toml: "true"
 
-      - name: Setup Ruby & Gems via rv & ore
-        uses: appraisal-rb/setup-ruby-flash@main
+      - name: Setup Ruby & RubyGems
+        if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "${{ matrix.ruby }}"
-          rubygems: "${{ matrix.rubygems }}"
-          bundler: "${{ matrix.bundler }}"
-          ore-install: true
-          cache-version: "v4"
-
-#      - name: Diagnostic - Compare gemspec formats
-#        run: ruby bin/compare_gemspec_formats
-#
-#      - name: Spy on Bundle Exec Environment
-#        continue-on-error: true
-#        run: |
-#          bundle exec ruby -e "
-#            puts '--- BUNDLE EXEC SPY ---'
-#            puts 'GEM_HOME=' + ENV['GEM_HOME'].to_s
-#            puts 'GEM_PATH=' + ENV['GEM_PATH'].to_s
-#            puts 'BUNDLE_BIN_PATH=' + ENV['BUNDLE_BIN_PATH'].to_s
-#            puts 'RUBYLIB=' + ENV['RUBYLIB'].to_s
-#            puts 'RUBYOPT=' + ENV['RUBYOPT'].to_s
-#            puts 'LOAD_PATH:'
-#            puts \$LOAD_PATH
-#            puts '-----------------------'
-#          "
-#          echo "--- bundle env ---"
-#          bundle env || true
-#          echo "--- ruby gem env ---"
-#          ruby -e "require 'rubygems'; puts 'Gem.dir=' + Gem.dir; puts 'Gem.path=' + Gem.path.join(':')"
-#          echo "--- PRE-FLIGHT bundle env ---"
-#          bundle env || true
-#          echo "--- PRE-FLIGHT ruby gem env ---"
-#          ruby -e "require 'rubygems'; puts 'Gem.dir=' + Gem.dir; puts 'Gem.path=' + Gem.path.join(':')"
-#          echo "--- PRE-FLIGHT bundle check ---"
-#          bundle check || true
-#          echo "--- PRE-FLIGHT bundle exec env snapshot ---"
-#          bundle exec env | sort | grep -E '^(GEM_|BUNDLE_)' || true
-#          echo "--- PRE-FLIGHT bundle exec platform summary ---"
-#          bundle exec ruby -e "require 'bundler'; require 'rubygems'; puts 'Gem.platforms=' + Gem.platforms.join(','); puts 'Gem::Platform.local=' + Gem::Platform.local.to_s; puts 'Bundler.local_platform=' + Bundler.local_platform.to_s; puts 'Bundler.generic_local_platform=' + Bundler.generic_local_platform.to_s; locked = Bundler.definition.instance_variable_get(:@locked_specs); specs = locked.respond_to?(:to_a) ? locked.to_a : Array(locked); missing = []; specs.each do |spec| src = spec.source; begin by_spec = src.specs.search(spec).empty?; rescue; by_spec = true; end; missing << spec if by_spec; end; puts 'locked_specs=' + specs.size.to_s + ' missing_by_spec=' + missing.size.to_s; missing.first(20).each do |spec| stubs = Gem::Specification.stubs.select { |s| s.name == spec.name }.map(&:full_name); puts spec.name + ' locked_platform=' + spec.platform.to_s + ' locked_full=' + spec.full_name + ' installed_stubs=' + stubs.join(','); end" || true
-#          echo "--- PRE-FLIGHT bundle exec locked spec platform check ---"
-#          bundle exec ruby -e "require 'bundler'; names=%w[kettle-dev rake rexml logger]; locked=Bundler.definition.instance_variable_get(:@locked_specs); names.each do |name| spec=locked[name]&.first; unless spec; puts name + ': locked spec missing'; next; end; src=spec.source; by_spec=src.specs.search(spec).size; by_name=src.specs.search([name, spec.version]).size; puts name + ': locked_platform=' + spec.platform.to_s + ' locked_full=' + spec.full_name + ' search(spec)=' + by_spec.to_s + ' search(name,ver)=' + by_name.to_s; end" || true
-#          echo "--- PRE-FLIGHT bundle exec rake detection ---"
-#          bundle exec ruby -e "require 'bundler'; path = Bundler.which('rake'); puts 'Bundler.which(rake)=' + path.to_s; if path && File.exist?(path); puts 'rake shebang=' + File.open(path, 'rb') { |f| f.gets.to_s.strip }; end" || true
-#          echo "--- PRE-FLIGHT bundle exec ruby -S rake ---"
-#          bundle exec ruby -S rake -T || true
-#          echo "--- PRE-FLIGHT bundle exec rake (exec load disabled) ---"
-#          BUNDLE_DISABLE_EXEC_LOAD=1 bundle exec rake -T || true
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: true
 
       - name: Checks the kitchen sink via ${{ matrix.exec_cmd }}
         run: bundle exec ${{ matrix.exec_cmd }}
