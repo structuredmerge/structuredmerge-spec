@@ -592,6 +592,13 @@ RSpec.describe TreeHaver do
     end
 
     describe "backend selection" do
+      context "when explicit backend is set" do
+        it "returns the explicit backend", :citrus_backend do
+          parser = described_class::Parser.new(backend: :citrus)
+          expect(parser.backend).to eq(:citrus)
+        end
+      end
+
       context "when backend is :citrus" do
         before do
           described_class.backend = :citrus
@@ -610,6 +617,38 @@ RSpec.describe TreeHaver do
             parser = described_class.parser_for(:toml)
             expect(parser).to be_a(described_class::Parser)
             expect(parser.backend).to eq(:citrus)
+          end
+        end
+      end
+
+      describe "#initialize with backend fallback" do
+        context "when tree-sitter backend fails and Citrus is available" do
+          before do
+            # Force tree-sitter backends to fail
+            allow(described_class::Backends::MRI).to receive(:available?).and_return(false)
+            allow(described_class::Backends::Rust).to receive(:available?).and_return(false)
+            allow(described_class::Backends::FFI).to receive(:available?).and_return(false)
+            allow(described_class::Backends::Java).to receive(:available?).and_return(false)
+            allow(described_class::Backends::Citrus).to receive(:available?).and_return(true)
+          end
+
+          it "falls back to Citrus parser" do
+            parser = described_class::Parser.new
+            expect(parser.backend).to eq(:citrus)
+          end
+        end
+
+        context "when explicit backend is requested but not available" do
+          before do
+            allow(described_class::Backends::FFI).to receive(:available?).and_return(false)
+          end
+
+          it "raises NotAvailable or BackendConflict for explicit backend" do
+            # FFI can fail with NotAvailable (gem not available) or BackendConflict
+            # (MRI already loaded, blocking FFI). Both indicate the backend is unusable.
+            expect {
+              described_class::Parser.new(backend: :ffi)
+            }.to raise_error(described_class::Error, /not available|blocked by/)
           end
         end
       end
@@ -691,55 +730,6 @@ RSpec.describe TreeHaver do
   end
 
   describe "::Parser" do
-    describe "#backend detection" do
-      context "when explicit backend is set" do
-        it "returns the explicit backend", :citrus_backend do
-          parser = described_class::Parser.new(backend: :citrus)
-          expect(parser.backend).to eq(:citrus)
-        end
-      end
-
-      context "when backend is auto and implementation class name is checked" do
-        it "detects Citrus backend from class name", :citrus_backend do
-          described_class.backend = :citrus
-          parser = described_class::Parser.new
-          expect(parser.backend).to eq(:citrus)
-        end
-      end
-    end
-
-    describe "#initialize with backend fallback" do
-      context "when tree-sitter backend fails and Citrus is available" do
-        before do
-          # Force tree-sitter backends to fail
-          allow(described_class::Backends::MRI).to receive(:available?).and_return(false)
-          allow(described_class::Backends::Rust).to receive(:available?).and_return(false)
-          allow(described_class::Backends::FFI).to receive(:available?).and_return(false)
-          allow(described_class::Backends::Java).to receive(:available?).and_return(false)
-          allow(described_class::Backends::Citrus).to receive(:available?).and_return(true)
-        end
-
-        it "falls back to Citrus parser" do
-          parser = described_class::Parser.new
-          expect(parser.backend).to eq(:citrus)
-        end
-      end
-
-      context "when explicit backend is requested but not available" do
-        before do
-          allow(described_class::Backends::FFI).to receive(:available?).and_return(false)
-        end
-
-        it "raises NotAvailable or BackendConflict for explicit backend" do
-          # FFI can fail with NotAvailable (gem not available) or BackendConflict
-          # (MRI already loaded, blocking FFI). Both indicate the backend is unusable.
-          expect {
-            described_class::Parser.new(backend: :ffi)
-          }.to raise_error(described_class::Error, /not available|blocked by/)
-        end
-      end
-    end
-
     describe "#language= with Citrus language", :citrus_backend, :toml_rb do
       it "switches to Citrus parser when given Citrus language" do
         # Start with a Citrus parser
@@ -1088,14 +1078,12 @@ RSpec.describe TreeHaver do
       parser_class = mock_parser_class
       language_class = mock_language_class
 
-      # rubocop:disable Style/ClassMethodsDefinitions
       Module.new do
         define_singleton_method(:name) { "MockBackend" }
         define_singleton_method(:available?) { true }
         const_set(:Parser, parser_class)
         const_set(:Language, language_class)
       end
-      # rubocop:enable Style/ClassMethodsDefinitions
     end
 
     after do

@@ -794,7 +794,9 @@ RSpec.describe TreeHaver::Node do
 
   describe "#respond_to_missing?" do
     it "returns true for methods on inner_node", :toml_parsing do
-      method = root_node.inner_node.methods.first
+      method = root_node.inner_node.public_methods.first
+      skip "No public methods on inner_node" unless method
+
       expect(root_node.respond_to?(method)).to be true
     end
 
