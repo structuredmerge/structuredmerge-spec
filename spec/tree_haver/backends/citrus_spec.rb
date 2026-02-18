@@ -165,11 +165,13 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
 
         it "derives name from symbol when registered" do
           grammar_module = Module.new do
-            def self.name
-              "TomlRB::Document"
-            end
+            class << self
+              def name
+                "TomlRB::Document"
+              end
 
-            def self.parse(_source)
+              def parse(_source)
+              end
             end
           end
           TreeHaver::LanguageRegistry.clear
@@ -183,11 +185,13 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
 
         it "derives name from path when registered" do
           grammar_module = Module.new do
-            def self.name
-              "Bash::Grammar"
-            end
+            class << self
+              def name
+                "Bash::Grammar"
+              end
 
-            def self.parse(_source)
+              def parse(_source)
+              end
             end
           end
           TreeHaver::LanguageRegistry.clear

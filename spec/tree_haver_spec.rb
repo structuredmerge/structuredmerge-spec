@@ -588,6 +588,57 @@ RSpec.describe TreeHaver do
       end
     end
 
+    context "with registered pure Ruby backend" do
+      after do
+        TreeHaver::LanguageRegistry.clear
+        TreeHaver::LanguageRegistry.clear_cache!
+      end
+
+      it "uses Language.<name> when available" do
+        backend_mod = Module.new
+        parser_class = Class.new { attr_accessor :language }
+        language_class = Class.new do
+          class << self
+            def fake
+              :fake_lang
+            end
+          end
+        end
+
+        backend_mod.const_set(:Parser, parser_class)
+        backend_mod.const_set(:Language, language_class)
+        backend_mod.define_singleton_method(:available?) { true }
+
+        described_class.register_language(:fake, backend_module: backend_mod, backend_type: :fake)
+
+        parser = described_class.parser_for(:fake)
+        expect(parser).to be_a(parser_class)
+        expect(parser.language).to eq(:fake_lang)
+      end
+
+      it "uses Language.from_library when name method is missing" do
+        backend_mod = Module.new
+        parser_class = Class.new { attr_accessor :language }
+        language_class = Class.new do
+          class << self
+            def from_library(_path, name:)
+              "lang_#{name}"
+            end
+          end
+        end
+
+        backend_mod.const_set(:Parser, parser_class)
+        backend_mod.const_set(:Language, language_class)
+        backend_mod.define_singleton_method(:available?) { true }
+
+        described_class.register_language(:other, backend_module: backend_mod, backend_type: :other)
+
+        parser = described_class.parser_for(:other)
+        expect(parser).to be_a(parser_class)
+        expect(parser.language).to eq("lang_other")
+      end
+    end
+
     describe "backend selection" do
       context "when backend is :citrus" do
         before do

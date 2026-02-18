@@ -22,7 +22,7 @@ TreeHaver.backend_allowed?(:ffi)   # => true/false
 ```
 ### Wrapping/Unwrapping Architecture
 **Critical Design Principle**: `TreeHaver::Parser` handles ALL wrapping/unwrapping. Backends work with raw objects only.
-**Key files**: 
+**Key files**:
 - `WRAPPING-ARCHITECTURE.md` - Complete unwrapping contract
 - `lib/tree_haver/parser.rb` - The only place that wraps/unwraps objects
 **Language Object Flow**:
@@ -96,7 +96,7 @@ External gems register their availability via `BackendRegistry`:
 TreeHaver::BackendRegistry.register_tag(
   :commonmarker_backend,
   category: :backend,
-  require_path: "commonmarker/merge"
+  require_path: "commonmarker/merge",
 ) { Commonmarker::Merge::Backend.available? }
 ```
 This enables dynamic RSpec tag filtering without hardcoding backend knowledge.
@@ -117,7 +117,7 @@ This project uses `kettle-dev` (sister project in kettle-rb org) for gem mainten
 ### Dependency Tag System
 RSpec tests use dynamic tags based on backend availability:
 ```ruby
-RSpec.describe "feature", :toml_parsing, :commonmarker_backend do
+RSpec.describe("feature", :toml_parsing, :commonmarker_backend) do
   # Auto-skipped if toml-rb or commonmarker unavailable
 end
 ```
