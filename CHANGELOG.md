@@ -20,9 +20,12 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
+- Many more specs
 - AGENTS.md
 
 ### Changed
+
+- appraisal2 v3.0.6
 
 ### Deprecated
 

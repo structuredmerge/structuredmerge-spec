@@ -112,6 +112,15 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
       end
     end
 
+    describe "#language_name" do
+      it "returns :unknown when grammar module name is missing" do
+        grammar = double("grammar", parse: nil, name: nil)
+        lang = backend::Language.new(grammar)
+
+        expect(lang.language_name).to eq(:unknown)
+      end
+    end
+
     describe ".from_library" do
       context "when no grammar is registered" do
         before do
@@ -146,6 +155,48 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
         it "returns Language wrapping the registered grammar" do
           lang = backend::Language.from_library(nil, name: :test_citrus_lang)
           expect(lang).to be_a(backend::Language)
+        end
+
+        it "raises when no name, symbol, or path is provided" do
+          expect {
+            backend::Language.from_library(nil)
+          }.to raise_error(TreeHaver::NotAvailable, /requires a language name/)
+        end
+
+        it "derives name from symbol when registered" do
+          grammar_module = Module.new do
+            def self.name
+              "TomlRB::Document"
+            end
+
+            def self.parse(_source)
+            end
+          end
+          TreeHaver::LanguageRegistry.clear
+          TreeHaver::LanguageRegistry.register(:toml, :citrus, grammar_module: grammar_module)
+
+          lang = backend::Language.from_library(nil, symbol: "tree_sitter_toml")
+          expect(lang.language_name).to eq(:toml)
+        ensure
+          TreeHaver::LanguageRegistry.clear
+        end
+
+        it "derives name from path when registered" do
+          grammar_module = Module.new do
+            def self.name
+              "Bash::Grammar"
+            end
+
+            def self.parse(_source)
+            end
+          end
+          TreeHaver::LanguageRegistry.clear
+          TreeHaver::LanguageRegistry.register(:bash, :citrus, grammar_module: grammar_module)
+
+          lang = backend::Language.from_library("/usr/lib/libtree-sitter-bash.so")
+          expect(lang.language_name).to eq(:bash)
+        ensure
+          TreeHaver::LanguageRegistry.clear
         end
       end
     end
@@ -706,6 +757,43 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
     describe "#named?" do
       it "always returns true" do
         expect(node.named?).to be true
+      end
+    end
+
+    describe "#structural?" do
+      let(:source) { "structural node" }
+
+      it "returns true for non-terminal event" do
+        event = double("event", terminal?: false)
+        match = double("match", events: [event], offset: 0, length: 0, string: "", matches: [])
+        node = backend::Node.new(match, source)
+
+        expect(node.structural?).to be true
+      end
+
+      it "returns false for terminal event" do
+        event = double("event", terminal?: true)
+        match = double("match", events: [event], offset: 0, length: 0, string: "", matches: [])
+        node = backend::Node.new(match, source)
+
+        expect(node.structural?).to be false
+      end
+
+      it "looks up grammar rules for symbol events" do
+        rule = double("rule", terminal?: false)
+        grammar = double("grammar", rules: {table: rule})
+        match = double("match", events: [:table], grammar: grammar, offset: 0, length: 0, string: "", matches: [])
+        node = backend::Node.new(match, source)
+
+        expect(node.structural?).to be true
+      end
+
+      it "defaults to structural when grammar rule is missing" do
+        grammar = double("grammar", rules: {})
+        match = double("match", events: [:unknown], grammar: grammar, offset: 0, length: 0, string: "", matches: [])
+        node = backend::Node.new(match, source)
+
+        expect(node.structural?).to be true
       end
     end
   end

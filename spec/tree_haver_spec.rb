@@ -279,6 +279,14 @@ RSpec.describe TreeHaver do
   describe "::register_language validation" do
     # NOTE: Don't clear registrations - use unique names per test
 
+    context "with grammar_class that doesn't respond to :new" do
+      it "raises ArgumentError" do
+        expect {
+          described_class.register_language(:bad_grammar_class_test, grammar_class: Object.new)
+        }.to raise_error(ArgumentError, /Grammar class must respond to :new/)
+      end
+    end
+
     context "with grammar_module that doesn't respond to :parse" do
       it "raises ArgumentError" do
         bad_module = Module.new
@@ -317,6 +325,54 @@ RSpec.describe TreeHaver do
         expect(registration[:tree_sitter][:path]).to eq("/fake/path.so")
         expect(registration[:citrus][:grammar_module]).to eq(mock_grammar)
       end
+    end
+  end
+
+  describe "::parser_for" do
+    after do
+      TreeHaver::LanguageRegistry.clear
+      TreeHaver::LanguageRegistry.clear_cache!
+      described_class.reset_backend!(to: :auto)
+    end
+
+    it "uses Language.<name> when available for a registered pure Ruby backend" do
+      backend_mod = Module.new
+      parser_class = Class.new { attr_accessor :language }
+      language_class = Class.new do
+        def self.fake
+          :fake_lang
+        end
+      end
+
+      backend_mod.const_set(:Parser, parser_class)
+      backend_mod.const_set(:Language, language_class)
+      backend_mod.define_singleton_method(:available?) { true }
+
+      described_class.register_language(:fake, backend_module: backend_mod, backend_type: :fake)
+
+      parser = described_class.parser_for(:fake)
+      expect(parser).to be_a(parser_class)
+      expect(parser.language).to eq(:fake_lang)
+    end
+
+    it "uses Language.from_library when name method is missing" do
+      backend_mod = Module.new
+      parser_class = Class.new { attr_accessor :language }
+      language_class = Class.new do
+        def self.from_library(_path, name:)
+          "lang_#{name}"
+        end
+      end
+
+      backend_mod.const_set(:Parser, parser_class)
+      backend_mod.const_set(:Language, language_class)
+      backend_mod.define_singleton_method(:available?) { true }
+
+      described_class.register_language(:other, backend_module: backend_mod, backend_type: :other)
+
+      parser = described_class.parser_for(:other)
+      expect(parser).to be_a(parser_class)
+      expect(parser.language).to eq("lang_other")
     end
   end
 
