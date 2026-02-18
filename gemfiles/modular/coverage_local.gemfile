@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+# To retain during kettle-dev templating:
+#     kettle-dev:freeze
+#     # ... your code
+#     kettle-dev:unfreeze
+# We run code coverage on the latest version of Ruby only.
+
+if ENV.fetch("KETTLE_RB_DEV", "false").casecmp?("true")
+  gem "kettle-dev", path: "../../../kettle-dev"
+  gem "kettle-test", path: "../../../kettle-test"
+
+  platform :mri do
+    # Coverage
+    gem "kettle-soup-cover", path: "../../../kettle-soup-cover"
+  end
+else
+  eval_gemfile("coverage.gemfile")
+end

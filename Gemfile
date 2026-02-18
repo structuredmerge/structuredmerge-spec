@@ -5,24 +5,25 @@ source "https://gem.coop"
 git_source(:codeberg) { |repo_name| "https://codeberg.org/#{repo_name}" }
 git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 
-#### IMPORTANT #######################################################
-# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
-####################################################### IMPORTANT ####
+#### IMPORTANT ##############################################################
+# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI        #
+# gemfiles/**/*_local.gemfile handle path deps without polluting appraisals #
+####################################################### IMPORTANT ###########
 
 # Include dependencies from <gem name>.gemspec
 gemspec
 
 # Templating
-eval_gemfile "gemfiles/modular/templating.gemfile"
+eval_gemfile "gemfiles/modular/templating_local.gemfile"
 
 # Debugging
 eval_gemfile "gemfiles/modular/debug.gemfile"
 
 # Code Coverage
-eval_gemfile "gemfiles/modular/coverage.gemfile"
+eval_gemfile "gemfiles/modular/coverage_local.gemfile"
 
 # Linting
-eval_gemfile "gemfiles/modular/style.gemfile"
+eval_gemfile "gemfiles/modular/style_local.gemfile"
 
 # Documentation
 eval_gemfile "gemfiles/modular/documentation.gemfile"
@@ -31,7 +32,7 @@ eval_gemfile "gemfiles/modular/documentation.gemfile"
 eval_gemfile "gemfiles/modular/optional.gemfile"
 
 # Tree Sitter Tools
-eval_gemfile "gemfiles/modular/tree_sitter.gemfile"
+eval_gemfile "gemfiles/modular/tree_sitter_local.gemfile"
 
 ### Std Lib Extracted Gems
 eval_gemfile "gemfiles/modular/x_std_libs.gemfile"
