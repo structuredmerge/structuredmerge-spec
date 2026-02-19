@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: AGENTS
+  
+    &mdash; Documentation by YARD 0.9.38
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "AGENTS";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: AGENTS</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="agentsmd---treehaver-development-guide">AGENTS.md - TreeHaver Development Guide</h1>
+<h2 id="-project-overview">🎯 Project Overview</h2>
+<p>TreeHaver is a <strong>cross-Ruby adapter for AST parsing libraries</strong> - think Faraday for parsing. It provides a unified API across 10 different backends (tree-sitter, Prism, Psych, Citrus, Parslet, etc.) that works on MRI, JRuby, and TruffleRuby.<br>
+<strong>Core Philosophy</strong>: Write once, run anywhere. Learn once, write anywhere.</p>
+<h2 id="️-architecture-the-adapter-pattern">🏗️ Architecture: The Adapter Pattern</h2>
+<h3 id="backend-selection-strategy">Backend Selection Strategy</h3>
+<p>TreeHaver uses <strong>automatic backend selection</strong> with environment-based control:</p>
+<ol>
+  <li>
+<strong>Priority Chain</strong>: Explicit <code>backend:</code> param → <code>TreeHaver.backend</code> → <code>TREE_HAVER_BACKEND</code> env → Auto-detection</li>
+  <li>
+<strong>Auto-detection Order</strong> (MRI): <code>:mri</code> → <code>:rust</code> → <code>:ffi</code> → <code>:citrus</code> → <code>:parslet</code>
+</li>
+  <li>
+<strong>Fallback Behavior</strong>: If tree-sitter runtime missing, auto-falls back to Citrus/Parslet</li>
+</ol>
+
+<p><strong>Engine Exclusivity</strong>: Ruby engines (MRI, JRuby, TruffleRuby) never run simultaneously. Auto-detection order adapts to the running engine - JRuby prioritizes <code>:java</code> and <code>:ffi</code>, TruffleRuby uses pure Ruby backends only.</p>
+
+<p><strong>Environment Variables</strong>:</p>
+<ul>
+  <li>
+<code>TREE_HAVER_BACKEND</code> - Force single backend (<code>:auto</code>, <code>:mri</code>, <code>:ffi</code>, <code>:citrus</code>, etc.)</li>
+  <li>
+<code>TREE_HAVER_NATIVE_BACKEND</code> - Restrict native backends (comma-separated or <code>none</code>)</li>
+  <li>
+<code>TREE_HAVER_RUBY_BACKEND</code> - Restrict Ruby backends (comma-separated or <code>none</code>)
+    <pre class="code language-ruby"><code class="language-ruby"># Check what&#39;s allowed
+TreeHaver.allowed_native_backends  # =&gt; [:mri, :ffi] or [:auto] or [:none]
+TreeHaver.backend_allowed?(:ffi)   # =&gt; true/false
+</code></pre>
+    <h3 id="wrappingunwrapping-architecture">Wrapping/Unwrapping Architecture</h3>
+    <p><strong>Critical Design Principle</strong>: <code>TreeHaver::Parser</code> handles ALL wrapping/unwrapping. Backends work with raw objects only.<br>
+<strong>Key files</strong>:</p>
+  </li>
+  <li>
+<code>WRAPPING-ARCHITECTURE.md</code> - Complete unwrapping contract</li>
+  <li>
+<code>lib/tree_haver/parser.rb</code> - The only place that wraps/unwraps objects<br>
+<strong>Language Object Flow</strong>:
+    <ol>
+      <li>User passes: <code>TreeHaver::Backends::*::Language</code> wrapper</li>
+      <li>Parser unwraps via <code>#unwrap_language</code> (checks backend compatibility)</li>
+      <li>Backend receives appropriate raw object (MRI: <code>::TreeSitter::Language</code>, Rust: String, FFI: wrapper, etc.)<br>
+<strong>Tree Object Flow</strong>:</li>
+      <li>Backend returns raw tree → Parser wraps as <code>TreeHaver::Tree</code>
+</li>
+      <li>Incremental parsing: Parser unwraps <code>old_tree.inner_tree</code> before passing to backend
+        <h3 id="position-api-unification">Position API Unification</h3>
+        <p>See <code>POSITION-API-SUMMARY.md</code> for details. All backends expose:</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+<code>start_line</code>, <code>end_line</code> (1-based, human-readable)</li>
+  <li>
+<code>source_position</code> (hash with 1-based lines, 0-based columns)</li>
+  <li>Inheritance: <code>TreeHaver::Base::Node</code> provides defaults, backends override as needed
+    <h2 id="-development-workflows">🔧 Development Workflows</h2>
+    <h3 id="running-tests">Running Tests</h3>
+    <pre class="code language-bash"><code class="language-bash"># Full suite (required for coverage thresholds)
+bundle exec rspec
+# Single file (disable coverage threshold)
+K_SOUP_COV_MIN_HARD=false bundle exec rspec spec/tree_haver/parser_spec.rb
+# FFI backend isolation (run BEFORE other tests to avoid backend pollution)
+bundle exec rake ffi_specs
+</code></pre>
+    <p>Note: Always run commands after a standalone <code>cd</code> so <code>direnv</code> can load ENV. Do NOT chain <code>cd</code> with <code>&amp;&amp;</code>.<br>
+Example (two separate commands):</p>
+    <pre class="code language-bash"><code class="language-bash">cd /home/pboling/src/kettle-rb/tree_haver
+bin/rspec spec/tree_haver/parser_spec.rb
+</code></pre>
+    <p><strong>Critical</strong>: FFI specs run FIRST in a clean environment (<code>:ffi_backend</code> tag triggers isolated mode). See <code>Rakefile</code> lines 66-95 for SimpleCov merging strategy.</p>
+    <h3 id="coverage-reports">Coverage Reports</h3>
+    <p>Use <code>bin/rake coverage</code> - pre-configured ENV variables for coverage reporting<br>
+Use <code>bin/rspec</code> - Allows customization of ENV variables for coverage reporting with specific settings<br>
+<strong>Key env vars</strong>:</p>
+  </li>
+  <li>
+<code>K_SOUP_COV_DO=true</code> - Enable coverage (default in <code>.envrc</code>)</li>
+  <li>
+<code>K_SOUP_COV_MIN_LINE=83</code> - Line coverage threshold</li>
+  <li>
+<code>K_SOUP_COV_MIN_BRANCH=72</code> - Branch coverage threshold</li>
+  <li>
+<code>K_SOUP_COV_MIN_HARD=true</code> - Fail if thresholds not met</li>
+  <li>
+<code>K_SOUP_COV_FORMATTERS="json,xml,lcov,tty"</code> - Output formats</li>
+  <li>
+<code>K_SOUP_COV_COMMAND_NAME</code> - Unique name for SimpleCov merging<br>
+<strong>Never</strong> review HTML reports - use JSON (preferred), XML, LCOV, or RCOV.<br>
+Use <code>kettle-soup-cover -d</code> - Reads SimpleCov output generated by prior command; prints human &amp; AI digestable report.
+    <h3 id="grammar-discovery">Grammar Discovery</h3>
+    <p><code>GrammarFinder</code> auto-discovers tree-sitter libraries across platforms:</p>
+    <pre class="code language-ruby"><code class="language-ruby">finder = TreeHaver::GrammarFinder.new(:toml)
+if finder.available?
+finder.register!  # Now: TreeHaver::Language.toml
+end
+</code></pre>
+    <p><strong>Search order</strong>: ENV var (<code>TREE_SITTER_TOML_PATH</code>) → extra_paths → base dirs (<code>/usr/lib</code>, <code>/usr/local/lib</code>, etc.)<br>
+<strong>Security</strong>: Path validation rejects <code>../</code>, validates extensions (<code>.so</code>, <code>.dylib</code>, <code>.dll</code>)</p>
+  </li>
+</ul>
+
+<h3 id="working-examples">Working Examples</h3>
+
+<p>The <code>examples/</code> directory contains fully functional scripts demonstrating TreeHaver patterns:</p>
+
+<ul>
+  <li>
+<code>auto_json.rb</code> - Backend auto-selection with JSON parsing</li>
+  <li>
+<code>backend_selection.rb</code> - Testing environment variable effects on backend availability</li>
+  <li>
+<code>parser_for_citrus.rb</code> - Citrus backend usage patterns</li>
+  <li>Real-world usage patterns for grammar registration, language loading, and tree traversal</li>
+</ul>
+
+<p>These are excellent references for understanding how components work together in practice.</p>
+
+<h2 id="-project-conventions">📝 Project Conventions</h2>
+<h3 id="backend-registry-pattern">Backend Registry Pattern</h3>
+<p>External gems register their availability via <code>BackendRegistry</code>:</p>
+<pre class="code language-ruby"><code class="language-ruby"># In external gem (e.g., commonmarker-merge)
+TreeHaver::BackendRegistry.register_tag(
+  :commonmarker_backend,
+  category: :backend,
+  require_path: &quot;commonmarker/merge&quot;,
+) { Commonmarker::Merge::Backend.available? }
+</code></pre>
+<p>This enables dynamic RSpec tag filtering without hardcoding backend knowledge.</p>
+
+<h3 id="kettle-dev-tooling">Kettle-Dev Tooling</h3>
+
+<p>This project uses <code>kettle-dev</code> (sister project in kettle-rb org) for gem maintenance automation:</p>
+
+<ul>
+  <li>
+<strong>Templating</strong>: Lines between <code>kettle-dev:freeze</code> / <code>kettle-dev:unfreeze</code> comments are preserved during template updates (see <code>tree_haver.gemspec</code> lines 3-5)</li>
+  <li>
+<strong>CI Workflows</strong>: GitHub Actions and GitLab CI configurations are managed by kettle-dev templates</li>
+  <li>
+<strong>Releases</strong>: Use <code>kettle-release</code> command for automated release process (versioning, changelog, gem publishing)</li>
+</ul>
+
+<h3 id="version-requirements">Version Requirements</h3>
+<ul>
+  <li>Ruby &gt;= 3.2.0 (gemspec line 19)</li>
+  <li>
+<code>ruby_tree_sitter</code> v2.0+ required (exception hierarchy changed: all inherit from <code>Exception</code>, not <code>StandardError</code>)</li>
+  <li>Tree-sitter runtime compatibility: Backend-specific (see README “Backend Requirements”)
+    <h2 id="-testing-patterns">🧪 Testing Patterns</h2>
+    <h3 id="dependency-tag-system">Dependency Tag System</h3>
+    <p>RSpec tests use dynamic tags based on backend availability:</p>
+    <pre class="code language-ruby"><code class="language-ruby">RSpec.describe(&quot;feature&quot;, :toml_parsing, :commonmarker_backend) do
+# Auto-skipped if toml-rb or commonmarker unavailable
+end
+</code></pre>
+    <p>Tags resolved by <code>lib/tree_haver/rspec/dependency_tags.rb</code> via <code>BackendRegistry</code>.</p>
+    <h3 id="backend-conflict-protection">Backend Conflict Protection</h3>
+    <p><code>TreeHaver.backend_protect</code> (default: true) prevents incompatible backend combinations (e.g., FFI after MRI). Tests may disable this with <code>TreeHaver.backend_protect = false</code>.</p>
+    <h3 id="matrix-testing">Matrix Testing</h3>
+    <p><code>spec_matrix/</code> contains backend compatibility matrix tests with minimal helper to avoid pre-loading dependencies.</p>
+    <h2 id="-critical-files">🔍 Critical Files</h2>
+  </li>
+  <li>
+<code>lib/tree_haver/parser.rb</code> - Main facade, handles all wrapping/unwrapping (439 lines)</li>
+  <li>
+<code>lib/tree_haver/backend_registry.rb</code> - Dynamic backend registration system (458 lines)</li>
+  <li>
+<code>lib/tree_haver/grammar_finder.rb</code> - Platform-aware grammar discovery (375 lines)</li>
+  <li>
+<code>WRAPPING-ARCHITECTURE.md</code> - Unwrapping contracts and design principles (277 lines)</li>
+  <li>
+<code>POSITION-API-SUMMARY.md</code> - Position API unification across backends (136 lines)</li>
+  <li>
+<code>lib/tree_haver.rb</code> - Module-level backend configuration and language registry
+    <h2 id="-common-tasks">🚀 Common Tasks</h2>
+    <pre class="code language-bash"><code class="language-bash"># Run all specs with coverage
+bundle exec rake spec
+# Generate coverage report and open in browser
+bundle exec rake coverage
+# Check code quality
+bundle exec rake reek
+bundle exec rake rubocop_gradual
+# Run benchmarks (skipped on CI)
+bundle exec rake bench
+# Prepare changelog for release, build and release
+kettle-changelog &amp;&amp; kettle-release
+</code></pre>
+    <h2 id="-integration-points">🌊 Integration Points</h2>
+  </li>
+  <li>
+<strong>Backends</strong>: 10 backends in <code>lib/tree_haver/backends/</code> (mri, rust, ffi, java, prism, psych, citrus, parslet, commonmarker, markly)</li>
+  <li>
+<strong>External Gems</strong>: Uses <code>*-merge</code> family (toml-merge, commonmarker-merge, etc.) via backend registry</li>
+  <li>
+<strong>RSpec</strong>: Deep integration via <code>tree_haver/rspec.rb</code> for dependency tagging</li>
+  <li>
+<strong>SimpleCov</strong>: Custom merging strategy for multi-task coverage (FFI specs + main specs)
+    <h2 id="-key-insights">💡 Key Insights</h2>
+    <ol>
+      <li>
+<strong>Backend pollution</strong>: MRI backend loads native tree-sitter, preventing FFI backend from working. Always run FFI specs first.</li>
+      <li>
+<strong>Language caching</strong>: <code>LanguageRegistry</code> caches loaded languages. Clear with <code>LanguageRegistry.clear_cache!</code> in tests.</li>
+      <li>
+<strong>Backend compatibility</strong>: Check <code>TreeHaver.capabilities</code> for backend-specific features (incremental parsing, queries, etc.).</li>
+      <li>
+<strong>Grammar registration</strong>: Use <code>GrammarFinder</code> for tree-sitter, <code>CitrusGrammarFinder</code> for Citrus, <code>ParsletGrammarFinder</code> for Parslet.</li>
+      <li>
+<strong>Exception mapping</strong>: TreeHaver catches backend exceptions and converts to <code>TreeHaver::NotAvailable</code> for consistent error handling.</li>
+    </ol>
+  </li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Thu Feb 19 09:34:25 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-4.0.1).
+</div>
+
+    </div>
+  </body>
+</html>
