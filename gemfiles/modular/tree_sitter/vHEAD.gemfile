@@ -13,15 +13,13 @@ platform :mri do
   # See: https://github.com/ruby/rubygems/issues/9001#issuecomment-3740868525
   # gem "commonmarker", github: "gjtorikian/commonmarker"
   # gem "commonmarker" # Not yet compatible with ruby-head
-  # Rust Backend
 
-  # MRI Backend
   gem "ruby_tree_sitter",
-    github: "pboling/ruby-tree-sitter",
-    branch: "tree_haver",
-    require: false # DO NOT LOAD, because conflicts with FFI
-  gem "tree_stump",
-    github: "joker1007/tree_stump",
-    branch: "main",
-    ref: "5e84fd375a08c3304796f8081dd622096ff30694"
+      github: "Faveod/ruby-tree-sitter",
+      branch: "master"
+  # Rust Backend: not yet compatible with ruby-head due to magnus ruby-head compat being unreleased.
+  # See: https://github.com/matsadler/magnus/pull/167
+  # gem "tree_stump",
+  #   github: "joker1007/tree_stump",
+  #   branch: "main"
 end
