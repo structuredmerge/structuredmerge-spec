@@ -58,10 +58,7 @@ gemfile do
     # MRI Backend
     gem "ruby_tree_sitter", require: false # DO NOT LOAD, because conflicts with FFI
     # Rust Backend
-    gem "tree_stump",
-      # path: "../../vendor/tree_stump"
-      github: "pboling/tree_stump",
-      branch: "feat/upgrade-tree-sitter"
+    gem "tree_stump", "~> 0.2"
   end
 end
 
