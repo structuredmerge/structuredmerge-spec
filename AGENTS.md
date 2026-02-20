@@ -2,6 +2,50 @@
 ## 🎯 Project Overview
 TreeHaver is a **cross-Ruby adapter for AST parsing libraries** - think Faraday for parsing. It provides a unified API across 10 different backends (tree-sitter, Prism, Psych, Citrus, Parslet, etc.) that works on MRI, JRuby, and TruffleRuby.
 **Core Philosophy**: Write once, run anywhere. Learn once, write anywhere.
+
+## ⚠️ AI Agent Terminal Limitations
+
+### Terminal Output Is Not Visible
+
+**CRITICAL**: AI agents using `run_in_terminal` almost never see the command output. The terminal tool sends commands to a persistent Copilot terminal, but output is frequently lost or invisible to the agent.
+
+**Workaround**: Always redirect output to a file in the project's local `tmp/` directory, then read it back with `read_file`:
+
+```bash
+bundle exec rspec spec/some_spec.rb > tmp/test_output.txt 2>&1
+```
+
+**NEVER** use `/tmp` or other system directories — always use the project's own `tmp/` directory.
+
+### direnv Requires Separate `cd` Command
+
+**CRITICAL**: Never chain `cd` with other commands via `&&`. The `direnv` environment won't initialize until after all chained commands finish. Run `cd` alone first:
+
+✅ **CORRECT**:
+```bash
+cd /home/pboling/src/kettle-rb/ast-merge/vendor/tree_haver
+```
+```bash
+bundle exec rspec > tmp/test_output.txt 2>&1
+```
+
+❌ **WRONG**:
+```bash
+cd /home/pboling/src/kettle-rb/ast-merge/vendor/tree_haver && bundle exec rspec
+```
+
+### Prefer Internal Tools Over Terminal
+
+Use `read_file`, `list_dir`, `grep_search`, `file_search` instead of terminal commands for gathering information. Only use terminal for running tests, installing dependencies, and git operations.
+
+### grep_search Cannot Search Nested Git Projects
+
+This project is a nested git project inside the `ast-merge` workspace. The `grep_search` tool **cannot** search inside it. Use `read_file` and `list_dir` instead.
+
+### NEVER Pipe Test Commands Through head/tail
+
+Always redirect to a file in `tmp/` instead of truncating output.
+
 ## 🏗️ Architecture: The Adapter Pattern
 ### Backend Selection Strategy
 TreeHaver uses **automatic backend selection** with environment-based control:
@@ -47,11 +91,14 @@ K_SOUP_COV_MIN_HARD=false bundle exec rspec spec/tree_haver/parser_spec.rb
 # FFI backend isolation (run BEFORE other tests to avoid backend pollution)
 bundle exec rake ffi_specs
 ```
-Note: Always run commands after a standalone `cd` so `direnv` can load ENV. Do NOT chain `cd` with `&&`.
-Example (two separate commands):
+Note: Always run commands after a standalone `cd` so `direnv` can load ENV. Do NOT chain `cd` with `&&`. See [AI Agent Terminal Limitations](#️-ai-agent-terminal-limitations) above.
+
+For AI agents, redirect output to a file:
 ```bash
-cd /home/pboling/src/kettle-rb/tree_haver
-bin/rspec spec/tree_haver/parser_spec.rb
+cd /home/pboling/src/kettle-rb/ast-merge/vendor/tree_haver
+```
+```bash
+bundle exec rspec spec/tree_haver/parser_spec.rb > tmp/test_output.txt 2>&1
 ```
 **Critical**: FFI specs run FIRST in a clean environment (`:ffi_backend` tag triggers isolated mode). See `Rakefile` lines 66-95 for SimpleCov merging strategy.
 ### Coverage Reports
