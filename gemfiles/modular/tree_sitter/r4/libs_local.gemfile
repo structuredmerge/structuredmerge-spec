@@ -1,29 +1,3 @@
-if ENV.fetch("KETTLE_RB_DEV", "false").casecmp?("true")
-  # FFI Backend - works on MRI, JRuby, and TruffleRuby
-  gem "ffi", require: false # DO NOT LOAD, because conflicts with MRI
-  gem "toml-rb"
-  gem "citrus"
-  gem "toml"
-  gem "parslet"
-  gem "prism", "~> 1.6"
-  gem "unparser", "~> 0.8", ">= 0.8.1"
-
-  platform :mri do
-    # On JRuby only the :java and :ffi backends are available.
-    # On Truffleruby it seems that no backends are available (yet)
-    # MRI only Parsers:
-    gem "commonmarker"
-    gem "markly", "~> 0.15", ">= 0.15.2"
-    gem "rbs", ">= 3.10"   # ruby >= 3.1.0
-
-    # MRI Backend - use local patched version for tree-sitter 0.26 ABI
-    # Rust Backend - use local patched version for tree-sitter 0.26 ABI
-    gem "ruby_tree_sitter",
-      path: "../../../ruby-tree-sitter",
-      require: false # DO NOT LOAD, because conflicts with FFI
-    gem "tree_stump",
-      path: "../../../tree_stump"
-  end
-else
-  eval_gemfile("libs.gemfile")
-end
+# Local development used to override ruby_tree_sitter with a path gem.
+# Since all fixes have been released, this now just evals the regular libs.
+eval_gemfile("libs.gemfile")

@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/pboling/ruby-tree-sitter.git
-  revision: c36cff9cbf55ca1512cc49d8739e4efc2ff0a962
-  branch: tree_haver
-  specs:
-    ruby_tree_sitter (2.0.0)
-      oppen (~> 1.0)
-      sorbet-runtime
-      zeitwerk
-
-GIT
   remote: https://github.com/pboling/yard-junk.git
   revision: 54ccebabbfa9a9cd44d0b991687ebbfd22c32b55
   branch: next
@@ -286,6 +276,10 @@ GEM
       rubocop-ast (>= 1.44.0, < 2.0)
     ruby-progressbar (1.13.0)
     ruby_engine (2.0.3)
+    ruby_tree_sitter (2.0.0)
+      oppen (~> 1.0)
+      sorbet-runtime
+      zeitwerk
     ruby_version (1.0.3)
     silent_stream (1.0.12)
       logger (~> 1.2)
@@ -423,7 +417,7 @@ DEPENDENCIES
   rubocop-rspec (~> 3.6)
   rubocop-ruby3_2
   ruby-progressbar (~> 1.13)
-  ruby_tree_sitter!
+  ruby_tree_sitter
   standard (>= 1.50)
   stone_checksums (~> 1.0, >= 1.0.3)
   stringio (>= 3.0)

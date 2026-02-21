@@ -17,8 +17,6 @@ platform :mri do
 
   # MRI Backend
   gem "ruby_tree_sitter",
-    github: "pboling/ruby-tree-sitter",
-    branch: "tree_haver",
     require: false # DO NOT LOAD, because conflicts with FFI
   # Rust Backend
   gem "tree_stump", "~> 0.2" # ruby >= 3.1.0

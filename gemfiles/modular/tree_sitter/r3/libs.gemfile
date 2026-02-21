@@ -24,11 +24,9 @@ platform :mri do
   gem "markly", "~> 0.15", ">= 0.15.2"
   gem "rbs", ">= 3.10"   # ruby >= 3.1.0
 
-  # MRI Backend - use local patched version for tree-sitter 0.26 ABI
-  # Rust Backend - use local patched version for tree-sitter 0.26 ABI
+  # MRI Backend
   gem "ruby_tree_sitter",
-    github: "pboling/ruby-tree-sitter",
-    branch: "tree_haver",
     require: false # DO NOT LOAD, because conflicts with FFI
+  # Rust Backend
   gem "tree_stump", "~> 0.2" # ruby >= 3.1.0
 end
