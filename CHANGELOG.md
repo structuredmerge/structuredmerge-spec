@@ -22,6 +22,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- tree_stump v0.2.0
+
 ### Deprecated
 
 ### Removed

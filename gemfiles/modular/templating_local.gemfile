@@ -24,6 +24,10 @@ if ENV.fetch("KETTLE_RB_DEV", "false").casecmp?("true")
     gem "commonmarker-merge", path: "../../../commonmarker-merge" # commonmarker markdown merging
     gem "markly-merge", path: "../../../markly-merge"     # markly markdown merging
   end
+
+  # Set KETTLE_RB_DEV=true for local development
+  gem "kettle-jem", path: "../../../kettle-jem"
+  gem "ast-merge", path: "../../../../"
 else
   eval_gemfile("templating.gemfile")
 end

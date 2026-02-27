@@ -16,7 +16,7 @@ platform :mri do
   gem "rbs", ">= 3.10"   # ruby >= 3.1.0
 
   # MRI Backend
-  gem "ruby_tree_sitter",
+  gem "ruby_tree_sitter", "~> 2.1",
     require: false # DO NOT LOAD, because conflicts with FFI
   # Rust Backend
   gem "tree_stump", "~> 0.2" # ruby >= 3.1.0
