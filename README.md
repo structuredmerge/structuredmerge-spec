@@ -812,7 +812,7 @@ export TREE_HAVER_TRUSTED_DIRS = "/home/linuxbrew/.linuxbrew/Cellar,~/.local/sha
 export TREE_HAVER_TRUSTED_DIRS="/home/linuxbrew/.linuxbrew/Cellar,~/.local/share/mise/installs/lua"
 
 # tree-sitter runtime library
-export TREE_SITTER_RUNTIME_LIB=/home/linuxbrew/.linuxbrew/Cellar/tree-sitter/0.26.3/lib/libtree-sitter.so
+export TREE_SITTER_RUNTIME_LIB=/home/linuxbrew/.linuxbrew/Cellar/tree-sitter/0.26.6/lib/libtree-sitter.so
 
 # Language grammar (luarocks-installed)
 export TREE_SITTER_TOML_PATH=~/.local/share/mise/installs/lua/5.4.8/luarocks/lib/luarocks/rocks-5.4/tree-sitter-toml/0.0.31-1/parser/toml.so
