@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-# To retain during kettle-dev templating:
-#     kettle-dev:freeze
+# To retain during kettle-jem templating:
+#     kettle-jem:freeze
 #     # ... your code
-#     kettle-dev:unfreeze
-# Documentation
+#     kettle-jem:unfreeze
+#
 
+# Documentation
 gem "kramdown", "~> 2.5", ">= 2.5.1", require: false # Ruby >= 2.5
 gem "kramdown-parser-gfm", "~> 1.1", require: false # Ruby >= 2.3
 gem "yard", "~> 0.9", ">= 0.9.37", require: false

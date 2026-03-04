@@ -1,22 +1,33 @@
-# FFI Backend - works on MRI, JRuby, and TruffleRuby
+# frozen_string_literal: true
+
+# Other backends areprovided by templating.gemfile, as they are used by kettle-jem
+# On JRuby only the :java and :ffi backends are available.
+# On Truffleruby it seems that no backends are available (yet)
 gem "ffi", github: "ffi/ffi", branch: "master", submodules: true, require: false # DO NOT LOAD, because conflicts with MRI
+
 gem "toml-rb", github: "emancu/toml-rb", branch: "master"
 gem "citrus", github: "mjackson/citrus", branch: "master"
-gem "toml", github: "jm/toml", branch: "master"
-gem "parslet", github: "kschiess/parslet", branch: "master"
-gem "prism", github: "ruby/prism", branch: "main"
-gem "unparser", github: "mbj/unparser", branch: "main"
+
+# Parslet and Citrus backends are nested dependencies of kettle-jem, so we test against head there.
+# gem "toml", github: "jm/toml", branch: "master"
+# gem "parslet", github: "kschiess/parslet", branch: "master"
+# gem "prism", github: "ruby/prism", branch: "main"
+# gem "unparser", github: "mbj/unparser", branch: "main"
 
 platform :mri do
-  gem "markly", github: "ioquatix/markly"
+  # Markly backend is nested dependency of kettle-jem, so we test against head there.
+  # gem "markly", github: "ioquatix/markly"
+
   # Bundler fails on git submodules in commonmarker:
   # See: https://github.com/ruby/rubygems/issues/9001#issuecomment-3740868525
   # gem "commonmarker", github: "gjtorikian/commonmarker"
   # gem "commonmarker" # Not yet compatible with ruby-head
 
-  gem "ruby_tree_sitter",
-      github: "Faveod/ruby-tree-sitter",
-      branch: "master"
+  # MRI backend is nested dependency of kettle-jem, so we test against head there.
+  # gem "ruby_tree_sitter",
+  #     github: "Faveod/ruby-tree-sitter",
+  #     branch: "master"
+
   # Rust Backend: not yet compatible with ruby-head due to magnus ruby-head compat being unreleased.
   # See: https://github.com/matsadler/magnus/pull/167
   # gem "tree_stump",

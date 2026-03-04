@@ -1,24 +1,27 @@
 # frozen_string_literal: true
 
-# To retain during kettle-dev templating:
-#     kettle-dev:freeze
-#     # ... your code
-#     kettle-dev:unfreeze
-#
+platform :mri do
+  gem "toml"
+  gem "parslet"
+  gem "prism", "~> 1.6"
+  gem "unparser", "~> 0.8", ">= 0.8.1"
 
-# AST parsing for advanced templating
-# Not all of these are released yet, but eventually we will add integration specs to ensure future changes work downstream.
-# gem "bash-merge"          # dotenv code blocks
-# gem "dotenv-merge"        # dotenv code blocks
-# gem "json-merge"          # JSON code blocks
-# gem "jsonc-merge"         # JSONC code blocks
-# gem "markdown-merge"      # generic markdown tools
-# gem "prism-merge"         # Ruby code blocks
-# gem "psych-merge"         # YAML code blocks
-# gem "rbs-merge"           # RBS code blocks
-# gem "toml-merge"          # TOML code blocks
-#
-# platform :mri do
-#   gem "commonmarker-merge"  # commonmarker markdown merging
-#   gem "markly-merge"    # markly markdown merging
-# end
+  # MRI only Parsers:
+  # kettle-jem currently uses markly instead of commonmarker, but these can easily be swapped.
+  # gem "commonmarker"
+  gem "markly", "~> 0.15", ">= 0.15.2"
+  gem "rbs", ">= 3.10"   # ruby >= 3.1.0
+
+  # MRI Backend
+  gem "ruby_tree_sitter", "~> 2.1"
+
+  # AST parsing for advanced templating.
+  # Set KETTLE_RB_DEV=true (or path) for local development with path-based dependencies.
+  # When false (default / CI), gemspec runtime dependencies are used (no extras needed here).
+  if ENV.fetch("KETTLE_RB_DEV", "false").casecmp("false").zero?
+    # AST parsing for advanced templating (remote/released)
+    gem "kettle-jem"      # Kettle-rb's Merge Recipes
+  else
+    eval_gemfile "templating_local.gemfile"
+  end
+end

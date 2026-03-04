@@ -14,16 +14,16 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 gemspec
 
 # Templating
-eval_gemfile "gemfiles/modular/templating_local.gemfile"
+eval_gemfile "gemfiles/modular/templating.gemfile"
 
 # Debugging
 eval_gemfile "gemfiles/modular/debug.gemfile"
 
 # Code Coverage
-eval_gemfile "gemfiles/modular/coverage_local.gemfile"
+eval_gemfile "gemfiles/modular/coverage.gemfile"
 
 # Linting
-eval_gemfile "gemfiles/modular/style_local.gemfile"
+eval_gemfile "gemfiles/modular/style.gemfile"
 
 # Documentation
 eval_gemfile "gemfiles/modular/documentation.gemfile"
@@ -32,7 +32,7 @@ eval_gemfile "gemfiles/modular/documentation.gemfile"
 eval_gemfile "gemfiles/modular/optional.gemfile"
 
 # Tree Sitter Tools
-eval_gemfile "gemfiles/modular/tree_sitter_local.gemfile"
+eval_gemfile "gemfiles/modular/tree_sitter.gemfile"
 
 ### Std Lib Extracted Gems
 eval_gemfile "gemfiles/modular/x_std_libs.gemfile"

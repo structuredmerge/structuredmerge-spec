@@ -1,3 +1,0 @@
-# Local development used to override ruby_tree_sitter with a path gem.
-# Since all fixes have been released, this now just evals the regular libs.
-eval_gemfile("libs.gemfile")
