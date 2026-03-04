@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# To retain during {KJ|GEM_NAME} templating:
-#     {KJ|FREEZE_TOKEN}:freeze
+# To retain during tree_haver templating:
+#     kettle-jem:freeze
 #     # ... your code
-#     {KJ|FREEZE_TOKEN}:unfreeze
+#     kettle-jem:unfreeze
 #
 
 # We run rubocop on the latest version of Ruby,
