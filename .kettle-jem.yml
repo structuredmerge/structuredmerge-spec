@@ -1,0 +1,140 @@
+# kettle-jem configuration file
+#
+# This file is both configuration and field guide for templated gems.
+# In most projects this comment block is the first place to look when you
+# want to understand what kettle-jem will merge, what it will copy as-is,
+# and which values you may want to customize.
+#
+# High-level structure:
+#   defaults  - default merge behavior for files that use strategy: merge
+#   tokens    - values for {KJ|...} placeholders used across template files
+#   patterns  - glob-based overrides for files/directories
+#   files     - exact per-file overrides using a nested directory tree
+#
+# Default behavior:
+#   If a file is NOT mentioned under files: and does NOT match a patterns:
+#   entry, kettle-jem will merge it using the format-aware merge gem for that
+#   file type.
+#
+# Strategies:
+#   merge:
+#     Resolve tokens, then merge template + destination using the appropriate
+#     AST-aware/text-aware merger for the file type.
+#   accept_template:
+#     Resolve tokens, then write the template result without merging.
+#     If the file is missing in the destination, it will be created from the template.
+#   keep_destination:
+#     Ignore this file during templating.
+#     No merge. No replacement. No creation when the destination file is missing.
+#     Use this when you want to permanently exclude a file from the template.
+#   raw_copy:
+#     Copy bytes exactly as they appear in the template.
+#     No token resolution. No merge. Use for immutable/binary assets such as certs.
+#
+# Merge options (used only with strategy: merge):
+#   preference:
+#     template    - template wins when both sides define the same node/value
+#     destination - destination wins when both sides define the same node/value
+#   add_template_only_nodes:
+#     true  - add nodes/entries that exist only in the template
+#     false - do not add template-only nodes
+#   freeze_token:
+#     Marker name used for frozen sections (default: kettle-jem)
+#   max_recursion_depth:
+#     Limit for recursive merging when a merger supports it
+#
+# Token values:
+#   Precedence is:
+#     1) ENV variables
+#     2) tokens: values in this file
+#     3) safe automatic derivation (author fields only, where possible)
+#
+# Important merge note for tokens in THIS file:
+#   Existing destination values are respected.
+#   That means:
+#     - a real value you already set here stays in place on future runs
+#     - an empty string also counts as an explicit destination value
+#   If you want kettle-jem to re-seed a missing value on a later run,
+#   delete that key instead of leaving it blank.
+#
+# Safe automatic derivations currently implemented:
+#   AUTHOR:NAME         <- first author from the gemspec
+#   AUTHOR:EMAIL        <- first email from the gemspec
+#   AUTHOR:DOMAIN       <- domain part of AUTHOR:EMAIL
+#   AUTHOR:GIVEN_NAMES  <- AUTHOR:NAME minus the last word
+#   AUTHOR:FAMILY_NAMES <- last word of AUTHOR:NAME
+#
+# Everything else should be set explicitly here or via ENV.
+
+# Default merge options
+defaults:
+  preference: "template"
+  add_template_only_nodes: true
+  freeze_token: "kettle-jem"
+
+# Token replacement values.
+#
+# General rules:
+#   - Empty strings are treated as unset.
+#   - Use the bare identifier/slug/handle expected by the inline comment.
+#   - Do NOT paste full URLs unless the comment explicitly says to.
+#
+# Tip:
+#   The author fields in a newly created destination config are normally seeded
+#   from the gemspec via safe derivation. After that, destination values win.
+tokens:
+  forge:
+    gh_user: ""        # GitHub username only, no @, no URL. Used for GitHub Sponsors and profile links. ENV: KJ_GH_USER
+    gl_user: ""        # GitLab username only, no @, no URL. Used for profile links. ENV: KJ_GL_USER
+    cb_user: ""        # Codeberg username only, no @, no URL. Used for profile links. ENV: KJ_CB_USER
+    sh_user: ""        # SourceHut username only, no leading ~, no URL. Used as https://sr.ht/~<value>/. ENV: KJ_SH_USER
+
+  author:
+    name: "Peter H. Boling"                 # Full display name. Example: Peter H. Boling. ENV: KJ_AUTHOR_NAME. Auto-seeded from gemspec authors.first
+    given_names: "Peter H."   # Given/personal names only. Example: Peter H. ENV: KJ_AUTHOR_GIVEN_NAMES. Auto-seeded when AUTHOR:NAME can be split
+    family_names: "Boling" # Family/surname only. Example: Boling. ENV: KJ_AUTHOR_FAMILY_NAMES. Auto-seeded when AUTHOR:NAME can be split
+    email: "floss@galtzo.com"               # Primary public email address. Example: floss@galtzo.com. ENV: KJ_AUTHOR_EMAIL. Auto-seeded from gemspec email.first
+    domain: "galtzo.com"             # Bare domain only, no scheme, no email. Example: galtzo.com. ENV: KJ_AUTHOR_DOMAIN. Auto-seeded from AUTHOR:EMAIL
+    orcid: ""                                # ORCID identifier only, not the full URL. Example: 0000-0001-2345-6789. ENV: KJ_AUTHOR_ORCID
+
+  funding:
+    patreon: ""        # Patreon account slug only. Used as https://patreon.com/<value>. ENV: KJ_FUNDING_PATREON
+    kofi: ""           # Ko-fi handle/slug only. Used as https://ko-fi.com/<value>. ENV: KJ_FUNDING_KOFI
+    paypal: ""         # PayPal.Me slug only. Used as https://www.paypal.com/paypalme/<value>. ENV: KJ_FUNDING_PAYPAL
+    buymeacoffee: ""   # Buy Me a Coffee slug only. Used as https://www.buymeacoffee.com/<value>. ENV: KJ_FUNDING_BUYMEACOFFEE
+    polar: ""          # Polar handle/slug only. Used as https://polar.sh/<value>. ENV: KJ_FUNDING_POLAR
+    liberapay: ""      # Liberapay account slug only. Used as https://liberapay.com/<value>/donate. ENV: KJ_FUNDING_LIBERAPAY
+    issuehunt: ""      # IssueHunt identifier/handle only, not a URL. ENV: KJ_FUNDING_ISSUEHUNT
+
+  social:
+    mastodon: ""       # Local handle only for the instance assumed by the template link. Current template uses https://ruby.social/@<value>. ENV: KJ_SOCIAL_MASTODON
+    bluesky: ""        # Full Bluesky handle. Example: peterboling.dev or alice.bsky.social. Used as https://bsky.app/profile/<value>. ENV: KJ_SOCIAL_BLUESKY
+    linktree: ""       # Linktree username only. Used as https://linktr.ee/<value>. ENV: KJ_SOCIAL_LINKTREE
+    devto: ""          # DEV Community username only. Used as https://dev.to/<value>. ENV: KJ_SOCIAL_DEVTO
+
+# Glob patterns evaluated in order (first match wins)
+patterns:
+  - path: "certs/**"
+    strategy: raw_copy
+
+# Per-file configuration (nested directory structure)
+# Only files that need overrides belong here. Everything else defaults to merge.
+files: {}
+
+# To override specific files, add entries like:
+#
+# files:
+#   README.md:
+#     strategy: accept_template
+#
+#   SECURITY.md:
+#     strategy: keep_destination
+#
+#   certs:
+#     pboling.pem:
+#       strategy: raw_copy
+#
+#   Rakefile:
+#     strategy: merge
+#     preference: destination
+#     add_template_only_nodes: false
