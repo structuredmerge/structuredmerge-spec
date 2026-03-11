@@ -3,51 +3,18 @@
 # Local path overrides for development.
 # Loaded by the associated non-local gemfile when KETTLE_RB_DEV != "false".
 
-validator = /^[a-z0-9][a-z0-9\-_]*$/
-local_gems = %w(
-  kettle-dev
-  kettle-test
-  kettle-soup-cover
-)
+require File.expand_path("../../../nomono/lib/nomono/bundler", __dir__)
 
-gem_root = ["src", "kettle-rb"]
-pather = ->(*paths) {
-  home = ENV["HOME"] || Dir.home
-  File.join(home, *paths)
-}
-
-verifier = ->(gem_name) {
-  raise "gem names in VENDORED_GEMS must match #{validator}" unless gem_name.match?(validator)
-
-  if local_gems.include?(gem_name)
-    gem_name
-  else
-    nil
-  end
-}
-
-path = ENV.fetch("KETTLE_RB_DEV") { pather.call(*gem_root) }
-# We'll never load this file when path == "false", so no need to account.
-path = pather.call(*gem_root) if path.casecmp("true").zero?
-# Relative paths are relative to the home dir.
-path = pather.call(path) if path[0] != "/"
-# Allowlisted and gem-name-pattern verified!
-vendored = ENV.fetch("VENDORED_GEMS", "").split(",").map(&:strip).compact.map{ |gem_name| verifier.call(gem_name) }.compact
-gem_paths = {}
-local_gems.each_with_object(gem_paths) do |gem_name, h|
-  vendored_path = vendored.find { |v| v == gem_name } ? ENV.fetch("VENDOR_GEM_DIR") { pather.call(path, "vendor") } : nil
-  vendored_path = pather.call(vendored_path) if vendored_path && vendored_path[0] != "/"
-  gem_path = [vendored_path ? vendored_path : path]
-  gem_path << gem_name
-  h[gem_name] = File.join(*gem_path)
-end
-if ENV.fetch("KETTLE_DEV_DEBUG", "false").casecmp("true").zero?
-  puts "Kettle Dev coverage gem_paths: #{gem_paths.inspect}"
-end
+local_gems = %w[kettle-dev kettle-test kettle-soup-cover]
 
 # export VENDORED_GEMS=kettle-dev,kettle-test,kettle-soup-cover
 platform :mri do
-  local_gems.each do |gem_name|
-    gem gem_name, path: gem_paths[gem_name]
-  end
+  eval_nomono_gems(
+    gems: local_gems,
+    prefix: "KETTLE_RB",
+    path_env: "KETTLE_RB_DEV",
+    vendored_gems_env: "VENDORED_GEMS",
+    vendor_gem_dir_env: "VENDOR_GEM_DIR",
+    debug_env: "KETTLE_DEV_DEBUG"
+  )
 end
