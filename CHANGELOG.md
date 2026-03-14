@@ -20,12 +20,15 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
-- Descriptive `:comment_support` capability reporting for built-in backends (`:full`, `:partial`, `:nodes_only`, `:none`)
-- `TreeHaver::Base::Comment` plus Prism-backed normalized comment wrappers with text/type/location access
+- Added descriptive `:comment_support` capability reporting for built-in backends (`:full`, `:partial`, `:nodes_only`, `:none`)
+- Added `TreeHaver::Base::Comment` plus Prism-backed normalized comment wrappers with text, type, and location access
+- Added optional normalized attachment hints for strong backends so downstream merge gems can distinguish native leading, inline, and trailing ownership from source-only fallback cases
+- Added backend capability specs covering comment-capability reporting, comment-wrapper fidelity, and attachment-hint exposure across the shared contract
 
 ### Changed
 
 - tree_stump v0.2.0
+- Prism-backed comment integration now advertises native ownership hints through the shared `TreeHaver::Base::Comment` surface instead of leaving merge gems to rediscover those relationships ad hoc
 
 ### Deprecated
 
