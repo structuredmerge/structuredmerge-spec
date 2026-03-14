@@ -9,16 +9,25 @@
 # Finitio language: https://www.finitio.io/
 # Finitio gem: https://github.com/enspirit/finitio-rb
 
+WORKSPACE_ROOT = File.expand_path("../..", __dir__)
+ENV["KETTLE_RB_DEV"] = WORKSPACE_ROOT unless ENV.key?("KETTLE_RB_DEV")
+
 require "bundler/inline"
 
 gemfile do
   source "https://gem.coop"
+  require File.expand_path("nomono/lib/nomono/bundler", WORKSPACE_ROOT)
 
-  # Load tree_haver from local path
-  gem "tree_haver", path: File.expand_path("..", __dir__)
+  eval_nomono_gems(
+    gems: %w[tree_haver],
+    prefix: "KETTLE_RB",
+    path_env: "KETTLE_RB_DEV",
+    vendored_gems_env: "VENDORED_GEMS",
+    vendor_gem_dir_env: "VENDOR_GEM_DIR",
+    debug_env: "KETTLE_DEV_DEBUG"
+  )
 
-  # Load finitio from vendor (has Citrus grammar)
-  gem "finitio", path: File.expand_path("../vendor/finitio", __dir__)
+  gem "finitio"
 
   gem "citrus"
 end

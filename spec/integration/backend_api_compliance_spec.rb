@@ -208,12 +208,16 @@ RSpec.describe "Backend API Compliance" do
           p.language = language
           p
         end
-        let(:source) { "def hello; puts 'hi'; end" }
+        let(:source) { "# leading comment\ndef hello; puts 'hi' # inline comment\nend" }
         let(:tree) { parser.parse(source) }
         let(:valid_tree) { tree }
         let(:invalid_tree) { parser.parse("def foo(") }
+        let(:expected_comment_support) { :partial }
+        let(:expect_comments) { true }
+        let(:expect_attachment_hints) { true }
 
         it_behaves_like "tree api compliance"
+        it_behaves_like "tree comment api"
         it_behaves_like "tree error handling"
         it_behaves_like "tree traversal"
       end
@@ -284,11 +288,13 @@ RSpec.describe "Backend API Compliance" do
           p.language = language
           p
         end
-        let(:source) { "section:\n  key: value\n  other: 123" }
+        let(:source) { "# comment ignored by psych\nsection:\n  key: value\n  other: 123" }
         let(:tree) { parser.parse(source) }
         let(:valid_tree) { tree }
+        let(:expected_comment_support) { :none }
 
         it_behaves_like "tree api compliance"
+        it_behaves_like "tree comment api"
         it_behaves_like "tree traversal"
       end
 

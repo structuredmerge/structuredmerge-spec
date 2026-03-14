@@ -83,7 +83,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::Rust.capabilities
-        #   # => { backend: :rust, query: true, bytes_field: true, incremental: false }
+        #   # => { backend: :rust, query: true, bytes_field: true, incremental: false, comment_support: :nodes_only }
         def capabilities
           return {} unless available?
           {
@@ -91,6 +91,7 @@ module TreeHaver
             query: true,
             bytes_field: true,
             incremental: false,  # TreeStump doesn't currently expose incremental parsing to Ruby
+            comment_support: :nodes_only,
           }
         end
       end

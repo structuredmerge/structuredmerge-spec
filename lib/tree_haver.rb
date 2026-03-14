@@ -942,11 +942,12 @@ module TreeHaver
     # - :query - Whether the Query API is available
     # - :bytes_field - Whether byte position fields are available
     # - :incremental - Whether incremental parsing is supported
+    # - :comment_support - Descriptive comment support level (:full, :partial, :nodes_only, :none)
     #
     # @return [Hash{Symbol => Object}] capability map, or empty hash if no backend available
     # @example
     #   TreeHaver.capabilities
-    #   # => { backend: :mri, query: true, bytes_field: true }
+    #   # => { backend: :mri, query: true, bytes_field: true, comment_support: :nodes_only }
     def capabilities
       mod = backend_module
       return {} unless mod

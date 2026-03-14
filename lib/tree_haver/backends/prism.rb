@@ -66,7 +66,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::Prism.capabilities
-        #   # => { backend: :prism, query: false, bytes_field: true, incremental: false, ruby_only: true }
+        #   # => { backend: :prism, query: false, bytes_field: true, incremental: false, ruby_only: true, comment_support: :partial }
         def capabilities
           return {} unless available?
           {
@@ -77,6 +77,8 @@ module TreeHaver
             pure_ruby: false,       # Prism has native C extension (but also pure Ruby mode)
             ruby_only: true,        # Prism only parses Ruby source code
             error_tolerant: true,   # Prism has excellent error recovery
+            comment_support: :partial,
+            comment_attachment_hints: true,
           }
         end
       end
@@ -262,9 +264,14 @@ module TreeHaver
 
         # Get comments from the parse
         #
-        # @return [Array<::Prism::Comment>]
+        # @return [Array<Comment>]
         def comments
-          @parse_result.comments
+          @comments ||= begin
+            hint_map = comment_hint_map
+            @parse_result.comments.map do |comment|
+              Comment.new(comment, source: source, attachment_hint: hint_map[comment.object_id])
+            end
+          end
         end
 
         # Get magic comments (e.g., frozen_string_literal)
@@ -279,6 +286,81 @@ module TreeHaver
         # @return [::Prism::Location, nil]
         def data_loc
           @parse_result.data_loc
+        end
+
+        private
+
+        def comment_hint_map
+          comments = @parse_result.comments
+          lines = source&.lines || []
+
+          comments.each_with_object({}) do |comment, hints|
+            hints[comment.object_id] = classify_comment_hint(comment, lines)
+          end
+        end
+
+        def classify_comment_hint(comment, lines)
+          line = lines[comment.location.start_line - 1].to_s
+          prefix = line[0...comment.location.start_column]
+          return :inline if prefix.match?(/\S/)
+
+          remaining_nonempty = Array(lines[comment.location.end_line..]).reject { |candidate| candidate.strip.empty? }
+          return :trailing if remaining_nonempty.empty? || remaining_nonempty.all? { |candidate| candidate.lstrip.start_with?("#") }
+
+          :leading
+        end
+      end
+
+      # Prism comment wrapper.
+      #
+      # Prism exposes native Ruby comments via Prism::Comment subclasses and
+      # Prism::Location objects. This wrapper normalizes those objects onto a
+      # small parser-facing contract for downstream consumers.
+      class Comment < TreeHaver::Base::Comment
+        def location
+          inner_comment.location
+        end
+
+        def type
+          self.class.comment_type_for(inner_comment.class)
+        end
+
+        def text
+          inner_comment.slice
+        end
+
+        def start_byte
+          location.start_offset
+        end
+
+        def end_byte
+          location.end_offset
+        end
+
+        def start_point
+          {
+            row: location.start_line - 1,
+            column: location.start_column,
+          }
+        end
+
+        def end_point
+          {
+            row: location.end_line - 1,
+            column: location.end_column,
+          }
+        end
+
+        def style
+          :line
+        end
+
+        class << self
+          def comment_type_for(klass)
+            klass.name.split("::").last
+              .gsub(/([a-z\d])([A-Z])/, '\\1_\\2')
+              .downcase
+          end
         end
       end
 
@@ -468,4 +550,3 @@ module TreeHaver
     end
   end
 end
-

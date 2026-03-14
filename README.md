@@ -740,7 +740,7 @@ end
 ```ruby
 TreeHaver.backend              # => :ffi
 TreeHaver.backend_module       # => TreeHaver::Backends::FFI
-TreeHaver.capabilities         # => { backend: :ffi, parse: true, query: false, ... }
+TreeHaver.capabilities         # => { backend: :ffi, parse: true, query: false, comment_support: :nodes_only, ... }
 ```
 
 See [examples/](examples/) directory for **26 complete working examples** demonstrating all 10 backends with multiple languages (JSON, JSONC, Bash, TOML, Ruby, YAML, Markdown) plus markdown-merge integration examples.
@@ -1118,14 +1118,18 @@ Different backends may support different features:
 
 ```ruby
 TreeHaver.capabilities
-# => { backend: :mri, query: true, bytes_field: true }
+# => { backend: :mri, query: true, bytes_field: true, comment_support: :nodes_only }
 # or
-# => { backend: :ffi, parse: true, query: false, bytes_field: true }
+# => { backend: :ffi, parse: true, query: false, bytes_field: true, comment_support: :nodes_only }
 # or
-# => { backend: :citrus, parse: true, query: false, bytes_field: false }
+# => { backend: :prism, query: false, bytes_field: true, comment_support: :partial }
 # or
-# => { backend: :parslet, parse: true, query: false, bytes_field: false }
+# => { backend: :psych, query: false, bytes_field: false, comment_support: :none }
 ```
+
+`comment_support` is descriptive only for now. It tells downstream libraries whether a backend currently exposes comment data as `:full`, `:partial`, `:nodes_only`, or `:none`; attachment semantics and merge policy remain outside TreeHaver.
+
+For backends that do expose comments today, `tree.comments` can return normalized wrapper objects with `#text`, `#type`, `#start_byte`, `#end_byte`, and `#source_position`. For example, the Prism backend now yields wrapper instances for native Ruby comments.
 
 ### Compatibility Mode
 

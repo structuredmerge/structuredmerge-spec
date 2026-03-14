@@ -222,7 +222,7 @@ module TreeHaver
       # @return [Hash{Symbol => Object}] capability map
       # @example
       #   TreeHaver::Backends::Java.capabilities
-      #   # => { backend: :java, parse: true, query: true, bytes_field: true, incremental: true }
+      #   # => { backend: :java, parse: true, query: true, bytes_field: true, incremental: true, comment_support: :nodes_only }
       def capabilities
         # :nocov:
         # This method returns meaningful data only on JRuby when java-tree-sitter is available.
@@ -233,6 +233,7 @@ module TreeHaver
           query: true, # java-tree-sitter supports the Query API
           bytes_field: true,
           incremental: true, # java-tree-sitter supports Parser.parse(Tree, String)
+          comment_support: :nodes_only,
         }
         # :nocov:
       end

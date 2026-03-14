@@ -20,6 +20,9 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
+- Descriptive `:comment_support` capability reporting for built-in backends (`:full`, `:partial`, `:nodes_only`, `:none`)
+- `TreeHaver::Base::Comment` plus Prism-backed normalized comment wrappers with text/type/location access
+
 ### Changed
 
 - tree_stump v0.2.0

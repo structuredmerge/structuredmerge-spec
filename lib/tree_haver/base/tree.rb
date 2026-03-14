@@ -79,7 +79,7 @@ module TreeHaver
       end
 
       # Get comments from the document
-      # @return [Array] Comments (empty for most pure-Ruby backends)
+      # @return [Array] Backend comment wrappers (empty for most backends)
       def comments
         []
       end

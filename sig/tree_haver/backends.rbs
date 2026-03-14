@@ -7,7 +7,8 @@ module TreeHaver
       # Check if the MRI backend is available
       def self.available?: () -> bool
 
-      # Get capabilities supported by this backend
+      # Get capabilities supported by this backend.
+      # Includes :comment_support with one of :full, :partial, :nodes_only, or :none.
       def self.capabilities: () -> Hash[Symbol, untyped]
 
       class Language
@@ -79,7 +80,8 @@ module TreeHaver
       # Check if the FFI backend is available
       def self.available?: () -> bool
 
-      # Get capabilities supported by this backend
+      # Get capabilities supported by this backend.
+      # Includes :comment_support with one of :full, :partial, :nodes_only, or :none.
       def self.capabilities: () -> Hash[Symbol, untyped]
 
       class Language
@@ -164,7 +166,8 @@ module TreeHaver
       # Get the loaded Java classes
       def self.java_classes: () -> Hash[Symbol, untyped]
 
-      # Get capabilities supported by this backend
+      # Get capabilities supported by this backend.
+      # Includes :comment_support with one of :full, :partial, :nodes_only, or :none.
       def self.capabilities: () -> Hash[Symbol, untyped]
 
       class Language
@@ -246,7 +249,8 @@ module TreeHaver
       # Reset the load state (for testing)
       def self.reset!: () -> void
 
-      # Get capabilities supported by this backend
+      # Get capabilities supported by this backend.
+      # Includes :comment_support with one of :full, :partial, :nodes_only, or :none.
       def self.capabilities: () -> Hash[Symbol, untyped]
 
       class Language
@@ -290,7 +294,8 @@ module TreeHaver
       # Reset the load state (for testing)
       def self.reset!: () -> void
 
-      # Get capabilities supported by this backend
+      # Get capabilities supported by this backend.
+      # Includes :comment_support with one of :full, :partial, :nodes_only, or :none.
       def self.capabilities: () -> Hash[Symbol, untyped]
 
       class Language

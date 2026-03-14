@@ -5,7 +5,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/bash-merge
+  remote: /home/pboling/src/kettle-rb/bash-merge
   specs:
     bash-merge (2.0.6)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -13,7 +13,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/dotenv-merge
+  remote: /home/pboling/src/kettle-rb/dotenv-merge
   specs:
     dotenv-merge (1.0.3)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -21,7 +21,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/json-merge
+  remote: /home/pboling/src/kettle-rb/json-merge
   specs:
     json-merge (1.1.2)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -29,7 +29,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/jsonc-merge
+  remote: /home/pboling/src/kettle-rb/jsonc-merge
   specs:
     jsonc-merge (1.0.1)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -37,12 +37,12 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/kettle-dev
+  remote: /home/pboling/src/kettle-rb/kettle-dev
   specs:
     kettle-dev (2.0.0)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/kettle-jem
+  remote: /home/pboling/src/kettle-rb/kettle-jem
   specs:
     kettle-jem (1.0.0)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -62,7 +62,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/kettle-soup-cover
+  remote: /home/pboling/src/kettle-rb/kettle-soup-cover
   specs:
     kettle-soup-cover (1.1.1)
       simplecov (~> 0.22)
@@ -75,7 +75,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/kettle-test
+  remote: /home/pboling/src/kettle-rb/kettle-test
   specs:
     kettle-test (1.0.10)
       appraisal2 (~> 3.0, >= 3.0.2)
@@ -90,7 +90,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/markdown-merge
+  remote: /home/pboling/src/kettle-rb/markdown-merge
   specs:
     markdown-merge (1.0.3)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -99,7 +99,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/markly-merge
+  remote: /home/pboling/src/kettle-rb/markly-merge
   specs:
     markly-merge (1.0.0)
       ast-merge (~> 4.0, >= 4.0.5)
@@ -109,7 +109,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/prism-merge
+  remote: /home/pboling/src/kettle-rb/prism-merge
   specs:
     prism-merge (2.0.4)
       ast-merge (~> 4.0, >= 4.0.6)
@@ -118,7 +118,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/psych-merge
+  remote: /home/pboling/src/kettle-rb/psych-merge
   specs:
     psych-merge (1.0.0)
       ast-merge (~> 4.0, >= 4.0.5)
@@ -127,7 +127,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/rbs-merge
+  remote: /home/pboling/src/kettle-rb/rbs-merge
   specs:
     rbs-merge (2.0.0)
       ast-merge (~> 4.0, >= 4.0.5)
@@ -135,7 +135,7 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
-  remote: /home/pboling/src/kettle-rb/ast-merge/vendor/toml-merge
+  remote: /home/pboling/src/kettle-rb/toml-merge
   specs:
     toml-merge (2.0.1)
       ast-merge (~> 4.0, >= 4.0.6)

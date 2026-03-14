@@ -70,6 +70,7 @@ RSpec.describe TreeHaver::Backends::Rust, :rust_backend do
         expect(caps[:query]).to be true
         expect(caps[:bytes_field]).to be true
         expect(caps[:incremental]).to be false  # TreeStump doesn't expose incremental parsing to Ruby
+        expect(caps[:comment_support]).to eq(:nodes_only)
       end
     end
 

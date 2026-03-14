@@ -78,6 +78,7 @@ RSpec.describe TreeHaver::Backends::Psych, :psych_backend do
         expect(caps[:pure_ruby]).to be false
         expect(caps[:yaml_only]).to be true
         expect(caps[:error_tolerant]).to be false
+        expect(caps[:comment_support]).to eq(:none)
       end
     end
 
@@ -293,6 +294,10 @@ RSpec.describe TreeHaver::Backends::Psych, :psych_backend do
 
       it "returns an array" do
         expect(tree.comments).to be_an(Array)
+      end
+
+      it "returns no normalized comments because Psych reports comment_support=:none" do
+        expect(tree.comments).to eq([])
       end
     end
 

@@ -91,6 +91,54 @@ RSpec.shared_examples "tree api compliance" do
   end
 end
 
+RSpec.shared_examples "tree comment api" do
+  # Expects `tree` to be defined as the tree under test
+  # Expects `expected_comment_support` to be one of BackendAPI::COMMENT_SUPPORT_LEVELS
+  # Optional: set `expect_comments` to true when the parsed source should produce wrappers
+
+  describe "comment capability" do
+    it "uses a recognized comment support level" do
+      expect(TreeHaver::BackendAPI::COMMENT_SUPPORT_LEVELS).to include(expected_comment_support)
+    end
+
+    it "returns an Array from #comments" do
+      expect(tree.comments).to be_an(Array)
+    end
+
+    it "matches the expected comment-support behavior" do
+      case expected_comment_support
+      when :none
+        expect(tree.comments).to eq([])
+      when :full, :partial
+        if defined?(expect_comments) && expect_comments
+          expect(tree.comments).not_to be_empty
+
+          comment = tree.comments.first
+          expect(comment).to respond_to(:type)
+          expect(comment).to respond_to(:text)
+          expect(comment).to respond_to(:start_byte)
+          expect(comment).to respond_to(:end_byte)
+          expect(comment).to respond_to(:start_point)
+          expect(comment).to respond_to(:end_point)
+          expect(comment).to respond_to(:source_position)
+
+          if defined?(expect_attachment_hints) && expect_attachment_hints
+            expect(comment).to respond_to(:attachment_hint)
+            expect(comment).to respond_to(:leading?)
+            expect(comment).to respond_to(:inline?)
+            expect(comment).to respond_to(:trailing?)
+            expect([:leading, :inline, :trailing]).to include(comment.attachment_hint)
+          end
+        end
+      when :nodes_only
+        expect(tree.comments).to be_an(Array)
+      else
+        raise "Unhandled expected_comment_support: #{expected_comment_support.inspect}"
+      end
+    end
+  end
+end
+
 # Tree error detection
 RSpec.shared_examples "tree error handling" do
   # Expects `valid_tree` to be a tree parsed from valid source

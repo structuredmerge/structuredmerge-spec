@@ -72,6 +72,17 @@ RSpec.shared_examples "backend module api" do
         it ":backend value is a Symbol" do
           expect(backend.capabilities[:backend]).to be_a(Symbol)
         end
+
+        it "includes :comment_support with a recognized value" do
+          expect(backend.capabilities).to have_key(:comment_support)
+          expect(TreeHaver::BackendAPI::COMMENT_SUPPORT_LEVELS).to include(backend.capabilities[:comment_support])
+        end
+
+        it "uses a boolean for :comment_attachment_hints when present" do
+          next unless backend.capabilities.key?(:comment_attachment_hints)
+
+          expect(backend.capabilities[:comment_attachment_hints]).to be(true).or be(false)
+        end
       end
 
       context "when not available" do

@@ -119,7 +119,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::FFI.capabilities
-        #   # => { backend: :ffi, parse: true, query: false, bytes_field: true }
+        #   # => { backend: :ffi, parse: true, query: false, bytes_field: true, comment_support: :nodes_only }
         def capabilities
           return {} unless available?
           {
@@ -128,6 +128,7 @@ module TreeHaver
             query: false, # Query API not yet implemented in FFI backend
             bytes_field: true,
             incremental: false,
+            comment_support: :nodes_only,
           }
         end
       end

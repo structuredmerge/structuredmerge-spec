@@ -1111,6 +1111,14 @@ RSpec.configure do |config|
     skip "FFI backend not available (MRI backend may have been used)" unless deps.ffi_available?
   end
 
+  # Java backend availability is normally handled by load-time exclusions, but
+  # focused example runs can still instantiate :java_backend groups in some
+  # host suites. Re-check dynamically so explicit Java contexts skip cleanly
+  # unless JRuby + java-tree-sitter-compatible grammars are actually usable.
+  config.before(:each, :java_backend) do
+    skip "Java backend not available (requires JRuby + java-tree-sitter-compatible grammars)" unless deps.java_backend_available?
+  end
+
   # ISOLATED FFI TAG: Checked dynamically but does NOT trigger mri_backend_available?
   # Use this tag for tests that must run before MRI is loaded (e.g., in ffi_specs task)
   config.before(:each, :ffi_backend_only) do

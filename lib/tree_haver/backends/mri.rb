@@ -96,7 +96,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::MRI.capabilities
-        #   # => { backend: :mri, query: true, bytes_field: true, incremental: true }
+        #   # => { backend: :mri, query: true, bytes_field: true, incremental: true, comment_support: :nodes_only }
         def capabilities
           return {} unless available?
           {
@@ -104,6 +104,7 @@ module TreeHaver
             query: true,
             bytes_field: true,
             incremental: true,
+            comment_support: :nodes_only,
           }
         end
       end

@@ -66,7 +66,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::Parslet.capabilities
-        #   # => { backend: :parslet, query: false, bytes_field: true, incremental: false }
+        #   # => { backend: :parslet, query: false, bytes_field: true, incremental: false, comment_support: :none }
         def capabilities
           return {} unless available?
           {
@@ -75,6 +75,7 @@ module TreeHaver
             bytes_field: true,     # Parslet::Slice provides offset and length
             incremental: false,    # Parslet doesn't support incremental parsing
             pure_ruby: true,       # Parslet is pure Ruby (portable)
+            comment_support: :none,
           }
         end
       end

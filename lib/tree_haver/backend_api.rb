@@ -28,6 +28,19 @@ module TreeHaver
   #   TreeHaver::BackendAPI.validate_node!(node_instance)
   #
   module BackendAPI
+    # Descriptive levels for backend comment support.
+    #
+    # - :full - backend can expose comment nodes plus strong attachment hints
+    # - :partial - backend can expose comments, but ownership/attachment is incomplete
+    # - :nodes_only - backend can surface comment nodes/tokens only
+    # - :none - backend does not expose comments through TreeHaver
+    COMMENT_SUPPORT_LEVELS = %i[
+      full
+      partial
+      nodes_only
+      none
+    ].freeze
+
     # Required methods for Language class/instances
     #
     # All backends MUST implement `from_library` for API consistency.
@@ -241,7 +254,45 @@ module TreeHaver
 
         unless mod.singleton_class.method_defined?(:capabilities)
           results[:warnings] << "Missing module method: capabilities"
+          return
         end
+
+        validate_capabilities_hash(mod.capabilities, results)
+      end
+
+      def validate_capabilities_hash(capabilities, results)
+        return if capabilities.nil? || capabilities.empty?
+
+        unless capabilities.is_a?(Hash)
+          results[:errors] << "Backend capabilities must return a Hash"
+          results[:valid] = false
+          return
+        end
+
+        comment_support = capabilities[:comment_support]
+        if comment_support.nil?
+          results[:warnings] << "Capabilities missing :comment_support"
+          return
+        end
+
+        unless COMMENT_SUPPORT_LEVELS.include?(comment_support)
+          results[:errors] << "Invalid :comment_support #{comment_support.inspect}; expected one of #{COMMENT_SUPPORT_LEVELS.inspect}"
+          results[:valid] = false
+          return
+        end
+
+        results[:capabilities][:comment_support] = comment_support
+
+        return unless capabilities.key?(:comment_attachment_hints)
+
+        attachment_hints = capabilities[:comment_attachment_hints]
+        unless attachment_hints == true || attachment_hints == false
+          results[:errors] << "Invalid :comment_attachment_hints #{attachment_hints.inspect}; expected true or false"
+          results[:valid] = false
+          return
+        end
+
+        results[:capabilities][:comment_attachment_hints] = attachment_hints
       end
 
       def validate_language(klass, results)

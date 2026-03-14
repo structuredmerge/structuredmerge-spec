@@ -78,6 +78,8 @@ RSpec.describe TreeHaver::Backends::Prism, :prism_backend do
         expect(caps[:pure_ruby]).to be false
         expect(caps[:ruby_only]).to be true
         expect(caps[:error_tolerant]).to be true
+        expect(caps[:comment_support]).to eq(:partial)
+        expect(caps[:comment_attachment_hints]).to be true
       end
     end
 
@@ -365,15 +367,52 @@ RSpec.describe TreeHaver::Backends::Prism, :prism_backend do
     end
 
     describe "#comments" do
-      let(:source) { "# comment\nputs 'hi'" }
+      let(:source) { "# leading comment\nputs 'hi' # inline comment\n# trailing comment\n" }
       let(:tree) { parser.parse(source) }
+      let(:comment) { tree.comments.first }
 
       it "returns array of comments" do
         expect(tree.comments).to be_an(Array)
       end
 
       it "includes comment nodes" do
-        expect(tree.comments.length).to be >= 1
+        expect(tree.comments.length).to be >= 3
+      end
+
+      it "returns normalized comment wrappers" do
+        expect(comment).to be_a(backend::Comment)
+        expect(comment.type).to eq("inline_comment")
+        expect(comment.text).to eq("# leading comment")
+        expect(comment.style).to eq(:line)
+      end
+
+      it "preserves location information" do
+        expect(comment.start_byte).to eq(0)
+        expect(comment.end_byte).to eq(17)
+        expect(comment.start_line).to eq(1)
+        expect(comment.source_position).to eq(
+          start_line: 1,
+          end_line: 1,
+          start_column: 0,
+          end_column: 17,
+        )
+      end
+
+      it "exposes zero-based point hashes" do
+        expect(comment.start_point).to eq(row: 0, column: 0)
+        expect(comment.end_point).to eq(row: 0, column: 17)
+      end
+
+      it "tracks both leading and inline comments with distinct lines" do
+        expect(tree.comments.map(&:start_line)).to eq([1, 2, 3])
+        expect(tree.comments.map(&:text)).to include("# leading comment", "# inline comment", "# trailing comment")
+      end
+
+      it "classifies optional attachment hints" do
+        expect(tree.comments.map(&:attachment_hint)).to eq([:leading, :inline, :trailing])
+        expect(tree.comments.map(&:leading?)).to eq([true, false, false])
+        expect(tree.comments.map(&:inline?)).to eq([false, true, false])
+        expect(tree.comments.map(&:trailing?)).to eq([false, false, true])
       end
     end
 

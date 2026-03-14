@@ -73,6 +73,7 @@ RSpec.describe TreeHaver::Backends::FFI, :check_output, :ffi_backend do
       expect(caps[:parse]).to be true
       expect(caps[:query]).to be false
       expect(caps[:bytes_field]).to be true
+      expect(caps[:comment_support]).to eq(:nodes_only)
     end
 
     context "when FFI is not available" do

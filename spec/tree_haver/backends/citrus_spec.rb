@@ -77,6 +77,7 @@ RSpec.describe TreeHaver::Backends::Citrus, :citrus_backend do
         expect(caps[:bytes_field]).to be true
         expect(caps[:incremental]).to be false
         expect(caps[:pure_ruby]).to be true
+        expect(caps[:comment_support]).to eq(:none)
       end
     end
 

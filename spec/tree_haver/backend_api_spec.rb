@@ -13,7 +13,7 @@ RSpec.describe TreeHaver::BackendAPI do
 
       it "reports capabilities" do
         results = described_class.validate(backend)
-        expect(results[:capabilities]).to include(:language, :node)
+        expect(results[:capabilities]).to include(:language, :node, :comment_support)
       end
     end
 
@@ -49,6 +49,148 @@ RSpec.describe TreeHaver::BackendAPI do
         results = described_class.validate(backend)
         expect(results[:valid]).to be true
         expect(results[:errors]).to be_empty
+      end
+    end
+
+    context "with recognized comment capability metadata" do
+      let(:backend_with_nodes_only_comments) do
+        mod = Module.new do
+          class << self
+            def available?
+              true
+            end
+
+            def capabilities
+              {backend: :mock, comment_support: :nodes_only, comment_attachment_hints: false}
+            end
+
+            def name
+              "CommentCapableBackend"
+            end
+          end
+        end
+
+        mod.const_set(:Language, Class.new do
+          class << self
+            def from_library(_path = nil, symbol: nil, name: nil)
+              new
+            end
+          end
+        end)
+        mod.const_set(:Parser, Class.new do
+          def parse(*)
+          end
+
+          def language=(_language)
+          end
+        end)
+        mod.const_set(:Tree, Class.new do
+          def root_node
+          end
+        end)
+        mod
+      end
+
+      it "records recognized comment support levels" do
+        results = described_class.validate(backend_with_nodes_only_comments)
+
+        expect(results[:valid]).to be(true)
+        expect(results[:capabilities][:comment_support]).to eq(:nodes_only)
+        expect(results[:capabilities][:comment_attachment_hints]).to be(false)
+      end
+    end
+
+    context "with invalid comment capability metadata" do
+      let(:backend_with_invalid_comment_support) do
+        mod = Module.new do
+          class << self
+            def available?
+              true
+            end
+
+            def capabilities
+              {backend: :mock, comment_support: :mystery}
+            end
+
+            def name
+              "InvalidCommentBackend"
+            end
+          end
+        end
+
+        mod.const_set(:Language, Class.new do
+          class << self
+            def from_library(_path = nil, symbol: nil, name: nil)
+              new
+            end
+          end
+        end)
+        mod.const_set(:Parser, Class.new do
+          def parse(*)
+          end
+
+          def language=(_language)
+          end
+        end)
+        mod.const_set(:Tree, Class.new do
+          def root_node
+          end
+        end)
+        mod
+      end
+
+      it "rejects unrecognized comment support levels" do
+        results = described_class.validate(backend_with_invalid_comment_support)
+
+        expect(results[:valid]).to be(false)
+        expect(results[:errors]).to include(/Invalid :comment_support/)
+      end
+    end
+
+    context "with invalid comment attachment hint capability metadata" do
+      let(:backend_with_invalid_attachment_hint_flag) do
+        mod = Module.new do
+          class << self
+            def available?
+              true
+            end
+
+            def capabilities
+              {backend: :mock, comment_support: :partial, comment_attachment_hints: :sometimes}
+            end
+
+            def name
+              "InvalidHintBackend"
+            end
+          end
+        end
+
+        mod.const_set(:Language, Class.new do
+          class << self
+            def from_library(_path = nil, symbol: nil, name: nil)
+              new
+            end
+          end
+        end)
+        mod.const_set(:Parser, Class.new do
+          def parse(*)
+          end
+
+          def language=(_language)
+          end
+        end)
+        mod.const_set(:Tree, Class.new do
+          def root_node
+          end
+        end)
+        mod
+      end
+
+      it "rejects non-boolean attachment hint capability flags" do
+        results = described_class.validate(backend_with_invalid_attachment_hint_flag)
+
+        expect(results[:valid]).to be(false)
+        expect(results[:errors]).to include(/Invalid :comment_attachment_hints/)
       end
     end
   end
@@ -314,6 +456,62 @@ RSpec.describe TreeHaver::BackendAPI do
   describe "LANGUAGE_CLASS_METHODS" do
     it "includes from_library" do
       expect(described_class::LANGUAGE_CLASS_METHODS).to include(:from_library)
+    end
+  end
+
+  describe "COMMENT_SUPPORT_LEVELS" do
+    it "includes the descriptive comment support vocabulary" do
+      expect(described_class::COMMENT_SUPPORT_LEVELS).to eq(%i[full partial nodes_only none])
+    end
+  end
+
+  describe "comment support capability validation" do
+    let(:backend_with_invalid_comment_support) do
+      mod = Module.new do
+        class << self
+          def available?
+            true
+          end
+
+          def capabilities
+            {backend: :fake, comment_support: :mystery}
+          end
+
+          def name
+            "InvalidCommentBackend"
+          end
+        end
+
+        const_set(:Language, Class.new do
+          class << self
+            def from_library(_path, symbol: nil)
+              new
+            end
+          end
+
+          def backend
+            :fake
+          end
+        end)
+
+        const_set(:Parser, Class.new do
+          def self.new(*args)
+            allocate
+          end
+
+          def language=(_lang); end
+
+          def parse(_source); end
+        end)
+      end
+      mod
+    end
+
+    it "rejects unknown comment support levels" do
+      results = described_class.validate(backend_with_invalid_comment_support)
+
+      expect(results[:valid]).to be(false)
+      expect(results[:errors]).to include(/Invalid :comment_support/)
     end
   end
 

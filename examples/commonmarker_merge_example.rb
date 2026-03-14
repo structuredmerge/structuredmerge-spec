@@ -10,10 +10,14 @@
 # markdown-merge: Base gem providing SmartMerger for template/destination merging
 # commonmarker-merge: Commonmarker backend integration for markdown-merge
 
+WORKSPACE_ROOT = File.expand_path("../..", __dir__)
+ENV["KETTLE_RB_DEV"] = WORKSPACE_ROOT unless ENV.key?("KETTLE_RB_DEV")
+
 require "bundler/inline"
 
 gemfile do
   source "https://gem.coop"
+  require File.expand_path("nomono/lib/nomono/bundler", WORKSPACE_ROOT)
 
   # stdlib gems
   gem "benchmark"
@@ -21,17 +25,14 @@ gemfile do
   # Parser
   gem "commonmarker", ">= 0.23"
 
-  # Load markdown-merge from local path
-  gem "markdown-merge", path: File.expand_path("../../markdown-merge", __dir__)
-
-  # Commonmarker backend for markdown-merge
-  gem "commonmarker-merge", path: File.expand_path("../../commonmarker-merge", __dir__)
-
-  # AST merging framework
-  gem "ast-merge", path: File.expand_path("../../..", __dir__)
-
-  # Tree parsing
-  gem "tree_haver", path: File.expand_path("..", __dir__)
+  eval_nomono_gems(
+    gems: %w[markdown-merge commonmarker-merge ast-merge tree_haver],
+    prefix: "KETTLE_RB",
+    path_env: "KETTLE_RB_DEV",
+    vendored_gems_env: "VENDORED_GEMS",
+    vendor_gem_dir_env: "VENDOR_GEM_DIR",
+    debug_env: "KETTLE_DEV_DEBUG"
+  )
 end
 
 require "commonmarker/merge"

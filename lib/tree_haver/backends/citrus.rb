@@ -67,7 +67,7 @@ module TreeHaver
         # @return [Hash{Symbol => Object}] capability map
         # @example
         #   TreeHaver::Backends::Citrus.capabilities
-        #   # => { backend: :citrus, query: false, bytes_field: true, incremental: false }
+        #   # => { backend: :citrus, query: false, bytes_field: true, incremental: false, comment_support: :none }
         def capabilities
           return {} unless available?
           {
@@ -76,6 +76,7 @@ module TreeHaver
             bytes_field: true,     # Citrus::Match provides offset and length
             incremental: false,    # Citrus doesn't support incremental parsing
             pure_ruby: true,       # Citrus is pure Ruby (portable)
+            comment_support: :none,
           }
         end
       end

@@ -33,6 +33,7 @@ module TreeHaver
   def self.backend_module: () -> Module?
 
   # Get capabilities of the current backend
+  # Includes :comment_support with one of :full, :partial, :nodes_only, or :none when available.
   def self.capabilities: () -> Hash[Symbol, untyped]
 
   # Register a language helper by name

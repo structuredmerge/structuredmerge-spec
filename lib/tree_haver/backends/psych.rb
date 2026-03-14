@@ -65,6 +65,7 @@ module TreeHaver
             pure_ruby: false,       # Psych has native libyaml C extension
             yaml_only: true,        # Psych only parses YAML
             error_tolerant: false,  # Psych raises on syntax errors
+            comment_support: :none,
           }
         end
       end

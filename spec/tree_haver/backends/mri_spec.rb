@@ -62,11 +62,12 @@ RSpec.describe TreeHaver::Backends::MRI, :mri_backend do
       expect(caps[:query]).to be true
       expect(caps[:bytes_field]).to be true
       expect(caps[:incremental]).to be true
+      expect(caps[:comment_support]).to eq(:nodes_only)
     end
 
     it "returns the full capabilities hash" do
       caps = backend.capabilities
-      expect(caps.keys).to contain_exactly(:backend, :query, :bytes_field, :incremental)
+      expect(caps.keys).to contain_exactly(:backend, :query, :bytes_field, :incremental, :comment_support)
     end
   end
 

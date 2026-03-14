@@ -219,13 +219,20 @@ RSpec.describe TreeHaver do
   describe "::capabilities" do
     it "returns backend capabilities when available" do
       allow(described_class).to receive(:backend_module).and_return(described_class::Backends::FFI)
-      allow(described_class::Backends::FFI).to receive(:capabilities).and_return({backend: :ffi, parse: true})
-      expect(described_class.capabilities).to eq({backend: :ffi, parse: true})
+      allow(described_class::Backends::FFI).to receive(:capabilities).and_return({backend: :ffi, parse: true, comment_support: :nodes_only})
+      expect(described_class.capabilities).to eq({backend: :ffi, parse: true, comment_support: :nodes_only})
     end
 
     it "returns empty hash when no backend available" do
       allow(described_class).to receive(:backend_module).and_return(nil)
       expect(described_class.capabilities).to eq({})
+    end
+
+    it "uses the shared comment support vocabulary" do
+      allow(described_class).to receive(:backend_module).and_return(described_class::Backends::Prism)
+      allow(described_class::Backends::Prism).to receive(:capabilities).and_return({backend: :prism, comment_support: :partial})
+
+      expect(TreeHaver::BackendAPI::COMMENT_SUPPORT_LEVELS).to include(described_class.capabilities[:comment_support])
     end
   end
 

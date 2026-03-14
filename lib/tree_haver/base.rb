@@ -3,6 +3,7 @@
 module TreeHaver
   # Base classes for backend implementation
   module Base
+    autoload :Comment, File.join(__dir__, "base", "comment")
     autoload :Node, File.join(__dir__, "base", "node")
     autoload :Tree, File.join(__dir__, "base", "tree")
     autoload :Parser, File.join(__dir__, "base", "parser")
