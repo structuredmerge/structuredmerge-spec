@@ -5,6 +5,13 @@ PATH
       version_gem (~> 1.1, >= 1.1.9)
 
 PATH
+  remote: /home/pboling/src/kettle-rb/ast-merge
+  specs:
+    ast-merge (4.0.6)
+      tree_haver (~> 5.0, >= 5.0.5)
+      version_gem (~> 1.1, >= 1.1.9)
+
+PATH
   remote: /home/pboling/src/kettle-rb/bash-merge
   specs:
     bash-merge (2.0.6)
@@ -153,9 +160,6 @@ GEM
       rake (>= 10)
       thor (>= 0.14)
     ast (2.4.3)
-    ast-merge (4.0.6)
-      tree_haver (~> 5.0, >= 5.0.5)
-      version_gem (~> 1.1, >= 1.1.9)
     backports (3.25.3)
     benchmark (0.5.0)
     bigdecimal (3.3.1)
@@ -163,7 +167,7 @@ GEM
       bundler (>= 1.2.0)
       thor (~> 1.0)
     citrus (3.0.2)
-    commonmarker (2.6.3-x86_64-linux)
+    commonmarker (2.7.0-x86_64-linux)
     concurrent-ruby (1.3.6)
     csv (3.3.5)
     date (3.5.1)
@@ -308,7 +312,7 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.0)
+    rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     rubocop-gradual (0.3.6)
@@ -381,7 +385,7 @@ GEM
     simplecov-rcov (0.3.7)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    sorbet-runtime (0.6.12997)
+    sorbet-runtime (0.6.13043)
     standard (1.54.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -462,6 +466,7 @@ PLATFORMS
 DEPENDENCIES
   addressable (>= 2.8, < 3)
   appraisal2 (~> 3.0, >= 3.0.6)
+  ast-merge!
   bash-merge!
   benchmark (~> 0.5, >= 0.5.0)
   bundler-audit (~> 0.9.3)
@@ -524,14 +529,14 @@ CHECKSUMS
   ansi (1.5.0) sha256=5408253274e33d9d27d4a98c46d2998266fd51cba58a7eb9d08f50e57ed23592
   appraisal2 (3.0.6) sha256=09387896b6c8c8c0ff0749af691ddff5e3168de2f06b591a80d8fd8b6394d147
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
-  ast-merge (4.0.6) sha256=c81803510cfda098ea42802427b0c83a47b06bb9bd9f6257aeeee793dbb89abd
+  ast-merge (4.0.6)
   backports (3.25.3) sha256=94298d32dc3c40ca15633b54e282780b49e2db0c045f602ea1907e4f63a17235
   bash-merge (2.0.6)
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
   bigdecimal (3.3.1) sha256=eaa01e228be54c4f9f53bf3cc34fe3d5e845c31963e7fcc5bedb05a4e7d52218
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   citrus (3.0.2) sha256=4ec2412fc389ad186735f4baee1460f7900a8e130ffe3f216b30d4f9c684f650
-  commonmarker (2.6.3-x86_64-linux) sha256=e861ba1812721113725ebd8e46e4fee20dc732842f5555db2cfb8dcd74056583
+  commonmarker (2.7.0-x86_64-linux) sha256=53243eeb30e4ddb6a474672597ff7e59334e55a7653126bb87e65e6ab2629a4c
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
@@ -610,7 +615,7 @@ CHECKSUMS
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
   rspec_junit_formatter (0.6.0) sha256=40dde674e6ae4e6cc0ff560da25497677e34fefd2338cc467a8972f602b62b15
   rubocop (1.84.2) sha256=5692cea54168f3dc8cb79a6fe95c5424b7ea893c707ad7a4307b0585e88dbf5f
-  rubocop-ast (1.49.0) sha256=49c3676d3123a0923d333e20c6c2dbaaae2d2287b475273fddee0c61da9f71fd
+  rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
   rubocop-gradual (0.3.6) sha256=d70505a81b63f95ff7d987afe66adf559c53708e4abf06328f6e6026b6571993
   rubocop-lts (24.0.2) sha256=3f3dbc45e573f9dcc6bf77bddbdeaf8fde723932057c759f43eb6ea34ebd92a3
   rubocop-md (1.2.4) sha256=3e481bb08e2d7479eeba3d02359737074f58dd5694f7a57de4ad8d807fdaf6ff
@@ -634,7 +639,7 @@ CHECKSUMS
   simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov-rcov (0.3.7) sha256=372f50bf6df6b6350b7d0c840f2f8bdabe021861a43c26877b747c9ac96139fc
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  sorbet-runtime (0.6.12997) sha256=5e84f6168c10e15b994fccb808ba64bbb8b3b027ea7bf083a9a3815a8b765c3f
+  sorbet-runtime (0.6.13043) sha256=593a8e2a22425b4b2b0a5e74af5ed44f66946cb9480bd3e2b12508da6a4d008d
   standard (1.54.0) sha256=7a4b08f83d9893083c8f03bc486f0feeb6a84d48233b40829c03ef4767ea0100
   standard-custom (1.0.2) sha256=424adc84179a074f1a2a309bb9cf7cd6bfdb2b6541f20c6bf9436c0ba22a652b
   standard-performance (1.9.0) sha256=49483d31be448292951d80e5e67cdcb576c2502103c7b40aec6f1b6e9c88e3f2
@@ -667,4 +672,4 @@ CHECKSUMS
   zlib (3.2.3) sha256=5bd316698b32f31a64ab910a8b6c282442ca1626a81bbd6a1674e8522e319c20
 
 BUNDLED WITH
-  4.0.7
+  4.0.8

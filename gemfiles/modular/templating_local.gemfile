@@ -6,6 +6,7 @@
 require File.expand_path("../../../nomono/lib/nomono/bundler", __dir__)
 
 local_gems = %w[
+  ast-merge
   bash-merge
   dotenv-merge
   json-merge
@@ -19,14 +20,13 @@ local_gems = %w[
   kettle-jem
 ]
 
-# export VENDORED_GEMS=bash-merge,dotenv-merge,json-merge,jsonc-merge,markdown-merge,prism-merge,prism-merge,psych-merge,rbs-merge,toml-merge,markly-merge,kettle-jem
+# In this sibling workspace, local development should resolve these gems from sibling repos,
+# even if a broader shell environment has vendored gem settings exported.
 platform :mri do
   eval_nomono_gems(
     gems: local_gems,
     prefix: "KETTLE_RB",
     path_env: "KETTLE_RB_DEV",
-    vendored_gems_env: "VENDORED_GEMS",
-    vendor_gem_dir_env: "VENDOR_GEM_DIR",
     debug_env: "KETTLE_DEV_DEBUG"
   )
 end
