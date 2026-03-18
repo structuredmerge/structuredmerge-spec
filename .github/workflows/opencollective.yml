@@ -23,7 +23,6 @@ jobs:
           rubygems: default
           bundler: default
           bundler-cache: true
-
       - name: README Update
         env:
           # Keep GITHUB_TOKEN for any tools/scripts expecting it, mapped to the same secret

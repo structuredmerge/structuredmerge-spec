@@ -31,7 +31,7 @@ jobs:
     name: Specs ${{ matrix.ruby }}@${{ matrix.appraisal }}${{ matrix.name_extra || '' }}
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
-    env:
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
       # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
       # Note: LD_LIBRARY_PATH and TREE_SITTER_*_PATH are set by setup-tree-sitter.sh
@@ -43,23 +43,21 @@ jobs:
           # ruby-head
           - ruby: "ruby-head"
             appraisal: "head"
-            exec_cmd: "rake magic"
+            exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: default
             bundler: default
-
           # truffleruby-head
           - ruby: "truffleruby-head"
             appraisal: "head"
-            exec_cmd: "rake magic"
+            exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: default
             bundler: default
-
           # jruby-head
           - ruby: "jruby-head"
             appraisal: "head"
-            exec_cmd: "rake magic"
+            exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: default
             bundler: default
@@ -68,7 +66,6 @@ jobs:
       - name: Checkout
         if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}
         uses: actions/checkout@v6
-
       - name: Install tree-sitter and toml grammar
         if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}
         uses: kettle-rb/ts-grammar-action@main
@@ -85,7 +82,6 @@ jobs:
           rubygems: ${{ matrix.rubygems }}
           bundler: ${{ matrix.bundler }}
           bundler-cache: true
-
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the primary Gemfile at all.
@@ -113,14 +109,12 @@ jobs:
         run: bundle exec appraisal ${{ matrix.appraisal }} install
         # Continue to the next step on failure
         continue-on-error: true
-
       # Effectively an automatic retry of the previous step.
       - name: "[Attempt 2] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
         id: bundleAppraisalAttempt2
         # If bundleAppraisalAttempt1 failed, try again here; Otherwise skip.
         if: ${{ steps.bundleAppraisalAttempt1.outcome == 'failure' && (!env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby'))) }}
         run: bundle exec appraisal ${{ matrix.appraisal }} install
-
       - name: Tests for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
         if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}

@@ -20,7 +20,7 @@ set -e
 SUDO=""
 INSTALL_CLI=false
 BUILD_FROM_SOURCE=false
-WORKSPACE_ROOT="/workspaces/tree_haver"
+WORKSPACE_ROOT="/workspaces/${PWD##*/}"
 SELECTED_GRAMMARS=()
 LIST_GRAMMARS=false
 
@@ -45,18 +45,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     --workspace=*)
       WORKSPACE_ROOT="${1#*=}"
-      shift
-      ;;
-    --grammars)
-      IFS=',' read -ra SELECTED_GRAMMARS <<< "$2"
-      shift 2
-      ;;
-    --grammars=*)
-      IFS=',' read -ra SELECTED_GRAMMARS <<< "${1#*=}"
-      shift
-      ;;
-    --list-grammars)
-      LIST_GRAMMARS=true
       shift
       ;;
     *)
@@ -181,6 +169,9 @@ else
   echo "Skipping tree-sitter-cli installation (use --cli flag to install)"
 fi
 
+# Install all tree-sitter grammars for integration testing
+GRAMMARS=("toml" "json" "jsonc" "bash")
+
 # Grammar URL mapping - maps grammar names to their repository URLs and default branches
 # Format: GRAMMAR_URLS[name]="url|branch"
 # Supported sources:
@@ -208,10 +199,51 @@ echo ""
 
 # Validate all requested grammars exist in mapping
 for grammar in "${GRAMMARS[@]}"; do
-  if [ -z "${GRAMMAR_URLS[$grammar]}" ]; then
-    echo "ERROR: Unknown grammar '${grammar}'. Available grammars: ${!GRAMMAR_URLS[*]}" >&2
+  echo "Building and installing tree-sitter-${grammar}..."
+  cd "$TMPDIR"
+
+  if ! wget -q "https://github.com/tree-sitter-grammars/tree-sitter-${grammar}/archive/refs/heads/master.zip" -O "${grammar}.zip"; then
+    echo "ERROR: Failed to download tree-sitter-${grammar}" >&2
     exit 1
   fi
+
+  if ! unzip -q "${grammar}.zip"; then
+    echo "ERROR: Failed to unzip tree-sitter-${grammar}" >&2
+    exit 1
+  fi
+
+  cd "tree-sitter-${grammar}-master"
+
+  # Compile parser.c
+  if ! gcc -fPIC -I./src -c src/parser.c -o parser.o; then
+    echo "ERROR: Failed to compile parser.c for ${grammar}" >&2
+    exit 1
+  fi
+
+  # Check if scanner exists (not all grammars have scanners)
+  if [ -f src/scanner.c ]; then
+    if ! gcc -fPIC -I./src -c src/scanner.c -o scanner.o; then
+      echo "ERROR: Failed to compile scanner.c for ${grammar}" >&2
+      exit 1
+    fi
+    OBJECTS="parser.o scanner.o"
+  else
+    OBJECTS="parser.o"
+  fi
+
+  # Link object files into shared library
+  if ! gcc -shared -o "libtree-sitter-${grammar}.so" $OBJECTS; then
+    echo "ERROR: Failed to link libtree-sitter-${grammar}.so" >&2
+    exit 1
+  fi
+
+  # Install to system
+  if ! $SUDO cp "libtree-sitter-${grammar}.so" /usr/local/lib/; then
+    echo "ERROR: Failed to copy libtree-sitter-${grammar}.so to /usr/local/lib/" >&2
+    exit 1
+  fi
+
+  echo "  ✓ Installed tree-sitter-${grammar}"
 done
 
 TMPDIR=$(mktemp -d)

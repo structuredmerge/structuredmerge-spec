@@ -6,9 +6,9 @@
 	"image": "mcr.microsoft.com/devcontainers/ruby:1-3-bookworm",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-    "features": {
-      "./apt-install": {}
-    },
+	"features": {
+		"./apt-install": {}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

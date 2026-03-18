@@ -6,8 +6,8 @@ permissions:
   id-token: write
 
 env:
-  K_SOUP_COV_MIN_BRANCH: 72
-  K_SOUP_COV_MIN_LINE: 83
+  K_SOUP_COV_MIN_BRANCH: 100
+  K_SOUP_COV_MIN_LINE: 100
   K_SOUP_COV_MIN_HARD: true
   K_SOUP_COV_FORMATTERS: "xml,rcov,lcov,tty"
   K_SOUP_COV_DO: true
@@ -39,7 +39,7 @@ jobs:
     name: Code Coverage on ${{ matrix.ruby }}@current
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
-    env:
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
       # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
       # tree-sitter library paths for FFI/MRI/Rust backend compatibility
@@ -55,7 +55,7 @@ jobs:
           # Coverage
           - ruby: "ruby"
             appraisal: "coverage"
-            exec_cmd: "rake magic"
+            exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
@@ -63,20 +63,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
       - name: Install tree-sitter and toml grammar
         uses: kettle-rb/ts-grammar-action@main
         with:
           setup-rust: "true"
           grammar-toml: "true"
 
-      - name: Setup Ruby & Gems via rv & ore
-        uses: appraisal-rb/setup-ruby-flash@main
+      - name: Setup Ruby & RubyGems
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: "${{ matrix.ruby }}"
           rubygems: "${{ matrix.rubygems }}"
           bundler: "${{ matrix.bundler }}"
           ore-install: true
+          bundler-cache: true
+      - name: "[Attempt 1] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
+        id: bundleAppraisalAttempt1
+        run: bundle exec appraisal ${{ matrix.appraisal }} install
+        # Continue to the next step on failure
+        continue-on-error: true
+
+      # Effectively an automatic retry of the previous step.
+      - name: "[Attempt 2] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
+        id: bundleAppraisalAttempt2
+        # If bundleAppraisalAttempt1 failed, try again here; Otherwise skip.
+        if: ${{ steps.bundleAppraisalAttempt1.outcome == 'failure' }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} install
 
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # NOTE: This does not use the primary Gemfile at all.
@@ -84,7 +96,6 @@ jobs:
         run: bundle exec appraisal ${{ matrix.appraisal }} install
       - name: Tests for ${{ matrix.ruby }}@current via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
-
       # Do SaaS coverage uploads first
       - name: Upload coverage to Coveralls
         if: ${{ !env.ACT }}
@@ -92,7 +103,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: ${{ matrix.experimental != 'false' }}
-
       - name: Upload coverage to QLTY
         if: ${{ !env.ACT }}
         uses: qltysh/qlty-action/coverage@main
@@ -100,7 +110,6 @@ jobs:
           token: ${{secrets.QLTY_COVERAGE_TOKEN}}
           files: coverage/.resultset.json
         continue-on-error: ${{ matrix.experimental != 'false' }}
-
       # Build will fail here if coverage upload fails
       #   which will hopefully be noticed for the lack of code coverage comments
       - name: Upload coverage to CodeCov
@@ -111,7 +120,6 @@ jobs:
           fail_ci_if_error: false # optional (default = false)
           files: coverage/lcov.info,coverage/coverage.xml
           verbose: true # optional (default = false)
-
       # Then PR comments
       - name: Code Coverage Summary Report
         if: ${{ !env.ACT && github.event_name == 'pull_request' }}
@@ -125,11 +133,10 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '${{ env.K_SOUP_COV_MIN_LINE }} ${{ env.K_SOUP_COV_MIN_BRANCH }}'
+          thresholds: '100 100'
         continue-on-error: ${{ matrix.experimental != 'false' }}
-
       - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ !env.ACT && github.event_name == 'pull_request' }}
         with:
           recreate: true

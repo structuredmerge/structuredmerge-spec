@@ -46,19 +46,20 @@ bin/rake -T
 
 TreeHaver supports multiple backends with different characteristics:
 
-- **MRI**: ruby_tree_sitter (C extension, tree-sitter grammars)
-- **FFI**: Pure Ruby FFI bindings (tree-sitter grammars)
-- **Rust**: tree_stump (Rust extension, tree-sitter grammars)
-- **Citrus**: Pure Ruby parser (TOML only via toml-rb grammar)
+- GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
+- GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
+- GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
+- GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
 
 Not all backends can coexist in the same Ruby process. Notably, **FFI and MRI backends conflict**
 at the libtree-sitter runtime level—using both in the same process will cause segfaults.
 
 The **Citrus backend** works differently:
-- Uses pure Ruby parsing (no .so files)
-- Currently only supports TOML via toml-rb grammar
-- Can coexist with tree-sitter backends
-- Useful for testing multi-backend scenarios
+
+1. Update version.rb to contain the correct version-to-be-released.
+2. Run `bundle exec kettle-changelog`.
+3. Run `bundle exec kettle-release`.
+4. Stay awake and monitor the release process for any errors, and answer any prompts.
 
 The `bin/backend-matrix` script helps test and document backend compatibility by running tests
 in isolated subprocesses.
@@ -169,19 +170,22 @@ export TREE_SITTER_BASH_PATH=/path/to/libtree-sitter-bash.so
 See `mise.toml` and `.env.local.example` for examples of how these are typically configured.
 
 **For Citrus backend:**
-- Requires the `toml-rb` gem (pure Ruby TOML parser)
-  - **Auto-installs**: Script uses bundler inline to install `toml-rb` automatically if missing
-- No environment variables needed (doesn't use .so files)
-- Only supports TOML grammar
+
+- DEBUG: Enable extra internal logging for this library (default: false)
+- REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
+- CI: When set to true, adjusts default rake tasks toward CI behavior
 
 ## Environment Variables for Local Development
 
 Below are the primary environment variables recognized by stone_checksums (and its integrated tools). Unless otherwise noted, set boolean values to the string "true" to enable.
 
 General/runtime
-- DEBUG: Enable extra internal logging for this library (default: false)
-- REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
-- CI: When set to true, adjusts default rake tasks toward CI behavior
+
+- SKIP_GEM_SIGNING: If set, skip gem signing during build/release
+- GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
+- SOURCE_DATE_EPOCH: Reproducible build timestamp.
+  - `kettle-release` will set this automatically for the session.
+  - Not needed on bundler >= 2.7.0, as reproducible builds have become the default.
 
 Coverage (kettle-soup-cover / SimpleCov)
 - K_SOUP_COV_DO: Enable coverage collection (default: true in `mise.toml`)
@@ -210,7 +214,7 @@ Git hooks and commit message helpers (exe/kettle-commit-msg)
 - GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
 - GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
 
-For a quick starting point, this repository’s `mise.toml` defines the shared defaults, and `.env.local` can override them locally. Copy `.env.local.example` to `.env.local`, use `KEY=value` lines, and either activate `mise` in your shell or run commands through `mise exec -C /home/pboling/src/kettle-rb/tree_haver -- ...`.
+For a quick starting point, this repository’s `mise.toml` defines the shared defaults, and `.env.local` can override them locally. Copy `.env.local.example` to `.env.local`, use `KEY=value` lines, and either activate `mise` in your shell or run commands through `mise exec -C /path/to/project -- ...`.
 
 ## Appraisals
 
@@ -357,3 +361,4 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 [📌major-versions-not-sacred]: https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html
 [🚎appraisal2]: https://github.com/appraisal-rb/appraisal2
 [🏃‍♂️runner-tool-cache]: https://github.com/ruby/ruby-builder/releases/tag/toolcache
+

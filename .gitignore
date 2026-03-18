@@ -50,3 +50,6 @@ Appraisal.*.gemfile.lock
 
 # Sentinels
 .floss_funding.*.lock
+/tmp/*
+!/tmp/.gitignore
+# direnv - brew install direnv

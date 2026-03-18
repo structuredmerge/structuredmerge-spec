@@ -15,7 +15,7 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
 ####################################################### IMPORTANT ####
 
-# Include dependencies from <gem name>.gemspec
+# Include dependencies from tree_haver.gemspec
 gemspec
 
 # Templating (env-switched: KETTLE_RB_DEV=true for local paths)

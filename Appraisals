@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# kettle-jem:freeze
+# To retain chunks of comments & code during tree_haver templating:
+# Wrap custom sections with freeze markers (e.g., as above and below this comment chunk).
+# tree_haver will then preserve content between those markers across template runs.
+# kettle-jem:unfreeze
+
 # HOW TO UPDATE APPRAISALS (will run rubocop_gradual's autocorrect afterward):
 #   bin/rake appraisal:update
 
@@ -36,6 +42,8 @@ appraise "head" do
   #  gem "cgi", ">= 0.5"
   eval_gemfile "modular/rspec.gemfile"
   eval_gemfile "modular/tree_sitter/vHEAD.gemfile"
+  # Why is gem "cgi" here? See: https://github.com/vcr/vcr/issues/1057
+  #  gem "cgi", ">= 0.5"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
@@ -90,5 +98,10 @@ end
 # Only run linter on the latest version of Ruby (but, in support of oldest supported Ruby version)
 appraise "style" do
   eval_gemfile "modular/style.gemfile"
+  eval_gemfile "modular/x_std_libs.gemfile"
+end
+
+appraise "templating" do
+  eval_gemfile "modular/templating.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
