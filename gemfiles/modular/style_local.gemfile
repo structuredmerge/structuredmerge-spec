@@ -4,11 +4,16 @@
 #   but in support of the oldest supported version of Ruby
 
 # Local path overrides for development.
-# Loaded by the associated non-local gemfile when KETTLE_RB_DEV != "false".
+# Loaded by the associated non-local gemfile when RUBOCOP_LTS_LOCAL != "false".
 
 require File.expand_path("../../../nomono/lib/nomono/bundler", __dir__)
 
-local_gems = %w[rubocop-lts rubocop-lts-rspec rubocop-ruby3_2 standard-rubocop-lts]
+local_gems = %w[
+  rubocop-lts
+  rubocop-lts-rspec
+  rubocop-ruby3_2
+  standard-rubocop-lts
+]
 
 # export VENDORED_GEMS=rubocop-lts,rubocop-lts-rspec,rubocop-ruby3_2,standard-rubocop-lts
 platform :mri do
