@@ -1,0 +1,12 @@
+{
+  "lib/tree_haver/rspec/dependency_tags.rb:3350664268": [
+    [487, 9, 75, "Lint/ShadowedException: Do not shadow rescued Exceptions.", 2970795855],
+    [995, 9, 269, "Lint/ShadowedException: Do not shadow rescued Exceptions.", 3451096387]
+  ],
+  "spec/support/shared_examples/tree_api_examples.rb:1226328310": [
+    [130, 20, 30, "RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.", 319432094]
+  ],
+  "spec/tree_haver/backend_api_spec.rb:2767738056": [
+    [498, 11, 54, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2126941373]
+  ]
+}

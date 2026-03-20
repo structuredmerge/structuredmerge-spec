@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe TreeHaver::Base::Comment do
+  subject(:comment) { comment_class.new(Object.new, source: "x\n  # hello\n") }
+
   let(:comment_class) do
     Class.new(described_class) do
       def type
@@ -34,8 +36,6 @@ RSpec.describe TreeHaver::Base::Comment do
       end
     end
   end
-
-  subject(:comment) { comment_class.new(Object.new, source: "x\n  # hello\n") }
 
   describe "#start_line" do
     it "converts 0-based rows to 1-based line numbers" do

@@ -111,13 +111,13 @@ module TreeHaver
       private
 
       def normalize_attachment_hint(hint)
-        return nil if hint.nil?
+        return if hint.nil?
 
         normalized = hint.to_sym
         return normalized if ATTACHMENT_HINTS.include?(normalized)
 
         raise ArgumentError,
-          "Unknown comment attachment hint: #{hint.inspect}. Expected one of: #{ATTACHMENT_HINTS.join(', ')}"
+          "Unknown comment attachment hint: #{hint.inspect}. Expected one of: #{ATTACHMENT_HINTS.join(", ")}"
       end
     end
   end

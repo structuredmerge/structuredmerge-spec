@@ -13,8 +13,9 @@ platform :mri do
   gem "rbs", ">= 3.10"   # ruby >= 3.1.0
 
   # MRI Backend
-  gem "ruby_tree_sitter", "~> 2.1",
-      require: false # DO NOT LOAD, because conflicts with FFI
+  gem "ruby_tree_sitter",
+    "~> 2.1",
+    require: false # DO NOT LOAD, because conflicts with FFI
 
   # AST parsing for advanced templating.
   # Set KETTLE_RB_DEV=true (or path) for local development with path-based dependencies.

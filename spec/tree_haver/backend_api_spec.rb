@@ -499,9 +499,11 @@ RSpec.describe TreeHaver::BackendAPI do
             allocate
           end
 
-          def language=(_lang); end
+          def language=(_lang)
+          end
 
-          def parse(_source); end
+          def parse(_source)
+          end
         end)
       end
       mod
