@@ -172,6 +172,9 @@ fi
 # Install all tree-sitter grammars for integration testing
 GRAMMARS=("toml" "json" "jsonc" "bash")
 
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
+
 # Grammar URL mapping - maps grammar names to their repository URLs and default branches
 # Format: GRAMMAR_URLS[name]="url|branch"
 # Supported sources:
@@ -248,77 +251,34 @@ done
 
 TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT
-
 for grammar in "${GRAMMARS[@]}"; do
-  echo "Building and installing tree-sitter-${grammar}..."
-  cd "$TMPDIR"
-
-  # Parse the URL mapping
-  IFS='|' read -r REPO_URL BRANCH URL_TYPE <<< "${GRAMMAR_URLS[$grammar]}"
-
-  # Download the grammar
-  if [ "$URL_TYPE" = "direct" ]; then
-    # Direct URL (e.g., GitLab archive URLs)
-    if ! wget -q "$REPO_URL" -O "${grammar}.zip"; then
-      echo "ERROR: Failed to download tree-sitter-${grammar} from ${REPO_URL}" >&2
-      exit 1
-    fi
-  else
-    # GitHub-style archive URL - try specified branch, then fallback to alternative
-    if ! wget -q "${REPO_URL}/archive/refs/heads/${BRANCH}.zip" -O "${grammar}.zip"; then
-      # Try alternative branch (main vs master)
-      ALT_BRANCH=$([ "$BRANCH" = "master" ] && echo "main" || echo "master")
-      echo "  ${BRANCH} branch not found, trying ${ALT_BRANCH} branch..."
-      if ! wget -q "${REPO_URL}/archive/refs/heads/${ALT_BRANCH}.zip" -O "${grammar}.zip"; then
-        echo "ERROR: Failed to download tree-sitter-${grammar} from ${REPO_URL} (tried ${BRANCH} and ${ALT_BRANCH})" >&2
-        exit 1
-      fi
-      BRANCH="$ALT_BRANCH"
-    fi
-  fi
-
-  if ! unzip -q "${grammar}.zip"; then
-    echo "ERROR: Failed to unzip tree-sitter-${grammar}" >&2
-    exit 1
-  fi
-
-  cd "tree-sitter-${grammar}-${BRANCH}"
-
-  # Compile parser.c
-  if ! gcc -fPIC -I./src -c src/parser.c -o parser.o; then
-    echo "ERROR: Failed to compile parser.c for ${grammar}" >&2
-    exit 1
-  fi
-
-  # Check if scanner exists (not all grammars have scanners)
-  if [ -f src/scanner.c ]; then
-    if ! gcc -fPIC -I./src -c src/scanner.c -o scanner.o; then
-      echo "ERROR: Failed to compile scanner.c for ${grammar}" >&2
-      exit 1
-    fi
-    OBJECTS="parser.o scanner.o"
-  else
-    OBJECTS="parser.o"
-  fi
-
-  # Link object files into shared library
-  if ! gcc -shared -o "libtree-sitter-${grammar}.so" $OBJECTS; then
-    echo "ERROR: Failed to link libtree-sitter-${grammar}.so" >&2
-    exit 1
-  fi
-
-  # Install to system
-  if ! $SUDO cp "libtree-sitter-${grammar}.so" /usr/local/lib/; then
-    echo "ERROR: Failed to copy libtree-sitter-${grammar}.so to /usr/local/lib/" >&2
-    exit 1
-  fi
-
-  echo "  ✓ Installed tree-sitter-${grammar}"
+  echo "  TREE_SITTER_${grammar^^}_PATH=/usr/local/lib/libtree-sitter-${grammar}.so"
 done
 
 if ! $SUDO ldconfig; then
   echo "WARNING: ldconfig failed, libraries may not be immediately available" >&2
 fi
+
+echo ""
+echo "tree-sitter setup complete!"
+echo ""
+echo "Detected library paths:"
+
+# Detect and report tree-sitter runtime library location
+if [ -f /usr/lib/x86_64-linux-gnu/libtree-sitter.so.0 ]; then
+  echo "  TREE_SITTER_RUNTIME_LIB=/usr/lib/x86_64-linux-gnu/libtree-sitter.so.0"
+elif [ -f /usr/lib/x86_64-linux-gnu/libtree-sitter.so ]; then
+  echo "  TREE_SITTER_RUNTIME_LIB=/usr/lib/x86_64-linux-gnu/libtree-sitter.so"
+elif [ -f /usr/lib/libtree-sitter.so.0 ]; then
+  echo "  TREE_SITTER_RUNTIME_LIB=/usr/lib/libtree-sitter.so.0"
+elif [ -f /usr/lib/libtree-sitter.so ]; then
+  echo "  TREE_SITTER_RUNTIME_LIB=/usr/lib/libtree-sitter.so"
+else
+  echo "  WARNING: Could not find libtree-sitter runtime library!"
+fi
+
+echo ""
+echo "Grammar libraries:"
 
 echo ""
 echo "tree-sitter setup complete!"

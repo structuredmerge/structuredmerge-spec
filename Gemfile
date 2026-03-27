@@ -45,4 +45,7 @@ eval_gemfile "gemfiles/modular/tree_sitter.gemfile"
 ### Std Lib Extracted Gems
 eval_gemfile "gemfiles/modular/x_std_libs.gemfile"
 
+# See unlocked_deps appraisal for more details on irb inclusion
+gem "irb", "~> 1.17" # ruby >= 2.7
+
 gem "table_tennis", "~> 0.0.7"        # ruby >= 3.0.0

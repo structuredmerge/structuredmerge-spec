@@ -386,7 +386,7 @@ GEM
     simplecov-rcov (0.3.7)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    sorbet-runtime (0.6.13064)
+    sorbet-runtime (0.6.13066)
     standard (1.54.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -484,7 +484,7 @@ DEPENDENCIES
   ffi
   gem_bench (~> 2.0, >= 2.0.5)
   gitmoji-regex (~> 1.0, >= 1.0.3)
-  irb (~> 1.15, >= 1.15.2)
+  irb (~> 1.17)
   json-merge!
   jsonc-merge!
   kettle-dev (~> 2.0, >= 0)!
@@ -649,7 +649,7 @@ CHECKSUMS
   simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov-rcov (0.3.7) sha256=372f50bf6df6b6350b7d0c840f2f8bdabe021861a43c26877b747c9ac96139fc
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  sorbet-runtime (0.6.13064) sha256=db888ffd9d0db3a42e3f18bec2d2321e8055b056cf7f1193d05168ba2c44443a
+  sorbet-runtime (0.6.13066) sha256=f11fd181b013ea00e7faa071be61e6ec472a4413267e6aca1e10b90651a808a9
   standard (1.54.0) sha256=7a4b08f83d9893083c8f03bc486f0feeb6a84d48233b40829c03ef4767ea0100
   standard-custom (1.0.2) sha256=424adc84179a074f1a2a309bb9cf7cd6bfdb2b6541f20c6bf9436c0ba22a652b
   standard-performance (1.9.0) sha256=49483d31be448292951d80e5e67cdcb576c2502103c7b40aec6f1b6e9c88e3f2

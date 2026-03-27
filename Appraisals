@@ -26,6 +26,20 @@
 #    - Broken workflow indicates that a new contributor will have a bad time
 #
 appraise "unlocked_deps" do
+  # Seems to be an undeclared dependency of yard.
+  # /opt/hostedtoolcache/Ruby/4.0.0/x64/lib/ruby/gems/4.0.0/gems/yard-0.9.38/lib/yard/parser/ruby/legacy/irb/slex.rb:13: warning: irb/notifier is found in irb, which is not part of the default gems since Ruby 4.0.0.
+  # You can add irb to your Gemfile or gemspec to fix this error.
+  # rake aborted!
+  # LoadError: cannot load such file -- irb/notifier (LoadError)
+  # /opt/hostedtoolcache/Ruby/4.0.0/x64/bin/bundle:25:in '<main>'
+  # But it won't install on TruffleRuby, so it can't be part of modular gemfiles used there:
+  # An error occurred while installing psych (5.3.1), and Bundler cannot continue.
+  #
+  # In ruby_3_2.gemfile:
+  #   irb was resolved to 1.16.0, which depends on
+  #     rdoc was resolved to 7.0.3, which depends on
+  #       psych
+  gem "irb", "~> 1.17" # ruby >= 2.7
   eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/documentation.gemfile"

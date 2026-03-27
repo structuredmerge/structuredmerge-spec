@@ -1,10 +1,11 @@
 # coding: utf-8
 # frozen_string_literal: true
 
-# To retain during kettle-dev templating:
-#     kettle-dev:freeze
-#     # ... your code
-#     kettle-dev:unfreeze
+# kettle-jem:freeze
+# To retain chunks of comments & code during tree_haver templating:
+# Wrap custom sections with freeze markers (e.g., as above and below this comment chunk).
+# tree_haver will then preserve content between those markers across template runs.
+# kettle-jem:unfreeze
 
 Gem::Specification.new do |spec|
   spec.name = "tree_haver"
@@ -12,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Peter H. Boling"]
   spec.email = ["floss@galtzo.com"]
 
-  spec.summary = "🌴 Cross-Ruby adapter for AST parsing libraries, like tree-sitter, citrus, & parslet; works on MRI, JRuby, and TruffleRuby"
+  spec.summary = "🍲 Cross-Ruby adapter for AST parsing libraries, like tree-sitter, citrus, & parslet; works on MRI, JRuby, and TruffleRuby"
   spec.description = "🌴 TreeHaver is a cross-Ruby adapter for many AST parsing libraries; supporting MRI Ruby, JRuby, & TruffleRuby. Provides unified parsing API & AST when using ruby_tree_sitter, parslet, citrus, ffi, tree_stump (Rust), JRuby JARs, etc. As Faraday is to HTTP clients, this is for ASTs: 'Learn once & write once & run anywhere'"
   spec.homepage = "https://github.com/kettle-rb/tree_haver"
   spec.licenses = ["MIT"]
@@ -36,7 +37,7 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.metadata["homepage_uri"] = "https://#{spec.name.tr("_", "-")}.galtzo.com/"
+  spec.metadata["homepage_uri"] = "https://tree-haver.galtzo.com/"
   spec.metadata["source_code_uri"] = "#{spec.homepage}/tree/v#{spec.version}"
   spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
   spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
@@ -88,10 +89,6 @@ Gem::Specification.new do |spec|
 
   # Utilities
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
-  # FFI is required at runtime if no other backends are configured since it can load on all Rubies
-  # But we keep it as an option dependency to reduce the footprint of this gem,
-  #   since if you configure a different backend, it would not get used.
-  # spec.add_dependency("ffi", ">= 1.15", "< 2.0")
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.
@@ -138,7 +135,6 @@ Gem::Specification.new do |spec|
   # /opt/hostedtoolcache/Ruby/2.3.8/x64/lib/ruby/gems/2.3.0/gems/erb-2.2.2/lib/erb.rb:670:in `prepare_trim_mode': undefined method `match?' for "-":String (NoMethodError)
   # spec.add_development_dependency("erb", ">= 2.2")                                  # ruby >= 2.3.0, not SemVer, old rubies get dropped in a patch.
   spec.add_development_dependency("gitmoji-regex", "~> 1.0", ">= 1.0.3")            # ruby >= 2.3.0
-  # ruby >= 2.3.0
 
   # HTTP recording for deterministic specs
   # In Ruby 3.5 (HEAD) the CGI library has been pared down, so we also need to depend on gem "cgi" for ruby@head

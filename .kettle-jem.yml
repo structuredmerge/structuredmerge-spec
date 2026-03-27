@@ -82,6 +82,19 @@ engines:
   - ruby
   - jruby
   - truffleruby
+# README top logo mode.
+# Controls whether the generated README header includes the GitHub org logo,
+# the project logo, or both after the shared Galtzo and ruby-lang logos.
+# Supported values: org, project, org_and_project
+# Default (when key is absent): org_and_project
+readme:
+  top_logo_mode: org
+# Self-test / templating CI threshold.
+# Set to a number from 0 to 100 to fail `rake kettle:jem:selftest` once
+# divergence reaches or exceeds that percent. Leave blank to report only.
+# Divergence is currently measured as the percent of produced files that would
+# change or be added during templating (100 - unchanged-file score).
+min_divergence_threshold:
 # kettle-jem configuration file
 #
 # This file is both configuration and field guide for templated gems.

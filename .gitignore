@@ -52,4 +52,4 @@ Appraisal.*.gemfile.lock
 .floss_funding.*.lock
 /tmp/*
 !/tmp/.gitignore
-# direnv - brew install direnv
+# Local environment overrides (KEY=value, loaded by mise via dotenvy)

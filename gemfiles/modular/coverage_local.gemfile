@@ -3,13 +3,9 @@
 # Local path overrides for development.
 # Loaded by the associated non-local gemfile when KETTLE_RB_DEV != "false".
 
-require File.expand_path("../../../nomono/lib/nomono/bundler", __dir__)
+require "nomono/bundler"
 
-local_gems = %w[
-  kettle-dev
-  kettle-test
-  kettle-soup-cover
-]
+local_gems = %w[kettle-dev kettle-test kettle-soup-cover]
 
 # export VENDORED_GEMS=kettle-dev,kettle-test,kettle-soup-cover
 platform :mri do
@@ -19,6 +15,6 @@ platform :mri do
     path_env: "KETTLE_RB_DEV",
     vendored_gems_env: "VENDORED_GEMS",
     vendor_gem_dir_env: "VENDOR_GEM_DIR",
-    debug_env: "KETTLE_DEV_DEBUG",
+    debug_env: "KETTLE_DEV_DEBUG"
   )
 end

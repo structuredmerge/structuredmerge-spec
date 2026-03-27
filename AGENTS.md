@@ -2,8 +2,9 @@
 
 ## 🎯 Project Overview
 
-TreeHaver is a **cross-Ruby adapter for AST parsing libraries** - think Faraday for parsing. It provides a unified API across 10 different backends (tree-sitter, Prism, Psych, Citrus, Parslet, etc.) that works on MRI, JRuby, and TruffleRuby.
-**Core Philosophy**: Write once, run anywhere. Learn once, write anywhere.
+### Running Commands
+
+Always make commands self-contained. Use `mise exec -C /home/pboling/src/kettle-rb/prism-merge -- ...` so the command gets the project environment in the same invocation.
 
 ## ⚠️ AI Agent Terminal Limitations
 
@@ -166,7 +167,8 @@ Template updates preserve custom code wrapped in freeze blocks:
 
 ### Backend Registry Pattern
 
-Single file (disable coverage threshold):
+For single file, targeted, or partial spec runs the coverage threshold **must** be disabled.
+Use the `K_SOUP_COV_MIN_HARD=false` environment variable to disable hard failure:
 
 ```ruby
 # In external gem (e.g., commonmarker-merge)
@@ -248,11 +250,11 @@ kettle-changelog && kettle-release
 
 ## 💡 Key Insights
 
-1. **Backend pollution**: MRI backend loads native tree-sitter, preventing FFI backend from working. Always run FFI specs first.
-2. **Language caching**: `LanguageRegistry` caches loaded languages. Clear with `LanguageRegistry.clear_cache!` in tests.
-3. **Backend compatibility**: Check `TreeHaver.capabilities` for backend-specific features (incremental parsing, queries, etc.).
-4. **Grammar registration**: Use `GrammarFinder` for tree-sitter, `CitrusGrammarFinder` for Citrus, `ParsletGrammarFinder` for Parslet.
-5. **Exception mapping**: TreeHaver catches backend exceptions and converts to `TreeHaver::NotAvailable` for consistent error handling.
+- `grep_search` instead of `grep` command
+- `file_search` instead of `find` command
+- `read_file` instead of `cat` command
+- `list_dir` instead of `ls` command
+- `replace_string_in_file` or `create_file` instead of `sed` / manual editing
 
 # AGENTS.md - Development Guide
 
@@ -332,6 +334,8 @@ gemfiles/
 ├── commit-subjects-goalie.txt # Commit subject prefix filters
 └── footer-template.erb.txt    # Commit footer ERB template
 ```
+
+Full suite spec runs:
 
 ```bash
 mise exec -C /path/to/project -- bundle exec rspec

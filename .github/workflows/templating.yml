@@ -40,7 +40,7 @@ jobs:
           # Latest Ruby
           - ruby: "ruby"
             appraisal: "templating"
-            exec_cmd: "rake test"
+            exec_cmd: "rake kettle:jem:selftest"
             gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
@@ -73,5 +73,5 @@ jobs:
         if: ${{ steps.bundleAppraisalAttempt1.outcome == 'failure' }}
         run: bundle exec appraisal ${{ matrix.appraisal }} install
 
-      - name: Tests for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
+      - name: Templating self-test for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
