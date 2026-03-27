@@ -26,6 +26,7 @@
 #    - Broken workflow indicates that a new contributor will have a bad time
 #
 appraise "unlocked_deps" do
+  eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/documentation.gemfile"
   eval_gemfile "modular/optional.gemfile"
@@ -88,6 +89,7 @@ end
 # Only run coverage on the latest version of Ruby
 appraise "coverage" do
   # We could add cgi here to get rid of the warning from simplecov-rcov
+  eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/optional.gemfile"
   eval_gemfile "modular/rspec.gemfile"
@@ -97,11 +99,13 @@ end
 
 # Only run linter on the latest version of Ruby (but, in support of oldest supported Ruby version)
 appraise "style" do
+  eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/style.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "templating" do
+  eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/templating.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end

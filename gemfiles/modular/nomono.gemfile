@@ -1,0 +1,2 @@
+# Support for eval_nomono_gems in local development
+gem "nomono", "~> 1.0"

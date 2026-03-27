@@ -18,6 +18,9 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Include dependencies from tree_haver.gemspec
 gemspec
 
+# Support for *_local modular gemfiles (not-a-monorepo)
+eval_gemfile "gemfiles/modular/nomono.gemfile"
+
 # Templating (env-switched: KETTLE_RB_DEV=true for local paths)
 eval_gemfile "gemfiles/modular/templating.gemfile"
 
