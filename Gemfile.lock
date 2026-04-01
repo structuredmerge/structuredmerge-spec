@@ -39,9 +39,7 @@ PATH
   remote: /home/pboling/src/kettle-rb/jsonc-merge
   specs:
     jsonc-merge (1.0.1)
-      ast-merge (~> 4.0, >= 4.0.6)
-      tree_haver (~> 5.0, >= 5.0.5)
-      version_gem (~> 1.1, >= 1.1.9)
+      json-merge (>= 1.1.2)
 
 PATH
   remote: /home/pboling/src/kettle-rb/kettle-dev
