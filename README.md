@@ -2100,22 +2100,11 @@ See [CHANGELOG.md][📌changelog] for a list of releases.
 ## 📄 License
 
 The gem is available as open source under the terms of
-the [MIT License][📄license] [![License: MIT][📄license-img]][📄license-ref].
-See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright-notice-explainer].
+the [MIT](MIT.md) [![License: MIT][📄license-img]][📄license-ref].
 
 ### © Copyright
 
-<ul>
-    <li>
-        Copyright (c) 2026 Peter H. Boling, of
-        <a href="https://discord.gg/3qme4XHNKN">
-            Galtzo.com
-            <picture>
-              <img src="https://logos.galtzo.com/assets/images/galtzo-floss/avatar-128px-blank.svg" alt="Galtzo.com Logo (Wordless) by Aboling0, CC BY-SA 4.0" width="24">
-            </picture>
-        </a>, and tree_haver contributors.
-    </li>
-</ul>
+See [LICENSE.md][📄license] for the official copyright notice.
 
 ## 🤑 A request for help
 
@@ -2310,7 +2299,7 @@ Thanks for RTFM. ☺️
 [🔐security]: SECURITY.md
 [🔐security-img]: https://img.shields.io/badge/security-policy-259D6C.svg?style=flat
 [📄copyright-notice-explainer]: https://opensource.stackexchange.com/questions/5778/why-do-licenses-such-as-the-mit-license-specify-a-single-year
-[📄license]: LICENSE.txt
+[📄license]: LICENSE.md
 [📄license-ref]: https://opensource.org/licenses/MIT
 [📄license-img]: https://img.shields.io/badge/License-MIT-259D6C.svg
 [📄license-compat]: https://dev.to/galtzo/how-to-check-license-compatibility-41h0
