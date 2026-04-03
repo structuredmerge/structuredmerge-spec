@@ -136,7 +136,7 @@ and is the future of Ruby parsing (used by CRuby, JRuby, TruffleRuby).</p>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prism/Language.html" title="TreeHaver::Backends::Prism::Language (class)">Language</a></span>, <span class='object_link'><a href="Prism/Node.html" title="TreeHaver::Backends::Prism::Node (class)">Node</a></span>, <span class='object_link'><a href="Prism/Parser.html" title="TreeHaver::Backends::Prism::Parser (class)">Parser</a></span>, <span class='object_link'><a href="Prism/Tree.html" title="TreeHaver::Backends::Prism::Tree (class)">Tree</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prism/Comment.html" title="TreeHaver::Backends::Prism::Comment (class)">Comment</a></span>, <span class='object_link'><a href="Prism/Language.html" title="TreeHaver::Backends::Prism::Language (class)">Language</a></span>, <span class='object_link'><a href="Prism/Node.html" title="TreeHaver::Backends::Prism::Node (class)">Node</a></span>, <span class='object_link'><a href="Prism/Parser.html" title="TreeHaver::Backends::Prism::Parser (class)">Parser</a></span>, <span class='object_link'><a href="Prism/Tree.html" title="TreeHaver::Backends::Prism::Tree (class)">Tree</a></span>
     
   
 </p>
@@ -333,7 +333,7 @@ and is the future of Ruby parsing (used by CRuby, JRuby, TruffleRuby).</p>
     
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::Prism (module)">Prism</a></span></span><span class='period'>.</span><span class='id identifier rubyid_capabilities'>capabilities</span>
-<span class='comment'># =&gt; { backend: :prism, query: false, bytes_field: true, incremental: false, ruby_only: true }</span></code></pre>
+<span class='comment'># =&gt; { backend: :prism, query: false, bytes_field: true, incremental: false, ruby_only: true, comment_support: :partial }</span></code></pre>
     
   </div>
 
@@ -372,7 +372,9 @@ and is the future of Ruby parsing (used by CRuby, JRuby, TruffleRuby).</p>
 78
 79
 80
-81</pre>
+81
+82
+83</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 70</span>
@@ -387,7 +389,9 @@ and is the future of Ruby parsing (used by CRuby, JRuby, TruffleRuby).</p>
 </span>    <span class='label'>pure_ruby:</span> <span class='kw'>false</span><span class='comma'>,</span>       <span class='comment'># Prism has native C extension (but also pure Ruby mode)
 </span>    <span class='label'>ruby_only:</span> <span class='kw'>true</span><span class='comma'>,</span>        <span class='comment'># Prism only parses Ruby source code
 </span>    <span class='label'>error_tolerant:</span> <span class='kw'>true</span><span class='comma'>,</span>   <span class='comment'># Prism has excellent error recovery
-</span>  <span class='rbrace'>}</span>
+</span>    <span class='label'>comment_support:</span> <span class='symbol'>:partial</span><span class='comma'>,</span>
+    <span class='label'>comment_attachment_hints:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -445,7 +449,7 @@ and is the future of Ruby parsing (used by CRuby, JRuby, TruffleRuby).</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

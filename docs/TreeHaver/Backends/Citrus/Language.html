@@ -383,7 +383,6 @@ that define grammars. This class wraps a Citrus grammar module.</p>
       <pre class="lines">
 
 
-103
 104
 105
 106
@@ -391,10 +390,11 @@ that define grammars. This class wraps a Citrus grammar module.</p>
 108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_grammar_module'>grammar_module</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_grammar_module'>grammar_module</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:parse</span><span class='rparen'>)</span>
@@ -455,12 +455,12 @@ that define grammars. This class wraps a Citrus grammar module.</p>
       <pre class="lines">
 
 
-100
 101
-102</pre>
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backend'>backend</span>
   <span class='ivar'>@backend</span>
@@ -514,12 +514,12 @@ that define grammars. This class wraps a Citrus grammar module.</p>
       <pre class="lines">
 
 
-96
 97
-98</pre>
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_grammar_module'>grammar_module</span>
   <span class='ivar'>@grammar_module</span>
@@ -555,7 +555,6 @@ that define grammars. This class wraps a Citrus grammar module.</p>
       <pre class="lines">
 
 
-170
 171
 172
 173
@@ -578,10 +577,11 @@ that define grammars. This class wraps a Citrus grammar module.</p>
 190
 191
 192
-193</pre>
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_library'>from_library</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>symbol:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Derive language name from path, symbol, or explicit name
@@ -682,16 +682,16 @@ Grammar module uniquely identifies a Citrus language.</p>
       <pre class="lines">
 
 
-136
 137
 138
 139
 140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::Citrus::Language (class)">Language</a></span></span><span class='rparen'>)</span>
@@ -743,12 +743,12 @@ Grammar module uniquely identifies a Citrus language.</p>
       <pre class="lines">
 
 
-146
 147
-148</pre>
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='lbracket'>[</span><span class='ivar'>@backend</span><span class='comma'>,</span> <span class='ivar'>@grammar_module</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -806,16 +806,16 @@ Grammar module uniquely identifies a Citrus language.</p>
       <pre class="lines">
 
 
-118
 119
 120
 121
 122
 123
-124</pre>
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_language_name'>language_name</span>
   <span class='comment'># Derive name from grammar module (e.g., TomlRB::Document -&gt; :toml)
@@ -834,7 +834,7 @@ Grammar module uniquely identifies a Citrus language.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:26 2026 by
+  Generated on Thu Apr  2 20:15:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

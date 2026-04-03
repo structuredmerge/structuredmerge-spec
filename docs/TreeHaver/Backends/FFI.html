@@ -364,7 +364,7 @@ define Tree/Node classes that directly inherit from Base::Tree/Base::Node.</p>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_ffi_gem_available?'>ffi_gem_available?</span>
 
   <span class='comment'># Check if MRI backend has been loaded (which blocks FFI)
-</span>  <span class='op'>!</span><span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../TreeSitter.html" title="TreeSitter (module)">TreeSitter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../TreeSitter.html#Parser-constant" title="TreeSitter::Parser (constant)">Parser</a></span></span><span class='rparen'>)</span>
+</span>  <span class='op'>!</span><span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>TreeSitter</span><span class='op'>::</span><span class='const'>Parser</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -394,7 +394,7 @@ define Tree/Node classes that directly inherit from Base::Tree/Base::Node.</p>
     
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::FFI (module)">FFI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_capabilities'>capabilities</span>
-<span class='comment'># =&gt; { backend: :ffi, parse: true, query: false, bytes_field: true }</span></code></pre>
+<span class='comment'># =&gt; { backend: :ffi, parse: true, query: false, bytes_field: true, comment_support: :nodes_only }</span></code></pre>
     
   </div>
 
@@ -431,7 +431,8 @@ define Tree/Node classes that directly inherit from Base::Tree/Base::Node.</p>
 129
 130
 131
-132</pre>
+132
+133</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/ffi.rb', line 123</span>
@@ -444,6 +445,7 @@ define Tree/Node classes that directly inherit from Base::Tree/Base::Node.</p>
     <span class='label'>query:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='comment'># Query API not yet implemented in FFI backend
 </span>    <span class='label'>bytes_field:</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='label'>incremental:</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='label'>comment_support:</span> <span class='symbol'>:nodes_only</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -613,7 +615,7 @@ STRUCT_BY_VALUE return types (used by ts_tree_root_node, ts_node_child, etc.)</p
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

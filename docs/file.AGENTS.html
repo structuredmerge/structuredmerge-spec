@@ -58,25 +58,82 @@
       </div>
 
       <div id="content"><div id='filecontents'><h1 id="agentsmd---treehaver-development-guide">AGENTS.md - TreeHaver Development Guide</h1>
+
 <h2 id="-project-overview">🎯 Project Overview</h2>
-<p>TreeHaver is a <strong>cross-Ruby adapter for AST parsing libraries</strong> - think Faraday for parsing. It provides a unified API across 10 different backends (tree-sitter, Prism, Psych, Citrus, Parslet, etc.) that works on MRI, JRuby, and TruffleRuby.<br>
-<strong>Core Philosophy</strong>: Write once, run anywhere. Learn once, write anywhere.</p>
+
+<h3 id="running-commands">Running Commands</h3>
+
+<p>Always make commands self-contained. Use <code>mise exec -C /home/pboling/src/kettle-rb/prism-merge -- ...</code> so the command gets the project environment in the same invocation.</p>
+
+<h2 id="️-ai-agent-terminal-limitations">⚠️ AI Agent Terminal Limitations</h2>
+
+<h3 id="terminal-output-is-available-but-each-command-is-isolated">Terminal Output Is Available, but Each Command Is Isolated</h3>
+
+<p><strong>Minimum Supported Ruby</strong>: See the gemspec <code>required_ruby_version</code> constraint.<br>
+<strong>Local Development Ruby</strong>: See <code>.tool-versions</code> for the version used in local development (typically the latest stable Ruby).</p>
+
+<h3 id="use-mise-for-project-environment">Use <code>mise</code> for Project Environment</h3>
+
+<p><strong>CRITICAL</strong>: The canonical project environment lives in <code>mise.toml</code>, with local overrides in <code>.env.local</code> loaded via <code>dotenvy</code>.</p>
+
+<p>⚠️ <strong>Watch for trust prompts</strong>: After editing <code>mise.toml</code> or <code>.env.local</code>, <code>mise</code> may require trust to be refreshed before commands can load the project environment. Until that trust step is handled, commands can appear hung or produce no output, which can look like terminal access is broken.</p>
+
+<p><strong>Recovery rule</strong>: If a <code>mise exec</code> command goes silent or appears hung, assume <code>mise trust</code> is the first thing to check. Recover by running:</p>
+
+<pre class="code language-bash"><code class="language-bash">mise trust -C /home/pboling/src/kettle-rb/tree_haver
+mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bundle exec rspec
+</code></pre>
+
+<p>Do this before spending time on unrelated debugging; in this workspace pattern, silent <code>mise</code> commands are usually a trust problem first.</p>
+
+<pre class="code language-bash"><code class="language-bash">mise trust -C /home/pboling/src/kettle-rb/tree_haver
+</code></pre>
+
+<p>✅ <strong>CORRECT</strong>:</p>
+<pre class="code language-bash"><code class="language-bash">mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bundle exec rspec
+</code></pre>
+
+<p>✅ <strong>CORRECT</strong>:</p>
+<pre class="code language-bash"><code class="language-bash">eval &quot;$(mise env -C /home/pboling/src/kettle-rb/tree_haver -s bash)&quot; &amp;&amp; bundle exec rspec
+</code></pre>
+
+<p>❌ <strong>WRONG</strong>:</p>
+<pre class="code language-bash"><code class="language-bash">cd /home/pboling/src/kettle-rb/tree_haver
+bundle exec rspec
+</code></pre>
+
+<p>❌ <strong>WRONG</strong>:</p>
+<pre class="code language-bash"><code class="language-bash">cd /home/pboling/src/kettle-rb/tree_haver &amp;&amp; bundle exec rspec
+</code></pre>
+
+<h3 id="prefer-internal-tools-over-terminal">Prefer Internal Tools Over Terminal</h3>
+
+<p>Use <code>read_file</code>, <code>list_dir</code>, <code>grep_search</code>, <code>file_search</code> instead of terminal commands for gathering information. Only use terminal for running tests, installing dependencies, and git operations.</p>
+
+<h3 id="workspace-layout">Workspace layout</h3>
+
+<p>❌ <strong>WRONG</strong> — A chained <code>cd</code> does not give directory-change hooks time to update the environment:</p>
+
+<h3 id="never-pipe-test-commands-through-headtail">NEVER Pipe Test Commands Through head/tail</h3>
+
+<p>When you do run tests, keep the full output visible so you can inspect failures completely.</p>
+
 <h2 id="️-architecture-the-adapter-pattern">🏗️ Architecture: The Adapter Pattern</h2>
+
 <h3 id="backend-selection-strategy">Backend Selection Strategy</h3>
-<p>TreeHaver uses <strong>automatic backend selection</strong> with environment-based control:</p>
-<ol>
-  <li>
-<strong>Priority Chain</strong>: Explicit <code>backend:</code> param → <code>TreeHaver.backend</code> → <code>TREE_HAVER_BACKEND</code> env → Auto-detection</li>
-  <li>
-<strong>Auto-detection Order</strong> (MRI): <code>:mri</code> → <code>:rust</code> → <code>:ffi</code> → <code>:citrus</code> → <code>:parslet</code>
-</li>
-  <li>
-<strong>Fallback Behavior</strong>: If tree-sitter runtime missing, auto-falls back to Citrus/Parslet</li>
-</ol>
+
+<p>✅ <strong>CORRECT</strong> — If you need shell syntax first, load the environment in the same command:</p>
+
+<ul>
+  <li>Uses <code>kettle-test</code> for RSpec helpers (stubbed_env, block_is_expected, silent_stream, timecop)</li>
+  <li>Uses <code>Dir.mktmpdir</code> for isolated filesystem tests</li>
+  <li>Spec helper is loaded by <code>.rspec</code> — never add <code>require "spec_helper"</code> to spec files</li>
+</ul>
 
 <p><strong>Engine Exclusivity</strong>: Ruby engines (MRI, JRuby, TruffleRuby) never run simultaneously. Auto-detection order adapts to the running engine - JRuby prioritizes <code>:java</code> and <code>:ffi</code>, TruffleRuby uses pure Ruby backends only.</p>
 
-<p><strong>Environment Variables</strong>:</p>
+<p>❌ <strong>AVOID</strong> when possible:</p>
+
 <ul>
   <li>
 <code>TREE_HAVER_BACKEND</code> - Force single backend (<code>:auto</code>, <code>:mri</code>, <code>:ffi</code>, <code>:citrus</code>, etc.)</li>
@@ -88,98 +145,112 @@
 TreeHaver.allowed_native_backends  # =&gt; [:mri, :ffi] or [:auto] or [:none]
 TreeHaver.backend_allowed?(:ffi)   # =&gt; true/false
 </code></pre>
-    <h3 id="wrappingunwrapping-architecture">Wrapping/Unwrapping Architecture</h3>
-    <p><strong>Critical Design Principle</strong>: <code>TreeHaver::Parser</code> handles ALL wrapping/unwrapping. Backends work with raw objects only.<br>
-<strong>Key files</strong>:</p>
   </li>
+</ul>
+
+<h3 id="wrappingunwrapping-architecture">Wrapping/Unwrapping Architecture</h3>
+
+<p><strong>Critical Design Principle</strong>: <code>TreeHaver::Parser</code> handles ALL wrapping/unwrapping. Backends work with raw objects only.<br>
+<strong>Key files</strong>:</p>
+<ul>
   <li>
 <code>WRAPPING-ARCHITECTURE.md</code> - Complete unwrapping contract</li>
   <li>
-<code>lib/tree_haver/parser.rb</code> - The only place that wraps/unwraps objects<br>
-<strong>Language Object Flow</strong>:
-    <ol>
-      <li>User passes: <code>TreeHaver::Backends::*::Language</code> wrapper</li>
-      <li>Parser unwraps via <code>#unwrap_language</code> (checks backend compatibility)</li>
-      <li>Backend receives appropriate raw object (MRI: <code>::TreeSitter::Language</code>, Rust: String, FFI: wrapper, etc.)<br>
-<strong>Tree Object Flow</strong>:</li>
-      <li>Backend returns raw tree → Parser wraps as <code>TreeHaver::Tree</code>
-</li>
-      <li>Incremental parsing: Parser unwraps <code>old_tree.inner_tree</code> before passing to backend
-        <h3 id="position-api-unification">Position API Unification</h3>
-        <p>See <code>POSITION-API-SUMMARY.md</code> for details. All backends expose:</p>
-      </li>
-    </ol>
+    <p><code>lib/tree_haver/parser.rb</code> - The only place that wraps/unwraps objects<br>
+<strong>Language Object Flow</strong>:</p>
   </li>
+  <li>
+<code>grep_search</code> instead of <code>grep</code> command</li>
+  <li>
+<code>file_search</code> instead of <code>find</code> command</li>
+  <li>
+<code>read_file</code> instead of <code>cat</code> command</li>
+  <li>
+<code>list_dir</code> instead of <code>ls</code> command</li>
+  <li>
+<code>replace_string_in_file</code> or <code>create_file</code> instead of <code>sed</code> / manual editing</li>
+</ul>
+
+<h3 id="position-api-unification">Position API Unification</h3>
+
+<p>✅ <strong>CORRECT</strong> — Run self-contained commands with <code>mise exec</code>:</p>
+
+<ul>
   <li>
 <code>start_line</code>, <code>end_line</code> (1-based, human-readable)</li>
   <li>
 <code>source_position</code> (hash with 1-based lines, 0-based columns)</li>
-  <li>Inheritance: <code>TreeHaver::Base::Node</code> provides defaults, backends override as needed
-    <h2 id="-development-workflows">🔧 Development Workflows</h2>
-    <h3 id="running-tests">Running Tests</h3>
-    <pre class="code language-bash"><code class="language-bash"># Full suite (required for coverage thresholds)
-bundle exec rspec
+  <li>Inheritance: <code>TreeHaver::Base::Node</code> provides defaults, backends override as needed</li>
+</ul>
+
+<h2 id="-development-workflows">🔧 Development Workflows</h2>
+
+<h3 id="running-tests">Running Tests</h3>
+
+<pre class="code language-bash"><code class="language-bash"># Full suite (required for coverage thresholds)
+mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bundle exec rspec
 # Single file (disable coverage threshold)
-K_SOUP_COV_MIN_HARD=false bundle exec rspec spec/tree_haver/parser_spec.rb
+mise exec -C /home/pboling/src/kettle-rb/tree_haver -- env K_SOUP_COV_MIN_HARD=false bundle exec rspec spec/tree_haver/parser_spec.rb
 # FFI backend isolation (run BEFORE other tests to avoid backend pollution)
-bundle exec rake ffi_specs
+mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bundle exec rake ffi_specs
 </code></pre>
-    <p>Note: Always run commands after a standalone <code>cd</code> so <code>direnv</code> can load ENV. Do NOT chain <code>cd</code> with <code>&amp;&amp;</code>.<br>
-Example (two separate commands):</p>
-    <pre class="code language-bash"><code class="language-bash">cd /home/pboling/src/kettle-rb/tree_haver
-bin/rspec spec/tree_haver/parser_spec.rb
-</code></pre>
-    <p><strong>Critical</strong>: FFI specs run FIRST in a clean environment (<code>:ffi_backend</code> tag triggers isolated mode). See <code>Rakefile</code> lines 66-95 for SimpleCov merging strategy.</p>
-    <h3 id="coverage-reports">Coverage Reports</h3>
-    <p>Use <code>bin/rake coverage</code> - pre-configured ENV variables for coverage reporting<br>
-Use <code>bin/rspec</code> - Allows customization of ENV variables for coverage reporting with specific settings<br>
-<strong>Key env vars</strong>:</p>
-  </li>
+
+<p><strong>CRITICAL</strong>: All constructors and public API methods that accept keyword arguments MUST include <code>**options</code> as the final parameter for forward compatibility.</p>
+
+<h3 id="coverage-reports">Coverage Reports</h3>
+
+<p>Use <code>mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bin/rake coverage</code> - pre-configured ENV variables for coverage reporting<br>
+Use <code>mise exec -C /home/pboling/src/kettle-rb/tree_haver -- bin/rspec</code> - Allows customization of ENV variables for coverage reporting with specific settings<br>
+<strong>Key env vars</strong> (set in <code>mise.toml</code>, with local overrides in <code>.env.local</code>):</p>
+<ul>
   <li>
-<code>K_SOUP_COV_DO=true</code> - Enable coverage (default in <code>.envrc</code>)</li>
+<code>K_SOUP_COV_DO=true</code> - Enable coverage</li>
   <li>
 <code>K_SOUP_COV_MIN_LINE=83</code> - Line coverage threshold</li>
   <li>
 <code>K_SOUP_COV_MIN_BRANCH=72</code> - Branch coverage threshold</li>
   <li>
-<code>K_SOUP_COV_MIN_HARD=true</code> - Fail if thresholds not met</li>
+<code>K_SOUP_COV_MIN_HARD=false</code> - Fail if thresholds not met</li>
   <li>
-<code>K_SOUP_COV_FORMATTERS="json,xml,lcov,tty"</code> - Output formats</li>
+<code>K_SOUP_COV_FORMATTERS="html,xml,rcov,lcov,json,tty"</code> - Output formats</li>
   <li>
 <code>K_SOUP_COV_COMMAND_NAME</code> - Unique name for SimpleCov merging<br>
 <strong>Never</strong> review HTML reports - use JSON (preferred), XML, LCOV, or RCOV.<br>
-Use <code>kettle-soup-cover -d</code> - Reads SimpleCov output generated by prior command; prints human &amp; AI digestable report.
-    <h3 id="grammar-discovery">Grammar Discovery</h3>
-    <p><code>GrammarFinder</code> auto-discovers tree-sitter libraries across platforms:</p>
-    <pre class="code language-ruby"><code class="language-ruby">finder = TreeHaver::GrammarFinder.new(:toml)
+Use <code>kettle-soup-cover -d</code> - Reads SimpleCov output generated by prior command; prints human &amp; AI digestable report.</li>
+</ul>
+
+<h3 id="grammar-discovery">Grammar Discovery</h3>
+
+<p>Only use terminal for:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">finder = TreeHaver::GrammarFinder.new(:toml)
 if finder.available?
-finder.register!  # Now: TreeHaver::Language.toml
+  finder.register!  # Now: TreeHaver::Language.toml
 end
 </code></pre>
-    <p><strong>Search order</strong>: ENV var (<code>TREE_SITTER_TOML_PATH</code>) → extra_paths → base dirs (<code>/usr/lib</code>, <code>/usr/local/lib</code>, etc.)<br>
+<p><strong>Search order</strong>: ENV var (<code>TREE_SITTER_TOML_PATH</code>) → extra_paths → base dirs (<code>/usr/lib</code>, <code>/usr/local/lib</code>, etc.)<br>
 <strong>Security</strong>: Path validation rejects <code>../</code>, validates extensions (<code>.so</code>, <code>.dylib</code>, <code>.dll</code>)</p>
-  </li>
-</ul>
 
 <h3 id="working-examples">Working Examples</h3>
 
-<p>The <code>examples/</code> directory contains fully functional scripts demonstrating TreeHaver patterns:</p>
+<p>❌ <strong>WRONG</strong> — Do not rely on a previous command changing directories:</p>
 
 <ul>
-  <li>
-<code>auto_json.rb</code> - Backend auto-selection with JSON parsing</li>
-  <li>
-<code>backend_selection.rb</code> - Testing environment variable effects on backend availability</li>
-  <li>
-<code>parser_for_citrus.rb</code> - Citrus backend usage patterns</li>
-  <li>Real-world usage patterns for grammar registration, language loading, and tree traversal</li>
+  <li>Running tests (<code>bundle exec rspec</code>)</li>
+  <li>Installing dependencies (<code>bundle install</code>)</li>
+  <li>Git operations that require interaction</li>
+  <li>Commands that actually need to execute (not just gather info)</li>
 </ul>
 
-<p>These are excellent references for understanding how components work together in practice.</p>
+<p>Template updates preserve custom code wrapped in freeze blocks:</p>
 
 <h2 id="-project-conventions">📝 Project Conventions</h2>
+
 <h3 id="backend-registry-pattern">Backend Registry Pattern</h3>
-<p>External gems register their availability via <code>BackendRegistry</code>:</p>
+
+<p>For single file, targeted, or partial spec runs the coverage threshold <strong>must</strong> be disabled.<br>
+Use the <code>K_SOUP_COV_MIN_HARD=false</code> environment variable to disable hard failure:</p>
+
 <pre class="code language-ruby"><code class="language-ruby"># In external gem (e.g., commonmarker-merge)
 TreeHaver::BackendRegistry.register_tag(
   :commonmarker_backend,
@@ -187,11 +258,12 @@ TreeHaver::BackendRegistry.register_tag(
   require_path: &quot;commonmarker/merge&quot;,
 ) { Commonmarker::Merge::Backend.available? }
 </code></pre>
-<p>This enables dynamic RSpec tag filtering without hardcoding backend knowledge.</p>
+
+<p><strong>Key ENV variables</strong> (set in <code>mise.toml</code>, with local overrides in <code>.env.local</code>):</p>
 
 <h3 id="kettle-dev-tooling">Kettle-Dev Tooling</h3>
 
-<p>This project uses <code>kettle-dev</code> (sister project in kettle-rb org) for gem maintenance automation:</p>
+<p>This gem is part of the <strong>kettle-rb</strong> ecosystem. Key development tools:</p>
 
 <ul>
   <li>
@@ -203,25 +275,37 @@ TreeHaver::BackendRegistry.register_tag(
 </ul>
 
 <h3 id="version-requirements">Version Requirements</h3>
+
 <ul>
   <li>Ruby &gt;= 3.2.0 (gemspec line 19)</li>
   <li>
 <code>ruby_tree_sitter</code> v2.0+ required (exception hierarchy changed: all inherit from <code>Exception</code>, not <code>StandardError</code>)</li>
-  <li>Tree-sitter runtime compatibility: Backend-specific (see README “Backend Requirements”)
-    <h2 id="-testing-patterns">🧪 Testing Patterns</h2>
-    <h3 id="dependency-tag-system">Dependency Tag System</h3>
-    <p>RSpec tests use dynamic tags based on backend availability:</p>
-    <pre class="code language-ruby"><code class="language-ruby">RSpec.describe(&quot;feature&quot;, :toml_parsing, :commonmarker_backend) do
-# Auto-skipped if toml-rb or commonmarker unavailable
+  <li>Tree-sitter runtime compatibility: Backend-specific (see README “Backend Requirements”)</li>
+</ul>
+
+<h2 id="-testing-patterns">🧪 Testing Patterns</h2>
+
+<h3 id="dependency-tag-system">Dependency Tag System</h3>
+
+<p>✅ <strong>PREFERRED</strong> — Use internal tools:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">RSpec.describe(&quot;feature&quot;, :toml_parsing, :commonmarker_backend) do
+  # Auto-skipped if toml-rb or commonmarker unavailable
 end
 </code></pre>
-    <p>Tags resolved by <code>lib/tree_haver/rspec/dependency_tags.rb</code> via <code>BackendRegistry</code>.</p>
-    <h3 id="backend-conflict-protection">Backend Conflict Protection</h3>
-    <p><code>TreeHaver.backend_protect</code> (default: true) prevents incompatible backend combinations (e.g., FFI after MRI). Tests may disable this with <code>TreeHaver.backend_protect = false</code>.</p>
-    <h3 id="matrix-testing">Matrix Testing</h3>
-    <p><code>spec_matrix/</code> contains backend compatibility matrix tests with minimal helper to avoid pre-loading dependencies.</p>
-    <h2 id="-critical-files">🔍 Critical Files</h2>
-  </li>
+<p>Tags resolved by <code>lib/tree_haver/rspec/dependency_tags.rb</code> via <code>BackendRegistry</code>.</p>
+
+<h3 id="backend-conflict-protection">Backend Conflict Protection</h3>
+
+<p>Gemfiles are split into modular components under <code>gemfiles/modular/</code>. Each component handles a specific concern (coverage, style, debug, etc.). The main <code>Gemfile</code> loads these modular components via <code>eval_gemfile</code>.</p>
+
+<h3 id="matrix-testing">Matrix Testing</h3>
+
+<p>Use dependency tags to conditionally skip tests when optional dependencies are not available:</p>
+
+<h2 id="-critical-files">🔍 Critical Files</h2>
+
+<ul>
   <li>
 <code>lib/tree_haver/parser.rb</code> - Main facade, handles all wrapping/unwrapping (439 lines)</li>
   <li>
@@ -233,9 +317,12 @@ end
   <li>
 <code>POSITION-API-SUMMARY.md</code> - Position API unification across backends (136 lines)</li>
   <li>
-<code>lib/tree_haver.rb</code> - Module-level backend configuration and language registry
-    <h2 id="-common-tasks">🚀 Common Tasks</h2>
-    <pre class="code language-bash"><code class="language-bash"># Run all specs with coverage
+<code>lib/tree_haver.rb</code> - Module-level backend configuration and language registry</li>
+</ul>
+
+<h2 id="-common-tasks">🚀 Common Tasks</h2>
+
+<pre class="code language-bash"><code class="language-bash"># Run all specs with coverage
 bundle exec rake spec
 # Generate coverage report and open in browser
 bundle exec rake coverage
@@ -247,35 +334,226 @@ bundle exec rake bench
 # Prepare changelog for release, build and release
 kettle-changelog &amp;&amp; kettle-release
 </code></pre>
-    <h2 id="-integration-points">🌊 Integration Points</h2>
-  </li>
+
+<h2 id="-integration-points">🌊 Integration Points</h2>
+
+<ul>
   <li>
-<strong>Backends</strong>: 10 backends in <code>lib/tree_haver/backends/</code> (mri, rust, ffi, java, prism, psych, citrus, parslet, commonmarker, markly)</li>
+<code>K_SOUP_COV_DO=true</code> – Enable coverage</li>
   <li>
-<strong>External Gems</strong>: Uses <code>*-merge</code> family (toml-merge, commonmarker-merge, etc.) via backend registry</li>
+<code>K_SOUP_COV_MIN_LINE</code> – Line coverage threshold</li>
   <li>
-<strong>RSpec</strong>: Deep integration via <code>tree_haver/rspec.rb</code> for dependency tagging</li>
+<code>K_SOUP_COV_MIN_BRANCH</code> – Branch coverage threshold</li>
   <li>
-<strong>SimpleCov</strong>: Custom merging strategy for multi-task coverage (FFI specs + main specs)
-    <h2 id="-key-insights">💡 Key Insights</h2>
-    <ol>
-      <li>
-<strong>Backend pollution</strong>: MRI backend loads native tree-sitter, preventing FFI backend from working. Always run FFI specs first.</li>
-      <li>
-<strong>Language caching</strong>: <code>LanguageRegistry</code> caches loaded languages. Clear with <code>LanguageRegistry.clear_cache!</code> in tests.</li>
-      <li>
-<strong>Backend compatibility</strong>: Check <code>TreeHaver.capabilities</code> for backend-specific features (incremental parsing, queries, etc.).</li>
-      <li>
-<strong>Grammar registration</strong>: Use <code>GrammarFinder</code> for tree-sitter, <code>CitrusGrammarFinder</code> for Citrus, <code>ParsletGrammarFinder</code> for Parslet.</li>
-      <li>
-<strong>Exception mapping</strong>: TreeHaver catches backend exceptions and converts to <code>TreeHaver::NotAvailable</code> for consistent error handling.</li>
-    </ol>
-  </li>
+<code>K_SOUP_COV_MIN_HARD=true</code> – Fail if thresholds not met</li>
 </ul>
+
+<h2 id="-key-insights">💡 Key Insights</h2>
+
+<ul>
+  <li>
+<code>grep_search</code> instead of <code>grep</code> command</li>
+  <li>
+<code>file_search</code> instead of <code>find</code> command</li>
+  <li>
+<code>read_file</code> instead of <code>cat</code> command</li>
+  <li>
+<code>list_dir</code> instead of <code>ls</code> command</li>
+  <li>
+<code>replace_string_in_file</code> or <code>create_file</code> instead of <code>sed</code> / manual editing</li>
+</ul>
+
+<h1 id="agentsmd---development-guide">AGENTS.md - Development Guide</h1>
+
+<p>This project is a <strong>RubyGem</strong> managed with the <a href="https://github.com/kettle-rb">kettle-rb</a> toolchain.</p>
+
+<pre class="code language-bash"><code class="language-bash">mise trust -C /path/to/project
+mise exec -C /path/to/project -- bundle exec rspec
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">mise exec -C /path/to/project -- bundle exec rspec
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">eval &quot;$(mise env -C /path/to/project -s bash)&quot; &amp;&amp; bundle exec rspec
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">cd /path/to/project
+bundle exec rspec
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">cd /path/to/project &amp;&amp; bundle exec rspec
+</code></pre>
+
+<ul>
+  <li>
+<code>run_in_terminal</code> for information gathering</li>
+</ul>
+
+<h2 id="️-architecture">🏗️ Architecture</h2>
+
+<h3 id="toolchain-dependencies">Toolchain Dependencies</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>kettle-dev</code></td>
+      <td>Development dependency: Rake tasks, release tooling, CI helpers</td>
+    </tr>
+    <tr>
+      <td><code>kettle-test</code></td>
+      <td>Test infrastructure: RSpec helpers, stubbed_env, timecop</td>
+    </tr>
+    <tr>
+      <td><code>kettle-jem</code></td>
+      <td>Template management and gem scaffolding</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="executables-from-kettle-dev">Executables (from kettle-dev)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Executable</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>kettle-release</code></td>
+      <td>Full gem release workflow</td>
+    </tr>
+    <tr>
+      <td><code>kettle-pre-release</code></td>
+      <td>Pre-release validation</td>
+    </tr>
+    <tr>
+      <td><code>kettle-changelog</code></td>
+      <td>Changelog generation</td>
+    </tr>
+    <tr>
+      <td><code>kettle-dvcs</code></td>
+      <td>DVCS (git) workflow automation</td>
+    </tr>
+    <tr>
+      <td><code>kettle-commit-msg</code></td>
+      <td>Commit message validation</td>
+    </tr>
+    <tr>
+      <td><code>kettle-check-eof</code></td>
+      <td>EOF newline validation</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="-project-structure">📁 Project Structure</h2>
+
+<pre class="code ruby"><code class="ruby">lib/
+├── &lt;gem_namespace&gt;/           # Main library code
+│   └── version.rb             # Version constant (managed by kettle-release)
+spec/
+├── fixtures/                  # Test fixture files (NOT auto-loaded)
+├── support/
+│   ├── classes/               # Helper classes for specs
+│   └── shared_contexts/       # Shared RSpec contexts
+├── spec_helper.rb             # RSpec configuration (loaded by .rspec)
+gemfiles/
+├── modular/                   # Modular Gemfile components
+│   ├── coverage.gemfile       # SimpleCov dependencies
+│   ├── debug.gemfile          # Debugging tools
+│   ├── documentation.gemfile  # YARD/documentation
+│   ├── optional.gemfile       # Optional dependencies
+│   ├── rspec.gemfile          # RSpec testing
+│   ├── style.gemfile          # RuboCop/linting
+│   └── x_std_libs.gemfile     # Extracted stdlib gems
+├── ruby_*.gemfile             # Per-Ruby-version Appraisal Gemfiles
+└── Appraisal.root.gemfile     # Root Gemfile for Appraisal builds
+.git-hooks/
+├── commit-msg                 # Commit message validation hook
+├── prepare-commit-msg         # Commit message preparation
+├── commit-subjects-goalie.txt # Commit subject prefix filters
+└── footer-template.erb.txt    # Commit footer ERB template
+</code></pre>
+
+<p>Full suite spec runs:</p>
+
+<pre class="code language-bash"><code class="language-bash">mise exec -C /path/to/project -- bundle exec rspec
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">mise exec -C /path/to/project -- env K_SOUP_COV_MIN_HARD=false bundle exec rspec spec/path/to/spec.rb
+</code></pre>
+
+<pre class="code language-bash"><code class="language-bash">mise exec -C /path/to/project -- bin/rake coverage
+mise exec -C /path/to/project -- bin/kettle-soup-cover -d
+</code></pre>
+
+<h3 id="code-quality">Code Quality</h3>
+
+<pre class="code language-bash"><code class="language-bash">mise exec -C /path/to/project -- bundle exec rake reek
+mise exec -C /path/to/project -- bundle exec rubocop-gradual
+</code></pre>
+
+<h3 id="releasing">Releasing</h3>
+
+<pre class="code language-bash"><code class="language-bash">bin/kettle-pre-release    # Validate everything before release
+bin/kettle-release        # Full release workflow
+</code></pre>
+
+<h3 id="freeze-block-preservation">Freeze Block Preservation</h3>
+
+<pre class="code language-ruby"><code class="language-ruby"># kettle-jem:freeze
+# ... custom code preserved across template runs ...
+# kettle-jem:unfreeze
+</code></pre>
+
+<h3 id="modular-gemfile-architecture">Modular Gemfile Architecture</h3>
+
+<h3 id="forward-compatibility-with-options">Forward Compatibility with <code>**options</code>
+</h3>
+
+<h3 id="test-infrastructure">Test Infrastructure</h3>
+
+<h3 id="environment-variable-helpers">Environment Variable Helpers</h3>
+
+<pre class="code language-ruby"><code class="language-ruby">before do
+  stub_env(&quot;MY_ENV_VAR&quot; =&gt; &quot;value&quot;)
+end
+
+before do
+  hide_env(&quot;HOME&quot;, &quot;USER&quot;)
+end
+</code></pre>
+
+<h3 id="dependency-tags">Dependency Tags</h3>
+
+<pre class="code language-ruby"><code class="language-ruby">RSpec.describe SomeClass, :prism_merge do
+  # Skipped if prism-merge is not available
+end
+</code></pre>
+
+<h2 id="-common-pitfalls">🚫 Common Pitfalls</h2>
+
+<ol>
+  <li>
+<strong>NEVER add backward compatibility</strong> — No shims, aliases, or deprecation layers. Bump major version instead.</li>
+  <li>
+<strong>NEVER expect <code>cd</code> to persist</strong> — Every terminal command is isolated; use a self-contained <code>mise exec -C ... -- ...</code> invocation.</li>
+  <li>
+<strong>NEVER pipe test output through <code>head</code>/<code>tail</code></strong> — Run tests without truncation so you can inspect the full output.</li>
+  <li>
+<strong>Terminal commands do not share shell state</strong> — Previous <code>cd</code>, <code>export</code>, aliases, and functions are not available to the next command.</li>
+</ol>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

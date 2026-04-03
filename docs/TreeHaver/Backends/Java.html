@@ -620,7 +620,7 @@ in that directory (recursively) are added to the JRuby classpath.</p>
     
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::Java (module)">Java</a></span></span><span class='period'>.</span><span class='id identifier rubyid_capabilities'>capabilities</span>
-<span class='comment'># =&gt; { backend: :java, parse: true, query: true, bytes_field: true, incremental: true }</span></code></pre>
+<span class='comment'># =&gt; { backend: :java, parse: true, query: true, bytes_field: true, incremental: true, comment_support: :nodes_only }</span></code></pre>
     
   </div>
 
@@ -660,7 +660,8 @@ in that directory (recursively) are added to the JRuby classpath.</p>
 235
 236
 237
-238</pre>
+238
+239</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/java.rb', line 226</span>
@@ -675,7 +676,8 @@ in that directory (recursively) are added to the JRuby classpath.</p>
     <span class='label'>query:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='comment'># java-tree-sitter supports the Query API
 </span>    <span class='label'>bytes_field:</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='label'>incremental:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='comment'># java-tree-sitter supports Parser.parse(Tree, String)
-</span>  <span class='rbrace'>}</span>
+</span>    <span class='label'>comment_support:</span> <span class='symbol'>:nodes_only</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
   <span class='comment'># :nocov:
 </span><span class='kw'>end</span></pre>
     </td>
@@ -1060,7 +1062,7 @@ in that directory (recursively) are added to the JRuby classpath.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

@@ -330,18 +330,18 @@ other tree_haver backends.</p>
       <pre class="lines">
 
 
-96
-97
 98
 99
 100
 101
 102
 103
-104</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='symbol'>:ruby</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>backend:</span> <span class='symbol'>:prism</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -484,8 +484,6 @@ other tree_haver backends.</p>
       <pre class="lines">
 
 
-141
-142
 143
 144
 145
@@ -494,10 +492,12 @@ other tree_haver backends.</p>
 148
 149
 150
-151</pre>
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_library'>from_library</span><span class='lparen'>(</span><span class='id identifier rubyid__path'>_path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>symbol:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lang_name'>lang_name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>||</span> <span class='symbol'>:ruby</span>
@@ -628,12 +628,12 @@ other tree_haver backends.</p>
       <pre class="lines">
 
 
-128
-129
-130</pre>
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ruby'>ruby</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ruby</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -710,15 +710,15 @@ other tree_haver backends.</p>
       <pre class="lines">
 
 
-110
-111
 112
 113
 114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Base.html" title="TreeHaver::Base (module)">Base</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Base/Language.html" title="TreeHaver::Base::Language (class)">Language</a></span></span><span class='rparen'>)</span>
@@ -736,7 +736,7 @@ other tree_haver backends.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:26 2026 by
+  Generated on Thu Apr  2 20:15:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

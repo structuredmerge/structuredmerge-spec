@@ -2,7 +2,7 @@
 
 module TreeHaver
   module Version
-    VERSION = "5.0.5"
+    VERSION = "6.0.0"
   end
   VERSION = Version::VERSION # Traditional Constant Location
 end

@@ -336,7 +336,7 @@ language needs its own Citrus grammar (e.g., toml-rb for TOML).</p>
     
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../TreeHaver.html" title="TreeHaver (module)">TreeHaver</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Backends.html" title="TreeHaver::Backends (module)">Backends</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::Citrus (module)">Citrus</a></span></span><span class='period'>.</span><span class='id identifier rubyid_capabilities'>capabilities</span>
-<span class='comment'># =&gt; { backend: :citrus, query: false, bytes_field: true, incremental: false }</span></code></pre>
+<span class='comment'># =&gt; { backend: :citrus, query: false, bytes_field: true, incremental: false, comment_support: :none }</span></code></pre>
     
   </div>
 
@@ -373,7 +373,8 @@ language needs its own Citrus grammar (e.g., toml-rb for TOML).</p>
 77
 78
 79
-80</pre>
+80
+81</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/citrus.rb', line 71</span>
@@ -386,7 +387,8 @@ language needs its own Citrus grammar (e.g., toml-rb for TOML).</p>
 </span>    <span class='label'>bytes_field:</span> <span class='kw'>true</span><span class='comma'>,</span>     <span class='comment'># Citrus::Match provides offset and length
 </span>    <span class='label'>incremental:</span> <span class='kw'>false</span><span class='comma'>,</span>    <span class='comment'># Citrus doesn&#39;t support incremental parsing
 </span>    <span class='label'>pure_ruby:</span> <span class='kw'>true</span><span class='comma'>,</span>       <span class='comment'># Citrus is pure Ruby (portable)
-</span>  <span class='rbrace'>}</span>
+</span>    <span class='label'>comment_support:</span> <span class='symbol'>:none</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -444,7 +446,7 @@ language needs its own Citrus grammar (e.g., toml-rb for TOML).</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

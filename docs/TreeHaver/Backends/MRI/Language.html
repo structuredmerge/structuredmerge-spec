@@ -438,7 +438,7 @@ API across all backends.</p>
         <span class='name'>lang</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../TreeSitter.html#Language-constant" title="TreeSitter::Language (constant)">::TreeSitter::Language</a></span></tt>)</span>
+        <span class='type'>(<tt>::TreeSitter::Language</tt>)</span>
       
       
       
@@ -491,15 +491,15 @@ API across all backends.</p>
       <pre class="lines">
 
 
-138
 139
 140
 141
 142
-143</pre>
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_lang'>lang</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>symbol:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@inner_language</span> <span class='op'>=</span> <span class='id identifier rubyid_lang'>lang</span>
@@ -557,12 +557,12 @@ API across all backends.</p>
       <pre class="lines">
 
 
-124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backend'>backend</span>
   <span class='ivar'>@backend</span>
@@ -577,7 +577,7 @@ API across all backends.</p>
       <div class="method_details ">
   <h3 class="signature " id="inner_language-instance_method">
   
-    #<strong>inner_language</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../TreeSitter.html#Language-constant" title="TreeSitter::Language (constant)">::TreeSitter::Language</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>inner_language</strong>  &#x21d2; <tt>::TreeSitter::Language</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -598,7 +598,7 @@ API across all backends.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../TreeSitter.html#Language-constant" title="TreeSitter::Language (constant)">::TreeSitter::Language</a></span></tt>)</span>
+        <span class='type'>(<tt>::TreeSitter::Language</tt>)</span>
       
       
       
@@ -612,12 +612,12 @@ API across all backends.</p>
       <pre class="lines">
 
 
-120
 121
-122</pre>
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inner_language'>inner_language</span>
   <span class='ivar'>@inner_language</span>
@@ -667,12 +667,12 @@ API across all backends.</p>
       <pre class="lines">
 
 
-128
 129
-130</pre>
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@path</span>
@@ -722,12 +722,12 @@ API across all backends.</p>
       <pre class="lines">
 
 
-132
 133
-134</pre>
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_symbol'>symbol</span>
   <span class='ivar'>@symbol</span>
@@ -759,14 +759,14 @@ API across all backends.</p>
       <pre class="lines">
 
 
-214
 215
 216
 217
-218</pre>
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_library'>from_library</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>symbol:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Derive symbol from path if not provided using shared utility
@@ -848,7 +848,6 @@ Path and symbol uniquely identify a loaded language.</p>
       <pre class="lines">
 
 
-176
 177
 178
 179
@@ -857,10 +856,11 @@ Path and symbol uniquely identify a loaded language.</p>
 182
 183
 184
-185</pre>
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="TreeHaver::Backends::MRI::Language (class)">Language</a></span></span><span class='rparen'>)</span>
@@ -915,12 +915,12 @@ Path and symbol uniquely identify a loaded language.</p>
       <pre class="lines">
 
 
-189
 190
-191</pre>
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='lbracket'>[</span><span class='ivar'>@backend</span><span class='comma'>,</span> <span class='ivar'>@path</span><span class='comma'>,</span> <span class='ivar'>@symbol</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -978,7 +978,6 @@ Path and symbol uniquely identify a loaded language.</p>
       <pre class="lines">
 
 
-150
 151
 152
 153
@@ -992,10 +991,11 @@ Path and symbol uniquely identify a loaded language.</p>
 161
 162
 163
-164</pre>
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_language_name'>language_name</span>
   <span class='comment'># Try to derive from symbol (e.g., &quot;tree_sitter_toml&quot; -&gt; :toml)
@@ -1020,7 +1020,7 @@ Path and symbol uniquely identify a loaded language.</p>
       <div class="method_details ">
   <h3 class="signature " id="to_language-instance_method">
   
-    #<strong>to_language</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../TreeSitter.html#Language-constant" title="TreeSitter::Language (constant)">::TreeSitter::Language</a></span></tt> 
+    #<strong>to_language</strong>  &#x21d2; <tt>::TreeSitter::Language</tt> 
   
 
   
@@ -1045,7 +1045,7 @@ Path and symbol uniquely identify a loaded language.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../TreeSitter.html#Language-constant" title="TreeSitter::Language (constant)">::TreeSitter::Language</a></span></tt>)</span>
+        <span class='type'>(<tt>::TreeSitter::Language</tt>)</span>
       
       
       
@@ -1059,12 +1059,12 @@ Path and symbol uniquely identify a loaded language.</p>
       <pre class="lines">
 
 
-199
 200
-201</pre>
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/mri.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_language'>to_language</span>
   <span class='ivar'>@inner_language</span>
@@ -1079,7 +1079,7 @@ Path and symbol uniquely identify a loaded language.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:26 2026 by
+  Generated on Thu Apr  2 20:15:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

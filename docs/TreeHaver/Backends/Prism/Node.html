@@ -544,12 +544,12 @@
       <pre class="lines">
 
 
-297
-298
-299</pre>
+379
+380
+381</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 379</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
@@ -680,16 +680,16 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-455
-456
-457
-458
-459
-460
-461</pre>
+537
+538
+539
+540
+541
+542
+543</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 455</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 537</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_kwargs'>kwargs</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='op'>&amp;.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
@@ -781,19 +781,19 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424</pre>
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 415</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 497</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_child_by_field_name'>child_by_field_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -856,15 +856,15 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-364
-365
-366
-367
-368
-369</pre>
+446
+447
+448
+449
+450
+451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 364</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -919,14 +919,14 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-333
-334
-335
-336
-337</pre>
+415
+416
+417
+418
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 415</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_end_byte'>end_byte</span>
   <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:location</span><span class='rparen'>)</span>
@@ -980,16 +980,16 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-353
-354
-355
-356
-357
-358
-359</pre>
+435
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 435</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_end_point'>end_point</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='label'>row:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>column:</span> <span class='int'>0</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:location</span><span class='rparen'>)</span>
@@ -1045,19 +1045,19 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399</pre>
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 472</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_error?'>has_error?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1120,12 +1120,12 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-317
-318
-319</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 317</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 399</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kind'>kind</span>
   <span class='id identifier rubyid_type'>type</span>
@@ -1177,13 +1177,13 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-404
-405
-406
-407</pre>
+486
+487
+488
+489</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 486</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_missing?'>missing?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1272,13 +1272,13 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-440
-441
-442
-443</pre>
+522
+523
+524
+525</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 440</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 522</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to_missing?'>respond_to_missing?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_include_private'>include_private</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1331,14 +1331,14 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-324
-325
-326
-327
-328</pre>
+406
+407
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_byte'>start_byte</span>
   <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:location</span><span class='rparen'>)</span>
@@ -1392,16 +1392,16 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-342
-343
-344
-345
-346
-347
-348</pre>
+424
+425
+426
+427
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 424</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_point'>start_point</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='label'>row:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>column:</span> <span class='int'>0</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:location</span><span class='rparen'>)</span>
@@ -1461,18 +1461,18 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-374
-375
-376
-377
-378
-379
-380
-381
-382</pre>
+456
+457
+458
+459
+460
+461
+462
+463
+464</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_text'>text</span>
   <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1530,12 +1530,12 @@ like <code>receiver</code>, <code>message</code>, <code>arguments</code>, etc.</
       <pre class="lines">
 
 
-431
-432
-433</pre>
+513
+514
+515</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 431</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 513</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_text'>text</span>
@@ -1594,16 +1594,16 @@ Example: CallNode → “call_node”, ProgramNode → “program_node”</p>
       <pre class="lines">
 
 
-307
-308
-309
-310
-311
-312
-313</pre>
+389
+390
+391
+392
+393
+394
+395</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_inner_node'>inner_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1622,7 +1622,7 @@ Example: CallNode → “call_node”, ProgramNode → “program_node”</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:26 2026 by
+  Generated on Thu Apr  2 20:15:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

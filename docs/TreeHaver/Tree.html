@@ -828,8 +828,8 @@ to check before calling this method.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span><span class='lparen'>(</span><span class='label'>start_byte:</span><span class='comma'>,</span> <span class='label'>old_end_byte:</span><span class='comma'>,</span> <span class='label'>new_end_byte:</span><span class='comma'>,</span> <span class='label'>start_point:</span><span class='comma'>,</span> <span class='label'>old_end_point:</span><span class='comma'>,</span> <span class='label'>new_end_point:</span><span class='rparen'>)</span>
   <span class='comment'># MRI backend (ruby_tree_sitter) requires an InputEdit object
-</span>  <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TreeSitter.html" title="TreeSitter (module)">TreeSitter</a></span></span><span class='op'>::</span><span class='const'>InputEdit</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@inner_tree</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TreeSitter.html" title="TreeSitter (module)">TreeSitter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TreeSitter.html#Tree-constant" title="TreeSitter::Tree (constant)">Tree</a></span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_input_edit'>input_edit</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../TreeSitter.html" title="TreeSitter (module)">TreeSitter</a></span></span><span class='op'>::</span><span class='const'>InputEdit</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+</span>  <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>TreeSitter</span><span class='op'>::</span><span class='const'>InputEdit</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@inner_tree</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>TreeSitter</span><span class='op'>::</span><span class='const'>Tree</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_input_edit'>input_edit</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>TreeSitter</span><span class='op'>::</span><span class='const'>InputEdit</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='id identifier rubyid_input_edit'>input_edit</span><span class='period'>.</span><span class='id identifier rubyid_start_byte'>start_byte</span> <span class='op'>=</span> <span class='id identifier rubyid_start_byte'>start_byte</span>
     <span class='id identifier rubyid_input_edit'>input_edit</span><span class='period'>.</span><span class='id identifier rubyid_old_end_byte'>old_end_byte</span> <span class='op'>=</span> <span class='id identifier rubyid_old_end_byte'>old_end_byte</span>
     <span class='id identifier rubyid_input_edit'>input_edit</span><span class='period'>.</span><span class='id identifier rubyid_new_end_byte'>new_end_byte</span> <span class='op'>=</span> <span class='id identifier rubyid_new_end_byte'>new_end_byte</span>
@@ -1160,7 +1160,7 @@ end</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

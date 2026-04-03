@@ -92,6 +92,7 @@
   def self.backend_module: () -&gt; Module?</p>
 
 <p># Get capabilities of the current backend<br>
+  # Includes :comment_support with one of :full, :partial, :nodes_only, or :none when available.<br>
   def self.capabilities: () -&gt; Hash[Symbol, untyped]</p>
 
 <p># Register a language helper by name<br>
@@ -294,7 +295,7 @@ end</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:25 2026 by
+  Generated on Thu Apr  2 20:15:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

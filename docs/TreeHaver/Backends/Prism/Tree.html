@@ -173,7 +173,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#comments-instance_method" title="#comments (instance method)">#<strong>comments</strong>  &#x21d2; Array&lt;::Prism::Comment&gt; </a>
+      <a href="#comments-instance_method" title="#comments (instance method)">#<strong>comments</strong>  &#x21d2; Array&lt;Comment&gt; </a>
     
 
     
@@ -402,13 +402,13 @@
       <pre class="lines">
 
 
-230
-231
 232
-233</pre>
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_result'>parse_result</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_result'>parse_result</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
@@ -472,12 +472,12 @@
       <pre class="lines">
 
 
-228
-229
-230</pre>
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_result'>parse_result</span>
   <span class='ivar'>@parse_result</span>
@@ -497,7 +497,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="comments-instance_method">
   
-    #<strong>comments</strong>  &#x21d2; <tt>Array&lt;::Prism::Comment&gt;</tt> 
+    #<strong>comments</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Comment.html" title="TreeHaver::Backends::Prism::Comment (class)">Comment</a></span>&gt;</tt> 
   
 
   
@@ -522,7 +522,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;::Prism::Comment&gt;</tt>)</span>
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Comment.html" title="TreeHaver::Backends::Prism::Comment (class)">Comment</a></span>&gt;</tt>)</span>
       
       
       
@@ -536,15 +536,25 @@
       <pre class="lines">
 
 
-266
-267
-268</pre>
+268
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_comments'>comments</span>
-  <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span>
+  <span class='ivar'>@comments</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='id identifier rubyid_hint_map'>hint_map</span> <span class='op'>=</span> <span class='id identifier rubyid_comment_hint_map'>comment_hint_map</span>
+    <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_comment'>comment</span><span class='op'>|</span>
+      <span class='const'><span class='object_link'><a href="Comment.html" title="TreeHaver::Backends::Prism::Comment (class)">Comment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Base/Comment.html#initialize-instance_method" title="TreeHaver::Base::Comment#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>attachment_hint:</span> <span class='id identifier rubyid_hint_map'>hint_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_comment'>comment</span><span class='period'>.</span><span class='id identifier rubyid_object_id'>object_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -593,12 +603,12 @@
       <pre class="lines">
 
 
-280
-281
-282</pre>
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 287</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_data_loc'>data_loc</span>
   <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_data_loc'>data_loc</span>
@@ -650,12 +660,12 @@
       <pre class="lines">
 
 
-252
-253
-254</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>
@@ -707,12 +717,12 @@
       <pre class="lines">
 
 
-245
-246
-247</pre>
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_errors?'>has_errors?</span>
   <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_failure?'>failure?</span>
@@ -764,12 +774,12 @@
       <pre class="lines">
 
 
-273
-274
-275</pre>
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 280</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_magic_comments'>magic_comments</span>
   <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_magic_comments'>magic_comments</span>
@@ -825,12 +835,12 @@
       <pre class="lines">
 
 
-238
-239
-240</pre>
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_node'>root_node</span>
   <span class='const'><span class='object_link'><a href="Node.html" title="TreeHaver::Backends::Prism::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Node.html#initialize-instance_method" title="TreeHaver::Backends::Prism::Node#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
@@ -882,12 +892,12 @@
       <pre class="lines">
 
 
-259
-260
-261</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/backends/prism.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings'>warnings</span>
   <span class='ivar'>@parse_result</span><span class='period'>.</span><span class='id identifier rubyid_warnings'>warnings</span>
@@ -902,7 +912,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 19 09:34:26 2026 by
+  Generated on Thu Apr  2 20:15:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-4.0.1).
 </div>

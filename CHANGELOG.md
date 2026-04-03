@@ -20,6 +20,25 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [6.0.0] - 2026-04-02
+
+- TAG: [v6.0.0][6.0.0t]
+- COVERAGE: 84.62% -- 2244/2652 lines in 31 files
+- BRANCH COVERAGE: 74.73% -- 905/1211 branches in 31 files
+- 92.55% documented
+
+### Added
+
 - Added descriptive `:comment_support` capability reporting for built-in backends (`:full`, `:partial`, `:nodes_only`, `:none`)
 - Added `TreeHaver::Base::Comment` plus Prism-backed normalized comment wrappers with text, type, and location access
 - Added optional normalized attachment hints for strong backends so downstream merge gems can distinguish native leading, inline, and trailing ownership from source-only fallback cases
@@ -34,14 +53,6 @@ Please file a bug if you notice a violation of semantic versioning.
   - PolyForm-Small-Business-1.0.0
   - LicenseRef-Big-Time-Public-License
   - Custom - See [LICENSE.md](LICENSE.md)
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## [5.0.5] - 2026-02-18
 
@@ -1351,7 +1362,9 @@ Despite the major version bump to 3.0.0 (following semver due to the breaking `L
 
 - Initial release
 
-[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...HEAD
+[Unreleased]: https://github.com/kettle-rb/tree_haver/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...v6.0.0
+[6.0.0t]: https://github.com/kettle-rb/tree_haver/releases/tag/v6.0.0
 [5.0.6]: https://github.com/kettle-rb/tree_haver/compare/v5.0.5...v5.0.6
 [5.0.6t]: https://github.com/kettle-rb/tree_haver/releases/tag/v5.0.6
 [5.0.5]: https://github.com/kettle-rb/tree_haver/compare/v5.0.4...v5.0.5
