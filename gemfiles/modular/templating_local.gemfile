@@ -15,7 +15,6 @@ local_gems = %w[
   bash-merge
   dotenv-merge
   json-merge
-  jsonc-merge
   markdown-merge
   prism-merge
   psych-merge
