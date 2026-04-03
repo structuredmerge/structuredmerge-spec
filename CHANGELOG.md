@@ -29,6 +29,11 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - tree_stump v0.2.0
 - Prism-backed comment integration now advertises native ownership hints through the shared `TreeHaver::Base::Comment` surface instead of leaving merge gems to rediscover those relationships ad hoc
+- **BREAKING**: License changed from MIT to your choice of:
+  - AGPL-3.0-only
+  - PolyForm-Small-Business-1.0.0
+  - LicenseRef-Big-Time-Public-License
+  - Custom - See [LICENSE.md](LICENSE.md)
 
 ### Deprecated
 
