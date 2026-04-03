@@ -108,7 +108,11 @@ readme:
 #   - Any non-MIT license adds a "contact for commercial license" prompt.
 #   - When MIT (or AGPL), a PolyForm variant, AND LicenseRef-Big-Time-Public-License
 #     are all present, a use-case guide table is added to README and LICENSE.md.
-licenses: [MIT]
+licenses:
+  - AGPL-3.0-only
+  - PolyForm-Small-Business-1.0.0
+  - LicenseRef-Big-Time-Public-License
+
 # Machine / automation accounts to exclude from generated copyright output.
 #
 # When kettle-jem collects copyright information via `git blame`, it filters
@@ -122,12 +126,14 @@ licenses: [MIT]
 # Default (when key is absent or empty): ["autobolt"]
 machine_users:
   - autobolt
+
 # Self-test / templating CI threshold.
 # Set to a number from 0 to 100 to fail `rake kettle:jem:selftest` once
 # divergence reaches or exceeds that percent. Leave blank to report only.
 # Divergence is currently measured as the percent of produced files that would
 # change or be added during templating (100 - unchanged-file score).
 min_divergence_threshold:
+
 # kettle-jem configuration file
 #
 # This file is both configuration and field guide for templated gems.
