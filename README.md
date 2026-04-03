@@ -2079,7 +2079,7 @@ the [Pessimistic Version Constraint][📌pvc] with two digits of precision.
 For example:
 
 ```ruby
-spec.add_dependency("tree_haver", "~> 1.0")
+spec.add_dependency("tree_haver", "~> 6.0")
 ```
 
 <details markdown="1">
