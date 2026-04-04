@@ -6,6 +6,14 @@
 # Local path overrides for development.
 # Loaded by the associated non-local gemfile when RUBOCOP_LTS_LOCAL != "false".
 
+require "nomono/bundler" unless defined?(Nomono)
+
+# We run rubocop on the latest version of Ruby,
+#   but in support of the oldest supported version of Ruby
+
+# Local path overrides for development.
+# Loaded by the associated non-local gemfile when RUBOCOP_LTS_LOCAL != "false".
+
 require "nomono/bundler"
 
 local_gems = %w[rubocop-lts rubocop-lts-rspec rubocop-ruby3_2 standard-rubocop-lts]
@@ -19,6 +27,6 @@ platform :mri do
     vendored_gems_env: "VENDORED_GEMS",
     vendor_gem_dir_env: "VENDOR_GEM_DIR",
     debug_env: "RUBOCOP_LTS_DEBUG",
-    root: ["src", "rubocop-lts"],
+    root: ["src", "rubocop-lts"]
   )
 end
