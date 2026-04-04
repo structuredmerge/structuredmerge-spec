@@ -52,12 +52,15 @@ module TreeHaver
   # @see PathValidator For details on security validations
   class GrammarFinder
     # Common base directories where tree-sitter libraries are installed
-    # Platform-specific extensions are appended automatically
+    # Platform-specific extensions are appended automatically.
+    # User-local XDG paths (~/.local/lib/tree-sitter) are added dynamically
+    # in #user_search_dirs so that HOME expansion happens at call time.
     BASE_SEARCH_DIRS = [
       "/usr/lib",
       "/usr/lib64",
       "/usr/local/lib",
       "/opt/homebrew/lib",
+      "/home/linuxbrew/.linuxbrew/lib",
     ].freeze
 
     # @return [Symbol] the language identifier
@@ -108,7 +111,7 @@ module TreeHaver
 
     # Generate the full list of search paths for this language
     #
-    # Order: ENV override, extra_paths, then common system paths
+    # Order: ENV override, extra_paths, user-local paths, then system paths
     #
     # @return [Array<String>] all paths to search
     def search_paths
@@ -116,6 +119,11 @@ module TreeHaver
 
       # Extra paths provided at initialization (searched after ENV)
       @extra_paths.each do |dir|
+        paths << File.join(dir, library_filename)
+      end
+
+      # User-local XDG paths (e.g. ~/.local/lib/tree-sitter/)
+      user_search_dirs.each do |dir|
         paths << File.join(dir, library_filename)
       end
 
@@ -356,6 +364,26 @@ module TreeHaver
     end
 
     private
+
+    # Compute user-local directories to search for grammar libraries.
+    # These are derived from HOME at call time so they survive into subprocesses
+    # and work regardless of how the process was launched.
+    #
+    # Directories checked (in order):
+    #   - $HOME/.local/lib/tree-sitter   (XDG user-local, where `tree-sitter` CLI installs grammars)
+    #   - $HOME/.local/lib               (plain XDG user-local lib)
+    #
+    # @return [Array<String>]
+    def user_search_dirs
+      home = Dir.home
+      [
+        File.join(home, ".local", "lib", "tree-sitter"),
+        File.join(home, ".local", "lib"),
+      ]
+    rescue ArgumentError
+      # Dir.home raises ArgumentError if HOME is not set
+      []
+    end
 
     # Get the platform-appropriate shared library extension
     #

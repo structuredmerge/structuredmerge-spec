@@ -20,6 +20,17 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
+- `GrammarFinder#search_paths` now includes user-local XDG directories
+  (`~/.local/lib/tree-sitter/` and `~/.local/lib/`) before system paths,
+  enabling auto-discovery of grammars installed without `sudo` or via
+  language-specific tooling (e.g. the `tree-sitter` CLI).
+  `~/` is expanded via `Dir.home` at call time, so it works correctly
+  regardless of how the process was launched
+- `GrammarFinder::BASE_SEARCH_DIRS` now includes `/home/linuxbrew/.linuxbrew/lib`
+  for Linuxbrew installations
+- `PathValidator#trusted_directories` now includes the same user-local XDG
+  paths dynamically, so `find_library_path_safe` also covers user installs
+
 ### Changed
 
 ### Deprecated

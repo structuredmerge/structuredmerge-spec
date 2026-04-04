@@ -65,11 +65,20 @@ module TreeHaver
 
     module_function
 
-    # Get all trusted directories (default + custom + from ENV)
+    # Get all trusted directories (default + user-local + custom + from ENV)
     #
     # @return [Array<String>] list of all trusted directory prefixes
     def trusted_directories
       dirs = DEFAULT_TRUSTED_DIRECTORIES.dup
+
+      # Add user-local XDG directories (computed at call time from HOME)
+      begin
+        home = Dir.home
+        dirs << File.join(home, ".local", "lib", "tree-sitter")
+        dirs << File.join(home, ".local", "lib")
+      rescue ArgumentError
+        # HOME not set — skip user-local dirs
+      end
 
       # Add custom registered directories
       @mutex.synchronize { dirs.concat(@custom_trusted_directories) }

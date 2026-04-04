@@ -106,6 +106,23 @@ RSpec.describe TreeHaver::GrammarFinder do
       expect(paths.any? { |p| common_dirs.any? { |d| p.start_with?(d) } }).to be true
     end
 
+    it "includes user-local XDG paths" do
+      paths = finder.search_paths
+      home = Dir.home
+      user_local = File.join(home, ".local", "lib", "tree-sitter")
+      expect(paths.any? { |p| p.start_with?(user_local) }).to be true
+    end
+
+    it "searches user-local paths before system paths" do
+      paths = finder.search_paths
+      home = Dir.home
+      user_local = File.join(home, ".local", "lib")
+      usr_lib = "/usr/lib"
+      user_idx = paths.index { |p| p.start_with?(user_local) }
+      sys_idx  = paths.index { |p| p.start_with?(usr_lib) }
+      expect(user_idx).to be < sys_idx
+    end
+
     it "prepends extra_paths" do
       finder = described_class.new(:toml, extra_paths: ["/custom/lib"])
       paths = finder.search_paths
