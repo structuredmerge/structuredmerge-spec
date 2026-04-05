@@ -40,6 +40,7 @@ appraise "unlocked_deps" do
   #     rdoc was resolved to 7.0.3, which depends on
   #       psych
   gem "irb", "~> 1.17" # ruby >= 2.7
+
   eval_gemfile "modular/nomono.gemfile" # Support for *_local modular gemfiles (not-a-monorepo)
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/documentation.gemfile"
