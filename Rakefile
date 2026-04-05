@@ -8,7 +8,7 @@ require "kettle/jem"
 # tree_haver will then preserve content between those markers across template runs.
 # kettle-jem:unfreeze
 
-# tree_haver Rakefile v1.0.0 - 2026-03-18
+# tree_haver Rakefile v1.0.0 - 2026-04-05
 # Ruby 2.3 (Safe Navigation) or higher required
 #
 # MIT License (see License.txt)
@@ -54,8 +54,9 @@ require "kettle/jem"
 # rake yard                                   # Generate YARD Documentation
 #
 
+# :nocov:
 require "bundler/gem_tasks" if !Dir[File.join(__dir__, "*.gemspec")].empty?
-
+# :nocov:
 # Define a base default task early so other files can enhance it.
 desc "Default tasks aggregator"
 task :default do
