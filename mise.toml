@@ -2,6 +2,7 @@
 # Local overrides belong in .env.local (loaded via dotenvy through mise).
 
 [env]
+KJ_PROJECT_EMOJI = "🌴"
 K_SOUP_COV_DO = "true"
 K_SOUP_COV_COMMAND_NAME = "Test Coverage"
 K_SOUP_COV_USE_MERGING = "true"
