@@ -5,9 +5,6 @@
 
 require "nomono/bundler" unless defined?(Nomono)
 
-# Local path overrides for development.
-# Loaded by the associated non-local gemfile when KETTLE_RB_DEV != "false".
-
 require "nomono/bundler"
 
 local_gems = %w[kettle-dev kettle-test kettle-soup-cover]
