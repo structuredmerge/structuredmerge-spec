@@ -39,6 +39,13 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- `parser_for` error message now lists attempted backends and grammar search paths
+  instead of the generic "Install tree-sitter-X or configure a Citrus/Parslet grammar"
+- `Language.method_missing` Citrus/Parslet error messages reworded to suggest
+  checking backend selection rather than implying a missing grammar registration
+  is expected. The old "Citrus backend is active but…" phrasing was confusing
+  when the language (e.g. JSON, Bash) never had a Citrus grammar
+
 ### Security
 
 ## [6.0.0] - 2026-04-02
