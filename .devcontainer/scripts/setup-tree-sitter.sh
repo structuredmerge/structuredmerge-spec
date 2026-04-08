@@ -180,8 +180,8 @@ if [ -f parsers.toml ]; then
   echo "[tsdl] Using parsers.toml config"
   $SUDO tsdl build --out-dir /usr/local/lib --progress plain
 else
-  echo "[tsdl] No parsers.toml found; building default grammars: toml json jsonc bash"
-  $SUDO tsdl build toml json jsonc bash --out-dir /usr/local/lib --progress plain
+  echo "[tsdl] No parsers.toml found; building default grammars: toml json bash rbs"
+  $SUDO tsdl build toml json bash rbs --out-dir /usr/local/lib --progress plain
 fi
 
 $SUDO ldconfig || echo "WARNING: ldconfig failed" >&2
