@@ -178,11 +178,12 @@ module TreeHaver
             return Backends::Citrus::Language.new(reg[:grammar_module])
           end
 
-          # Fall back to error if no Citrus grammar registered
+          # No Citrus grammar for this language — provide actionable error
           raise NotAvailable,
-            "Citrus backend is active but no Citrus grammar registered for :#{method_name}. " \
-              "Either register a Citrus grammar or use a tree-sitter backend. " \
-              "Registered backends: #{all_backends.keys.inspect}"
+            "No Citrus grammar registered for :#{method_name}. " \
+              "This language may only be available via tree-sitter. " \
+              "Check that the correct backend is selected (current: citrus). " \
+              "Registered backends for :#{method_name}: #{all_backends.keys.inspect}"
         end
 
         # If Parslet backend is active
@@ -191,11 +192,12 @@ module TreeHaver
             return Backends::Parslet::Language.new(reg[:grammar_class])
           end
 
-          # Fall back to error if no Parslet grammar registered
+          # No Parslet grammar for this language — provide actionable error
           raise NotAvailable,
-            "Parslet backend is active but no Parslet grammar registered for :#{method_name}. " \
-              "Either register a Parslet grammar or use a tree-sitter backend. " \
-              "Registered backends: #{all_backends.keys.inspect}"
+            "No Parslet grammar registered for :#{method_name}. " \
+              "This language may only be available via tree-sitter. " \
+              "Check that the correct backend is selected (current: parslet). " \
+              "Registered backends for :#{method_name}: #{all_backends.keys.inspect}"
         end
 
         # For tree-sitter backends, try to load from path

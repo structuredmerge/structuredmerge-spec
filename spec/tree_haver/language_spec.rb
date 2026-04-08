@@ -718,7 +718,7 @@ RSpec.describe TreeHaver::Language do
       it "raises NotAvailable when Citrus registration has no grammar_module" do
         expect {
           described_class.citrus_no_grammar_test
-        }.to raise_error(TreeHaver::NotAvailable, /no Citrus grammar registered/)
+        }.to raise_error(TreeHaver::NotAvailable, /No Citrus grammar registered/)
       end
     end
 

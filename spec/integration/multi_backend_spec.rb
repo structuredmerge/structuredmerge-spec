@@ -197,7 +197,7 @@ RSpec.describe "Multi-backend integration" do
       TreeHaver.backend = :citrus
       expect {
         TreeHaver::Language.incomplete
-      }.to raise_error(TreeHaver::NotAvailable, /no Citrus grammar registered/)
+      }.to raise_error(TreeHaver::NotAvailable, /No Citrus grammar registered/)
     end
 
     it "raises error when native backend explicitly requested but only Citrus registered", :mri_backend, :toml_rb_gem do

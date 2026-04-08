@@ -1222,8 +1222,25 @@ module TreeHaver
       end
 
       # Raise if nothing worked
-      raise NotAvailable, "No parser available for #{name}. " \
-        "Install tree-sitter-#{name} or configure a Citrus/Parslet grammar." unless language
+      unless language
+        # Build an informative error showing what was searched
+        searched = []
+        searched << "tree-sitter (auto-discovery)" if try_tree_sitter
+        searched << "citrus" if try_citrus
+        searched << "parslet" if try_parslet
+        # Include GrammarFinder search paths for actionable debugging
+        begin
+          finder = GrammarFinder.new(name)
+          grammar_paths = finder.search_paths
+        rescue StandardError
+          grammar_paths = []
+        end
+        msg = +"No parser available for :#{name}. Attempted backends: #{searched.join(', ')}."
+        if grammar_paths.any?
+          msg << " Searched grammar paths: #{grammar_paths.join(', ')}"
+        end
+        raise NotAvailable, msg
+      end
 
       # Create and configure parser
       parser = Parser.new
