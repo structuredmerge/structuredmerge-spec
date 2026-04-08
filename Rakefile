@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "kettle/jem"
-
 # kettle-jem:freeze
 # To retain chunks of comments & code during tree_haver templating:
 # Wrap custom sections with freeze markers (e.g., as above and below this comment chunk).
