@@ -1235,9 +1235,9 @@ module TreeHaver
         rescue StandardError
           grammar_paths = []
         end
-        msg = +"No parser available for :#{name}. Attempted backends: #{searched.join(', ')}."
+        msg = +"No parser available for :#{name}. Attempted backends: #{searched.join(", ")}."
         if grammar_paths.any?
-          msg << " Searched grammar paths: #{grammar_paths.join(', ')}"
+          msg << " Searched grammar paths: #{grammar_paths.join(", ")}"
         end
         raise NotAvailable, msg
       end

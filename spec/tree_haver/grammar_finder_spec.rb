@@ -119,7 +119,7 @@ RSpec.describe TreeHaver::GrammarFinder do
       user_local = File.join(home, ".local", "lib")
       usr_lib = "/usr/lib"
       user_idx = paths.index { |p| p.start_with?(user_local) }
-      sys_idx  = paths.index { |p| p.start_with?(usr_lib) }
+      sys_idx = paths.index { |p| p.start_with?(usr_lib) }
       expect(user_idx).to be < sys_idx
     end
 
