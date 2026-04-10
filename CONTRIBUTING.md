@@ -54,11 +54,6 @@ pass/fail count, failing example list, and SimpleCov coverage percentages.
 
 The **Citrus backend** works differently:
 
-1. Update version.rb to contain the correct version-to-be-released.
-2. Run `bundle exec kettle-changelog`.
-3. Run `bundle exec kettle-release`.
-4. Stay awake and monitor the release process for any errors, and answer any prompts.
-
 The `bin/backend-matrix` script helps test and document backend compatibility by running tests
 in isolated subprocesses.
 
@@ -178,12 +173,6 @@ See `mise.toml` and `.env.local.example` for examples of how these are typically
 Below are the primary environment variables recognized by stone_checksums (and its integrated tools). Unless otherwise noted, set boolean values to the string "true" to enable.
 
 General/runtime
-
-- SKIP_GEM_SIGNING: If set, skip gem signing during build/release
-- GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
-- SOURCE_DATE_EPOCH: Reproducible build timestamp.
-  - `kettle-release` will set this automatically for the session.
-  - Not needed on bundler >= 2.7.0, as reproducible builds have become the default.
 
 Coverage (kettle-soup-cover / SimpleCov)
 - K_SOUP_COV_DO: Enable coverage collection (default: true in `mise.toml`)
