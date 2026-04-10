@@ -20,6 +20,7 @@ platform :mri do
   # MRI only Parsers:
   gem "commonmarker"
 
-  # Rust Backend
-  gem "tree_stump", "~> 0.2"
+  # Rust Backend: not yet compatible with ruby 4.x due to magnus compat being unreleased.
+  # See: https://github.com/matsadler/magnus/pull/167
+  # gem "tree_stump", "~> 0.2"
 end
