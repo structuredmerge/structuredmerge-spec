@@ -48,11 +48,6 @@ bin/rake -T
 
 TreeHaver supports multiple backends with different characteristics:
 
-- GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
-- GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
-- GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
-- GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
-
 Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
 `tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
 pass/fail count, failing example list, and SimpleCov coverage percentages.

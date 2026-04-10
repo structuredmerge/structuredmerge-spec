@@ -54,8 +54,6 @@ end
 # Used for head (nightly) releases of ruby, truffleruby, and jruby.
 # Split into discrete appraisals if one of them needs a dependency locked discretely.
 appraise "head" do
-  # Why is gem "cgi" here? See: https://github.com/vcr/vcr/issues/1057
-  #  gem "cgi", ">= 0.5"
   eval_gemfile "modular/rspec.gemfile"
   eval_gemfile "modular/tree_sitter/vHEAD.gemfile"
   # Why is gem "cgi" here? See: https://github.com/vcr/vcr/issues/1057
