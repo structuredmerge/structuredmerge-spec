@@ -500,7 +500,7 @@ DEPENDENCIES
   kramdown (~> 2.5, >= 2.5.1)
   kramdown-parser-gfm (~> 1.1)
   markdown-merge!
-  markly (~> 0.15, >= 0.15.2)
+  markly (~> 0.15, >= 0.15.3)
   markly-merge!
   mutex_m (~> 0.2)
   nomono (~> 1.0)

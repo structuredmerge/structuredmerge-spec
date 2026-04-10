@@ -53,8 +53,9 @@ TreeHaver supports multiple backends with different characteristics:
 - GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
 - GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
 
-Not all backends can coexist in the same Ruby process. Notably, **FFI and MRI backends conflict**
-at the libtree-sitter runtime level—using both in the same process will cause segfaults.
+Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
+`tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
+pass/fail count, failing example list, and SimpleCov coverage percentages.
 
 The **Citrus backend** works differently:
 
@@ -251,6 +252,16 @@ To run all tests
 
 ```console
 bundle exec rake test
+```
+
+```console
+bundle exec kettle-test
+```
+
+For targeted runs, disable the hard coverage threshold to avoid false failures:
+
+```console
+K_SOUP_COV_MIN_HARD=false bundle exec kettle-test spec/path/to/spec.rb
 ```
 
 ### Spec organization (required)
