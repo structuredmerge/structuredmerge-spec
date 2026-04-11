@@ -778,10 +778,7 @@ TreeHaver.register_language(
 - All backends now use shared `LibraryPathUtils` for path parsing
   - MRI, Rust, FFI, and Java backends updated for consistency
   - Ensures identical behavior across all tree-sitter backends
-- `TreeHaver::Language` class extracted to `lib/tree_haver/language.rb`
-  - No API changes, just file organization
-  - Loaded via autoload for lazy loading
-- `TreeHaver::Parser` class extracted to `lib/tree_haver/parser.rb`
+- `TreeHaver::Language` & `TreeHaver::Parser` classes extracted to `lib/tree_haver/language.rb` & `lib/tree_haver/parser.rb`
   - No API changes, just file organization
   - Loaded via autoload for lazy loading
 - Backend availability exclusions in `dependency_tags.rb` are now dynamic
