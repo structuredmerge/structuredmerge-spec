@@ -992,9 +992,9 @@ module TreeHaver
           end
 
           success
-        rescue TreeHaver::NotAvailable, TreeHaver::Error, StandardError => e
+        rescue TreeHaver::NotAvailable, TreeHaver::Error, StandardError
           if debug
-            puts "  [grammar_works? #{language}] Exception: #{e.class}: #{e.message}"
+            puts "  [grammar_works? #{language}] Exception: #{$ERROR_INFO.class}: #{$ERROR_INFO.message}"
             puts "  [grammar_works? #{language}] Returning false"
           end
           false

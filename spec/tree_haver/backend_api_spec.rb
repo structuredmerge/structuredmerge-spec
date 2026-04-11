@@ -495,8 +495,10 @@ RSpec.describe TreeHaver::BackendAPI do
         end)
 
         const_set(:Parser, Class.new do
-          def self.new(*args)
-            allocate
+          class << self
+            def new(*args)
+              allocate
+            end
           end
 
           def language=(_lang)
