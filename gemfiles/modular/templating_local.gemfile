@@ -8,6 +8,7 @@ require "nomono/bundler" unless defined?(Nomono)
 local_gems = %w[
   ast-merge
   bash-merge
+  kettle-drift
   dotenv-merge
   json-merge
   markdown-merge
@@ -20,7 +21,7 @@ local_gems = %w[
   jsonc-merge
 ]
 
-# export VENDORED_GEMS=ast-merge,bash-merge,dotenv-merge,json-merge,markdown-merge,prism-merge,psych-merge,rbs-merge,toml-merge,markly-merge,kettle-jem,jsonc-merge
+# export VENDORED_GEMS=ast-merge,bash-merge,kettle-drift,dotenv-merge,json-merge,markdown-merge,prism-merge,psych-merge,rbs-merge,toml-merge,markly-merge,kettle-jem,jsonc-merge
 platform :mri do
   eval_nomono_gems(
     gems: local_gems,
