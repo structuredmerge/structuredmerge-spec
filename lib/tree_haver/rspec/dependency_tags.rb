@@ -484,8 +484,6 @@ module TreeHaver
             TreeHaver::Backends::Java::Language.from_library(path, symbol: "tree_sitter_toml")
           end
           true
-        rescue TreeHaver::NotAvailable, TreeHaver::Error, LoadError
-          false
         rescue StandardError
           # Catch any other Java-related errors
           false
@@ -992,7 +990,7 @@ module TreeHaver
           end
 
           success
-        rescue TreeHaver::NotAvailable, TreeHaver::Error, StandardError
+        rescue StandardError
           if debug
             puts "  [grammar_works? #{language}] Exception: #{$ERROR_INFO.class}: #{$ERROR_INFO.message}"
             puts "  [grammar_works? #{language}] Returning false"
