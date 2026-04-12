@@ -6,7 +6,7 @@
 <title>
   Module: TreeHaver::PathValidator
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.39
   
 </title>
 
@@ -569,7 +569,7 @@ This prevents shell metacharacters and other injection attempts</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Get all trusted directories (default + custom + from ENV).</p>
+    <span class="summary_desc"><div class='inline'><p>Get all trusted directories (default + user-local + custom + from ENV).</p>
 </div></span>
   
 </li>
@@ -711,15 +711,6 @@ such as Homebrew locations, luarocks paths, or other package managers.</p>
       <pre class="lines">
 
 
-106
-107
-108
-109
-110
-111
-112
-113
-114
 115
 116
 117
@@ -728,10 +719,19 @@ such as Homebrew locations, luarocks paths, or other package managers.</p>
 120
 121
 122
-123</pre>
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_trusted_directory'>add_trusted_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_directory'>directory</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expanded'>expanded</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_directory'>directory</span><span class='rparen'>)</span>
@@ -784,13 +784,13 @@ Primarily useful for testing.</p>
       <pre class="lines">
 
 
-141
-142
-143
-144</pre>
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_custom_trusted_directories!'>clear_custom_trusted_directories!</span>
   <span class='ivar'>@mutex</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='ivar'>@custom_trusted_directories</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span> <span class='rbrace'>}</span>
@@ -843,12 +843,12 @@ Primarily useful for testing.</p>
       <pre class="lines">
 
 
-149
-150
-151</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_custom_trusted_directories'>custom_trusted_directories</span>
   <span class='ivar'>@mutex</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='ivar'>@custom_trusted_directories</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='rbrace'>}</span>
@@ -901,19 +901,19 @@ Allows: .so, .dylib, .dll, and versioned .so files like .so.0, .so.14</p>
       <pre class="lines">
 
 
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351</pre>
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 351</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_valid_extension?'>has_valid_extension?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='comment'># Check for exact matches first (.so, .dylib, .dll)
@@ -994,18 +994,18 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-208
-209
-210
-211
-212
-213
-214
-215
-216</pre>
+217
+218
+219
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 217</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_in_trusted_directory?'>in_trusted_directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1065,14 +1065,14 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-129
-130
-131
-132
-133</pre>
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_trusted_directory'>remove_trusted_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_directory'>directory</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expanded'>expanded</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_directory'>directory</span><span class='rparen'>)</span>
@@ -1149,20 +1149,20 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-223
-224
-225
-226
-227
-228
-229
-230
-231
 232
-233</pre>
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolve_check_path'>resolve_check_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
@@ -1241,14 +1241,14 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-279
-280
-281
-282
-283</pre>
+288
+289
+290
+291
+292</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 288</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safe_backend_name?'>safe_backend_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_backend'>backend</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_backend'>backend</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># nil means :auto
@@ -1338,18 +1338,18 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-249
-250
-251
-252
-253
-254
-255
-256
-257</pre>
+258
+259
+260
+261
+262
+263
+264
+265
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safe_language_name?'>safe_language_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1465,15 +1465,6 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-173
-174
-175
-176
-177
-178
-179
-180
-181
 182
 183
 184
@@ -1491,10 +1482,19 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
 196
 197
 198
-199</pre>
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safe_library_path?'>safe_library_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>require_trusted_dir:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1598,16 +1598,16 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-267
-268
-269
-270
-271
-272
-273</pre>
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safe_symbol_name?'>safe_symbol_name?</span><span class='lparen'>(</span><span class='id identifier rubyid_symbol'>symbol</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_symbol'>symbol</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1691,18 +1691,18 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-293
-294
-295
-296
-297
-298
-299
-300
-301</pre>
+302
+303
+304
+305
+306
+307
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 293</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 302</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sanitize_language_name'>sanitize_language_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1729,7 +1729,7 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Get all trusted directories (default + custom + from ENV)</p>
+    <p>Get all trusted directories (default + user-local + custom + from ENV)</p>
 
 
   </div>
@@ -1779,13 +1779,31 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
 87
 88
 89
-90</pre>
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_trusted_directories'>trusted_directories</span>
   <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_TRUSTED_DIRECTORIES-constant" title="TreeHaver::PathValidator::DEFAULT_TRUSTED_DIRECTORIES (constant)">DEFAULT_TRUSTED_DIRECTORIES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+
+  <span class='comment'># Add user-local XDG directories (computed at call time from HOME)
+</span>  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_home'>home</span> <span class='op'>=</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span>
+    <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>&lt;&lt;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_home'>home</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.local</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tree-sitter</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>&lt;&lt;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_home'>home</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.local</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>
+    <span class='comment'># HOME not set — skip user-local dirs
+</span>  <span class='kw'>end</span>
 
   <span class='comment'># Add custom registered directories
 </span>  <span class='ivar'>@mutex</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_dirs'>dirs</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='ivar'>@custom_trusted_directories</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1870,15 +1888,6 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-307
-308
-309
-310
-311
-312
-313
-314
-315
 316
 317
 318
@@ -1894,10 +1903,19 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
 328
 329
 330
-331</pre>
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validation_errors'>validation_errors</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1971,13 +1989,13 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
       <pre class="lines">
 
 
-334
-335
-336
-337</pre>
+343
+344
+345
+346</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'lib/tree_haver/path_validator.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_windows_absolute_path?'>windows_absolute_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='comment'># Match Windows absolute paths like C:\path or D:/path
@@ -1993,9 +2011,9 @@ and directories from TREE_HAVER_TRUSTED_DIRS environment variable.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Apr  2 20:15:34 2026 by
+  Generated on Sun Apr 12 11:50:00 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-4.0.1).
+  0.9.39 (ruby-4.0.2).
 </div>
 
     </div>
