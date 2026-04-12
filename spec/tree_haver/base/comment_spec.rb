@@ -34,6 +34,10 @@ RSpec.describe TreeHaver::Base::Comment do
       def style
         :line
       end
+
+      def opening_delimiter
+        "#"
+      end
     end
   end
 
@@ -57,6 +61,30 @@ RSpec.describe TreeHaver::Base::Comment do
         start_column: 2,
         end_column: 9,
       )
+    end
+  end
+
+   describe "normalized text helpers" do
+    it "extracts the comment body without delimiters" do
+      expect(comment.body_text).to eq("hello")
+    end
+
+    it "returns a stripped matching-friendly normalized body" do
+      expect(comment.normalized_text).to eq("hello")
+    end
+
+    it "exposes delimiter metadata" do
+      expect(comment.delimiter_metadata).to eq(
+        opening: "#",
+        closing: nil,
+        body: "hello",
+      )
+    end
+
+    it "classifies line and multiline behavior" do
+      expect(comment.line?).to be(true)
+      expect(comment.block?).to be(false)
+      expect(comment.multiline?).to be(false)
     end
   end
 

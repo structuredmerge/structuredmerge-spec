@@ -355,6 +355,10 @@ module TreeHaver
           :line
         end
 
+        def opening_delimiter
+          "#"
+        end
+
         class << self
           def comment_type_for(klass)
             klass.name.split("::").last

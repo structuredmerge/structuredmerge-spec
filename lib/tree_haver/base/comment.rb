@@ -66,35 +66,131 @@ module TreeHaver
       end
 
       # Get the normalized delimiter style.
+      #
       # @return [Symbol, nil]
       def style
         nil
       end
 
+      # Get the opening delimiter for the comment, when the backend can provide it.
+      #
+      # Examples:
+      # - `#` for hash comments
+      # - `//` for C-style line comments
+      # - `<!--` for HTML/XML block comments
+      #
+      # @return [String, nil]
+      def opening_delimiter
+        nil
+      end
+
+      # Get the closing delimiter for the comment, when applicable.
+      #
+      # This is typically `nil` for line comments.
+      #
+      # @return [String, nil]
+      def closing_delimiter
+        nil
+      end
+
+      # Get the comment body with outer delimiters removed when possible.
+      #
+      # Backends with richer native comment models should override this when they
+      # can provide a more semantically accurate body than simple delimiter
+      # trimming.
+      #
+      # @return [String]
+      def body_text
+        extract_body_text(text.to_s)
+      end
+
+      # Get a matching-friendly normalized comment body.
+      #
+      # This strips leading and trailing whitespace from {#body_text} while
+      # preserving the raw rendered form in {#text}.
+      #
+      # @return [String]
+      def normalized_text
+        body_text.strip
+      end
+
+      # Get delimiter/body metadata in one normalized hash.
+      #
+      # @return [Hash{Symbol => String, nil}]
+      def delimiter_metadata
+        {
+          opening: opening_delimiter,
+          closing: closing_delimiter,
+          body: body_text,
+        }
+      end
+
+      # Whether this comment uses a line-comment style.
+      #
+      # @return [Boolean]
+      def line?
+        style == :line
+      end
+
+      # Whether this comment uses a block-comment style.
+      #
+      # @return [Boolean]
+      def block?
+        style == :block
+      end
+
+      # Whether this comment spans multiple source lines.
+      #
+      # @return [Boolean]
+      def multiline?
+        start_line != end_line
+      end
+
+      # Whether this comment has a parser-provided attachment hint.
+      #
+      # @return [Boolean]
       def attachment_hint?
         !attachment_hint.nil?
       end
 
+      # Whether this comment is hinted as leading its owner.
+      #
+      # @return [Boolean]
       def leading?
         attachment_hint == :leading
       end
 
+      # Whether this comment is hinted as inline with its owner.
+      #
+      # @return [Boolean]
       def inline?
         attachment_hint == :inline
       end
 
+      # Whether this comment is hinted as trailing its owner.
+      #
+      # @return [Boolean]
       def trailing?
         attachment_hint == :trailing
       end
 
+      # Get the 1-based start line.
+      #
+      # @return [Integer]
       def start_line
         start_point[:row] + 1
       end
 
+      # Get the 1-based end line.
+      #
+      # @return [Integer]
       def end_line
         end_point[:row] + 1
       end
 
+      # Get a normalized source-position hash.
+      #
+      # @return [Hash{Symbol => Integer}]
       def source_position
         {
           start_line: start_line,
@@ -109,6 +205,18 @@ module TreeHaver
       end
 
       private
+
+      def extract_body_text(raw_text)
+        text_without_opening = if opening_delimiter
+          raw_text.sub(/\A#{Regexp.escape(opening_delimiter)}[ \t]?/, "")
+        else
+          raw_text
+        end
+
+        return text_without_opening unless closing_delimiter
+
+        text_without_opening.sub(/[ \t]*#{Regexp.escape(closing_delimiter)}\z/m, "")
+      end
 
       def normalize_attachment_hint(hint)
         return if hint.nil?

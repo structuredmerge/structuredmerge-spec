@@ -384,6 +384,11 @@ RSpec.describe TreeHaver::Backends::Prism, :prism_backend do
         expect(comment.type).to eq("inline_comment")
         expect(comment.text).to eq("# leading comment")
         expect(comment.style).to eq(:line)
+        expect(comment.opening_delimiter).to eq("#")
+        expect(comment.body_text).to eq("leading comment")
+        expect(comment.normalized_text).to eq("leading comment")
+        expect(comment.line?).to be(true)
+        expect(comment.block?).to be(false)
       end
 
       it "preserves location information" do
