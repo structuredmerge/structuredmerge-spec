@@ -1,0 +1,194 @@
+{
+  "# Continue to the next step on failure\ncontinue-on-error: true": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        97,
+        111
+      ]
+    },
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        100,
+        114
+      ]
+    },
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        96,
+        110
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        106,
+        120
+      ]
+    }
+  ],
+  "**Other Helpers** (loaded by kettle-test):\n- `block_is_expected` - Enhanced block expectations (from `rspec-block_is_expected`)": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        246,
+        258
+      ]
+    }
+  ],
+  "**Where these come from**:\n- External gems loaded by `kettle/test/external.rb` in the kettle-test gem": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        251,
+        263
+      ]
+    }
+  ],
+  "- External gems loaded by `kettle/test/external.rb` in the kettle-test gem\n- `rspec/stubbed_env` - Provides `stub_env` and `hide_env`": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        252,
+        264
+      ]
+    }
+  ],
+  "- No incremental parsing support\n- No query API": [
+    {
+      "file": "README.md",
+      "lines": [
+        1659,
+        1685
+      ]
+    }
+  ],
+  "- No query API\n- Pure Ruby performance (slower than native backends)": [
+    {
+      "file": "README.md",
+      "lines": [
+        1660,
+        1686
+      ]
+    }
+  ],
+  "- Pure Ruby performance (slower than native backends)\n- Best for: prototyping, environments without native extension support, teaching": [
+    {
+      "file": "README.md",
+      "lines": [
+        1661,
+        1687
+      ]
+    }
+  ],
+  "- `block_is_expected` - Enhanced block expectations (from `rspec-block_is_expected`)\n- `capture` - Capture output during tests (from `silent_stream`)": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        247,
+        259
+      ]
+    }
+  ],
+  "- `capture` - Capture output during tests (from `silent_stream`)\n- Timecop integration for time manipulation": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        248,
+        260
+      ]
+    }
+  ],
+  "- `rspec/block_is_expected` - Enhanced block expectations\n- `silent_stream` - Output suppression": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        254,
+        266
+      ]
+    }
+  ],
+  "- `rspec/stubbed_env` - Provides `stub_env` and `hide_env`\n- `rspec/block_is_expected` - Enhanced block expectations": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        253,
+        265
+      ]
+    }
+  ],
+  "- `silent_stream` - Output suppression\n- `timecop/rspec` - Time travel for tests": [
+    {
+      "file": ".github/COPILOT_INSTRUCTIONS.md",
+      "lines": [
+        255,
+        267
+      ]
+    }
+  ],
+  "appraisal: \"current\"\nexec_cmd: \"rake magic\"": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        52,
+        60
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        63,
+        71
+      ]
+    }
+  ],
+  "exec_cmd: \"rake magic\"\ngemfile: \"Appraisal.root\"": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        53,
+        61
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        56,
+        64,
+        72
+      ]
+    }
+  ],
+  "if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}\nrun: bundle install": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        90,
+        95
+      ]
+    },
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        93,
+        98
+      ]
+    },
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        89,
+        94
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        99,
+        104
+      ]
+    }
+  ]
+}
