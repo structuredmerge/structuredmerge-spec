@@ -211,7 +211,7 @@ module TreeHaver
       #
       # @return [Boolean]
       def at_file_end?
-        return false unless source_lines.any?
+        return false if source_lines.none?
 
         end_line >= source_lines.length
       end

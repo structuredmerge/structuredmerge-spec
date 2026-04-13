@@ -133,7 +133,7 @@ RSpec.shared_examples "tree comment api" do
             expect(comment).to respond_to(:leading?)
             expect(comment).to respond_to(:inline?)
             expect(comment).to respond_to(:trailing?)
-            expect([:leading, :inline, :trailing]).to include(comment.attachment_hint)
+            expect(comment.attachment_hint).to be_in([:leading, :inline, :trailing])
           end
         end
       when :nodes_only
