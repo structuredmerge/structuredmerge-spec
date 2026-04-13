@@ -419,6 +419,13 @@ RSpec.describe TreeHaver::Backends::Prism, :prism_backend do
         expect(tree.comments.map(&:inline?)).to eq([false, true, false])
         expect(tree.comments.map(&:trailing?)).to eq([false, false, true])
       end
+
+      it "exposes source-adjacent blank-line metadata for merge-layer layout reasoning" do
+        expect(tree.comments.map(&:blank_line_count_before)).to eq([0, 0, 0])
+        expect(tree.comments.map(&:blank_line_count_after)).to eq([0, 0, 0])
+        expect(tree.comments.map(&:at_file_start?)).to eq([true, false, false])
+        expect(tree.comments.map(&:at_file_end?)).to eq([false, false, true])
+      end
     end
 
     describe "#inspect" do

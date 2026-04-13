@@ -200,11 +200,99 @@ module TreeHaver
         }
       end
 
+      # Whether this comment starts at the first line of the available source.
+      #
+      # @return [Boolean]
+      def at_file_start?
+        start_line == 1
+      end
+
+      # Whether this comment ends at the final line of the available source.
+      #
+      # @return [Boolean]
+      def at_file_end?
+        return false unless source_lines.any?
+
+        end_line >= source_lines.length
+      end
+
+      # Return the contiguous blank source lines immediately before this comment.
+      #
+      # This is parser-facing layout metadata. It does not decide ownership; it
+      # simply exposes spacing adjacent to the comment so merge layers can reason
+      # about floating vs attached behavior without rescanning source text.
+      #
+      # @return [Array<String>]
+      def blank_lines_before
+        return [] if at_file_start?
+
+        line_num = start_line - 1
+        blanks = []
+
+        while line_num >= 1
+          line = source_line(line_num)
+          break unless line && line.strip.empty?
+
+          blanks.unshift(line)
+          line_num -= 1
+        end
+
+        blanks
+      end
+
+      # Return the contiguous blank source lines immediately after this comment.
+      #
+      # @return [Array<String>]
+      def blank_lines_after
+        return [] if at_file_end?
+
+        line_num = end_line + 1
+        blanks = []
+
+        while line_num <= source_lines.length
+          line = source_line(line_num)
+          break unless line && line.strip.empty?
+
+          blanks << line
+          line_num += 1
+        end
+
+        blanks
+      end
+
+      # Return the count of immediately preceding blank source lines.
+      #
+      # @return [Integer]
+      def blank_line_count_before
+        blank_lines_before.length
+      end
+
+      # Return the count of immediately following blank source lines.
+      #
+      # @return [Integer]
+      def blank_line_count_after
+        blank_lines_after.length
+      end
+
       def inspect
         "#<#{self.class} type=#{type.inspect} range=#{start_byte}...#{end_byte}>"
       end
 
       private
+
+      def source_lines
+        @source_lines ||= begin
+          values = source.to_s.split("\n", -1)
+          values.pop if values.last&.empty? && source.to_s.end_with?("\n")
+          values
+        end
+      end
+
+      def source_line(line_number)
+        return if line_number < 1 || line_number > source_lines.length
+
+        source_lines[line_number - 1]
+      end
 
       def extract_body_text(raw_text)
         text_without_opening = if opening_delimiter

@@ -64,6 +64,55 @@ RSpec.describe TreeHaver::Base::Comment do
     end
   end
 
+  describe "source-adjacent layout metadata" do
+    it "reports file-edge position" do
+      expect(comment).not_to be_at_file_start
+      expect(comment).to be_at_file_end
+    end
+
+    it "reports contiguous blank lines around the comment" do
+      expect(comment.blank_lines_before).to eq([])
+      expect(comment.blank_lines_after).to eq([])
+      expect(comment.blank_line_count_before).to eq(0)
+      expect(comment.blank_line_count_after).to eq(0)
+    end
+
+    it "tracks blank-line runs before and after multi-line-separated comments" do
+      separated_comment = Class.new(comment_class) do
+        def start_point
+          {row: 2, column: 0}
+        end
+
+        def end_point
+          {row: 2, column: 7}
+        end
+      end.new(
+        Object.new,
+        source: "intro\n\n# hello\n\n\nbody\n",
+      )
+
+      expect(separated_comment.blank_lines_before).to eq([""])
+      expect(separated_comment.blank_lines_after).to eq(["", ""])
+      expect(separated_comment.blank_line_count_before).to eq(1)
+      expect(separated_comment.blank_line_count_after).to eq(2)
+    end
+
+    it "treats line-1 comments as file-start anchored" do
+      start_comment = Class.new(comment_class) do
+        def start_point
+          {row: 0, column: 0}
+        end
+
+        def end_point
+          {row: 0, column: 7}
+        end
+      end.new(Object.new, source: "# hello\nbody\n")
+
+      expect(start_comment).to be_at_file_start
+      expect(start_comment.blank_lines_before).to eq([])
+    end
+  end
+
   describe "normalized text helpers" do
     it "extracts the comment body without delimiters" do
       expect(comment.body_text).to eq("hello")

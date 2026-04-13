@@ -121,13 +121,19 @@ RSpec.shared_examples "tree comment api" do
           expect(comment).to respond_to(:start_point)
           expect(comment).to respond_to(:end_point)
           expect(comment).to respond_to(:source_position)
+          expect(comment).to respond_to(:blank_lines_before)
+          expect(comment).to respond_to(:blank_lines_after)
+          expect(comment).to respond_to(:blank_line_count_before)
+          expect(comment).to respond_to(:blank_line_count_after)
+          expect(comment).to respond_to(:at_file_start?)
+          expect(comment).to respond_to(:at_file_end?)
 
           if defined?(expect_attachment_hints) && expect_attachment_hints
             expect(comment).to respond_to(:attachment_hint)
             expect(comment).to respond_to(:leading?)
             expect(comment).to respond_to(:inline?)
             expect(comment).to respond_to(:trailing?)
-            expect(comment.attachment_hint).to be_in([:leading, :inline, :trailing])
+            expect([:leading, :inline, :trailing]).to include(comment.attachment_hint)
           end
         end
       when :nodes_only
