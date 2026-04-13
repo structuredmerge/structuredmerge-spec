@@ -1,4 +1,34 @@
 {
+  "# Continue to the next step on failure\ncontinue-on-error: true": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        97,
+        111
+      ]
+    },
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        100,
+        114
+      ]
+    },
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        96,
+        110
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        106,
+        120
+      ]
+    }
+  ],
   "- No incremental parsing support\n- No query API": [
     {
       "file": "README.md",
@@ -23,6 +53,69 @@
       "lines": [
         1661,
         1687
+      ]
+    }
+  ],
+  "appraisal: \"current\"\nexec_cmd: \"rake magic\"": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        52,
+        60
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        63,
+        71
+      ]
+    }
+  ],
+  "exec_cmd: \"rake magic\"\ngemfile: \"Appraisal.root\"": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        53,
+        61
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        56,
+        64,
+        72
+      ]
+    }
+  ],
+  "if: ${{ !env.ACT || (! startsWith(matrix.ruby, 'jruby') && !startsWith(matrix.ruby, 'truffleruby')) }}\nrun: bundle install": [
+    {
+      "file": ".github/workflows/current.yml",
+      "lines": [
+        90,
+        95
+      ]
+    },
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        93,
+        98
+      ]
+    },
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        89,
+        94
+      ]
+    },
+    {
+      "file": ".github/workflows/truffle.yml",
+      "lines": [
+        99,
+        104
       ]
     }
   ]
