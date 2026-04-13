@@ -64,7 +64,7 @@ RSpec.describe TreeHaver::Base::Comment do
     end
   end
 
-   describe "normalized text helpers" do
+  describe "normalized text helpers" do
     it "extracts the comment body without delimiters" do
       expect(comment.body_text).to eq("hello")
     end
