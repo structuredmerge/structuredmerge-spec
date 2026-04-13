@@ -1,3 +1,7 @@
+# Shared development environment for this gem.
+# Local overrides belong in .env.local (loaded via dotenvy through mise).
+# Shared development environment for this gem.
+# Local overrides belong in .env.local (loaded via dotenvy through mise).
 # Shared development environment for tree_haver.
 # Local overrides belong in .env.local (loaded via dotenvy through mise).
 [env]
@@ -15,11 +19,11 @@ K_SOUP_COV_COMMAND_NAME = "Test Coverage"
 K_SOUP_COV_DO = "true"
 K_SOUP_COV_FORMATTERS = "html,xml,rcov,lcov,json,tty"
 K_SOUP_COV_MERGE_TIMEOUT = "3600"
-K_SOUP_COV_MIN_BRANCH = "72"
-K_SOUP_COV_MIN_HARD = "false"
-K_SOUP_COV_MIN_LINE = "83"
-K_SOUP_COV_MULTI_FORMATTERS = "false"
-K_SOUP_COV_OPEN_BIN = "false"
+K_SOUP_COV_MIN_BRANCH = "76"
+K_SOUP_COV_MIN_HARD = "true"
+K_SOUP_COV_MIN_LINE = "92"
+K_SOUP_COV_MULTI_FORMATTERS = "true"
+K_SOUP_COV_OPEN_BIN = ""
 K_SOUP_COV_USE_MERGING = "true"
 MAX_ROWS = "1"
 OPENCOLLECTIVE_HANDLE = "kettle-rb"
