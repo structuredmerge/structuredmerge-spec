@@ -12,6 +12,8 @@ Remember to [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] if
 
 Take a look at the `reek` list which is the file called `REEK` and find something to improve.
 
+Take a look at the open issues and pull requests, or use the gem and find something to improve.
+
 Follow these instructions:
 
 1. Join the Discord: [![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite]
@@ -48,9 +50,8 @@ bin/rake -T
 
 TreeHaver supports multiple backends with different characteristics:
 
-Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
-`tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
-pass/fail count, failing example list, and SimpleCov coverage percentages.
+Start with the standard `kettle-test` workflow in the [Run Tests](#run-tests) section below.
+For backend-specific validation, use the matrix commands in this section.
 
 The **Citrus backend** works differently:
 
@@ -240,6 +241,10 @@ To run all tests
 ```console
 bundle exec rake test
 ```
+
+Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
+`tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
+pass/fail count, failing example list, and SimpleCov coverage percentages.
 
 ```console
 bundle exec kettle-test
