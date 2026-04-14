@@ -54,8 +54,11 @@ pass/fail count, failing example list, and SimpleCov coverage percentages.
 
 The **Citrus backend** works differently:
 
-The `bin/backend-matrix` script helps test and document backend compatibility by running tests
-in isolated subprocesses.
+## Developer Certificate of Origin
+
+In order to protect users of this project, we require all contributors to comply with the
+[Developer Certificate of Origin](https://developercertificate.org/).
+This ensures that all contributions are properly licensed and attributed.
 
 ### Basic Usage
 
