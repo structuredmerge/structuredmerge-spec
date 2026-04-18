@@ -8,9 +8,13 @@ To submit a patch, please fork the project, create a patch with tests, and send 
 
 Remember to [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] if you make changes.
 
-## Help out!
+## Developer Certificate of Origin
 
-Take a look at the `reek` list which is the file called `REEK` and find something to improve.
+In order to protect users of this project, we require all contributors to comply with the
+[Developer Certificate of Origin](https://developercertificate.org/).
+This ensures that all contributions are properly licensed and attributed.
+
+## Help out!
 
 Take a look at the open issues and pull requests, or use the gem and find something to improve.
 
@@ -31,175 +35,57 @@ Follow these instructions:
 Executables shipped by dependencies, such as kettle-dev, and stone_checksums, are available
 after running `bin/setup`. These include:
 
-1. - gem_checksums
-2. - kettle-changelog
-3. - kettle-commit-msg
-4. - kettle-dev-setup
-5. - kettle-dvcs
-6. - kettle-pre-release
-7. - kettle-readme-backers
-8. - kettle-release
+- gem_checksums
+- kettle-changelog
+- kettle-commit-msg
+- kettle-dev-setup
+- kettle-dvcs
+- kettle-pre-release
+- kettle-readme-backers
+- kettle-release
+
 There are many Rake tasks available as well. You can see them by running:
 
 ```shell
 bin/rake -T
 ```
 
-## Backend Compatibility Testing
-
-TreeHaver supports multiple backends with different characteristics:
-
-Start with the standard `kettle-test` workflow in the [Run Tests](#run-tests) section below.
-For backend-specific validation, use the matrix commands in this section.
-
-The **Citrus backend** works differently:
-
-## Developer Certificate of Origin
-
-In order to protect users of this project, we require all contributors to comply with the
-[Developer Certificate of Origin](https://developercertificate.org/).
-This ensures that all contributions are properly licensed and attributed.
-
-### Basic Usage
-
-```shell
-# Test all backends with TOML grammar (default)
-bin/backend-matrix
-
-# Test specific backend order (including Citrus)
-bin/backend-matrix ffi mri rust citrus
-
-# Test Citrus with tree-sitter backends
-bin/backend-matrix citrus mri ffi    # Citrus before tree-sitter
-bin/backend-matrix mri citrus ffi    # Citrus between tree-sitter
-
-# Test with a different grammar
-bin/backend-matrix --grammar=json
-
-# Test multiple grammars
-bin/backend-matrix --grammars=json,toml,bash
-
-# Citrus only supports TOML
-bin/backend-matrix --grammar=toml citrus
-```
-
-### All Permutations Mode
-
-Test all possible backend combinations by spawning fresh subprocesses for each:
-
-```shell
-# Test all 64 backend combinations (4 backends: 4 1-backend + 12 2-backend + 24 3-backend + 24 4-backend)
-bin/backend-matrix --all-permutations
-
-# With multiple grammars
-bin/backend-matrix --all-permutations --grammars=json,toml
-
-# Note: Citrus only supports TOML, so JSON/Bash tests will skip for Citrus
-```
-
-### Cross-Grammar Testing
-
-The most interesting test: can different backends coexist if they use *different* grammar files?
-
-```shell
-# Test: FFI+json then MRI+toml, MRI+json then FFI+toml, etc.
-bin/backend-matrix --cross-grammar --grammars=json,toml
-
-# Full cross-grammar matrix
-bin/backend-matrix --all-permutations --cross-grammar --grammars=json,toml
-```
-
-### Custom Source Files
-
-Provide your own source files for parsing:
-
-```shell
-bin/backend-matrix --toml-source=my_config.toml --json-source=data.json
-```
-
-### List Available Grammars
-
-Check which grammars are configured and available:
-
-```shell
-bin/backend-matrix --list-grammars
-```
-
-### Understanding the Output
-
-The script produces tables showing:
-
-1. **1-Backend Tests**: Each backend tested in isolation with all grammars
-2. **2-Backend Tests**: Pairs of backends tested in sequence (A → B)
-3. **3-Backend Tests**: Triples tested in sequence (A → B → C)
-4. **Backend Pair Compatibility**: Data-driven analysis of which backends can coexist
-5. **Statistics**: Success rates and combination counts
-
-Example findings:
-
-```
-Backend Pair Compatibility:
-╭───────────────┬────────────────────┬─────────┬────────╮
-│ Backend Pair  │ Compatibility      │ Working │ Failed │
-├───────────────┼────────────────────┼─────────┼────────┤
-│ ffi+mri       │ ✗ Incompatible     │       0 │      8 │
-│ mri+rust      │ ✓ Fully compatible │       8 │      0 │
-│ ffi+rust      │ ✓ Fully compatible │       8 │      0 │
-│ citrus+mri    │ ✓ Fully compatible │       2 │      0 │
-│ citrus+ffi    │ ✓ Fully compatible │       2 │      0 │
-│ citrus+rust   │ ✓ Fully compatible │       2 │      0 │
-╰───────────────┴────────────────────┴─────────┴────────╯
-
-Note: Citrus only supports TOML, so it has fewer total combinations.
-```
-
-### Required Environment Variables
-
-The script requires grammar paths to be set for tree-sitter backends:
-
-```shell
-export TREE_SITTER_TOML_PATH=/path/to/libtree-sitter-toml.so
-export TREE_SITTER_JSON_PATH=/path/to/libtree-sitter-json.so
-export TREE_SITTER_BASH_PATH=/path/to/libtree-sitter-bash.so
-```
-
-See `mise.toml` and `.env.local.example` for examples of how these are typically configured.
-
-**For Citrus backend:**
-
-1. - DEBUG: Enable extra internal logging for this library (default: false)
-2. - REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
-3. - CI: When set to true, adjusts default rake tasks toward CI behavior
-
 ## Environment Variables for Local Development
 
 Below are the primary environment variables recognized by stone_checksums (and its integrated tools). Unless otherwise noted, set boolean values to the string "true" to enable.
 
 General/runtime
+- DEBUG: Enable extra internal logging for this library (default: false)
+- REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
+- CI: When set to true, adjusts default rake tasks toward CI behavior
 
 Coverage (kettle-soup-cover / SimpleCov)
-1. - K_SOUP_COV_DO: Enable coverage collection (default: true in `mise.toml`)
-2. - K_SOUP_COV_FORMATTERS: Comma-separated list of formatters (html, xml, rcov, lcov, json, tty)
-3. - K_SOUP_COV_MIN_LINE: Minimum line coverage threshold (integer, e.g., 100)
-4. - K_SOUP_COV_MIN_BRANCH: Minimum branch coverage threshold (integer, e.g., 100)
-5. - K_SOUP_COV_MIN_HARD: Fail the run if thresholds are not met (true/false)
-6. - K_SOUP_COV_MULTI_FORMATTERS: Enable multiple formatters at once (true/false)
-7. - K_SOUP_COV_OPEN_BIN: Path to browser opener for HTML (empty disables auto-open)
-8. - MAX_ROWS: Limit console output rows for simplecov-console (e.g., 1)
+- K_SOUP_COV_DO: Enable coverage collection (default: true in `mise.toml`)
+- K_SOUP_COV_FORMATTERS: Comma-separated list of formatters (html, xml, rcov, lcov, json, tty)
+- K_SOUP_COV_MIN_LINE: Minimum line coverage threshold (integer, e.g., 100)
+- K_SOUP_COV_MIN_BRANCH: Minimum branch coverage threshold (integer, e.g., 100)
+- K_SOUP_COV_MIN_HARD: Fail the run if thresholds are not met (true/false)
+- K_SOUP_COV_MULTI_FORMATTERS: Enable multiple formatters at once (true/false)
+- K_SOUP_COV_OPEN_BIN: Path to browser opener for HTML (empty disables auto-open)
+- MAX_ROWS: Limit console output rows for simplecov-console (e.g., 1)
   Tip: When running a single spec file locally, you may want `K_SOUP_COV_MIN_HARD=false` to avoid failing thresholds for a partial run.
+
 GitHub API and CI helpers
-1. - GITHUB_TOKEN or GH_TOKEN: Token used by `ci:act` and release workflow checks to query GitHub Actions status at higher rate limits
+- GITHUB_TOKEN or GH_TOKEN: Token used by `ci:act` and release workflow checks to query GitHub Actions status at higher rate limits
+
 Releasing and signing
-1. - SKIP_GEM_SIGNING: If set, skip gem signing during build/release
-2. - GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
-3. - SOURCE_DATE_EPOCH: Reproducible build timestamp.
+- SKIP_GEM_SIGNING: If set, skip gem signing during build/release
+- GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
+- SOURCE_DATE_EPOCH: Reproducible build timestamp.
   - `kettle-release` will set this automatically for the session.
   - Not needed on bundler >= 2.7.0, as reproducible builds have become the default.
+
 Git hooks and commit message helpers (exe/kettle-commit-msg)
-1. - GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
-2. - GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
-3. - GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
-4. - GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
+- GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
+- GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
+- GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
+- GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
+
 For a quick starting point, this repository’s `mise.toml` defines the shared defaults, and `.env.local` can override them locally. Copy `.env.local.example` to `.env.local`, use `KEY=value` lines, and either activate `mise` in your shell or run commands through `mise exec -C /path/to/project -- ...`.
 
 ## Appraisals
@@ -219,23 +105,7 @@ bin/rake appraisal:reset
 
 When adding an appraisal to CI, check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
 
-## The Reek List
-
-Take a look at the open issues and pull requests, or use the gem and find something to improve.
-
-To refresh the `reek` list:
-
-```console
-bundle exec reek > REEK
-```
-
 ## Run Tests
-
-To run all tests
-
-```console
-bundle exec rake test
-```
 
 Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
 `tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
@@ -253,8 +123,8 @@ K_SOUP_COV_MIN_HARD=false bundle exec kettle-test spec/path/to/spec.rb
 
 ### Spec organization (required)
 
-1. - One spec file per class/module. For each class or module under `lib/`, keep all of its unit tests in a single spec file under `spec/` that mirrors the path and file name exactly: `lib/tree_haver/my_class.rb` -> `spec/tree_haver/my_class_spec.rb`.
-2. - Exception: Integration specs that intentionally span multiple classes. Place these under `spec/integration/` (or a clearly named integration folder), and do not directly mirror a single class. Name them after the scenario, not a class.
+- One spec file per class/module. For each class or module under `lib/`, keep all of its unit tests in a single spec file under `spec/` that mirrors the path and file name exactly: `lib/tree_haver/my_class.rb` -> `spec/tree_haver/my_class_spec.rb`.
+- Exception: Integration specs that intentionally span multiple classes. Place these under `spec/integration/` (or a clearly named integration folder), and do not directly mirror a single class. Name them after the scenario, not a class.
 
 ## Lint It
 
@@ -276,10 +146,11 @@ For more detailed information about using RuboCop in this project, please see th
 
 Never add `# rubocop:disable ...` / `# rubocop:enable ...` comments to code or specs (except when following the few existing `rubocop:disable` patterns for a rule already being disabled elsewhere in the code). Instead:
 
-1. - Prefer configuration-based exclusions when a rule should not apply to certain paths or files (e.g., via `.rubocop.yml`).
-2. - When a violation is temporary, and you plan to fix it later, record it in `.rubocop_gradual.lock` using the gradual workflow:
+- Prefer configuration-based exclusions when a rule should not apply to certain paths or files (e.g., via `.rubocop.yml`).
+- When a violation is temporary, and you plan to fix it later, record it in `.rubocop_gradual.lock` using the gradual workflow:
   - `bundle exec rake rubocop_gradual:autocorrect` (preferred)
   - `bundle exec rake rubocop_gradual:force_update` (only when you cannot fix the violations immediately)
+
 As a general rule, fix style issues rather than ignoring them. For example, our specs should follow RSpec conventions like using `described_class` for the class under test.
 
 ## Contributors
@@ -340,6 +211,7 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
     - `sha256sum pkg/<gem name>-<version>.gem`
 14. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to the gem host configured in the gemspec.
+
 [📜src-gl]: https://gitlab.com/kettle-rb/tree_haver/
 [📜src-cb]: https://codeberg.org/kettle-rb/tree_haver
 [📜src-gh]: https://github.com/kettle-rb/tree_haver
