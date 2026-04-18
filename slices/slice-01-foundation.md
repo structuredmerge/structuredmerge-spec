@@ -45,8 +45,9 @@ This slice succeeds when all three language families:
 
 ## Notes
 
-- TypeScript package names may include `-ts`.
-- Rust crate names may include `-rs`.
+- TypeScript packages should rely on the `@structuredmerge` scope for language
+  context rather than a `-ts` suffix.
+- Rust crates should use conventional crate names without a `-rs` suffix.
 - Go uses package names that fit Go conventions, even when the repo name is
   `structuredmerge-go`.
 - The DRAFT should be refined from cross-language friction discovered while
