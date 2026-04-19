@@ -189,6 +189,10 @@ Examples:
 An observable name binding between a policy surface and one declared policy on
 that surface.
 
+### Policy Reporting
+
+The optional exposure of active policy references on a parse or merge result.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -254,3 +258,5 @@ Observations from slices 02 through 08:
   will be hard to reason about.
 - Once multiple policy surfaces exist, they need a shared neutral vocabulary so
   implementations do not encode policy identity as format-local strings.
+- Policy vocabulary becomes substantially more useful once results can report
+  which policies were active for a given operation.
