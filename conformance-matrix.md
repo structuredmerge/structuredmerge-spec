@@ -19,6 +19,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | Text merge-resolution contract | Existing | Slice 10 | Slice 10 | Slice 10 |
 | Text block matching contract | Existing | Slice 11 | Slice 11 | Slice 11 |
 | Text match-driven merge contract | Existing | Slice 12 | Slice 12 | Slice 12 |
+| Text content-refined matching contract | Existing | Slice 13 | Slice 13 | Slice 13 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
@@ -53,6 +54,7 @@ All implementations should eventually share:
 - Slice 10: text merge-resolution contracts
 - Slice 11: text block matching contracts
 - Slice 12: text match-driven merge contracts
+- Slice 13: text content-refined matching contracts
 
 ## License Policy
 

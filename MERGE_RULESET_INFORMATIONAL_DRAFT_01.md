@@ -139,6 +139,10 @@ A consumer MAY expose additional match candidates that are not yet the sole
 normative match key in a given behavior profile, so long as the actual match
 rule remains explicit.
 
+Consumers MAY also expose whether an accepted correspondence came from a
+baseline rule or from a declared refinement pass, so long as the distinction is
+descriptive rather than a hidden substitute for the normative match key.
+
 ### 5.3b Stable Path
 
 A reproducible location identifier within an analyzed document that MAY be used

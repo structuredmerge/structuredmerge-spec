@@ -90,6 +90,20 @@ Examples:
 A post-parse matching helper that improves baseline structural matching using
 content similarity, signatures, or specialized heuristics.
 
+### Match Phase
+
+The declared stage of a matching decision.
+
+Examples:
+
+- `exact`
+- `refined`
+
+### Refined Match
+
+A match produced by a declared refinement pass after baseline matching has
+already consumed exact or primary candidates.
+
 ### Match Candidate
 
 An exposed identity hint that may support matching in later or richer policies
@@ -189,3 +203,6 @@ Observations from slices 02 through 08:
 - For text-like content, destination-order preservation and first-unmatched
   consumption are observable behaviors that should be specified explicitly when
   repeated blocks are possible.
+- For text-like content, exact anchor matching and refined matching should stay
+  distinct in the observable result model even when both phases contribute to
+  merge output.
