@@ -21,6 +21,8 @@ This slice defines a deliberately small merge rule:
 4. keys present only in the template are added
 5. keys present only in the destination are preserved
 6. rendered output is canonicalized with stable object-key ordering
+7. invalid template input reports `parse_error`
+8. invalid destination input reports `destination_parse_error`
 
 ## Shared Types
 
