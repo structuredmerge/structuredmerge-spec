@@ -243,6 +243,19 @@ Such derived metadata **SHOULD** be computed only from declared ruleset meaning 
 
 If the underlying ruleset omits optional directives because those surfaces are outside the declared merge contract, an exposed feature profile SHOULD preserve that omission rather than synthesize values. For example, it SHOULD not invent a comment family when `comment_style` is absent or a render family when `render` is absent.
 
+Where an implementation supports aggregate conformance or capability reporting
+across families, it MAY additionally expose a **default family context** derived
+from a declared family feature profile. Such defaulting is appropriate only when
+the derived context does not introduce merge ambiguity or silently change merge
+semantics. An implementation that exposes such defaulting SHOULD also expose
+that assumption as a manifest-level diagnostic rather than silently omitting the
+undeclared context.
+
+Implementations MAY also offer an **explicit context mode** in which family
+contexts must be declared directly and derived defaults are not allowed. In
+that mode, missing contexts are configuration errors rather than recoverable
+defaults.
+
 ### 5.12 Merge Surface
 
 A merge-relevant region within a document that MAY be merged under a distinct sub-ruleset or delegated merge contract.

@@ -239,6 +239,32 @@ fixture path.
 The optional capability requirements a conformance case declares before
 execution.
 
+### Default Family Context
+
+A synthesized family planning context derived from a declared family feature
+profile when no explicit family context is provided.
+
+### Explicit Context Mode
+
+A strict planning mode in which family contexts must be declared explicitly and
+default synthesis is not allowed.
+
+### Configuration Error
+
+A hard conformance configuration problem that makes a suite or manifest
+declaration internally invalid or non-reportable.
+
+Examples:
+
+- missing required suite roles
+- missing family context in explicit mode
+- missing family context with no safe default profile
+
+### Manifest Diagnostic
+
+Aggregate planning or reporting feedback attached to a manifest-wide conformance
+report rather than to an individual case result.
+
 Examples:
 
 - required dialect
