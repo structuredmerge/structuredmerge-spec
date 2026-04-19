@@ -24,6 +24,7 @@ Initial files:
 - `slices/slice-06-parser-adapters.md` - planned parser adapter contract slice
 - `slices/slice-07-json-structure.md` - planned JSON structural analysis slice
 - `slices/slice-08-json-owner-matching.md` - planned JSON owner matching slice
+- `slices/slice-09-json-merge-resolution.md` - planned JSON merge-resolution slice
 
 Non-goals for this directory:
 

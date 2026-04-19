@@ -136,6 +136,14 @@ retained, removed, or conditionally emitted.
 
 The final emission step that turns resolved nodes back into document text.
 
+### Canonical Render
+
+A deterministic rendered form chosen for conformance testing or stable
+cross-implementation comparison.
+
+Canonical render is an observable comparison surface. It need not be the final
+presentation-oriented render used by all consumers.
+
 ## Implementation Contracts
 
 Every language implementation should define equivalents for:
