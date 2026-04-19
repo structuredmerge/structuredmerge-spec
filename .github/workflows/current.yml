@@ -1,0 +1,53 @@
+name: Current
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - "main"
+      - "*-stable"
+    tags:
+      - "!*" # Do not execute on tags
+  pull_request:
+    branches:
+      - "*"
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate Spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Validate slice inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=0
+          while IFS= read -r slice; do
+            count=$((count + 1))
+            first_line=$(head -n 1 "$slice")
+            test -n "$first_line"
+            case "$first_line" in
+              \#\ Slice\ *) ;;
+              *)
+                echo "missing slice heading in $slice"
+                exit 1
+                ;;
+            esac
+          done < <(find slices -maxdepth 1 -type f -name 'slice-*.md' | sort)
+          test "$count" -gt 0
+      - name: Validate markdown headings
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            grep -q '^#' "$file"
+          done < <(find . -type f -name '*.md' -not -path './.git/*' | sort)
