@@ -7,6 +7,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 
 | Capability | Ruby | TypeScript | Rust | Go |
 |---|---|---|---|---|
+| Shared diagnostic/result contracts | Existing | Slice 02 | Slice 02 | Slice 02 |
 | Tree-sitter runtime wrapper | Existing | Planned | Planned | Planned |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
@@ -28,6 +29,14 @@ All implementations should eventually share:
 - explicit comment-handling behavior
 - explicit parse failure and destination-parse-failure behavior
 
+## Slice Roadmap
+
+- Slice 01: foundation and monorepo shape
+- Slice 02: diagnostic and result contracts
+- Slice 03: text analysis contracts
+- Slice 04: JSON and JSONC parse contracts
+- Slice 05: text similarity contracts
+
 ## License Policy
 
 All new non-Ruby implementation projects planned from this workspace should be
@@ -37,4 +46,3 @@ dual licensed under:
 - `PolyForm-Small-Business-1.0.0`
 
 See `LICENSE_TEMPLATE_PLAN.md` for the active workspace licensing plan context.
-

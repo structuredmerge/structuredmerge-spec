@@ -17,6 +17,10 @@ Initial files:
 - `merge-lexicon.md` - portable terminology snapshot derived from the active draft
 - `conformance-matrix.md` - MVP capability matrix across language stacks
 - `slices/slice-01-foundation.md` - first shared cross-language implementation slice
+- `slices/slice-02-diagnostics-and-results.md` - portable diagnostic and result contract
+- `slices/slice-03-text-analysis.md` - planned text-analysis slice
+- `slices/slice-04-json-parse.md` - planned JSON and JSONC parse slice
+- `slices/slice-05-text-similarity.md` - planned text-similarity slice
 
 Non-goals for this directory:
 
