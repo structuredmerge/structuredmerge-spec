@@ -4,7 +4,7 @@
 
 Expand manifest-driven fixture discovery beyond family profiles.
 
-## Planned Scope
+## Scope
 
 - add representative fixture roles for text and json/jsonc conformance
 - keep the manifest intentionally small and portable
@@ -28,3 +28,5 @@ This slice defines one broader conformance-discovery contract:
 
 - This slice broadens manifest usage without requiring every fixture to be
   indexed immediately.
+- Representative roles may cover family behavior, diagnostics vocabulary, and
+  backend-backed behavior slices as long as they remain portable and stable.
