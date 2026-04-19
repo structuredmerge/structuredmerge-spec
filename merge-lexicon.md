@@ -204,6 +204,11 @@ result.
 A normalized descriptive view of supported merge-relevant behavior intended for
 inspection, conformance reporting, or feature negotiation.
 
+### Family Feature Profile
+
+A normalized descriptive view of a document-family merge package, independent of
+any single backend adapter.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -276,3 +281,6 @@ Observations from slices 02 through 08:
 - Once adapter capability surfaces become explicit, a normalized feature profile
   becomes useful as the compact reporting surface that ties backend identity,
   dialect support, and supported policies together.
+- Family-level profiles are a useful second reporting surface after adapter
+  profiles because they describe package behavior without leaking backend
+  identity into every consumer-facing report.
