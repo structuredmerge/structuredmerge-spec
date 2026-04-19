@@ -918,6 +918,7 @@ Early adoption is improved if the ecosystem develops:
 
 - one or more early conforming implementations,
 - a language-neutral conformance fixture corpus,
+- manifest-driven suite planning and reporting surfaces,
 - additional independent implementations,
 - examples spanning multiple document families,
 - reusable feature-profile and diagnostic tooling,

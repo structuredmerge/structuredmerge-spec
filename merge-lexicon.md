@@ -262,6 +262,14 @@ selection state into an observable case result.
 A normalized helper that executes an ordered list of conformance cases through a
 common case-runner flow and returns an ordered list of case results.
 
+### Conformance Suite Plan
+
+A normalized pre-execution plan derived from a conformance manifest, a family,
+and an ordered role list.
+
+It preserves role order, resolves fixture paths, and records missing roles
+without silently dropping them.
+
 ### Backend Reference
 
 A normalized descriptive identifier for a parser backend.
