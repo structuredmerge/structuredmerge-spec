@@ -167,6 +167,14 @@ contract and does not silently repair prohibited syntax.
 The policy governing whether destination-only or template-only nodes are
 retained, removed, or conditionally emitted.
 
+### Array Policy
+
+The declared rule governing how arrays are resolved when both template and
+destination provide an array value at the same merge location.
+
+Array policy is separate from object member merge behavior even when both appear
+in the same document family.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -227,3 +235,6 @@ Observations from slices 02 through 08:
   are explicit.
 - Once a fallback exists, its non-applicability cases become just as important
   as the success path because silent scope growth is otherwise hard to detect.
+- Array handling should become an explicit policy surface before any
+  element-level array matching is introduced, otherwise later policy expansion
+  will be hard to reason about.

@@ -2,26 +2,34 @@
 
 ## Goal
 
-Plan the first explicit array-policy slice for JSON merge.
+Define the first explicit JSON array policy contract.
 
 ## Planned Scope
 
-- make the current destination-wins array behavior explicit as an array policy
-- expose that policy separately from object merge semantics
-- prepare for future alternative array policies without changing baseline
-  meaning
+- make the current destination-wins array behavior explicit as a named baseline
+  policy
+- expose array handling separately from object merge semantics
+- keep array handling observable without introducing element-level array merge
+  yet
 
-## Intended Direction
+## Shared Behavior
 
-This slice should:
+This slice defines one baseline array policy:
 
-1. define a named baseline array policy for JSON merge
-2. make array handling observable in fixtures without requiring element-level
-   matching yet
-3. preserve canonical render comparison
+1. when both template and destination values are arrays, the destination array
+   is preserved as a whole
+2. the template array is not appended to, interleaved with, or element-matched
+   against the destination array
+3. array policy applies recursively inside enclosing object merges
+4. canonical render remains the comparison surface for merged output
+
+## Shared Types
+
+- `merge_json` or equivalent host-language function
+- `MergeResult` or equivalent result wrapper
 
 ## Notes
 
-- The current implementation already behaves as destination-wins for arrays.
-- The next step is to make that a first-class policy surface instead of an
-  incidental branch inside object merge resolution.
+- This slice names the current behavior rather than changing it.
+- Future slices may introduce alternative array policies, but this slice keeps
+  the baseline explicit.
