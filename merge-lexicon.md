@@ -193,6 +193,12 @@ that surface.
 
 The optional exposure of active policy references on a parse or merge result.
 
+### Policy Support
+
+The optional exposure of which policy references a backend, adapter, or merge
+surface can support, independent of which ones were active in a particular
+result.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -260,3 +266,5 @@ Observations from slices 02 through 08:
   implementations do not encode policy identity as format-local strings.
 - Policy vocabulary becomes substantially more useful once results can report
   which policies were active for a given operation.
+- Active policies and supported policies are different surfaces and should stay
+  distinct: one is result-specific, the other is capability metadata.

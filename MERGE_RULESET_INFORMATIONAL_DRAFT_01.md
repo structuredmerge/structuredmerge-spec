@@ -729,6 +729,9 @@ When a parse or merge result exposes active policy information, the consumer
 SHOULD report it as structured policy references rather than collapsing it into
 diagnostic text.
 
+When an adapter or backend exposes policy support, the consumer SHOULD keep that
+capability metadata distinct from result-level active policy reporting.
+
 This draft does not define a standard `unresolved` directive or a standard persistence format for reviewable unresolved outcomes. Consumers MAY expose such runtime outcomes so long as they do not present them as additional declared ruleset directives unless a later profile or specification standardizes them.
 
 When a consumer does expose a reviewable unresolved runtime outcome, it MAY report that operation as unresolved rather than completed even if a provisional emitted result is also available for inspection.
