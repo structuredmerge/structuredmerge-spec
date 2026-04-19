@@ -9,6 +9,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 |---|---|---|---|---|
 | Shared diagnostic/result contracts | Existing | Slice 02 | Slice 02 | Slice 02 |
 | Tree-sitter runtime wrapper | Existing | Planned | Planned | Planned |
+| Text analysis contract | Existing | Slice 03 | Slice 03 | Slice 03 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
