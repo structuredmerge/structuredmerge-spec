@@ -224,6 +224,13 @@ fixture corpus.
 It exists so language-specific integration harnesses can discover the same
 fixture set without independent hard-coded path lists drifting apart.
 
+### Backend Reference
+
+A normalized descriptive identifier for a parser backend.
+
+It separates stable backend identity from any host-language package name or
+implementation-local wiring detail.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.

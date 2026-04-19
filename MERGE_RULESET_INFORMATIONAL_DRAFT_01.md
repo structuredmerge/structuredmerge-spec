@@ -747,6 +747,10 @@ As the shared fixture corpus expands, producers and consumers MAY rely on a
 small conformance manifest to identify stable portable fixture subsets without
 forcing each implementation to maintain its own divergent fixture index.
 
+When backend identity is reported, consumers SHOULD prefer a normalized backend
+reference over implementation-local naming alone so future backend selection and
+conformance reporting do not collapse into package-specific strings.
+
 This draft does not define a standard `unresolved` directive or a standard persistence format for reviewable unresolved outcomes. Consumers MAY expose such runtime outcomes so long as they do not present them as additional declared ruleset directives unless a later profile or specification standardizes them.
 
 When a consumer does expose a reviewable unresolved runtime outcome, it MAY report that operation as unresolved rather than completed even if a provisional emitted result is also available for inspection.
