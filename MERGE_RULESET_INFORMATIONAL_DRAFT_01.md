@@ -347,6 +347,11 @@ The minimum externally visible context needed to evaluate whether previously sav
 
 Replay compatibility context MAY include source-version evidence, ruleset-version evidence, normalized input fingerprints, or other compatibility indicators. This document does not standardize the transport shape or exact fields. It standardizes only the concept that replay-safe review requires explicit compatibility evaluation rather than blind reassociation by local case identifier.
 
+When a consumer exposes resumable review state, it MAY also expose host-policy
+hints describing whether the producing call was interactive-capable, whether
+strict explicit declarations were required, or similar caller-selected review
+constraints. Such hints are descriptive state, not transport or UI commands.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.

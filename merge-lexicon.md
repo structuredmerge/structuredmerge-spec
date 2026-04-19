@@ -216,6 +216,32 @@ The portable core shape behind family-specific feature profiles.
 It keeps family-level reporting stable across merge families, including
 families that do not expose dialect variants.
 
+### Review Host Hints
+
+A small descriptive surface recording how a producer was asked to behave while
+emitting resumable review state.
+
+Examples:
+
+- whether the host was interactive-capable
+- whether explicit contexts were required
+
+### Review Request
+
+A structured unresolved item exported for later review or inline completion
+without embedding transport- or UI-specific behavior in the core contract.
+
+### Review Decision
+
+A replayable choice bound to a prior review request through stable review
+identity rather than a transient local ordinal.
+
+### Replay Context
+
+A normalized compatibility context exposed with review state so that previously
+saved decisions can be evaluated against the newly produced unresolved surface
+instead of being blindly rebound by position.
+
 ### Conformance Manifest
 
 A shared fixture index that assigns stable roles to a portable subset of the
