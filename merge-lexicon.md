@@ -175,6 +175,20 @@ destination provide an array value at the same merge location.
 Array policy is separate from object member merge behavior even when both appear
 in the same document family.
 
+### Policy Surface
+
+The merge-behavior dimension to which a named policy applies.
+
+Examples:
+
+- fallback scope
+- array resolution
+
+### Policy Reference
+
+An observable name binding between a policy surface and one declared policy on
+that surface.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -238,3 +252,5 @@ Observations from slices 02 through 08:
 - Array handling should become an explicit policy surface before any
   element-level array matching is introduced, otherwise later policy expansion
   will be hard to reason about.
+- Once multiple policy surfaces exist, they need a shared neutral vocabulary so
+  implementations do not encode policy identity as format-local strings.
