@@ -23,3 +23,12 @@ Record cross-language host constraints that affect backend adoption.
 - In the same environment, `@kreuzberg/tree-sitter-language-pack` does load and
   parse JSON successfully, so it is currently the most practical TypeScript
   backend candidate.
+- In the same workspace, the published Rust crate
+  `tree-sitter-language-pack` does load and parse JSON successfully, so it is a
+  viable current backend candidate for the Rust implementation.
+- The published Go module
+  `github.com/kreuzberg-dev/tree-sitter-language-pack/packages/go` is not yet a
+  practical backend candidate here. It raises the repo floor to Go `1.26`, and
+  its published module payload does not include the `include/` and `lib/`
+  artifacts referenced by its own CGO bindings, so downstream builds fail
+  before runtime behavior can be evaluated.
