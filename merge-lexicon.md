@@ -39,6 +39,25 @@ Examples:
 - Tree-sitter parse tree plus comment metadata
 - Text block segmentation plus normalized spans
 
+### Dialect
+
+A declared parse or merge variant within one document family that changes
+observable acceptance or interpretation rules without changing the high-level
+document family itself.
+
+Examples:
+
+- `json` vs `jsonc`
+- strict vs extension-enabled parse modes
+
+### Normalized Source
+
+A canonicalized text form produced before or during analysis for the purpose of
+portable comparison, validation, or matching.
+
+Normalized source is an observable behavior artifact. It is not necessarily the
+same as the final rendered output.
+
 ### Node
 
 A structural unit eligible for matching, conflict resolution, rendering, or
@@ -75,6 +94,19 @@ replay, or synthesize comments.
 Structured information about parse problems, merge ambiguity, fallback,
 corruption detection, or skipped behavior.
 
+### Preprocessing
+
+A constrained transformation applied before parser or matcher execution in order
+to realize a declared contract in a portable way.
+
+Examples:
+
+- stripping JSONC comments before strict JSON parsing
+- newline normalization before text block analysis
+
+Preprocessing is acceptable only when its effect is part of the observable
+contract and does not silently repair prohibited syntax.
+
 ### Removal Mode
 
 The policy governing whether destination-only or template-only nodes are
@@ -104,3 +136,16 @@ Every language implementation should define equivalents for:
   portability target for v1.
 - Templating/scaffolding is a later layer, not part of the core lexicon MVP.
 
+## Cross-Implementation Observations
+
+Observations from slices 02 through 04:
+
+- Portable runtime contracts for diagnostics and results stabilize faster than
+  parser API contracts and should be specified earlier.
+- Observable parse behavior can be aligned before tree-sitter integration is
+  aligned, which argues for behavior-first conformance slices.
+- `dialect` is a first-class concept rather than an implementation detail.
+- `normalized_source` is useful as a portable comparison surface and should be
+  treated as part of analysis contracts where relevant.
+- Controlled preprocessing is sometimes required for portability, but silent
+  repair must remain outside baseline conformance unless explicitly declared.

@@ -11,6 +11,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | Tree-sitter runtime wrapper | Existing | Planned | Planned | Planned |
 | Text analysis contract | Existing | Slice 03 | Slice 03 | Slice 03 |
 | JSON and JSONC parse contract | Existing | Slice 04 | Slice 04 | Slice 04 |
+| Text similarity contract | Existing | Slice 05 | Slice 05 | Slice 05 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
@@ -38,6 +39,8 @@ All implementations should eventually share:
 - Slice 03: text analysis contracts
 - Slice 04: JSON and JSONC parse contracts
 - Slice 05: text similarity contracts
+- Slice 06: parser adapter contracts
+- Slice 07: JSON structural analysis contracts
 
 ## License Policy
 

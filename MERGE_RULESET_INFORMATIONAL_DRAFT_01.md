@@ -135,6 +135,15 @@ Examples include:
 - attribute tuple,
 - normalized reference label.
 
+### 5.3a Dialect
+
+A declared parse or merge variant within a document family that changes
+observable acceptance or interpretation rules without changing the broader
+document family.
+
+Examples include strict JSON versus JSON-with-comments handling, or other
+extension-controlled parse modes that share the same high-level merge family.
+
 ### 5.4 Comment Region
 
 A grouped comment unit. Region kinds include:
@@ -242,6 +251,28 @@ Typical repair-policy outcomes include:
 - fail,
 - defer completion and expose a reviewable unresolved outcome,
 - apply a declared healing transformation.
+
+### 5.14a Normalized Source
+
+A canonicalized text form produced before or during analysis for the purpose of
+portable comparison, validation, structural matching, or conformance testing.
+
+Normalized source is an observable behavior artifact. It is not necessarily the
+same as either the original input bytes or the final rendered output.
+
+### 5.14b Preprocessing
+
+A constrained transformation applied before parser or matcher execution in order
+to realize a declared merge contract in a portable way.
+
+Examples include comment stripping for a comment-tolerant dialect before
+handoff to a stricter native parser, or newline normalization before text-block
+analysis.
+
+Preprocessing MAY be used by a consumer when its effect is part of the declared
+or documented observable contract. A consumer MUST NOT silently repair syntax
+that the declared contract says is invalid unless an explicit repair policy
+permits that behavior.
 
 ### 5.15 Unresolved Outcome
 

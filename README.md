@@ -21,6 +21,8 @@ Initial files:
 - `slices/slice-03-text-analysis.md` - planned text-analysis slice
 - `slices/slice-04-json-parse.md` - planned JSON and JSONC parse slice
 - `slices/slice-05-text-similarity.md` - planned text-similarity slice
+- `slices/slice-06-parser-adapters.md` - planned parser adapter contract slice
+- `slices/slice-07-json-structure.md` - planned JSON structural analysis slice
 
 Non-goals for this directory:
 
