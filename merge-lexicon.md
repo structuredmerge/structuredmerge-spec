@@ -142,6 +142,13 @@ Fallback is an observable behavior decision. It is not the same as baseline
 preprocessing, and it must not silently widen the accepted syntax surface unless
 the behavior contract explicitly allows it.
 
+### Fallback Scope
+
+The declared boundary of states and inputs for which a fallback is allowed.
+
+Fallback scope is part of conformance behavior. A recovery path that succeeds
+outside its declared scope is a contract violation, not a benign extension.
+
 ### Preprocessing
 
 A constrained transformation applied before parser or matcher execution in order
@@ -218,3 +225,5 @@ Observations from slices 02 through 08:
 - Recovery behavior can be standardized independently from baseline parser
   strictness, but only if fallback activation, scope, and resulting diagnostics
   are explicit.
+- Once a fallback exists, its non-applicability cases become just as important
+  as the success path because silent scope growth is otherwise hard to detect.
