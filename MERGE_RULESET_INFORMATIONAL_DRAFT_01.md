@@ -709,6 +709,10 @@ Initial values are intentionally policy-shaped rather than algorithm-shaped. Typ
 
 A consumer **MUST NOT** silently apply undeclared repair behavior when the ruleset explicitly asks for a stricter policy.
 
+When a declared repair policy or behavior profile allows recovery, the consumer
+SHOULD expose that activation through an observable diagnostic surface rather
+than making the widened acceptance path indistinguishable from baseline success.
+
 This draft does not define a standard `unresolved` directive or a standard persistence format for reviewable unresolved outcomes. Consumers MAY expose such runtime outcomes so long as they do not present them as additional declared ruleset directives unless a later profile or specification standardizes them.
 
 When a consumer does expose a reviewable unresolved runtime outcome, it MAY report that operation as unresolved rather than completed even if a provisional emitted result is also available for inspection.

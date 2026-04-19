@@ -133,6 +133,15 @@ replay, or synthesize comments.
 Structured information about parse problems, merge ambiguity, fallback,
 corruption detection, or skipped behavior.
 
+### Fallback
+
+A declared recovery path applied after baseline processing fails for a specific
+state class.
+
+Fallback is an observable behavior decision. It is not the same as baseline
+preprocessing, and it must not silently widen the accepted syntax surface unless
+the behavior contract explicitly allows it.
+
 ### Preprocessing
 
 A constrained transformation applied before parser or matcher execution in order
@@ -206,3 +215,6 @@ Observations from slices 02 through 08:
 - For text-like content, exact anchor matching and refined matching should stay
   distinct in the observable result model even when both phases contribute to
   merge output.
+- Recovery behavior can be standardized independently from baseline parser
+  strictness, but only if fallback activation, scope, and resulting diagnostics
+  are explicit.
