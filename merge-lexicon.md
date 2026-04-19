@@ -100,6 +100,11 @@ Example:
 - a JSON object member `match_key` when the baseline matcher still uses stable
   path equality
 
+### First-Unmatched Matching
+
+A matching policy in which repeated equivalent candidates are consumed in order,
+and each new match uses the first candidate that has not already been matched.
+
 ### Freeze Region
 
 A region whose destination content is preserved regardless of template content.
@@ -181,3 +186,6 @@ Observations from slices 02 through 08:
   argues for making path contracts explicit before richer matching policies.
 - Exposed match candidates and actual match rules should remain distinct until
   conformance evidence shows they can safely collapse.
+- For text-like content, destination-order preservation and first-unmatched
+  consumption are observable behaviors that should be specified explicitly when
+  repeated blocks are possible.

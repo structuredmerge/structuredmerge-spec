@@ -17,6 +17,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | JSON owner matching contract | Existing | Slice 08 | Slice 08 | Slice 08 |
 | JSON merge-resolution contract | Existing | Slice 09 | Slice 09 | Slice 09 |
 | Text merge-resolution contract | Existing | Slice 10 | Slice 10 | Slice 10 |
+| Text block matching contract | Existing | Slice 11 | Slice 11 | Slice 11 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
@@ -49,6 +50,7 @@ All implementations should eventually share:
 - Slice 08: JSON owner matching contracts
 - Slice 09: JSON merge-resolution contracts
 - Slice 10: text merge-resolution contracts
+- Slice 11: text block matching contracts
 
 ## License Policy
 
