@@ -768,6 +768,12 @@ selection explicitly rather than silently omitting unsupported cases. A skipped
 case remains observable conformance evidence when the skip is derived from
 declared dialect or policy support boundaries.
 
+When reusable conformance runner helpers are exposed, consumers SHOULD preserve
+ordinary case-result reporting for skipped cases rather than introducing a
+separate hidden skip channel. Suite-level execution MAY be layered above such a
+case runner so long as ordered case results remain observable and compatible
+with normalized suite-summary derivation.
+
 This draft does not define a standard `unresolved` directive or a standard persistence format for reviewable unresolved outcomes. Consumers MAY expose such runtime outcomes so long as they do not present them as additional declared ruleset directives unless a later profile or specification standardizes them.
 
 When a consumer does expose a reviewable unresolved runtime outcome, it MAY report that operation as unresolved rather than completed even if a provisional emitted result is also available for inspection.

@@ -252,6 +252,16 @@ run or be reported as skipped based on declared capabilities.
 Selection is distinct from case outcome. A case may be skipped by selection
 without executing and without being silently dropped from reporting.
 
+### Conformance Case Runner
+
+A normalized helper that turns one conformance case plus its capability
+selection state into an observable case result.
+
+### Conformance Suite Runner
+
+A normalized helper that executes an ordered list of conformance cases through a
+common case-runner flow and returns an ordered list of case results.
+
 ### Backend Reference
 
 A normalized descriptive identifier for a parser backend.
