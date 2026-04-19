@@ -209,6 +209,21 @@ inspection, conformance reporting, or feature negotiation.
 A normalized descriptive view of a document-family merge package, independent of
 any single backend adapter.
 
+### Shared Family Feature Profile
+
+The portable core shape behind family-specific feature profiles.
+
+It keeps family-level reporting stable across merge families, including
+families that do not expose dialect variants.
+
+### Conformance Manifest
+
+A shared fixture index that assigns stable roles to a portable subset of the
+fixture corpus.
+
+It exists so language-specific integration harnesses can discover the same
+fixture set without independent hard-coded path lists drifting apart.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
