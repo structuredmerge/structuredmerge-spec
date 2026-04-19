@@ -27,6 +27,7 @@ Initial files:
 - `slices/slice-09-json-merge-resolution.md` - planned JSON merge-resolution slice
 - `slices/slice-10-text-merge-resolution.md` - planned text merge-resolution slice
 - `slices/slice-11-text-block-matching.md` - planned text block matching slice
+- `slices/slice-12-text-match-driven-merge.md` - planned text match-driven merge slice
 
 Non-goals for this directory:
 
