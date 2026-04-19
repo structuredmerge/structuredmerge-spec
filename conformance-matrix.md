@@ -12,6 +12,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | Text analysis contract | Existing | Slice 03 | Slice 03 | Slice 03 |
 | JSON and JSONC parse contract | Existing | Slice 04 | Slice 04 | Slice 04 |
 | Text similarity contract | Existing | Slice 05 | Slice 05 | Slice 05 |
+| Parser adapter contract | Existing | Slice 06 | Slice 06 | Slice 06 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
