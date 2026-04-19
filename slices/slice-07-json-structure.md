@@ -22,6 +22,7 @@ JSON or JSONC documents:
 4. owners expose a stable path using JSON Pointer-style notation
 5. object members expose a `match_key` equal to the member key
 6. array elements expose no match key
+7. owners are emitted in stable-path order for conformance comparison
 
 ## Shared Types
 
