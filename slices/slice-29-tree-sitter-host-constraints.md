@@ -20,3 +20,6 @@ Record cross-language host constraints that affect backend adoption.
   `tree-sitter ^0.21.1`.
 - That makes TypeScript backend adoption a host/runtime problem, not just an
   unimplemented wrapper.
+- In the same environment, `@kreuzberg/tree-sitter-language-pack` does load and
+  parse JSON successfully, so it is currently the most practical TypeScript
+  backend candidate.
