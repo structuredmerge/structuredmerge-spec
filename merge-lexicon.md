@@ -229,6 +229,11 @@ fixture set without independent hard-coded path lists drifting apart.
 A stable descriptive name used by a conformance manifest to identify one
 fixture's purpose within a portable suite.
 
+### Conformance Manifest Entry
+
+A single manifest entry that binds a stable descriptive role to one portable
+fixture path.
+
 ### Backend Reference
 
 A normalized descriptive identifier for a parser backend.
@@ -311,3 +316,8 @@ Observations from slices 02 through 08:
 - Family-level profiles are a useful second reporting surface after adapter
   profiles because they describe package behavior without leaking backend
   identity into every consumer-facing report.
+- Once shared manifests are used broadly, family-specific top-level manifest
+  keys become an avoidable portability leak; a normalized family map is the
+  cleaner contract.
+- Once case-level conformance results exist, a derived suite summary becomes a
+  useful second reporting surface for CI and reusable runners.
