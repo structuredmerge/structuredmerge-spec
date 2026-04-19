@@ -14,6 +14,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | Text similarity contract | Existing | Slice 05 | Slice 05 | Slice 05 |
 | Parser adapter contract | Existing | Slice 06 | Slice 06 | Slice 06 |
 | JSON structural analysis contract | Existing | Slice 07 | Slice 07 | Slice 07 |
+| JSON owner matching contract | Existing | Slice 08 | Slice 08 | Slice 08 |
 | Text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
@@ -43,6 +44,7 @@ All implementations should eventually share:
 - Slice 05: text similarity contracts
 - Slice 06: parser adapter contracts
 - Slice 07: JSON structural analysis contracts
+- Slice 08: JSON owner matching contracts
 
 ## License Policy
 

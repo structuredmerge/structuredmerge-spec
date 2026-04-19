@@ -135,6 +135,22 @@ Examples include:
 - attribute tuple,
 - normalized reference label.
 
+A consumer MAY expose additional match candidates that are not yet the sole
+normative match key in a given behavior profile, so long as the actual match
+rule remains explicit.
+
+### 5.3b Stable Path
+
+A reproducible location identifier within an analyzed document that MAY be used
+as an observable matching surface.
+
+Examples include JSON Pointer-style owner paths or normalized structural paths
+derived from syntax trees.
+
+When a consumer uses stable path as part of a behavior profile, the path format
+and normalization rules SHOULD be explicit enough for cross-implementation
+conformance testing.
+
 ### 5.3a Dialect
 
 A declared parse or merge variant within a document family that changes

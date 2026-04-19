@@ -23,6 +23,7 @@ Initial files:
 - `slices/slice-05-text-similarity.md` - planned text-similarity slice
 - `slices/slice-06-parser-adapters.md` - planned parser adapter contract slice
 - `slices/slice-07-json-structure.md` - planned JSON structural analysis slice
+- `slices/slice-08-json-owner-matching.md` - planned JSON owner matching slice
 
 Non-goals for this directory:
 

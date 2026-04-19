@@ -75,10 +75,30 @@ Examples:
 An implementation decision that two nodes from template and destination are the
 same logical unit for merge purposes.
 
+### Stable Path
+
+A reproducible location identifier within an analyzed document that can be used
+as an observable matching surface.
+
+Examples:
+
+- JSON Pointer-style owner paths
+- normalized owner paths derived from syntax trees
+
 ### Refiner
 
 A post-parse matching helper that improves baseline structural matching using
 content similarity, signatures, or specialized heuristics.
+
+### Match Candidate
+
+An exposed identity hint that may support matching in later or richer policies
+without yet being the sole match rule in the current slice.
+
+Example:
+
+- a JSON object member `match_key` when the baseline matcher still uses stable
+  path equality
 
 ### Freeze Region
 
@@ -138,7 +158,7 @@ Every language implementation should define equivalents for:
 
 ## Cross-Implementation Observations
 
-Observations from slices 02 through 04:
+Observations from slices 02 through 08:
 
 - Portable runtime contracts for diagnostics and results stabilize faster than
   parser API contracts and should be specified earlier.
@@ -149,3 +169,7 @@ Observations from slices 02 through 04:
   treated as part of analysis contracts where relevant.
 - Controlled preprocessing is sometimes required for portability, but silent
   repair must remain outside baseline conformance unless explicitly declared.
+- Stable path semantics became important as soon as structure was exposed, which
+  argues for making path contracts explicit before richer matching policies.
+- Exposed match candidates and actual match rules should remain distinct until
+  conformance evidence shows they can safely collapse.
