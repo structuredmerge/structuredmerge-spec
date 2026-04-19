@@ -357,6 +357,10 @@ SHOULD be accompanied by replay-compatibility context. A consumer that cannot
 establish compatibility SHOULD reject the imported decisions explicitly rather
 than downgrading silently to best-effort positional reassociation.
 
+When compatibility is established, a consumer SHOULD still evaluate whether each
+imported decision refers to a currently live review identity rather than
+assuming that every decision in a compatible bundle remains applicable.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.
