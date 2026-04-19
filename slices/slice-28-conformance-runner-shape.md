@@ -2,15 +2,36 @@
 
 ## Goal
 
-Plan a normalized runner shape for cross-language conformance execution.
+Define a normalized runner shape for cross-language conformance execution.
 
-## Planned Scope
+## Scope
 
 - define a minimal runner vocabulary
 - describe how fixtures, roles, and outcomes are reported
 - keep the runner shape separate from any one test framework
 
+## Contract
+
+This slice defines one minimal reporting contract:
+
+1. a conformance runner reports each executed case through a stable case
+   reference
+2. the case reference identifies the family, role, and fixture case name
+3. each reported case has a normalized outcome
+4. each reported case may carry zero or more diagnostic messages intended for
+   human-readable failure context
+5. the runner shape is descriptive and transportable; it does not prescribe a
+   specific assertion library or test runner
+
+## Shared Types
+
+- `ConformanceCaseRef`
+- `ConformanceOutcome`
+- `ConformanceCaseResult`
+
 ## Notes
 
-- This slice is planned ahead so fixture usage can evolve toward an actual
-  shared runner instead of remaining only a pattern in test files.
+- This slice is intentionally smaller than a full reusable runner
+  implementation.
+- It gives the current fixture-driven test suites one normalized reporting
+  target without forcing any repo to adopt a shared executable harness yet.
