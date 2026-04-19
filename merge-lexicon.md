@@ -234,6 +234,24 @@ fixture's purpose within a portable suite.
 A single manifest entry that binds a stable descriptive role to one portable
 fixture path.
 
+### Conformance Case Requirements
+
+The optional capability requirements a conformance case declares before
+execution.
+
+Examples:
+
+- required dialect
+- required policy references
+
+### Conformance Selection
+
+A normalized pre-execution decision describing whether a conformance case should
+run or be reported as skipped based on declared capabilities.
+
+Selection is distinct from case outcome. A case may be skipped by selection
+without executing and without being silently dropped from reporting.
+
 ### Backend Reference
 
 A normalized descriptive identifier for a parser backend.
