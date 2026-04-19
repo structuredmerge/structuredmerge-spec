@@ -242,6 +242,11 @@ A normalized compatibility context exposed with review state so that previously
 saved decisions can be evaluated against the newly produced unresolved surface
 instead of being blindly rebound by position.
 
+### Replay Rejection
+
+An explicit observable refusal to apply imported review decisions because replay
+compatibility could not be established.
+
 ### Conformance Manifest
 
 A shared fixture index that assigns stable roles to a portable subset of the

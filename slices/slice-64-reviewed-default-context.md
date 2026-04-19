@@ -16,7 +16,7 @@ default-context decision into a recomputed conformance review state.
 This slice defines one replay contract:
 
 1. a saved `accept_default_context` decision may satisfy a matching pending
-   `family_context` request
+   `family_context` request when replay compatibility has been established
 2. when applied, the producer emits the same synthesized default context it
    would have used in permissive mode
 3. the applied decision is exposed in `applied_decisions`

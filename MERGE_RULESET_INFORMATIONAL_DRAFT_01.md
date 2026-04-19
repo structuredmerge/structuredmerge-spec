@@ -352,6 +352,11 @@ hints describing whether the producing call was interactive-capable, whether
 strict explicit declarations were required, or similar caller-selected review
 constraints. Such hints are descriptive state, not transport or UI commands.
 
+If a consumer accepts imported review decisions for replay, those decisions
+SHOULD be accompanied by replay-compatibility context. A consumer that cannot
+establish compatibility SHOULD reject the imported decisions explicitly rather
+than downgrading silently to best-effort positional reassociation.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.
