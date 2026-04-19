@@ -199,6 +199,11 @@ The optional exposure of which policy references a backend, adapter, or merge
 surface can support, independent of which ones were active in a particular
 result.
 
+### Feature Profile
+
+A normalized descriptive view of supported merge-relevant behavior intended for
+inspection, conformance reporting, or feature negotiation.
+
 ### Render
 
 The final emission step that turns resolved nodes back into document text.
@@ -268,3 +273,6 @@ Observations from slices 02 through 08:
   which policies were active for a given operation.
 - Active policies and supported policies are different surfaces and should stay
   distinct: one is result-specific, the other is capability metadata.
+- Once adapter capability surfaces become explicit, a normalized feature profile
+  becomes useful as the compact reporting surface that ties backend identity,
+  dialect support, and supported policies together.
