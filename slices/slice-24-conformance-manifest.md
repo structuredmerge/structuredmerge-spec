@@ -8,6 +8,7 @@ Create a shared manifest for portable fixture discovery.
 
 - define a narrow conformance manifest format
 - start with family feature profile fixtures
+- expand the manifest to representative text and json fixture roles
 - use the manifest from language-specific integration tests
 
 ## Shared Behavior

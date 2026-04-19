@@ -224,6 +224,11 @@ fixture corpus.
 It exists so language-specific integration harnesses can discover the same
 fixture set without independent hard-coded path lists drifting apart.
 
+### Conformance Role
+
+A stable descriptive name used by a conformance manifest to identify one
+fixture's purpose within a portable suite.
+
 ### Backend Reference
 
 A normalized descriptive identifier for a parser backend.
