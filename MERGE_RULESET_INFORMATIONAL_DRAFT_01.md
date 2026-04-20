@@ -337,6 +337,10 @@ capability or conformance consequences. A consumer MAY therefore expose backend
 identity and backend-limited conformance results without changing the family
 contract itself.
 
+A family MAY also expose a backend-specific feature profile view for
+conformance or planning surfaces, so long as the view remains consistent with
+the family contract rather than leaking parser-internal detail.
+
 ### 5.14e Backend Requirement
 
 A conformance-case constraint that limits selection to a named family backend.
