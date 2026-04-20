@@ -29,6 +29,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | TOML backend plan contexts | Existing | Slice 135-137 | Slice 135-137 | Slice 135-137 |
 | YAML backend plurality | Slice 170 | Slice 170 | Slice 170 | Slice 170 |
 | YAML backend plan contexts | Slice 171-174 | Slice 171-174 | Slice 171-174 | Slice 171-174 |
+| YAML polyglot backend path | Slice 183-186 | Slice 183-186 | Slice 183-186 | Slice 183-186 |
 | Canonical stable suites with alternate config backends | Existing | Slice 175-177 | Slice 175-177 | Slice 175-177 |
 | Canonical widened suites with alternate config backends | Existing | Slice 178-182 | Slice 178-182 | Slice 178-182 |
 | TOML named-suite planning and reporting | Existing | Slice 138-140 | Slice 138-140 | Slice 138-140 |
@@ -119,6 +120,10 @@ All implementations should eventually share:
 - Slice 180: canonical widened-suite backend review state
 - Slice 181: canonical widened-suite backend reviewed default
 - Slice 182: canonical widened-suite backend replay application
+- Slice 183: YAML polyglot backend feature profiles
+- Slice 184: YAML polyglot backend plan contexts
+- Slice 185: YAML polyglot backend named-suite plans
+- Slice 186: YAML polyglot backend manifest report
 
 ## License Policy
 
