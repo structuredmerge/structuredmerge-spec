@@ -192,6 +192,11 @@ A projected child review group whose case identifiers have all been resolved,
 so it can be applied as one delegated child unit while incomplete sibling
 groups remain pending.
 
+### Delegated Child Group Review Request
+
+A review request that asks the host whether a projected child review group that
+is ready for apply should be applied as one delegated child unit.
+
 Examples:
 
 - `exact`
