@@ -27,6 +27,8 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | TOML merge | Existing | Slice 90-94 | Slice 90-94 | Slice 90-94 |
 | TOML backend plurality | Existing | Slice 134 | Slice 134 | Slice 134 |
 | TOML backend plan contexts | Existing | Slice 135-137 | Slice 135-137 | Slice 135-137 |
+| YAML backend plurality | Slice 170 | Slice 170 | Slice 170 | Slice 170 |
+| YAML backend plan contexts | Slice 171-174 | Slice 171-174 | Slice 171-174 | Slice 171-174 |
 | TOML named-suite planning and reporting | Existing | Slice 138-140 | Slice 138-140 | Slice 138-140 |
 | TOML canonical-manifest paths | Existing | Slice 141 | Slice 141 | Slice 141 |
 | YAML merge | Existing | Slice 95-99 | Slice 95-99 | Slice 95-99 |
@@ -102,6 +104,11 @@ All implementations should eventually share:
 - Slice 167: backend-sensitive aggregate suite plans
 - Slice 168: backend-sensitive aggregate tree-sitter report
 - Slice 169: backend-sensitive aggregate native report
+- Slice 170: YAML family backend plurality
+- Slice 171: YAML family backend feature profiles
+- Slice 172: YAML family backend plan contexts
+- Slice 173: YAML family backend named suite plans
+- Slice 174: YAML family backend manifest report
 
 ## License Policy
 
