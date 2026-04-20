@@ -361,6 +361,10 @@ When compatibility is established, a consumer SHOULD still evaluate whether each
 imported decision refers to a currently live review identity rather than
 assuming that every decision in a compatible bundle remains applicable.
 
+Implementations MAY expose replay inputs as separate fields or as one replay
+bundle object so long as the observable replay-compatibility and replay-safety
+semantics remain unchanged.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.
