@@ -27,6 +27,7 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | TOML merge | Existing | Slice 90-94 | Slice 90-94 | Slice 90-94 |
 | TOML backend plurality | Existing | Slice 134 | Slice 134 | Slice 134 |
 | TOML backend plan contexts | Existing | Slice 135-137 | Slice 135-137 | Slice 135-137 |
+| TOML named-suite planning and reporting | Existing | Slice 138-140 | Slice 138-140 | Slice 138-140 |
 | YAML merge | Existing | Slice 95-99 | Slice 95-99 | Slice 95-99 |
 | TypeScript family merge | Existing | Slice 100-104 | Slice 100-104 | Slice 100-104 |
 | Rust family merge | Existing | Slice 105-108 | Slice 105-108 | Slice 105-108 |
@@ -73,6 +74,7 @@ All implementations should eventually share:
 - Slice 133: family substrate layer
 - Slice 134: TOML family backend plurality
 - Slice 135-137: TOML backend feature profiles, plan contexts, and family manifest
+- Slice 138-140: TOML suite definitions, named-suite plans, and manifest report
 
 ## License Policy
 
