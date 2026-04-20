@@ -898,6 +898,11 @@ Different source-language families MAY also select different parser backends in
 the same manifest-level planning or reporting pass so long as each family
 context remains explicit about its selected backend capability surface.
 
+When a source-family manifest entry is meaningful only for a particular parser
+backend, that restriction SHOULD be expressed through ordinary case
+requirements rather than by introducing a backend-specific manifest shape or a
+backend-specific suite namespace.
+
 When case-level conformance reporting is exposed, consumers MAY also derive or
 report a normalized suite summary so aggregate status remains portable without
 replacing case-level evidence.
