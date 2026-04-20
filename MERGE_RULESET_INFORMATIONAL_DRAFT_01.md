@@ -352,6 +352,10 @@ export those actions as structured offers rather than as a bare string list, so
 hosts can determine whether additional payload is required before presenting or
 submitting a decision.
 
+If a review action requires structured payload, the action offer SHOULD identify
+the payload kind explicitly rather than requiring the host to infer it from the
+action name alone.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

@@ -256,6 +256,11 @@ applicable before the decision is applied.
 A structured description of one review action, including whether that action
 requires additional decision payload.
 
+### Review Payload Kind
+
+A compact identifier describing the shape of payload data expected by a review
+action offer.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
