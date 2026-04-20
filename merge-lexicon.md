@@ -261,6 +261,11 @@ requires additional decision payload.
 A compact identifier describing the shape of payload data expected by a review
 action offer.
 
+### Review Decision Diagnostic
+
+A structured diagnostic that identifies the rejected or invalid review request
+and action in addition to its human-readable message.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously

@@ -356,6 +356,10 @@ If a review action requires structured payload, the action offer SHOULD identify
 the payload kind explicitly rather than requiring the host to infer it from the
 action name alone.
 
+When a consumer rejects one specific replayed review decision, it SHOULD expose
+the rejected request identity and action in structured diagnostic fields rather
+than only in diagnostic prose.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.
