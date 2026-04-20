@@ -80,6 +80,9 @@ All implementations should eventually share:
 - Slice 142-143: YAML family plan contexts and family manifest
 - Slice 144-146: YAML suite definitions, named-suite plans, and manifest report
 - Slice 147: YAML family in the canonical manifest
+- Slice 148: aggregate config-family manifest
+- Slice 149: aggregate config-family suite plans
+- Slice 150: aggregate config-family manifest report
 
 ## License Policy
 
