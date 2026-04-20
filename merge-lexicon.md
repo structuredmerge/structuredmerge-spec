@@ -197,6 +197,12 @@ groups remain pending.
 A review request that asks the host whether a projected child review group that
 is ready for apply should be applied as one delegated child unit.
 
+### Delegated Child Group Review State
+
+The current review transport state for a set of apply-ready delegated child
+groups, including outstanding requests, accepted groups, applied decisions, and
+replay diagnostics.
+
 Examples:
 
 - `exact`

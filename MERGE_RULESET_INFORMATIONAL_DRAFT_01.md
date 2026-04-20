@@ -276,6 +276,8 @@ pattern. In such cases, the transport SHOULD preserve:
 - delegated child group review requests and replayed apply decisions so ready
   delegated child groups can flow through the same transport family as other
   review decisions.
+- delegated child group review state so unresolved delegated child groups,
+  accepted groups, applied decisions, and replay rejections remain explicit.
 
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In
