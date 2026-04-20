@@ -39,6 +39,9 @@ All implementations should eventually share:
 - explicit freeze behavior
 - explicit comment-handling behavior
 - explicit parse failure and destination-parse-failure behavior
+- the same backend-ownership rule:
+  reusable parser frameworks in `tree-haver`, one-trick parsers in family
+  libraries
 
 ## Slice Roadmap
 

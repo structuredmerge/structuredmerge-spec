@@ -66,6 +66,22 @@ Examples:
 - stable alternate parser feeding the same family contract
 - PEG-style parser backend feeding the same family contract
 
+Reusable parser frameworks are the preferred `tree-haver` backend candidates.
+One-trick parsers that are effectively tied to one family may instead be hosted
+inside that merge-family library so long as they still emit the same
+family-facing shapes.
+
+### Family Substrate
+
+Parser-agnostic family logic shared by multiple backends for the same family.
+
+A family substrate may normalize node kinds, owner paths, or merge-relevant
+structure before parser-specific merge code continues.
+
+Some families keep the substrate inside one merge library. Others may expose it
+as a separate shared package when parser-specific packaging or dependency
+constraints make a single all-backends package impractical.
+
 ### Backend Requirement
 
 A conformance-case requirement that limits selection to a named family backend.

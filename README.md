@@ -28,6 +28,8 @@ Initial files:
 - `slices/slice-10-text-merge-resolution.md` - planned text merge-resolution slice
 - `slices/slice-11-text-block-matching.md` - planned text block matching slice
 - `slices/slice-12-text-match-driven-merge.md` - planned text match-driven merge slice
+- `slices/slice-132-backend-ownership-boundary.md` - backend hosting boundary between `tree-haver` and family libraries
+- `slices/slice-133-family-substrate-layer.md` - parser-agnostic family substrate seam
 
 Non-goals for this directory:
 

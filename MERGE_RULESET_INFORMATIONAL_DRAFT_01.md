@@ -347,6 +347,13 @@ family MAY therefore validate the same fixture or ruleset corpus against
 multiple backend implementations side by side so long as each backend satisfies
 the same family-facing contract.
 
+Backend hosting is a separate concern from backend plurality. Reusable
+parser-framework integrations SHOULD live in `tree-haver` or its equivalent,
+while parser-specific one-trick integrations MAY live directly in the
+merge-family library that uses them. In both cases, the resulting backend MUST
+still satisfy the same family-facing contract and shared diagnostic/result
+shapes.
+
 ### 5.14e Backend Requirement
 
 A conformance-case constraint that limits selection to a named family backend.
@@ -356,6 +363,16 @@ policy requirements. A consumer MUST NOT silently select a backend-limited case
 when a different backend is active.
 Backend requirements MAY be declared directly on a case or propagated through a
 manifest entry that plans such a case.
+
+### 5.14f Family Substrate
+
+Parser-agnostic family logic shared by multiple backends for the same family.
+
+A family substrate may normalize node kinds, owner paths, or merge-relevant
+structure before parser-specific merge code continues. A family MAY keep this
+substrate inside one merge library or expose it as a separate shared package
+when packaging, native dependency, or installability concerns make that split
+useful.
 
 ### 5.15 Unresolved Outcome
 
