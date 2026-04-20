@@ -343,6 +343,10 @@ When a reviewable case allows a caller to provide a structured replacement
 value, that decision payload SHOULD travel through the same replay-safe review
 surface rather than requiring a separate out-of-band override channel.
 
+If an imported review decision requires structured payload data, a consumer
+SHOULD validate that payload before applying it. Missing or semantically
+mismatched payload MUST NOT be silently treated as a valid resolution.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

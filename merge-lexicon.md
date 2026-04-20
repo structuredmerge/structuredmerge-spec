@@ -246,6 +246,11 @@ can inspect what would be accepted without parsing human-oriented prose.
 Structured decision data attached to a replayed review choice when selecting the
 action alone is not enough to carry the chosen value.
 
+### Review Decision Validation
+
+The explicit check that a replayed decision payload is present and semantically
+applicable before the decision is applied.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
