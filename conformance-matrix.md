@@ -83,6 +83,9 @@ All implementations should eventually share:
 - Slice 148: aggregate config-family manifest
 - Slice 149: aggregate config-family suite plans
 - Slice 150: aggregate config-family manifest report
+- Slice 151: aggregate config-family review state
+- Slice 152: aggregate config-family reviewed default
+- Slice 153: aggregate config-family replay application
 
 ## License Policy
 
