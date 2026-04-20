@@ -360,6 +360,10 @@ When a consumer rejects one specific replayed review decision, it SHOULD expose
 the rejected request identity and action in structured diagnostic fields rather
 than only in diagnostic prose.
 
+When a rejected or invalid review decision falls into a known machine-readable
+class, a consumer SHOULD also expose a structured diagnostic reason rather than
+forcing hosts to infer that reason from human-readable prose.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

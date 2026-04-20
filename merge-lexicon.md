@@ -266,6 +266,11 @@ action offer.
 A structured diagnostic that identifies the rejected or invalid review request
 and action in addition to its human-readable message.
 
+### Review Diagnostic Reason
+
+A structured reason code attached to a review decision diagnostic so hosts can
+distinguish payload, family, and stale-request failures without parsing prose.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
