@@ -364,6 +364,10 @@ When a rejected or invalid review decision falls into a known machine-readable
 class, a consumer SHOULD also expose a structured diagnostic reason rather than
 forcing hosts to infer that reason from human-readable prose.
 
+If the rejection or invalidity is specifically due to missing structured review
+payload, the consumer SHOULD expose the required payload kind on the diagnostic
+itself rather than only in the review action offer.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

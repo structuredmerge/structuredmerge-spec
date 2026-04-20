@@ -271,6 +271,11 @@ and action in addition to its human-readable message.
 A structured reason code attached to a review decision diagnostic so hosts can
 distinguish payload, family, and stale-request failures without parsing prose.
 
+### Review Diagnostic Payload Kind
+
+A structured payload-kind hint attached to a review decision diagnostic when the
+diagnostic explains that required review payload data was missing.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
