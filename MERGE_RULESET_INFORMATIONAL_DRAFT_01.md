@@ -894,6 +894,10 @@ source-language family supports multiple parser backends, a named suite SHOULD
 remain family-oriented while backend choice is supplied through a backend-aware
 family plan context.
 
+Different source-language families MAY also select different parser backends in
+the same manifest-level planning or reporting pass so long as each family
+context remains explicit about its selected backend capability surface.
+
 When case-level conformance reporting is exposed, consumers MAY also derive or
 report a normalized suite summary so aggregate status remains portable without
 replacing case-level evidence.
