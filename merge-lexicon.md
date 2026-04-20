@@ -203,6 +203,12 @@ The current review transport state for a set of apply-ready delegated child
 groups, including outstanding requests, accepted groups, applied decisions, and
 replay diagnostics.
 
+### Delegated Child Apply Plan
+
+An ordered transport-level plan that pairs each accepted delegated child group
+with the applied review decision that selected it, so family packages can apply
+ready delegated child groups without re-deriving request matching.
+
 Examples:
 
 - `exact`

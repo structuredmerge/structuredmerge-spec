@@ -278,6 +278,9 @@ pattern. In such cases, the transport SHOULD preserve:
   review decisions.
 - delegated child group review state so unresolved delegated child groups,
   accepted groups, applied decisions, and replay rejections remain explicit.
+- delegated child apply plans so accepted delegated child groups can move
+  forward as stable, ordered apply units without re-deriving decision matching
+  in each family package.
 
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In
