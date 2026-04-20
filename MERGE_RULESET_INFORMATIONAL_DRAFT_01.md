@@ -365,6 +365,11 @@ Implementations MAY expose replay inputs as separate fields or as one replay
 bundle object so long as the observable replay-compatibility and replay-safety
 semantics remain unchanged.
 
+If review state or replay bundles are externalized as JSON, implementations
+SHOULD preserve the normalized observable contract across serialization and
+deserialization rather than treating JSON export as an implementation-private
+debug dump.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.
