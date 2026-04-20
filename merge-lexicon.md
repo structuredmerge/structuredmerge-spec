@@ -64,6 +64,7 @@ Examples:
 - tree-sitter-backed adapter
 - native language parser
 - stable alternate parser feeding the same family contract
+- PEG-style parser backend feeding the same family contract
 
 ### Backend Requirement
 
@@ -451,8 +452,8 @@ Every language implementation should define equivalents for:
 ## Deliberate Constraints
 
 - MVP implementations should prefer tree-sitter-backed analysis where practical.
-- Native parser alternatives may be used later, but tree-sitter is the baseline
-  portability target for v1.
+- Native parser and PEG-style alternatives may be used later, but tree-sitter is
+  the baseline portability target for v1.
 - Templating/scaffolding is a later layer, not part of the core lexicon MVP.
 
 ## Cross-Implementation Observations

@@ -330,7 +330,8 @@ Examples include:
 
 - a tree-sitter-backed adapter,
 - a native language parser,
-- another stable parser with the same family-facing merge contract.
+- another stable parser with the same family-facing merge contract,
+- a PEG-style parser backend with the same family-facing merge contract.
 
 A family backend is an implementation concern, but it may have observable
 capability or conformance consequences. A consumer MAY therefore expose backend
@@ -340,6 +341,11 @@ contract itself.
 A family MAY also expose a backend-specific feature profile view for
 conformance or planning surfaces, so long as the view remains consistent with
 the family contract rather than leaking parser-internal detail.
+
+Backend plurality is intentionally part of the model. A source or structured
+family MAY therefore validate the same fixture or ruleset corpus against
+multiple backend implementations side by side so long as each backend satisfies
+the same family-facing contract.
 
 ### 5.14e Backend Requirement
 

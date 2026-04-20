@@ -28,3 +28,5 @@ This slice defines one backend identity contract:
 
 - This slice is planned ahead to keep adapter work from becoming ad hoc once
   backend implementations deepen.
+- Backend families are expected to include tree-sitter, native parser, and
+  PEG-style variants when they can satisfy the same family-facing contract.
