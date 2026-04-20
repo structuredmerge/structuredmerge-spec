@@ -339,6 +339,10 @@ rather than only as prose. A host that resumes or renders review state should
 not need to parse a human-oriented message string to know what is being
 accepted.
 
+When a reviewable case allows a caller to provide a structured replacement
+value, that decision payload SHOULD travel through the same replay-safe review
+surface rather than requiring a separate out-of-band override channel.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

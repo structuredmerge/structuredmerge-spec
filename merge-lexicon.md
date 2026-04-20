@@ -241,6 +241,11 @@ identity rather than a transient local ordinal.
 A structured candidate value or branch attached to a review request so a host
 can inspect what would be accepted without parsing human-oriented prose.
 
+### Review Decision Payload
+
+Structured decision data attached to a replayed review choice when selecting the
+action alone is not enough to carry the chosen value.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
