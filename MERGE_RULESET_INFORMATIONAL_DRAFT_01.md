@@ -368,6 +368,10 @@ If the rejection or invalidity is specifically due to missing structured review
 payload, the consumer SHOULD expose the required payload kind on the diagnostic
 itself rather than only in the review action offer.
 
+If the rejection or invalidity is specifically due to a family mismatch, the
+consumer SHOULD expose the expected and provided family identities on the
+diagnostic itself rather than only in prose.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

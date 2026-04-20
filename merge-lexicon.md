@@ -276,6 +276,11 @@ distinguish payload, family, and stale-request failures without parsing prose.
 A structured payload-kind hint attached to a review decision diagnostic when the
 diagnostic explains that required review payload data was missing.
 
+### Review Diagnostic Family Detail
+
+Structured expected/provided family identifiers attached to a review decision
+diagnostic when the diagnostic explains a family mismatch.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
