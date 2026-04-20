@@ -93,6 +93,7 @@ All implementations should eventually share:
 - Slice 158: source-family review state
 - Slice 159: source-family reviewed default
 - Slice 160: source-family replay application
+- Slice 161: source suites in canonical manifest
 
 ## License Policy
 
