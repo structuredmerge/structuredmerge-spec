@@ -903,6 +903,10 @@ backend, that restriction SHOULD be expressed through ordinary case
 requirements rather than by introducing a backend-specific manifest shape or a
 backend-specific suite namespace.
 
+The canonical shared manifest MAY also widen incrementally by admitting new
+families through `family_feature_profiles` and the `families` map before those
+families are promoted into the canonical suite set.
+
 When case-level conformance reporting is exposed, consumers MAY also derive or
 report a normalized suite summary so aggregate status remains portable without
 replacing case-level evidence.
