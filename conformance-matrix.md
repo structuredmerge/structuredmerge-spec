@@ -77,6 +77,9 @@ All implementations should eventually share:
 - Slice 135-137: TOML backend feature profiles, plan contexts, and family manifest
 - Slice 138-140: TOML suite definitions, named-suite plans, and manifest report
 - Slice 141: TOML family in the canonical manifest
+- Slice 142-143: YAML family plan contexts and family manifest
+- Slice 144-146: YAML suite definitions, named-suite plans, and manifest report
+- Slice 147: YAML family in the canonical manifest
 
 ## License Policy
 
