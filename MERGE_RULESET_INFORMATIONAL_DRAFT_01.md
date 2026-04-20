@@ -307,6 +307,21 @@ or documented observable contract. A consumer MUST NOT silently repair syntax
 that the declared contract says is invalid unless an explicit repair policy
 permits that behavior.
 
+### 5.14c Process Analysis
+
+A lightweight extracted view produced by a parser backend before full family
+analysis or merge resolution.
+
+Typical process-analysis outputs include:
+
+- top-level structure items,
+- import/include statements,
+- parser diagnostics attached to extracted spans.
+
+Process analysis is especially useful for source-language families that need a
+portable ownership and matching baseline before richer AST-aware merge behavior
+is declared.
+
 ### 5.15 Unresolved Outcome
 
 A runtime merge outcome in which a consumer preserves one or more reviewable cases instead of collapsing immediately to one emitted result.

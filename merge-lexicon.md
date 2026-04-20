@@ -37,7 +37,23 @@ matching and merge resolution.
 Examples:
 
 - Tree-sitter parse tree plus comment metadata
+- tree-sitter-backed process extraction of structure and imports
 - Text block segmentation plus normalized spans
+
+### Process Analysis
+
+A lightweight extracted view produced by a parser backend before full family
+analysis.
+
+Examples:
+
+- top-level structure items
+- import or include statements
+- parser diagnostics tied to extracted spans
+
+Process analysis is especially useful for source-language families that need
+portable ownership and matching signals before richer AST-aware merge behavior
+exists.
 
 ### Dialect
 
