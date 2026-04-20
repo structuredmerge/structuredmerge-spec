@@ -94,6 +94,11 @@ All implementations should eventually share:
 - Slice 159: source-family reviewed default
 - Slice 160: source-family replay application
 - Slice 161: source suites in canonical manifest
+- Slice 162: canonical widened-suite plans
+- Slice 163: canonical widened-suite report
+- Slice 164: canonical widened-suite review state
+- Slice 165: canonical widened-suite reviewed default
+- Slice 166: canonical widened-suite replay application
 
 ## License Policy
 
