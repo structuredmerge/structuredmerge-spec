@@ -68,6 +68,7 @@ Examples:
 ### Backend Requirement
 
 A conformance-case requirement that limits selection to a named family backend.
+It may be declared directly or carried through manifest-based planning.
 
 ### Dialect
 

@@ -344,6 +344,8 @@ A conformance-case constraint that limits selection to a named family backend.
 Backend requirements are evaluated at case-selection time alongside dialect and
 policy requirements. A consumer MUST NOT silently select a backend-limited case
 when a different backend is active.
+Backend requirements MAY be declared directly on a case or propagated through a
+manifest entry that plans such a case.
 
 ### 5.15 Unresolved Outcome
 
