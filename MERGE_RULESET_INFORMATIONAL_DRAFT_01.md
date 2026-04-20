@@ -888,6 +888,12 @@ When a conformance manifest is exposed across implementations, consumers SHOULD
 prefer a normalized family-indexed manifest shape over family-specific top-level
 manifest fields so fixture discovery stays portable as more families are added.
 
+Source-language families MAY participate in that same normalized manifest
+without introducing a source-language-specific manifest shape. When a
+source-language family supports multiple parser backends, a named suite SHOULD
+remain family-oriented while backend choice is supplied through a backend-aware
+family plan context.
+
 When case-level conformance reporting is exposed, consumers MAY also derive or
 report a normalized suite summary so aggregate status remains portable without
 replacing case-level evidence.
