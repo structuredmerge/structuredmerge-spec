@@ -159,6 +159,16 @@ content similarity, signatures, or specialized heuristics.
 
 The declared stage of a matching decision.
 
+### Doc Surface
+
+A discovered surface derived from an owned documentation region, often attached
+to a declaration owner rather than emitted directly as a parser node.
+
+### Language Chain
+
+The ordered stack of effective languages from a root surface through delegated
+child surfaces.
+
 Examples:
 
 - `exact`
@@ -468,6 +478,26 @@ cross-implementation comparison.
 
 Canonical render is an observable comparison surface. It need not be the final
 presentation-oriented render used by all consumers.
+
+### Surface Owner
+
+The structural owner, owned region, or parent surface from which a discovered
+surface is derived.
+
+### Discovered Surface
+
+A merge surface produced by family analysis with stable identity, ownership,
+language, and reconstruction metadata.
+
+### Delegated Child Operation
+
+A child execution unit created for a discovered surface while preserving parent
+operation identity and nested language context.
+
+### Projected Child Review Case
+
+A parent-visible unresolved/review case that preserves child-surface identity
+and replay/grouping metadata instead of flattening child state away.
 
 ## Implementation Contracts
 

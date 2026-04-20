@@ -258,6 +258,16 @@ semantics. An implementation that exposes such defaulting SHOULD also expose
 that assumption as a manifest-level diagnostic rather than silently omitting the
 undeclared context.
 
+Nested delegated child operations MAY be discovered from parser-owned structure
+or from owned regions derived by family analysis. Markdown fenced code blocks
+and Ruby documentation/example surfaces are both instances of this broader
+pattern. In such cases, the transport SHOULD preserve:
+
+- stable parent and child surface addresses,
+- the language chain from the root surface to the child,
+- the delegated child operation identity, and
+- projected child review cases at the root/reporting layer.
+
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In
 that mode, missing contexts are configuration errors rather than recoverable
@@ -274,11 +284,54 @@ Examples include:
 - an embedded configuration fragment,
 - a heredoc or multiline literal with a known language.
 
+### 5.12a Surface Owner
+
+The source from which a merge surface is derived.
+
+Surface ownership MAY come from:
+
+- a structural owner such as a parser node,
+- an owned region such as an attached comment block,
+- another parent surface.
+
+Surface ownership is an observable identity boundary. It need not imply a
+single parser or AST representation.
+
+### 5.12b Discovered Surface
+
+A merge surface identified during family analysis rather than declared directly
+as a top-level document.
+
+A discovered surface SHOULD expose:
+
+- stable address,
+- owner reference,
+- effective language,
+- optional declared language,
+- span when available,
+- reconstruction strategy,
+- family-specific metadata needed to safely re-emit the owned fragment.
+
 ### 5.13 Delegation Policy
 
 A declarative rule describing whether and how a merge surface is handed to another merge contract.
 
 Delegation policy is distinct from parser behavior. It describes observable merge responsibility, not a particular implementation call graph.
+
+### 5.13a Delegated Child Operation
+
+An execution unit created for a discovered child surface.
+
+A delegated child operation preserves:
+
+- child operation identity,
+- parent operation identity,
+- requested strategy,
+- child surface identity,
+- nested language chain when the host exposes that context.
+
+The delegated child-operation concept is transportable. It does not require a
+particular runtime session or inline recursion model.
 
 ### 5.14 Repair Policy
 
@@ -668,6 +721,16 @@ Examples include:
 - embedded JSON, YAML, or shell fragments nested inside a host format.
 
 The declaration of merge surfaces or delegation policies does not require a single universal runtime architecture. It only requires that a conforming consumer preserve the declared surface boundaries and delegation semantics at the observable behavior level.
+
+Discovered surfaces MAY appear at multiple depths. Examples include:
+
+- a fenced code block inside Markdown,
+- a documentation comment surface attached to a Ruby owner,
+- a YARD `@example` surface discovered inside that documentation surface.
+
+When a consumer projects unresolved child-surface state into a parent result,
+it SHOULD preserve child identity rather than flattening the case into a
+parent-only ordinal.
 
 ## 8. Ruleset Syntax
 
