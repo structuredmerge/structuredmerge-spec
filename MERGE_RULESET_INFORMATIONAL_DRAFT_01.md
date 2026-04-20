@@ -267,6 +267,8 @@ pattern. In such cases, the transport SHOULD preserve:
 - the language chain from the root surface to the child,
 - the delegated child operation identity, and
 - projected child review cases at the root/reporting layer.
+- projected child review groups for grouped replay or presentation of delegated
+  child cases that share one delegated surface.
 
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In

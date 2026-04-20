@@ -169,6 +169,18 @@ to a declaration owner rather than emitted directly as a parser node.
 The ordered stack of effective languages from a root surface through delegated
 child surfaces.
 
+### Delegated Apply Group
+
+A stable group identity used to keep multiple projected child review cases tied
+to one delegated child surface for presentation, replay, or grouped
+application.
+
+### Projected Child Review Group
+
+A grouped view over projected child review cases that preserves delegated child
+surface identity without flattening multiple child cases into unrelated parent
+operations.
+
 Examples:
 
 - `exact`
