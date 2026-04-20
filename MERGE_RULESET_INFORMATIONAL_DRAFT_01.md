@@ -333,6 +333,12 @@ When a consumer exposes structured runtime state, a resolution case SHOULD be ca
 - enough local context to reconnect the case to the affected merge surface,
 - and, when intended for replay beyond the producing runtime, a stable identity or equivalent compatibility binding that is not merely a transient local ordinal.
 
+When a reviewable case offers acceptance of a synthesized or provisional
+default, implementations SHOULD expose that proposed value as structured data
+rather than only as prose. A host that resumes or renders review state should
+not need to parse a human-oriented message string to know what is being
+accepted.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.

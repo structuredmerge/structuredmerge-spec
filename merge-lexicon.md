@@ -236,6 +236,11 @@ without embedding transport- or UI-specific behavior in the core contract.
 A replayable choice bound to a prior review request through stable review
 identity rather than a transient local ordinal.
 
+### Review Proposal
+
+A structured candidate value or branch attached to a review request so a host
+can inspect what would be accepted without parsing human-oriented prose.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously
