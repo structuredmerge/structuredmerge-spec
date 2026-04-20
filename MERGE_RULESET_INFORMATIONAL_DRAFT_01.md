@@ -381,6 +381,14 @@ substrate inside one merge library or expose it as a separate shared package
 when packaging, native dependency, or installability concerns make that split
 useful.
 
+A family substrate MAY also host the primary tree-sitter-backed path for that
+family while sibling provider packages host optional native-parser variants.
+
+### 5.14g Provider Package
+
+A family-specific package that supplies one concrete backend while preserving
+the same family-facing contracts defined by the substrate.
+
 ### 5.15 Unresolved Outcome
 
 A runtime merge outcome in which a consumer preserves one or more reviewable cases instead of collapsing immediately to one emitted result.

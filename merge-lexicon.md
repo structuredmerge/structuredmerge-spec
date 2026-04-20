@@ -82,6 +82,14 @@ Some families keep the substrate inside one merge library. Others may expose it
 as a separate shared package when parser-specific packaging or dependency
 constraints make a single all-backends package impractical.
 
+A family substrate MAY also host the primary tree-sitter-backed path for that
+family while sibling provider packages host optional native-parser variants.
+
+### Provider Package
+
+A family-specific package that supplies one concrete backend while preserving
+the same family-facing contracts defined by the substrate.
+
 ### Family Backend Plurality
 
 The condition in which one merge family supports more than one backend while
