@@ -24,8 +24,12 @@ stack. It is intentionally smaller than the full Ruby surface area.
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
 | Strict handling of trailing commas | Existing | MVP target | MVP target | MVP target |
-| TOML merge | Existing | Later | Later | Later |
-| YAML merge | Existing | Later | Later | Later |
+| TOML merge | Existing | Slice 90-94 | Slice 90-94 | Slice 90-94 |
+| TOML backend plurality | Existing | Slice 134 | Slice 134 | Slice 134 |
+| YAML merge | Existing | Slice 95-99 | Slice 95-99 | Slice 95-99 |
+| TypeScript family merge | Existing | Slice 100-104 | Slice 100-104 | Slice 100-104 |
+| Rust family merge | Existing | Slice 105-108 | Slice 105-108 | Slice 105-108 |
+| Go family merge | Existing | Slice 109-112 | Slice 109-112 | Slice 109-112 |
 | Markdown merge | Existing | Later | Later | Later |
 | Ruleset execution | Existing | Later | Later | Later |
 | Package templating layer | Existing | Later | Later | Later |
@@ -42,6 +46,9 @@ All implementations should eventually share:
 - the same backend-ownership rule:
   reusable parser frameworks in `tree-haver`, one-trick parsers in family
   libraries
+- the same family-level backend-plurality rule:
+  supported backends for one family SHOULD satisfy the same family-facing
+  fixtures unless a backend restriction is declared explicitly
 
 ## Slice Roadmap
 
@@ -58,6 +65,12 @@ All implementations should eventually share:
 - Slice 11: text block matching contracts
 - Slice 12: text match-driven merge contracts
 - Slice 13: text content-refined matching contracts
+- Slice 90-94: TOML family contracts
+- Slice 95-99: YAML family contracts
+- Slice 100-112: source-language family contracts
+- Slice 132: backend ownership boundary
+- Slice 133: family substrate layer
+- Slice 134: TOML family backend plurality
 
 ## License Policy
 

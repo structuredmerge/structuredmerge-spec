@@ -62,6 +62,13 @@ Across these formats, the same practical questions recur:
 
 In many implementations, answers to those questions are encoded as implicit local code rather than explicit portable declarations. This document proposes a compact ruleset format for expressing those answers directly.
 
+That same concern applies when one merge family supports multiple parser
+backends. Parser plurality is useful only if the backend choice does not make
+the family contract private or accidental. A family SHOULD therefore make
+backend ownership explicit and SHOULD validate the same family-facing behavior
+across its supported backends unless a backend-specific restriction is declared
+explicitly.
+
 ## 2. Conventions and Requirements Language
 
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in RFC 2119 and RFC 8174 when, and only when, they appear in all capitals.

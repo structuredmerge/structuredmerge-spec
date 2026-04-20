@@ -82,6 +82,15 @@ Some families keep the substrate inside one merge library. Others may expose it
 as a separate shared package when parser-specific packaging or dependency
 constraints make a single all-backends package impractical.
 
+### Family Backend Plurality
+
+The condition in which one merge family supports more than one backend while
+preserving one family-facing contract.
+
+Backend plurality does not require all backends to be hosted in the same layer.
+It does require backend ownership and backend-specific restrictions to stay
+explicit so that the family contract remains conformance-testable.
+
 ### Backend Requirement
 
 A conformance-case requirement that limits selection to a named family backend.
