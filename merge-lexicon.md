@@ -181,6 +181,11 @@ A grouped view over projected child review cases that preserves delegated child
 surface identity without flattening multiple child cases into unrelated parent
 operations.
 
+### Projected Child Review Group Progress
+
+A stable summary of which projected child review cases in one delegated apply
+group have already been resolved and which remain pending.
+
 Examples:
 
 - `exact`

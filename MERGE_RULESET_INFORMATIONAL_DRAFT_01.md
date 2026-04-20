@@ -269,6 +269,8 @@ pattern. In such cases, the transport SHOULD preserve:
 - projected child review cases at the root/reporting layer.
 - projected child review groups for grouped replay or presentation of delegated
   child cases that share one delegated surface.
+- projected child review group progress so partial child-session replay can
+  remain explicit and stable.
 
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In
