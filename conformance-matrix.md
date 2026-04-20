@@ -129,6 +129,8 @@ All implementations should eventually share:
 - Slice 189: canonical widened-suite polyglot backend review state
 - Slice 190: canonical widened-suite polyglot backend reviewed default
 - Slice 191: canonical widened-suite polyglot backend replay application
+- Slice 192: backend-sensitive aggregate tree-sitter review state
+- Slice 193: backend-sensitive aggregate native review state
 
 ## License Policy
 
