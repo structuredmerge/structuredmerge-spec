@@ -86,6 +86,7 @@ All implementations should eventually share:
 - Slice 151: aggregate config-family review state
 - Slice 152: aggregate config-family reviewed default
 - Slice 153: aggregate config-family replay application
+- Slice 154: stable config suites in the canonical manifest
 
 ## License Policy
 
