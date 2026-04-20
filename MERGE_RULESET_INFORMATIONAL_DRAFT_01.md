@@ -271,6 +271,8 @@ pattern. In such cases, the transport SHOULD preserve:
   child cases that share one delegated surface.
 - projected child review group progress so partial child-session replay can
   remain explicit and stable.
+- projected child review groups ready for apply so fully resolved delegated
+  child groups can move forward without collapsing incomplete sibling groups.
 
 Implementations MAY also offer an **explicit context mode** in which family
 contexts must be declared directly and derived defaults are not allowed. In

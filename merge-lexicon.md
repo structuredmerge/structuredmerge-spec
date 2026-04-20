@@ -186,6 +186,12 @@ operations.
 A stable summary of which projected child review cases in one delegated apply
 group have already been resolved and which remain pending.
 
+### Projected Child Review Group Ready For Apply
+
+A projected child review group whose case identifiers have all been resolved,
+so it can be applied as one delegated child unit while incomplete sibling
+groups remain pending.
+
 Examples:
 
 - `exact`
