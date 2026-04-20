@@ -251,6 +251,11 @@ action alone is not enough to carry the chosen value.
 The explicit check that a replayed decision payload is present and semantically
 applicable before the decision is applied.
 
+### Review Action Offer
+
+A structured description of one review action, including whether that action
+requires additional decision payload.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously

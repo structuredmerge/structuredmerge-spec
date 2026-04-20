@@ -347,6 +347,11 @@ If an imported review decision requires structured payload data, a consumer
 SHOULD validate that payload before applying it. Missing or semantically
 mismatched payload MUST NOT be silently treated as a valid resolution.
 
+When review requests expose multiple possible actions, implementations SHOULD
+export those actions as structured offers rather than as a bare string list, so
+hosts can determine whether additional payload is required before presenting or
+submitting a decision.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.
