@@ -247,6 +247,14 @@ instead of being blindly rebound by position.
 An explicit observable refusal to apply imported review decisions because replay
 compatibility could not be established.
 
+### Review Transport Envelope
+
+A kind-marked, versioned transport wrapper around externalized review state or
+replay bundles.
+
+It exists to keep exported review JSON self-identifying and rejectable without
+requiring out-of-band transport assumptions.
+
 ### Conformance Manifest
 
 A shared fixture index that assigns stable roles to a portable subset of the

@@ -370,6 +370,12 @@ SHOULD preserve the normalized observable contract across serialization and
 deserialization rather than treating JSON export as an implementation-private
 debug dump.
 
+When implementations externalize review state or replay bundles for transport,
+they SHOULD prefer an explicit kind-marked, versioned envelope over a bare
+payload with only out-of-band meaning. A consumer that receives an unexpected
+envelope kind or unsupported envelope version SHOULD reject that transport
+explicitly rather than treating it as best-effort compatible.
+
 ### 5.19 Diagnostic Surface
 
 The externally visible reporting channel through which a consumer exposes unsupported capabilities, repair-policy activation, delegation failure, unresolved-outcome activation, or other declared-contract mismatches.
