@@ -90,6 +90,9 @@ All implementations should eventually share:
 - Slice 155: canonical stable-suite plans
 - Slice 156: canonical stable-suite report
 - Slice 157: canonical stable-suite review state
+- Slice 158: source-family review state
+- Slice 159: source-family reviewed default
+- Slice 160: source-family replay application
 
 ## License Policy
 
