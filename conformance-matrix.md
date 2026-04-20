@@ -124,6 +124,11 @@ All implementations should eventually share:
 - Slice 184: YAML polyglot backend plan contexts
 - Slice 185: YAML polyglot backend named-suite plans
 - Slice 186: YAML polyglot backend manifest report
+- Slice 187: canonical widened-suite polyglot backend plans
+- Slice 188: canonical widened-suite polyglot backend report
+- Slice 189: canonical widened-suite polyglot backend review state
+- Slice 190: canonical widened-suite polyglot backend reviewed default
+- Slice 191: canonical widened-suite polyglot backend replay application
 
 ## License Policy
 
