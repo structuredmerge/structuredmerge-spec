@@ -99,6 +99,9 @@ All implementations should eventually share:
 - Slice 164: canonical widened-suite review state
 - Slice 165: canonical widened-suite reviewed default
 - Slice 166: canonical widened-suite replay application
+- Slice 167: backend-sensitive aggregate suite plans
+- Slice 168: backend-sensitive aggregate tree-sitter report
+- Slice 169: backend-sensitive aggregate native report
 
 ## License Policy
 
