@@ -322,6 +322,21 @@ Process analysis is especially useful for source-language families that need a
 portable ownership and matching baseline before richer AST-aware merge behavior
 is declared.
 
+### 5.14d Family Backend
+
+A concrete parser-backed implementation path used by one merge family.
+
+Examples include:
+
+- a tree-sitter-backed adapter,
+- a native language parser,
+- another stable parser with the same family-facing merge contract.
+
+A family backend is an implementation concern, but it may have observable
+capability or conformance consequences. A consumer MAY therefore expose backend
+identity and backend-limited conformance results without changing the family
+contract itself.
+
 ### 5.15 Unresolved Outcome
 
 A runtime merge outcome in which a consumer preserves one or more reviewable cases instead of collapsing immediately to one emitted result.

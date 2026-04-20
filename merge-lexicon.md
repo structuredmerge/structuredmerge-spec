@@ -55,6 +55,16 @@ Process analysis is especially useful for source-language families that need
 portable ownership and matching signals before richer AST-aware merge behavior
 exists.
 
+### Family Backend
+
+A concrete parser-backed implementation path used by one merge family.
+
+Examples:
+
+- tree-sitter-backed adapter
+- native language parser
+- stable alternate parser feeding the same family contract
+
 ### Dialect
 
 A declared parse or merge variant within one document family that changes
