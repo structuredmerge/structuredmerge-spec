@@ -281,6 +281,11 @@ diagnostic explains that required review payload data was missing.
 Structured expected/provided family identifiers attached to a review decision
 diagnostic when the diagnostic explains a family mismatch.
 
+### Review Diagnostic Detail
+
+A nested structured object carried by a diagnostic when the diagnostic is
+specifically about review-state validation, replay, or decision handling.
+
 ### Replay Context
 
 A normalized compatibility context exposed with review state so that previously

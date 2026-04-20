@@ -372,6 +372,10 @@ If the rejection or invalidity is specifically due to a family mismatch, the
 consumer SHOULD expose the expected and provided family identities on the
 diagnostic itself rather than only in prose.
 
+When diagnostics carry review-specific structured metadata, implementations
+SHOULD prefer a nested review-detail object rather than continuing to grow the
+top-level diagnostic surface with review-only fields.
+
 ### 5.17 Review Identity
 
 An opaque stable identifier for a resolution case that is intended to remain meaningful across recomputation of the same unresolved merge surface.
