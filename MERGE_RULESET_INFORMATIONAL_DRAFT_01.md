@@ -337,6 +337,14 @@ capability or conformance consequences. A consumer MAY therefore expose backend
 identity and backend-limited conformance results without changing the family
 contract itself.
 
+### 5.14e Backend Requirement
+
+A conformance-case constraint that limits selection to a named family backend.
+
+Backend requirements are evaluated at case-selection time alongside dialect and
+policy requirements. A consumer MUST NOT silently select a backend-limited case
+when a different backend is active.
+
 ### 5.15 Unresolved Outcome
 
 A runtime merge outcome in which a consumer preserves one or more reviewable cases instead of collapsing immediately to one emitted result.

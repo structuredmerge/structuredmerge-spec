@@ -65,6 +65,10 @@ Examples:
 - native language parser
 - stable alternate parser feeding the same family contract
 
+### Backend Requirement
+
+A conformance-case requirement that limits selection to a named family backend.
+
 ### Dialect
 
 A declared parse or merge variant within one document family that changes
