@@ -12,4 +12,7 @@ This slice defines one canonical widened-suite reviewed-default contract:
    source family,
 2. the accepted decision becomes an applied decision in the canonical reviewed
    state,
-3. unresolved widened canonical families remain review requests.
+3. unresolved widened canonical families remain review requests,
+4. family-local nested Markdown or Ruby delegated suites remain outside this
+   reviewed-default surface until a later slice promotes them into canonical
+   membership explicitly.

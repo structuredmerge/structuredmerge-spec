@@ -13,4 +13,6 @@ This slice defines one canonical widened-suite review-state contract:
 2. remaining canonical source-family contexts become review requests rather than
    silent omissions,
 3. already-resolved canonical families continue to report results while review
-   requests remain open.
+   requests remain open,
+4. nested Markdown or Ruby delegated suites do not generate canonical review
+   requests unless a later slice first makes them canonical family members.

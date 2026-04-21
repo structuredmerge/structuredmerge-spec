@@ -12,4 +12,6 @@ This slice defines one canonical widened-suite replay-application contract:
 2. the replay bundle MAY apply the same reviewed-default decision as an inline
    review interaction,
 3. the resulting reviewed state remains identical to the equivalent inline
-   reviewed-default state.
+   reviewed-default state,
+4. replay does not implicitly add family-local nested Markdown or Ruby
+   delegated suites to the canonical surface.

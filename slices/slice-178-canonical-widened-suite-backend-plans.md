@@ -12,4 +12,6 @@ This slice defines one language-local widened planning contract:
 1. the canonical widened suite surface remains unchanged,
 2. alternate TOML and YAML backends propagate through the widened canonical
    plan,
-3. source-family backend requirements remain unchanged in the same plan.
+3. source-family backend requirements remain unchanged in the same plan,
+4. the unchanged widened canonical surface still excludes family-local nested
+   Markdown and Ruby delegated suites.
