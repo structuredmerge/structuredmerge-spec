@@ -43,3 +43,5 @@ Tooling:
   fixture-key coverage across TypeScript, Go, Rust, and Ruby host tests.
 - `tools/family_package_fixture_key_parity.py` - reports family-package fixture
   slice coverage across TypeScript, Go, Rust, and Ruby host tests.
+- `tools/provider_package_fixture_key_parity.py` - reports provider-package
+  fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
