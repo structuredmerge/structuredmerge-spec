@@ -2,21 +2,21 @@
 
 ## Goal
 
-Define stable suite-name resolution from the shared manifest.
+Define stable suite-selector resolution from the shared manifest.
 
 ## Scope
 
 - avoid host-language map iteration drift
-- make named suites enumerable through one normalized helper
+- make suite descriptors enumerable through one normalized helper
 - establish deterministic suite ordering for later aggregate helpers
 
 ## Contract
 
-This slice defines one small suite-name contract:
+This slice defines one small suite-selector contract:
 
-1. a manifest suite-name helper returns all declared suite names
-2. returned names are sorted in ascending lexical order
-3. an absent `suites` section resolves to an empty list
+1. a manifest suite-selector helper returns all declared suite selectors
+2. returned selectors preserve manifest declaration order
+3. an absent suite-descriptor section resolves to an empty list
 
 ## Shared Fixture
 

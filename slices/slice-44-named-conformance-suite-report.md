@@ -2,23 +2,23 @@
 
 ## Goal
 
-Define a normalized report helper for named manifest suites.
+Define a normalized report helper for manifest suite descriptors.
 
 ## Scope
 
-- compose suite-definition lookup with planning and reporting
-- avoid reimplementing the same named-suite flow in each host language
+- compose suite-descriptor lookup with planning and reporting
+- avoid reimplementing the same suite-descriptor flow in each host language
 - preserve the existing report shape
 
 ## Contract
 
-This slice defines one small named-suite report contract:
+This slice defines one small suite-descriptor report contract:
 
-1. a named-suite report helper consumes a manifest and one suite name
+1. a suite-descriptor report helper consumes a manifest and one suite selector
 2. it resolves the suite definition from the manifest
-3. it plans the suite using the existing named-suite planning helper
+3. it plans the suite using the existing suite-descriptor planning helper
 4. it executes and reports through the existing planned-suite report helper
-5. it returns `undefined`/`nil`/`None` when the suite name is not declared
+5. it returns `undefined`/`nil`/`None` when the suite selector is not declared
 
 ## Shared Fixture
 

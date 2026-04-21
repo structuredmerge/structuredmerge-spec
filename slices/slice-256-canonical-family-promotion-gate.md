@@ -9,8 +9,9 @@ promoted into the canonical stable or widened suite sets.
 
 1. canonical family promotion SHOULD remain a separate decision from canonical
    manifest widening and from shared-shape portability
-2. a later promotion slice SHOULD identify the exact family or named suite
-   being promoted and the canonical suite set into which it is promoted
+2. a later promotion slice SHOULD identify the exact family or suite
+   descriptor being promoted and the canonical suite set into which it is
+   promoted
 3. before a family-scoped nested or delegated suite is promoted, the promoting
    slice SHOULD show that its review-state, reviewed-default, and replay
    behavior can be described without parser-specific ambiguity in canonical

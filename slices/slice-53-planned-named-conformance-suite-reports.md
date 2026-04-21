@@ -2,21 +2,23 @@
 
 ## Goal
 
-Report aggregate named-suite plans while preserving suite identity.
+Report aggregate suite-descriptor plans while preserving suite identity.
 
 ## Scope
 
-- compose named-suite plan entries with the existing planned-suite report helper
+- compose suite-descriptor plan entries with the existing planned-suite report
+  helper
 - preserve stable ordering from aggregate planning
 - avoid rebuilding aggregate suite reporting in each host language
 
 ## Contract
 
-This slice defines one small aggregate named-suite report contract:
+This slice defines one small aggregate suite-descriptor report contract:
 
-1. a planned named-suite report helper consumes ordered named-suite plan entries
+1. a planned suite-descriptor report helper consumes ordered suite-descriptor
+   plan entries
 2. it reports each plan through the existing planned-suite report helper
-3. it returns ordered named-suite report entries
+3. it returns ordered suite-descriptor report entries
 
 ## Shared Fixture
 

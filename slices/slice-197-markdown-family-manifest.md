@@ -11,7 +11,7 @@ This slice defines one Markdown family manifest contract:
 1. the manifest exposes the Markdown family feature profile fixture,
 2. it maps the family roles `analysis` and `matching` to the shared Markdown
    fixtures,
-3. it MAY define a named suite such as `markdown_portable` over those roles.
+3. it MAY define one portable suite descriptor over those roles.
 
 ## Notes
 

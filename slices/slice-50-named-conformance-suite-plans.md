@@ -2,22 +2,24 @@
 
 ## Goal
 
-Plan all declared named suites through stable manifest ordering.
+Plan all declared suite descriptors through stable manifest ordering.
 
 ## Scope
 
-- compose suite-name ordering with suite-definition lookup and family plan contexts
-- avoid rebuilding aggregate named-suite planning in each host language
+- compose suite-selector ordering with suite-definition lookup and family plan
+  contexts
+- avoid rebuilding aggregate suite-descriptor planning in each host language
 - keep aggregate planning deterministic
 
 ## Contract
 
 This slice defines one small aggregate planning contract:
 
-1. an aggregate named-suite planning helper consumes a manifest and family plan contexts
-2. it resolves suite names in stable order
+1. an aggregate suite-descriptor planning helper consumes a manifest and family
+   plan contexts
+2. it resolves suite selectors in stable manifest order
 3. it plans each suite whose family has a declared plan context
-4. it returns ordered named-suite plan entries
+4. it returns ordered suite-descriptor plan entries
 5. suites without a matching family plan context are omitted
 
 ## Shared Fixture

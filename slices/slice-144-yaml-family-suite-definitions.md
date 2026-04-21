@@ -2,13 +2,13 @@
 
 ## Goal
 
-Expose the YAML family through the shared named-suite mechanism.
+Expose the YAML family through the shared suite-descriptor mechanism.
 
 ## Shared Behavior
 
 This slice defines one YAML suite-definition contract:
 
-1. a YAML manifest MAY define a named suite such as `yaml_portable`,
-2. that suite references the representative YAML roles `analysis`,
+1. a YAML manifest MAY define one portable suite descriptor,
+2. that descriptor references the representative YAML roles `analysis`,
    `matching`, and `merge`,
 3. the suite-definition shape is identical to the one used by other families.

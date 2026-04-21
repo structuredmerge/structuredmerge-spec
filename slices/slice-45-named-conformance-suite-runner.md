@@ -2,23 +2,23 @@
 
 ## Goal
 
-Define a normalized runner helper for named manifest suites.
+Define a normalized runner helper for manifest suite descriptors.
 
 ## Scope
 
-- compose suite-definition lookup with planning and execution
-- avoid reimplementing the same named-suite run flow in each host language
+- compose suite-descriptor lookup with planning and execution
+- avoid reimplementing the same suite-descriptor run flow in each host language
 - preserve the existing case-result shape
 
 ## Contract
 
-This slice defines one small named-suite runner contract:
+This slice defines one small suite-descriptor runner contract:
 
-1. a named-suite runner helper consumes a manifest and one suite name
+1. a suite-descriptor runner helper consumes a manifest and one suite selector
 2. it resolves the suite definition from the manifest
-3. it plans the suite using the existing named-suite planning helper
+3. it plans the suite using the existing suite-descriptor planning helper
 4. it executes through the existing planned-suite runner helper
-5. it returns `undefined`/`nil`/`None` when the suite name is not declared
+5. it returns `undefined`/`nil`/`None` when the suite selector is not declared
 
 ## Shared Fixture
 

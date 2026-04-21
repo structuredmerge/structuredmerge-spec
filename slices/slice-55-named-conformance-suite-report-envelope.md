@@ -2,11 +2,12 @@
 
 ## Goal
 
-Define the manifest-wide report envelope for ordered named-suite report entries.
+Define the manifest-wide report envelope for ordered suite-descriptor report
+entries.
 
 ## Scope
 
-- preserve ordered named-suite report entries
+- preserve ordered suite-descriptor report entries
 - attach one aggregate manifest-wide summary
 - avoid inventing a second summary vocabulary
 
@@ -14,8 +15,8 @@ Define the manifest-wide report envelope for ordered named-suite report entries.
 
 This slice defines one small aggregate report envelope contract:
 
-1. a named-suite report envelope contains `entries` and `summary`
-2. `entries` is an ordered list of named-suite report entries
+1. a suite-descriptor report envelope contains `entries` and `summary`
+2. `entries` is an ordered list of suite-descriptor report entries
 3. `summary` is produced by the aggregate named-suite summary helper
 
 ## Shared Fixture

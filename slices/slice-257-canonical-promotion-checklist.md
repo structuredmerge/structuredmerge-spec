@@ -9,7 +9,7 @@ canonical stable or widened suite sets.
 
 This slice defines one promotion-checklist contract:
 
-1. a promotion slice SHOULD identify the promoted suite name and target
+1. a promotion slice SHOULD identify the promoted suite descriptor and target
    canonical suite set explicitly
 2. it SHOULD identify the canonical review-request identity surface that will
    cover the promoted suite

@@ -2,17 +2,20 @@
 
 ## Goal
 
-Promote `ruby_portable` into the canonical widened suite set.
+Promote the base portable Ruby suite descriptor into the canonical widened
+suite set.
 
 ## Contract
 
 This slice defines one canonical widened-suite promotion contract:
 
-1. the widened canonical manifest MAY expose `ruby_portable`
-2. `ruby_portable` uses the current Ruby family roles `analysis`, `matching`,
-   `discovered_surfaces`, and `delegated_child_operations`
+1. the widened canonical manifest MAY expose the base portable Ruby suite
+   descriptor
+2. that base portable Ruby descriptor uses the current Ruby family roles
+   `analysis`, `matching`, `discovered_surfaces`, and
+   `delegated_child_operations`
 3. canonical widened planning, reporting, review, reviewed-default, and replay
-   MAY treat `ruby_portable` as another source-family suite entry
+   MAY treat that descriptor as another source-family suite entry
 4. nested delegated Ruby review-state, reviewed-default, replay, and apply-plan
    roles remain outside canonical widened membership until a later promotion
    slice adds them explicitly

@@ -2,11 +2,12 @@
 
 ## Goal
 
-Define named conformance suites directly in the shared manifest.
+Define structured conformance suite descriptors directly in the shared
+manifest.
 
 ## Scope
 
-- assign stable names to ordered role sets
+- assign stable structured identity to ordered role sets
 - avoid rebuilding the same role list in every host-language harness
 - keep suite definition separate from suite planning and execution
 
@@ -14,11 +15,14 @@ Define named conformance suites directly in the shared manifest.
 
 This slice defines one small suite-definition contract:
 
-1. a conformance manifest may declare named suites
-2. each named suite declares one `family` and an ordered `roles` list
-3. planning a named suite is equivalent to planning its declared family and
-   role list directly
-4. suite definitions are descriptive manifest data; they do not alter case
+1. a conformance manifest may declare ordered suite descriptors
+2. each suite descriptor declares one `kind`, one `subject`, and an ordered
+   `roles` list
+3. `subject` carries language or grammar identity as data rather than encoding
+   it in a top-level suite label
+4. planning a suite descriptor is equivalent to planning its declared family
+   and role list directly
+5. suite descriptors are descriptive manifest data; they do not alter case
    selection or execution semantics
 
 ## Shared Types
@@ -31,5 +35,7 @@ This slice defines one small suite-definition contract:
 
 ## Notes
 
-- This slice makes portable suite names part of the shared conformance surface.
-- It does not replace direct family-plus-roles planning; it layers on top of it.
+- This slice makes structured suite identity part of the shared conformance
+  surface.
+- It does not replace direct family-plus-roles planning; it layers on top of
+  it.

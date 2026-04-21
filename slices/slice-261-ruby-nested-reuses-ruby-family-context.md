@@ -9,7 +9,7 @@ future nested Ruby suite promotion.
 
 1. if a nested delegated Ruby suite is later promoted into the canonical
    widened suite set, it SHOULD remain a distinct named suite rather than
-   silently widening `ruby_portable`
+   silently widening the base portable Ruby suite descriptor
 2. that promoted nested Ruby suite SHOULD reuse the existing
    `family_context:ruby` review-request, reviewed-default, and replay identity
    surface

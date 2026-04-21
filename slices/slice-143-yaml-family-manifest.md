@@ -11,7 +11,7 @@ This slice defines one YAML family manifest contract:
 1. the manifest exposes the YAML family feature profile fixture,
 2. it maps the family roles `analysis`, `matching`, and `merge` to the shared
    YAML fixtures,
-3. it MAY define a named suite such as `yaml_portable` over those roles.
+3. it MAY define one portable suite descriptor over those roles.
 
 ## Notes
 
