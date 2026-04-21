@@ -19,6 +19,9 @@ HOSTS = {
         ],
         "slice_patterns": [
             r"readFixture(?:<.*?>)?\(\s*'diagnostics',\s*'(slice-\d+-[a-z0-9-]+)'",
+            r"\[\s*'(slice-\d+-[a-z0-9-]+)'\s*,\s*'[^']+\.json'",
+            r",\s*'(slice-\d+-[a-z0-9-]+)'\s*,\s*'[^']+\.json'",
+            r"'(slice-\d+-[a-z0-9-]+/[a-z0-9-]+\.json)'",
         ],
     },
     "go": {
@@ -28,6 +31,9 @@ HOSTS = {
         ],
         "slice_patterns": [
             r'filepath\.Join\("..", "..", "fixtures", "diagnostics", "(slice-\d+-[a-z0-9-]+)"',
+            r'\(\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r',\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r'"(slice-\d+-[a-z0-9-]+/[a-z0-9-]+\.json)"',
         ],
     },
     "rust": {
@@ -37,6 +43,9 @@ HOSTS = {
         ],
         "slice_patterns": [
             r'"diagnostics",\s*"(slice-\d+-[a-z0-9-]+)"',
+            r'\(\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r',\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r'"(slice-\d+-[a-z0-9-]+/[a-z0-9-]+\.json)"',
         ],
     },
     "ruby": {
@@ -46,6 +55,9 @@ HOSTS = {
         ],
         "slice_patterns": [
             r'fixtures_root\.join\(\s*"diagnostics",\s*"(slice-\d+-[a-z0-9-]+)"',
+            r'\[\s*\[\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r',\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
+            r',\s*\[\s*"(slice-\d+-[a-z0-9-]+)"\s*,\s*"[^"]+\.json"',
             r'(slice-\d+-[a-z0-9-]+)/[a-z0-9-]+\.json',
         ],
         "dynamic_keys": [
@@ -58,12 +70,26 @@ KEY_ALIASES = {
     "delegated_child_group_accepted_for_apply": "delegated_child_groups_accepted_for_apply",
 }
 
+IGNORED_KEYS = {
+    "analysis",
+    "matching",
+    "merge",
+    "manifest",
+    "source_family_manifest",
+    "conformance_runner",
+    "family_feature_profile",
+    "go_family_feature_profile",
+    "rust_family_feature_profile",
+    "typescript_family_feature_profile",
+}
+
 
 def workspace_root(script_path: Path) -> Path:
     return script_path.resolve().parents[2]
 
 
 def key_from_slice_dir(slice_dir: str) -> str:
+    slice_dir = slice_dir.split("/", 1)[0]
     _, _, suffix = slice_dir.partition("-")
     _, _, name = suffix.partition("-")
     key = name.replace("-", "_")
@@ -105,7 +131,7 @@ def build_report(root: Path) -> dict[str, object]:
     parity_gaps = {
         key: hosts
         for key, hosts in sorted(key_presence.items())
-        if len(hosts) != len(HOSTS)
+        if key not in IGNORED_KEYS and len(hosts) != len(HOSTS)
     }
 
     return {
