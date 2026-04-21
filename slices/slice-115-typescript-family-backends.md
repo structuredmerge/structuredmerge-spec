@@ -1,22 +1,26 @@
 ## Slice 115: TypeScript Family Backends
 
-Define multiple parser backends for the same TypeScript family contract.
+Define the substrate backend contract for the TypeScript family package.
 
 ### Why
 
-- `typescript-merge` should validate the family-backend pattern beyond Go
-- the TypeScript compiler API is the clearest native parser for this family
+- `typescript-merge` now follows the same substrate-first shape as the other
+  family packages
+- native TypeScript parser behavior still matters, but it belongs in a provider
+  package rather than the family package
 
 ### Rules
 
-1. `typescript-merge` exposes at least two backends:
-   - `tree-sitter`
-   - `native`
-2. both backends target the same family-facing owner, match, and merge contract
-3. backend identity may be observable in feature or conformance reporting
-4. backend choice must not silently change the declared family semantics
+1. `typescript-merge` exposes exactly one substrate backend:
+   - `kreuzberg-language-pack`
+2. the family package keeps the shared TypeScript owner, match, and merge
+   contract
+3. non-tree-sitter TypeScript parsers MAY be exposed by separate provider
+   packages
+4. provider identity remains visible through provider-local feature profiles,
+   contexts, plans, and reports rather than through the family package
 
 ### Notes
 
 - backend-limited behavior may still surface through conformance selection
-- this slice extends the family-backend pattern to a second source-language family
+- this slice now defines the family substrate boundary, not provider plurality
