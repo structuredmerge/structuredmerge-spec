@@ -18,7 +18,7 @@ HOSTS = {
             r"conformanceFixturePath\([^)]*'diagnostics', '([^']+)'\)",
         ],
         "slice_patterns": [
-            r"readFixture(?:<.*?>)?\(\s*'diagnostics',\s*'(slice-\d+-[^']+)'",
+            r"readFixture(?:<.*?>)?\(\s*'diagnostics',\s*'(slice-\d+-[a-z0-9-]+)'",
         ],
     },
     "go": {
@@ -27,7 +27,7 @@ HOSTS = {
             r'diagnosticsFixturePath\(t, "([^"]+)"\)',
         ],
         "slice_patterns": [
-            r'filepath\.Join\("..", "..", "fixtures", "diagnostics", "(slice-\d+-[^"]+)"',
+            r'filepath\.Join\("..", "..", "fixtures", "diagnostics", "(slice-\d+-[a-z0-9-]+)"',
         ],
     },
     "rust": {
@@ -36,7 +36,7 @@ HOSTS = {
             r'diagnostics_fixture_path\(\s*"([^"]+)"\s*,?\s*\)',
         ],
         "slice_patterns": [
-            r'"diagnostics",\s*"(slice-\d+-[^"]+)"',
+            r'"diagnostics",\s*"(slice-\d+-[a-z0-9-]+)"',
         ],
     },
     "ruby": {
@@ -45,12 +45,17 @@ HOSTS = {
             r'diagnostics_fixture\("([^"]+)"\)',
         ],
         "slice_patterns": [
-            r'fixtures_root\.join\(\s*"diagnostics",\s*"(slice-\d+-[^"]+)"',
+            r'fixtures_root\.join\(\s*"diagnostics",\s*"(slice-\d+-[a-z0-9-]+)"',
+            r'(slice-\d+-[a-z0-9-]+)/[a-z0-9-]+\.json',
         ],
         "dynamic_keys": [
             r'%w\[([^\]]+)\]\.each do \|role\|\s*fixture = diagnostics_fixture\(role\)',
         ],
     },
+}
+
+KEY_ALIASES = {
+    "delegated_child_group_accepted_for_apply": "delegated_child_groups_accepted_for_apply",
 }
 
 
@@ -61,7 +66,8 @@ def workspace_root(script_path: Path) -> Path:
 def key_from_slice_dir(slice_dir: str) -> str:
     _, _, suffix = slice_dir.partition("-")
     _, _, name = suffix.partition("-")
-    return name.replace("-", "_")
+    key = name.replace("-", "_")
+    return KEY_ALIASES.get(key, key)
 
 
 def fixture_keys(root: Path, relpath: Path, config: dict[str, object]) -> set[str]:
@@ -73,14 +79,15 @@ def fixture_keys(root: Path, relpath: Path, config: dict[str, object]) -> set[st
     keys: set[str] = set()
 
     for pattern in config.get("key_patterns", []):
-        keys.update(re.findall(pattern, text, flags))
+        for key in re.findall(pattern, text, flags):
+            keys.add(KEY_ALIASES.get(key, key))
 
     for pattern in config.get("slice_patterns", []):
         keys.update(key_from_slice_dir(match) for match in re.findall(pattern, text, flags))
 
     for pattern in config.get("dynamic_keys", []):
         for block in re.findall(pattern, text, flags):
-            keys.update(item.strip() for item in block.split() if item.strip())
+            keys.update(KEY_ALIASES.get(item.strip(), item.strip()) for item in block.split() if item.strip())
 
     return keys
 
