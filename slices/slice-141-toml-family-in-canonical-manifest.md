@@ -12,5 +12,10 @@ This slice defines one canonical-manifest widening contract:
 1. the canonical manifest MAY include the TOML family feature profile entry,
 2. it MAY include the representative TOML roles `analysis`, `matching`, and
    `merge`,
-3. this widening does not require the canonical suite set to add
-   `toml_portable` immediately.
+3. this widening does not require the canonical suite set to add a TOML
+   portable descriptor immediately.
+
+## Notes
+
+- Provider packages do not need separate canonical manifest entries while they
+  execute the shared TOML suite descriptors through provider-local contexts.

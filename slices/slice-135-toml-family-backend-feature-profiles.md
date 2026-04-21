@@ -2,21 +2,20 @@
 
 ## Goal
 
-Expose backend-specific feature profiles for the TOML family.
+Expose the tree-sitter substrate backend profile for the TOML family.
 
 ## Shared Behavior
 
 This slice defines one TOML family backend-profile contract:
 
-1. a TOML family MAY expose more than one backend-specific feature profile,
-2. each backend profile keeps the shared TOML family identity while reporting
-   backend-specific capability differences,
-3. backend capability differences SHOULD stay narrow and explicit.
+1. the TOML family package exposes exactly one substrate backend profile,
+2. that substrate profile keeps the shared TOML family identity while reporting
+   tree-sitter backend capability details,
+3. non-tree-sitter TOML backends belong in provider-package feature profiles,
+   not in the substrate family package.
 
 ## Notes
 
-- Current TOML backend plurality is expected to be visible first in:
-  - Ruby: `citrus`, `parslet`
-  - TypeScript: `native`, `peggy`
-  - Rust: `native`, `pest`
-  - Go: `go-toml/v2`, `pigeon`
+- The first substrate backend is `kreuzberg-language-pack`.
+- Native and PEG-backed TOML providers define their own feature profiles in
+  provider-specific slices.

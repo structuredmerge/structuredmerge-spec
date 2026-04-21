@@ -2,18 +2,19 @@
 
 ## Goal
 
-Lift TOML backend plurality into conformance family plan contexts.
+Lift the TOML tree-sitter substrate into conformance family plan contexts.
 
 ## Shared Behavior
 
-This slice defines one TOML plan-context contract:
+This slice defines one TOML substrate plan-context contract:
 
-1. each TOML backend-specific feature profile MAY be wrapped in a family plan
-   context,
-2. the family profile remains stable across TOML backends,
-3. only the backend-specific feature profile varies between those contexts.
+1. the TOML family package exposes exactly one substrate plan context,
+2. that plan context carries the shared TOML family profile plus the tree-sitter
+   backend profile,
+3. non-tree-sitter TOML providers expose separate plan contexts without
+   changing the family plan-context shape.
 
 ## Notes
 
-- This keeps TOML backend plurality compatible with the existing manifest and
-  named-suite planning helpers.
+- This keeps the TOML family manifest stable while provider packages vary the
+  backend-specific feature profile externally.

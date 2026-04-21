@@ -16,4 +16,4 @@ This slice defines one TOML family manifest contract:
 ## Notes
 
 - This manifest is intentionally separate from the canonical manifest while the
-  TOML backend-plurality path is still being widened.
+  substrate and provider TOML paths are still being widened.
