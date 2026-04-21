@@ -47,3 +47,5 @@ Tooling:
   fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
 - `tools/provider_matching_assertion_audit.py` - reports whether provider
   matching-fixture tests assert unmatched paths as well as matched pairs.
+- `tools/provider_backend_override_audit.py` - reports whether provider
+  packages test unsupported backend override rejection across hosts.
