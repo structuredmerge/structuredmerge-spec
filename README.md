@@ -45,3 +45,5 @@ Tooling:
   slice coverage across TypeScript, Go, Rust, and Ruby host tests.
 - `tools/provider_package_fixture_key_parity.py` - reports provider-package
   fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
+- `tools/provider_matching_assertion_audit.py` - reports whether provider
+  matching-fixture tests assert unmatched paths as well as matched pairs.
