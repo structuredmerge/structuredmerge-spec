@@ -81,7 +81,7 @@ tree = parser.parse(source_code)
         - **Parslet Backend**: Pure Ruby PEG parsing via [`parslet`][parslet] (no native dependencies)
 - **Automatic Backend Selection**: Intelligently selects the best backend for your Ruby implementation
 - **Language Agnostic**: Parse any language - Ruby, Markdown, YAML, JSON, Bash, TOML, JavaScript, etc.
-- **Grammar Discovery**: Built-in `GrammarFinder` utility for platform-aware grammar library discovery
+- **Grammar Discovery**: Built-in `GrammarFinder` utility for registration-first tree-sitter grammar resolution
 - **Unified Position API**: Consistent `start_line`, `end_line`, `source_position` across all backends
 - **Thread-Safe**: Built-in language registry with thread-safe caching
 - **Minimal API Surface**: Simple, focused API that covers the most common use cases
@@ -1020,7 +1020,12 @@ language = TreeHaver::Language.toml(
 
 ### Grammar Discovery with GrammarFinder
 
-For libraries that need to automatically locate tree-sitter grammars (like the `*-merge` family of gems), TreeHaver provides the `GrammarFinder` utility class. It handles platform-aware grammar discovery without requiring language-specific code in TreeHaver itself.
+For libraries that need to automatically locate tree-sitter grammars (like the
+`*-merge` family of gems), TreeHaver provides the `GrammarFinder` utility
+class. It resolves explicit registrations first and then uses
+`tree_sitter_language_pack` as the normalized on-demand provisioning path for
+tree-sitter grammars. Parser-specific non-tree-sitter backends should be
+registered by the owning merge gem rather than hardcoded in TreeHaver.
 
 ```ruby
 # Create a finder for any language
@@ -1031,7 +1036,7 @@ if finder.available?
   puts "TOML grammar found at: #{finder.find_library_path}"
 else
   puts finder.not_found_message
-  # => "tree-sitter toml grammar not found. Searched: /usr/lib/libtree-sitter-toml.so, ..."
+  # => "tree-sitter toml grammar not found. Searched: /.../libtree_sitter_toml.so, ..."
 end
 
 # Register the language if available
@@ -1041,47 +1046,80 @@ finder.register! if finder.available?
 language = TreeHaver::Language.toml
 ```
 
+#### Registration Bootstrap
+
+TreeHaver is the shared registry. It is not the owner of parser-family policy.
+
+- Tree-sitter grammars should be normalized through `GrammarFinder` and
+  `tree_sitter_language_pack` or an explicit registration.
+- Non-tree-sitter backends should be registered by the merge gem that owns
+  that parser family.
+- Tools that load multiple merge gems should invoke each gem's registration
+  bootstrap so TreeHaver sees the full set of available grammars before
+  `parser_for` is called.
+
+```ruby
+# In a tool that uses several merge gems
+require "tree_haver"
+require "toml-merge"
+require "markdown-merge"
+
+TomlMerge.register_tree_haver_grammars!
+MarkdownMerge.register_tree_haver_grammars!
+
+parser = TreeHaver.parser_for(:toml)
+```
+
+Once those registrations have run, `TreeHaver.parser_for` can resolve any
+registered tree-sitter grammar plus any registered backend-specific grammar for
+the active backend mode. If a merge depends on a grammar that has not been
+registered and cannot be provisioned through `tree_sitter_language_pack`,
+TreeHaver raises `TreeHaver::NotAvailable`.
+
 #### GrammarFinder Automatic Derivation
 
 Given just the language name, `GrammarFinder` automatically derives:
 
-| Property         | Derived Value (for `:toml`)                          |
-|------------------|------------------------------------------------------|
-| ENV var          | `TREE_SITTER_TOML_PATH`                              |
-| Library filename | `libtree-sitter-toml.so` (Linux) or `.dylib` (macOS) |
-| Symbol name      | `tree_sitter_toml`                                   |
+| Property         | Derived Value (for `:toml`)                         |
+|------------------|-----------------------------------------------------|
+| ENV var          | `TREE_SITTER_TOML_PATH`                             |
+| Library filename | `libtree_sitter_toml.so` (Linux) or `.dylib` (macOS) |
+| Symbol name      | `tree_sitter_toml`                                  |
 
 #### Search Order
 
 `GrammarFinder` searches for grammars in this order:
 
 1.  **Environment variable**: `TREE_SITTER_<LANG>_PATH` (highest priority)
-2.  **Extra paths**: Custom paths provided at initialization
-3.  **System paths**: Common installation directories (`/usr/lib`, `/usr/local/lib`, `/opt/homebrew/lib`, etc.)
+2.  **Existing TreeHaver registration**: previously-registered tree-sitter grammar path
+3.  **Extra paths**: explicit paths provided at initialization
+4.  **`tree_sitter_language_pack`**: cache lookup plus on-demand download when the gem is available
 
 #### Usage in \*-merge Gems
 
-The `GrammarFinder` pattern enables clean integration in language-specific merge gems:
+The `GrammarFinder` pattern enables clean integration in language-specific
+merge gems:
 
 ```ruby
 # In toml-merge
 finder = TreeHaver::GrammarFinder.new(:toml)
 finder.register! if finder.available?
 
-# In json-merge
-finder = TreeHaver::GrammarFinder.new(:json)
-finder.register! if finder.available?
-
-# In bash-merge
-finder = TreeHaver::GrammarFinder.new(:bash)
-finder.register! if finder.available?
+# Register non-tree-sitter backends in the merge gem as well
+TreeHaver.register_language(
+  :toml,
+  grammar_module: TomlRB::Document,
+  gem_name: "toml-rb",
+)
 ```
 
-Each gem uses the same API—only the language name changes.
+Each gem uses the same API. TreeHaver owns the shared registration surface;
+merge gems own parser-specific backend registrations and any explicit bootstrap
+hook they expose to register them.
 
 #### Adding Custom Search Paths
 
-For non-standard installations, provide extra search paths:
+For non-standard standalone grammar builds, provide extra search paths:
 
 ```ruby
 finder = TreeHaver::GrammarFinder.new(:toml, extra_paths: [
@@ -1102,9 +1140,9 @@ puts finder.search_info
 #      env_var: "TREE_SITTER_TOML_PATH",
 #      env_value: nil,
 #      symbol: "tree_sitter_toml",
-#      library_filename: "libtree-sitter-toml.so",
-#      search_paths: ["/usr/lib/libtree-sitter-toml.so", ...],
-#      found_path: "/usr/lib/libtree-sitter-toml.so",
+#      library_filename: "libtree_sitter_toml.so",
+#      search_paths: ["/custom/lib/libtree_sitter_toml.so", "/.../tree-sitter-language-pack/..."],
+#      found_path: "/.../libtree_sitter_toml.so",
 #      available: true
 #    }
 ```
@@ -1223,12 +1261,14 @@ end
 
 ### Quick Start
 
-The simplest way to parse code is with `TreeHaver.parser_for`, which handles all the complexity of language loading, grammar discovery, and backend selection:
+The simplest way to parse code is with `TreeHaver.parser_for`, which handles
+language loading, grammar resolution, and backend selection:
 
 ```ruby
 require "tree_haver"
 
-# Parse TOML - auto-discovers grammar and falls back to Citrus if needed
+# Parse TOML - resolves any registered tree-sitter grammar and any registered
+# non-tree-sitter backend for the active backend mode
 parser = TreeHaver.parser_for(:toml)
 tree = parser.parse("[package]\nname = \"my-app\"")
 
@@ -1243,7 +1283,7 @@ tree = parser.parse("#!/bin/bash\necho hello")
 # With explicit library path
 parser = TreeHaver.parser_for(:toml, library_path: "/custom/path/libtree-sitter-toml.so")
 
-# With Citrus fallback configuration
+# With explicit Citrus fallback configuration
 parser = TreeHaver.parser_for(
   :toml,
   citrus_config: {gem_name: "toml-rb", grammar_const: "TomlRB::Document"},
@@ -1254,7 +1294,7 @@ parser = TreeHaver.parser_for(
 
 1.  Checking if the language is already registered
 2.  Auto-discovering tree-sitter grammar via `GrammarFinder`
-3.  Falling back to Citrus grammar if tree-sitter is unavailable
+3.  Using any registered backend-specific grammar for the active backend
 4.  Creating and configuring the parser
 5.  Raising `NotAvailable` with a helpful message if nothing works
 

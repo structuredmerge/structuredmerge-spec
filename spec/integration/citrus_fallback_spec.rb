@@ -2,18 +2,12 @@
 
 require "spec_helper"
 
-# Regression tests for Citrus fallback when tree-sitter backends are unavailable.
-#
-# These tests verify that parser_for correctly falls back to Citrus backends
-# when native tree-sitter backends fail or are unavailable (e.g., on TruffleRuby).
-#
-# The bug: When no explicit citrus_config was provided to parser_for, and
-# tree-sitter backends failed, the Citrus fallback was attempted with
-# gem_name: nil and grammar_const: nil, causing require to receive nil
-# instead of a valid require path.
+# Regression tests for registration-driven Citrus fallback when tree-sitter
+# backends are unavailable.
 RSpec.describe "Citrus fallback", :citrus_backend do
   before do
     TreeHaver::LanguageRegistry.clear_cache!
+    TreeHaver.register_language(:toml, grammar_module: TomlRB::Document, gem_name: "toml-rb") if defined?(TomlRB::Document)
   end
 
   after do
@@ -21,21 +15,11 @@ RSpec.describe "Citrus fallback", :citrus_backend do
     TreeHaver.reset_backend!(to: :auto)
   end
 
-  describe "TreeHaver::CITRUS_DEFAULTS" do
-    it "includes configuration for :toml" do
-      expect(TreeHaver::CITRUS_DEFAULTS).to have_key(:toml)
-    end
-
-    it "has gem_name for :toml" do
-      expect(TreeHaver::CITRUS_DEFAULTS[:toml][:gem_name]).to eq("toml-rb")
-    end
-
-    it "has grammar_const for :toml" do
-      expect(TreeHaver::CITRUS_DEFAULTS[:toml][:grammar_const]).to eq("TomlRB::Document")
-    end
-
-    it "has require_path for :toml" do
-      expect(TreeHaver::CITRUS_DEFAULTS[:toml][:require_path]).to eq("toml-rb")
+  describe "registered Citrus grammar" do
+    it "is registered for :toml in the test environment" do
+      registration = TreeHaver.registered_language(:toml)
+      expect(registration).to include(:citrus)
+      expect(registration[:citrus]).to include(gem_name: "toml-rb")
     end
   end
 
@@ -55,7 +39,7 @@ RSpec.describe "Citrus fallback", :citrus_backend do
         # rubocop:enable RSpec/AnyInstance
       end
 
-      context "with :toml (has CITRUS_DEFAULTS entry)" do
+      context "with :toml (registered Citrus grammar)" do
         it "successfully creates a parser using Citrus backend" do
           parser = TreeHaver.parser_for(:toml)
           expect(parser).to be_a(TreeHaver::Parser)
@@ -69,17 +53,14 @@ RSpec.describe "Citrus fallback", :citrus_backend do
           expect(tree.root_node).not_to be_nil
         end
 
-        it "does not require explicit citrus_config" do
-          # This is the key regression test - previously this would fail with:
-          # TypeError: no implicit conversion of nil into String
-          # because citrus_config[:gem_name] was nil
+        it "does not require explicit citrus_config when grammar is registered" do
           expect {
             TreeHaver.parser_for(:toml)
           }.not_to raise_error
         end
       end
 
-      context "with unknown language (no CITRUS_DEFAULTS entry)" do
+      context "with unknown language (no registered Citrus grammar)" do
         it "raises NotAvailable" do
           expect {
             TreeHaver.parser_for(:totally_unknown_language_xyz)

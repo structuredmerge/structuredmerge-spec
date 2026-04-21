@@ -9,6 +9,7 @@ RSpec.describe TreeHaver::GrammarFinder do
   after do
     described_class.reset_runtime_check!
     TreeHaver.reset_backend!(to: :auto)
+    TreeHaver::LanguageRegistry.clear
   end
 
   describe "#initialize" do
@@ -74,20 +75,20 @@ RSpec.describe TreeHaver::GrammarFinder do
   end
 
   describe "#library_filename" do
-    it "returns platform-appropriate filename" do
+    it "returns tree-sitter-language-pack filename" do
       filename = finder.library_filename
-      expect(filename).to match(/^libtree-sitter-toml\.(so|dylib|dll)$/)
+      expect(filename).to match(/^libtree_sitter_toml\.(so|dylib|dll)$/)
     end
 
     context "when on Linux", if: RbConfig::CONFIG["host_os"] =~ /linux/i do
       it "uses .so extension" do
-        expect(finder.library_filename).to eq("libtree-sitter-toml.so")
+        expect(finder.library_filename).to eq("libtree_sitter_toml.so")
       end
     end
 
     context "when on macOS", if: RbConfig::CONFIG["host_os"] =~ /darwin/i do
       it "uses .dylib extension" do
-        expect(finder.library_filename).to eq("libtree-sitter-toml.dylib")
+        expect(finder.library_filename).to eq("libtree_sitter_toml.dylib")
       end
     end
   end
@@ -96,43 +97,25 @@ RSpec.describe TreeHaver::GrammarFinder do
     it "returns array of paths" do
       paths = finder.search_paths
       expect(paths).to be_an(Array)
-      expect(paths).not_to be_empty
-    end
-
-    it "includes common system paths" do
-      paths = finder.search_paths
-      # At least one of the common paths should be included
-      common_dirs = ["/usr/lib", "/usr/local/lib"]
-      expect(paths.any? { |p| common_dirs.any? { |d| p.start_with?(d) } }).to be true
-    end
-
-    it "includes user-local XDG paths" do
-      paths = finder.search_paths
-      home = Dir.home
-      user_local = File.join(home, ".local", "lib", "tree-sitter")
-      expect(paths.any? { |p| p.start_with?(user_local) }).to be true
-    end
-
-    it "searches user-local paths before system paths" do
-      paths = finder.search_paths
-      home = Dir.home
-      user_local = File.join(home, ".local", "lib")
-      usr_lib = "/usr/lib"
-      user_idx = paths.index { |p| p.start_with?(user_local) }
-      sys_idx = paths.index { |p| p.start_with?(usr_lib) }
-      expect(user_idx).to be < sys_idx
     end
 
     it "prepends extra_paths" do
       finder = described_class.new(:toml, extra_paths: ["/custom/lib"])
       paths = finder.search_paths
-      expect(paths.first).to match(%r{^/custom/lib/})
+      expect(paths.first).to eq("/custom/lib/libtree_sitter_toml#{File.extname(finder.library_filename)}")
     end
 
-    it "does not include ENV path in search_paths" do
-      # ENV path is handled separately in find_library_path
-      paths = finder.search_paths
-      expect(paths).not_to include(nil)
+    it "includes registered paths before extra paths" do
+      TreeHaver.register_language(:toml, path: "/registered/libtree_sitter_toml.so", symbol: "tree_sitter_toml")
+      finder = described_class.new(:toml, extra_paths: ["/custom/lib"])
+      expect(finder.search_paths.first).to eq("/registered/libtree_sitter_toml.so")
+    ensure
+      TreeHaver::LanguageRegistry.clear
+    end
+
+    it "includes tree_sitter_language_pack cache candidates when available" do
+      allow(finder).to receive(:tree_sitter_language_pack_cache_dir).and_return("/cache/ts-pack")
+      expect(finder.search_paths).to include("/cache/ts-pack/libtree_sitter_toml#{File.extname(finder.library_filename)}")
     end
   end
 

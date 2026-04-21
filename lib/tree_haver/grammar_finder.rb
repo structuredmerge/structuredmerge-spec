@@ -3,15 +3,17 @@
 require "rbconfig"
 
 module TreeHaver
-  # Generic utility for finding tree-sitter grammar shared libraries.
+  # Registration-first utility for finding tree-sitter grammar shared libraries.
   #
-  # GrammarFinder provides platform-aware discovery of tree-sitter grammar
-  # libraries. Given a language name, it searches common installation paths
-  # and supports environment variable overrides.
+  # GrammarFinder resolves tree-sitter grammars in a constrained order:
+  #
+  # 1. explicit environment override
+  # 2. existing TreeHaver registration
+  # 3. explicit extra paths
+  # 4. tree_sitter_language_pack cache/provisioning
   #
   # This class is designed to be used by language-specific merge gems
-  # (toml-merge, json-merge, bash-merge, etc.) without requiring TreeHaver
-  # to have knowledge of each specific language.
+  # without requiring TreeHaver to own parser- or grammar-specific policy.
   #
   # == Security Considerations
   #
@@ -29,7 +31,7 @@ module TreeHaver
   # @example Basic usage
   #   finder = TreeHaver::GrammarFinder.new(:toml)
   #   path = finder.find_library_path
-  #   # => "/usr/lib/libtree-sitter-toml.so"
+  #   # => "/home/user/.cache/tree-sitter-language-pack/vX/libs/libtree_sitter_toml.so"
   #
   # @example Check availability
   #   finder = TreeHaver::GrammarFinder.new(:json)
@@ -51,18 +53,6 @@ module TreeHaver
   #
   # @see PathValidator For details on security validations
   class GrammarFinder
-    # Common base directories where tree-sitter libraries are installed
-    # Platform-specific extensions are appended automatically.
-    # User-local XDG paths (~/.local/lib/tree-sitter) are added dynamically
-    # in #user_search_dirs so that HOME expansion happens at call time.
-    BASE_SEARCH_DIRS = [
-      "/usr/lib",
-      "/usr/lib64",
-      "/usr/local/lib",
-      "/opt/homebrew/lib",
-      "/home/linuxbrew/.linuxbrew/lib",
-    ].freeze
-
     # @return [Symbol] the language identifier
     attr_reader :language_name
 
@@ -101,46 +91,61 @@ module TreeHaver
       "tree_sitter_#{@language_name}"
     end
 
-    # Get the library filename for the current platform
+    # Get the canonical tree-sitter-language-pack filename for the current platform
     #
-    # @return [String] the library filename (e.g., "libtree-sitter-toml.so")
+    # @return [String] the library filename (e.g., "libtree_sitter_toml.so")
     def library_filename
+      library_filenames.first
+    end
+
+    # Get all accepted library filenames for this language
+    #
+    # Accept both the tree-sitter-language-pack naming convention and the
+    # historical hyphenated form used by some standalone grammar builds.
+    #
+    # @return [Array<String>]
+    def library_filenames
       ext = platform_extension
-      "libtree-sitter-#{@language_name}#{ext}"
+      [
+        "libtree_sitter_#{@language_name}#{ext}",
+        "libtree-sitter-#{@language_name}#{ext}",
+      ]
     end
 
     # Generate the full list of search paths for this language
     #
-    # Order: ENV override, extra_paths, user-local paths, then system paths
+    # Order: registered path, explicit extra paths, then tree_sitter_language_pack cache
     #
     # @return [Array<String>] all paths to search
     def search_paths
       paths = []
 
-      # Extra paths provided at initialization (searched after ENV)
+      registration = registered_tree_sitter_registration
+      paths << registration[:path] if registration&.dig(:path)
+
       @extra_paths.each do |dir|
-        paths << File.join(dir, library_filename)
+        library_filenames.each do |filename|
+          paths << File.join(dir, filename)
+        end
       end
 
-      # User-local XDG paths (e.g. ~/.local/lib/tree-sitter/)
-      user_search_dirs.each do |dir|
-        paths << File.join(dir, library_filename)
+      cache_dir = tree_sitter_language_pack_cache_dir
+      if cache_dir
+        library_filenames.each do |filename|
+          paths << File.join(cache_dir, filename)
+        end
       end
 
-      # Common system paths with platform-appropriate extension
-      BASE_SEARCH_DIRS.each do |dir|
-        paths << File.join(dir, library_filename)
-      end
-
-      paths
+      paths.uniq
     end
 
     # Find the grammar library path
     #
     # Searches in order:
     # 1. Environment variable override (validated for safety)
-    # 2. Extra paths provided at initialization
-    # 3. Common system installation paths
+    # 2. Existing TreeHaver tree-sitter registration
+    # 3. Extra paths provided at initialization
+    # 4. tree_sitter_language_pack cache / on-demand download
     #
     # @note Paths from ENV are validated using {PathValidator.safe_library_path?}
     #   to prevent path traversal and other attacks. Invalid ENV paths cause
@@ -189,8 +194,13 @@ module TreeHaver
         return env_path
       end
 
-      # Search all paths (these are constructed from trusted base dirs)
-      search_paths.find { |path| File.exist?(path) }
+      registered_path = registered_tree_sitter_path
+      return registered_path if registered_path
+
+      explicit_path = explicit_search_path
+      return explicit_path if explicit_path
+
+      tree_sitter_language_pack_path
     end
 
     # Validate an environment variable path and return reason if invalid
@@ -223,7 +233,6 @@ module TreeHaver
     # @return [String, nil] the path to the library, or nil if not found
     # @see PathValidator::TRUSTED_DIRECTORIES For the list of trusted directories
     def find_library_path_safe
-      # Environment variable is NOT checked in safe mode - only trusted system paths
       search_paths.find do |path|
         File.exist?(path) && PathValidator.in_trusted_directory?(path)
       end
@@ -335,6 +344,7 @@ module TreeHaver
         env_rejection_reason: @env_rejection_reason,
         symbol: symbol_name,
         library_filename: library_filename,
+        library_filenames: library_filenames,
         search_paths: search_paths,
         found_path: found,
         available: !found.nil?,
@@ -354,35 +364,69 @@ module TreeHaver
       elsif env_value && File.exist?(env_value) && !self.class.tree_sitter_runtime_usable?
         " #{env_var_name} is set and file exists, but no tree-sitter runtime is available. " \
           "Add ruby_tree_sitter, ffi, or tree_stump gem to your Gemfile."
-      elsif env_value
-        " #{env_var_name} is set but was not used (file may have been removed)."
       else
         " Searched: #{search_paths.join(", ")}."
       end
 
-      msg + " Install tree-sitter-#{@language_name} or set #{env_var_name} to a valid path."
+      msg + " Register the grammar, install tree_sitter_language_pack, or set #{env_var_name} to a valid path."
     end
 
     private
 
-    # Compute user-local directories to search for grammar libraries.
-    # These are derived from HOME at call time so they survive into subprocesses
-    # and work regardless of how the process was launched.
-    #
-    # Directories checked (in order):
-    #   - $HOME/.local/lib/tree-sitter   (XDG user-local, where `tree-sitter` CLI installs grammars)
-    #   - $HOME/.local/lib               (plain XDG user-local lib)
-    #
-    # @return [Array<String>]
-    def user_search_dirs
-      home = Dir.home
-      [
-        File.join(home, ".local", "lib", "tree-sitter"),
-        File.join(home, ".local", "lib"),
-      ]
-    rescue ArgumentError
-      # Dir.home raises ArgumentError if HOME is not set
-      []
+    def registered_tree_sitter_registration
+      TreeHaver::LanguageRegistry.registered(@language_name, :tree_sitter)
+    end
+
+    def registered_tree_sitter_path
+      registration = registered_tree_sitter_registration
+      path = registration&.dig(:path)
+      return unless path
+      return path if File.exist?(path)
+
+      @registered_rejection_reason = "registered path does not exist: #{path}"
+      nil
+    end
+
+    def explicit_search_path
+      search_paths.find { |path| File.exist?(path) }
+    end
+
+    def tree_sitter_language_pack_path
+      return @tree_sitter_language_pack_path if defined?(@tree_sitter_language_pack_path)
+
+      @tree_sitter_language_pack_path = begin
+        require "tree_sitter_language_pack"
+        language = @language_name.to_s
+        unless TreeSitterLanguagePack.has_language(language)
+          @tree_sitter_language_pack_rejection_reason = "language not published by tree_sitter_language_pack"
+          nil
+        else
+          TreeSitterLanguagePack.download([language])
+          cache_dir = TreeSitterLanguagePack.cache_dir
+          @tree_sitter_language_pack_cache_dir = cache_dir
+
+          library_filenames
+            .map { |filename| File.join(cache_dir, filename) }
+            .find { |path| File.exist?(path) }
+        end
+      rescue LoadError
+        @tree_sitter_language_pack_rejection_reason = "tree_sitter_language_pack gem not available"
+        nil
+      rescue StandardError => e
+        @tree_sitter_language_pack_rejection_reason = e.message
+        nil
+      end
+    end
+
+    def tree_sitter_language_pack_cache_dir
+      return @tree_sitter_language_pack_cache_dir if defined?(@tree_sitter_language_pack_cache_dir)
+
+      @tree_sitter_language_pack_cache_dir = begin
+        require "tree_sitter_language_pack"
+        TreeSitterLanguagePack.cache_dir
+      rescue LoadError, StandardError
+        nil
+      end
     end
 
     # Get the platform-appropriate shared library extension

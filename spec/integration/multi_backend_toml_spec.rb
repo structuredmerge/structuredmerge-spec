@@ -7,6 +7,12 @@ require "spec_helper"
 # This spec runs the same tests against all available TOML backends
 # to ensure consistent behavior across tree-sitter and Citrus implementations.
 RSpec.describe "TOML parsing across backends" do
+  def register_toml_citrus_grammar!
+    return unless defined?(TomlRB::Document)
+
+    TreeHaver.register_language(:toml, grammar_module: TomlRB::Document, gem_name: "toml-rb")
+  end
+
   # Tree-sitter backend tests - requires native backend and toml grammar
   context "with tree-sitter-toml backend", :native_parsing do
     # Let TreeHaver pick the best available native backend
@@ -18,6 +24,10 @@ RSpec.describe "TOML parsing across backends" do
 
   # Citrus backend tests - requires citrus gem and toml-rb
   context "with Citrus/toml-rb backend", :citrus_backend, :toml_rb do
+    before do
+      register_toml_citrus_grammar!
+    end
+
     around do |example|
       TreeHaver.with_backend(:citrus) do
         example.run
@@ -34,6 +44,10 @@ RSpec.describe "TOML parsing across backends" do
   # Only runs when BOTH native tree-sitter AND citrus backends are available
   describe "backend equivalence", :citrus_backend, :native_parsing, :toml_rb do
     let(:source) { "[section]\nkey = \"value\"" }
+
+    before do
+      register_toml_citrus_grammar!
+    end
 
     # Use auto backend for tree-sitter (will pick best available native backend)
     let(:tree_sitter_parser) { TreeHaver.parser_for(:toml) }

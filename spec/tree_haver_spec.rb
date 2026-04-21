@@ -609,6 +609,7 @@ RSpec.describe TreeHaver do
       context "when backend is :citrus" do
         before do
           described_class.backend = :citrus
+          described_class.register_language(:toml, grammar_module: TomlRB::Document, gem_name: "toml-rb") if defined?(TomlRB::Document)
         end
 
         it "creates a parser with citrus backend", :citrus_backend do
@@ -620,6 +621,7 @@ RSpec.describe TreeHaver do
 
       context "when using with_backend(:citrus)" do
         it "creates a parser with citrus backend within the block", :citrus_backend do
+          described_class.register_language(:toml, grammar_module: TomlRB::Document, gem_name: "toml-rb") if defined?(TomlRB::Document)
           described_class.with_backend(:citrus) do
             parser = described_class.parser_for(:toml)
             expect(parser).to be_a(described_class::Parser)
@@ -674,12 +676,15 @@ RSpec.describe TreeHaver do
       end
     end
 
-    describe "CITRUS_DEFAULTS" do
-      it "includes configuration for :toml" do
-        expect(described_class::CITRUS_DEFAULTS[:toml]).to include(
-          gem_name: "toml-rb",
-          grammar_const: "TomlRB::Document",
-        )
+    describe "registered Citrus grammars" do
+      before do
+        described_class.register_language(:toml, grammar_module: TomlRB::Document, gem_name: "toml-rb") if defined?(TomlRB::Document)
+      end
+
+      it "can resolve registered :toml grammar without built-in defaults" do
+        registration = described_class.registered_language(:toml)
+        expect(registration).to include(:citrus)
+        expect(registration[:citrus]).to include(gem_name: "toml-rb")
       end
     end
   end

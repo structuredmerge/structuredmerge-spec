@@ -84,7 +84,8 @@ require_relative "tree_haver/version"
 #   language = TreeHaver::Language.toml
 #
 # @example Using GrammarFinder for automatic discovery
-#   # GrammarFinder automatically locates grammar libraries on the system
+#   # GrammarFinder resolves registered grammars first and can provision
+#   # tree-sitter grammars through tree_sitter_language_pack when available.
 #   finder = TreeHaver::GrammarFinder.new(:toml)
 #   finder.register! if finder.available?
 #   language = TreeHaver::Language.toml
@@ -161,34 +162,6 @@ module TreeHaver
   #   # Now you can test backend conflicts (at risk of segfaults)
   class BackendConflict < Error; end
 
-  # Default Citrus configurations for known languages
-  #
-  # These are used by {TreeHaver.parser_for} when no explicit citrus_config is provided
-  # and tree-sitter backends are not available (e.g., on TruffleRuby).
-  #
-  # @api private
-  CITRUS_DEFAULTS = {
-    toml: {
-      gem_name: "toml-rb",
-      grammar_const: "TomlRB::Document",
-      require_path: "toml-rb",
-    },
-  }.freeze
-
-  # Default Parslet configurations for known languages
-  #
-  # These are used by {TreeHaver.parser_for} when no explicit parslet_config is provided
-  # and tree-sitter backends are not available (e.g., on TruffleRuby).
-  #
-  # @api private
-  PARSLET_DEFAULTS = {
-    toml: {
-      gem_name: "toml",
-      grammar_const: "TOML::Parslet",
-      require_path: "toml",
-    },
-  }.freeze
-
   # Namespace for backend implementations
   #
   # TreeHaver provides multiple backends to support different Ruby implementations:
@@ -247,9 +220,9 @@ module TreeHaver
 
   # Generic grammar finder utility with built-in security validations
   #
-  # GrammarFinder provides platform-aware discovery of tree-sitter grammar
-  # libraries for any language. It validates paths from environment variables
-  # to prevent path traversal and other attacks.
+  # GrammarFinder resolves registered tree-sitter grammars first and can
+  # provision tree-sitter-language-pack grammars on demand. It validates paths
+  # from environment variables to prevent path traversal and other attacks.
   #
   # @example Find and register a language
   #   finder = TreeHaver::GrammarFinder.new(:toml)
@@ -1128,9 +1101,9 @@ module TreeHaver
     # TreeHaver.backend=, or with_backend block).
     #
     # Supports four types of backends:
-    # 1. Tree-sitter native backends (auto-discovered or explicit path)
-    # 2. Citrus grammars (pure Ruby, via CITRUS_DEFAULTS or explicit config)
-    # 3. Parslet grammars (pure Ruby, via PARSLET_DEFAULTS or explicit config)
+    # 1. Tree-sitter native backends (registered, auto-provisioned, or explicit path)
+    # 2. Citrus grammars (pure Ruby, via registration or explicit config)
+    # 3. Parslet grammars (pure Ruby, via registration or explicit config)
     # 4. Pure Ruby backends (registered via backend_module, e.g., Prism, Psych, RBS)
     #
     # @param language_name [Symbol, String] the language to parse (e.g., :toml, :json, :ruby, :yaml, :rbs)
@@ -1154,6 +1127,10 @@ module TreeHaver
     #   # First, rbs-merge registers its backend:
     #   # TreeHaver.register_language(:rbs, backend_module: Rbs::Merge::RbsBackend, backend_type: :rbs)
     #   parser = TreeHaver.parser_for(:rbs)
+    #
+    # @note TreeHaver owns the shared grammar registry. Language-specific gems
+    #   are expected to register their own non-tree-sitter backends and any
+    #   tree-sitter grammar bootstrap they require before calling parser_for.
     def parser_for(language_name, library_path: nil, symbol: nil, citrus_config: nil, parslet_config: nil)
       # Ensure built-in pure Ruby backends are registered
       ensure_builtin_backends_registered!
@@ -1287,7 +1264,12 @@ module TreeHaver
     # Load a Citrus language from configuration or defaults
     # @return [Language, nil]
     def load_citrus_language(name, citrus_config: nil)
-      config = citrus_config || CITRUS_DEFAULTS[name] || {}
+      registration = registered_language(name)&.dig(:citrus)
+      if registration && registration[:grammar_module]
+        return Language.public_send(name)
+      end
+
+      config = citrus_config || {}
       return unless config[:gem_name] && config[:grammar_const]
 
       finder = CitrusGrammarFinder.new(
@@ -1307,7 +1289,12 @@ module TreeHaver
     # Load a Parslet language from configuration or defaults
     # @return [Language, nil]
     def load_parslet_language(name, parslet_config: nil)
-      config = parslet_config || PARSLET_DEFAULTS[name] || {}
+      registration = registered_language(name)&.dig(:parslet)
+      if registration && registration[:grammar_class]
+        return Language.public_send(name)
+      end
+
+      config = parslet_config || {}
       return unless config[:gem_name] && config[:grammar_const]
 
       finder = ParsletGrammarFinder.new(
