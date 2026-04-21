@@ -36,3 +36,8 @@ Non-goals for this directory:
 - Replacing the active draft
 - Language-specific package planning
 - Templating/package-scaffold implementation details
+
+Tooling:
+
+- `tools/ast_merge_fixture_key_parity.py` - reports shared `ast-merge` diagnostic
+  fixture-key coverage across TypeScript, Go, Rust, and Ruby host tests.
