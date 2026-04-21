@@ -13,8 +13,11 @@ family-scoped nested or delegated suite for that family may be promoted.
 2. when a family has no existing canonical review/default/replay identity
    surface, a promotion slice SHOULD first establish that ordinary family
    surface before attempting nested canonical promotion
-3. Markdown nested and Ruby nested suites therefore remain blocked on canonical
-   promotion of `markdown_portable` and `ruby_portable` respectively
+3. Markdown nested therefore remains blocked on canonical promotion of
+   `markdown_portable`
+4. once a family's ordinary portable suite is canonical, any nested promotion
+   for that family remains subject to the separate identity/default/replay
+   gate defined by later slices
 
 ## Notes
 
