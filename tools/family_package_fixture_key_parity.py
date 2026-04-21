@@ -77,6 +77,13 @@ FAMILIES = {
 
 SLICE_PATTERN = re.compile(r"(slice-\d+-[a-z0-9-]+)")
 
+ALLOWED_HOSTS_BY_KEY = {
+    "rust_source": {
+        "native": ["rust"],
+        "rust_family_backends": ["rust"],
+    },
+}
+
 
 def workspace_root(script_path: Path) -> Path:
     return script_path.resolve().parents[2]
@@ -114,7 +121,8 @@ def build_report(root: Path) -> dict[str, object]:
         gaps = {
             key: present_hosts
             for key, present_hosts in sorted(key_presence.items())
-            if len(present_hosts) != len(HOSTS)
+            if sorted(present_hosts)
+            != sorted(ALLOWED_HOSTS_BY_KEY.get(family, {}).get(key, list(HOSTS)))
         }
         if gaps:
             parity_gaps[family] = gaps
