@@ -17,9 +17,9 @@ contract.
 3. canonical suite growth SHOULD require a later slice that defines the
    canonical family membership and any new defaulting or review policy needed
    for the promoted suite
-4. until such a slice exists, nested Markdown and Ruby delegated suites SHOULD
-   remain in their dedicated family manifests or named suites even when their
-   underlying operation shapes are fully portable
+4. until such a slice exists, nested Markdown delegated suites SHOULD remain in
+   their dedicated family manifests or named suites even when their underlying
+   operation shapes are fully portable
 5. family-scoped nested suites MAY still be planned, reported, reviewed, and
    replayed through the ordinary named-suite machinery when explicitly selected
 
