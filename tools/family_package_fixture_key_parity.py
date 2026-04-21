@@ -84,19 +84,47 @@ ALLOWED_HOSTS_BY_KEY = {
     },
 }
 
+ROLE_KEY_PATTERNS = {
+    "json": {
+        "parse": [
+            re.compile(r"""jsonFixturePath\(t,\s*"parse_comments"\)"""),
+            re.compile(r"""jsonFixturePath\(\s*'parse_comments'\s*\)"""),
+            re.compile(r"""json_fixture_path\("parse_comments"\)"""),
+            re.compile(r"""jsonFixture\("parse_comments"\)"""),
+            re.compile(r"""json_fixture\("parse_comments"\)"""),
+        ],
+        "structure": [
+            re.compile(r"""jsonFixturePath\(t,\s*"structure_json"\)"""),
+            re.compile(r"""jsonFixturePath\(t,\s*"structure_jsonc"\)"""),
+            re.compile(r"""jsonFixturePath\(\s*'structure_json'\s*\)"""),
+            re.compile(r"""jsonFixturePath\(\s*'structure_jsonc'\s*\)"""),
+            re.compile(r"""json_fixture_path\("structure_json"\)"""),
+            re.compile(r"""json_fixture_path\("structure_jsonc"\)"""),
+            re.compile(r"""jsonFixture\("structure_json"\)"""),
+            re.compile(r"""jsonFixture\("structure_jsonc"\)"""),
+            re.compile(r"""json_fixture\("structure_json"\)"""),
+            re.compile(r"""json_fixture\("structure_jsonc"\)"""),
+        ],
+    },
+}
+
 
 def workspace_root(script_path: Path) -> Path:
     return script_path.resolve().parents[2]
 
 
-def fixture_keys(source_path: Path) -> set[str]:
+def fixture_keys(source_path: Path, family: str) -> set[str]:
     if not source_path.exists():
         raise FileNotFoundError(f"missing package fixture file: {source_path}")
     text = source_path.read_text()
-    return {
+    keys = {
         match.group(1).split("/", 1)[0]
         for match in SLICE_PATTERN.finditer(text)
     }
+    for key, patterns in ROLE_KEY_PATTERNS.get(family, {}).items():
+        if any(pattern.search(text) for pattern in patterns):
+            keys.add(key)
+    return keys
 
 
 def key_from_slice(slice_dir: str) -> str:
@@ -111,15 +139,18 @@ def build_report(root: Path) -> dict[str, object]:
 
     for family, host_paths in FAMILIES.items():
         family_hosts: dict[str, list[str]] = {}
-        key_presence: dict[str, list[str]] = {}
+        key_presence: dict[str, set[str]] = {}
         for host in HOSTS:
-            keys = sorted(key_from_slice(slice_dir) for slice_dir in fixture_keys(root / host_paths[host]))
+            keys = sorted(
+                key_from_slice(slice_dir) if slice_dir.startswith("slice-") else slice_dir
+                for slice_dir in fixture_keys(root / host_paths[host], family)
+            )
             family_hosts[host] = keys
             for key in keys:
-                key_presence.setdefault(key, []).append(host)
+                key_presence.setdefault(key, set()).add(host)
         families[family] = family_hosts
         gaps = {
-            key: present_hosts
+            key: sorted(present_hosts)
             for key, present_hosts in sorted(key_presence.items())
             if sorted(present_hosts)
             != sorted(ALLOWED_HOSTS_BY_KEY.get(family, {}).get(key, list(HOSTS)))
