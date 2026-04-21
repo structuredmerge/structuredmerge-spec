@@ -1,23 +1,28 @@
 ## Slice 113: Go Family Backends
 
-Define multiple parser backends for the same Go family contract.
+Define the built-in backend surface for the Go family package.
 
 ### Why
 
-- the Ruby family stacks were strongest when one family contract supported multiple parsers
-- `go-merge` is the cleanest first test of that pattern
-- backend plurality should be a family concern, not just a `tree-haver` experiment
+- the Go family package now follows the substrate-first structure used by the
+  other active families
+- backend plurality for Go still exists, but it should enter through provider
+  packages rather than through the family package itself
+- the family contract still needs one explicit built-in backend identity
 
 ### Rules
 
-1. `go-merge` exposes at least two backends:
-   - `tree-sitter`
-   - `native`
-2. both backends target the same family-facing owner, match, and merge contract
-3. backend identity may be observable in feature or conformance reporting
-4. backend choice must not silently change the declared family semantics
+1. `go-merge` exposes exactly one built-in backend:
+   - `kreuzberg-language-pack`
+2. the Go family package remains responsible for the shared family-facing owner,
+   match, and merge contract
+3. non-tree-sitter Go parser stacks must be exposed by discrete provider
+   packages rather than by `go-merge`
+4. backend identity may be observable in feature or conformance reporting
+   without changing the declared Go family semantics
 
 ### Notes
 
-- backend-limited behavior may still surface through conformance selection
-- this slice defines the family-backend pattern, not full parity for every language family
+- provider-backed execution may still surface through conformance selection
+- this slice defines the built-in Go family backend surface, not the full Go
+  provider matrix

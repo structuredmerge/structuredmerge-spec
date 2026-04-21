@@ -1,20 +1,28 @@
-## Slice 114: Go Native Parser Baseline
+## Slice 114: Go Parser Provider Baseline
 
-Define the baseline native-parser path for `go-merge` in Go.
+Define the baseline `go-parser` provider path for Go in Go.
 
 ### Why
 
-- `go/parser` is the clearest first example of a native parser living beside tree-sitter
-- this slice turns family-backend plurality into an implemented behavior surface
+- `go/parser` is the clearest first example of a native Go parser living beside
+  tree-sitter
+- the Go family package is substrate-first, so the native parser needs a
+  provider package contract of its own
 
 ### Rules
 
-1. the native backend uses Go's standard parser stack
-2. the native backend exposes the same family-facing owner paths and merge behavior as the tree-sitter backend for the covered fixtures
-3. backend choice is explicit and stable
-4. when snippet fixtures omit a package clause, the native backend may inject a synthetic package header so long as exposed spans and rendered text are remapped to the original source
+1. the `go-parser` backend uses Go's standard parser stack
+2. the `go-parser` backend is exposed by a discrete provider package rather than
+   by `go-merge`
+3. the provider exposes the same Go family-facing owner paths and merge
+   behavior as the tree-sitter substrate for the covered fixtures
+4. backend choice is explicit and stable
+5. when snippet fixtures omit a package clause, the provider may inject a
+   synthetic package header so long as exposed spans and rendered text are
+   remapped to the original source
 
 ### Notes
 
 - deeper backend-comparison coverage can grow later
-- this slice focuses on the first parity subset, not full backend equivalence
+- this slice focuses on the first provider parity subset, not full backend
+  equivalence
