@@ -8,14 +8,13 @@ Expose backend-specific feature profiles for the Markdown family.
 
 This slice defines one Markdown backend-profile contract:
 
-1. `markdown-merge` MAY expose more than one backend-specific feature profile,
-2. each backend profile keeps the shared Markdown family identity,
-3. backend plurality is observable through backend identity strings.
+1. `markdown-merge` exposes the built-in tree-sitter backend feature profile for the Markdown family,
+2. that backend profile keeps the shared Markdown family identity,
+3. native parser backends are exposed by discrete provider packages, not by `markdown-merge`.
 
 ## Notes
 
-- The first backend pair is expected to be:
-  - a family-local native parser,
-  - `kreuzberg-language-pack` as the tree-sitter substrate backend.
-- Ruby MAY later split native providers into sibling gems such as
-  `kramdown-merge`, while keeping the same family-facing contracts.
+- `kreuzberg-language-pack` is the expected tree-sitter substrate backend.
+- Native providers such as `markdown-it-merge`, `kramdown-merge`,
+  `commonmarker-merge`, and `markly-merge` define their own backend
+  feature-profile contracts.

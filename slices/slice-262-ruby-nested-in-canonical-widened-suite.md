@@ -2,15 +2,15 @@
 
 ## Goal
 
-Promote the nested portable Ruby suite descriptor into the canonical widened
-suite set.
+Promote the nested portable descriptor for grammar `ruby` into the canonical
+widened suite set.
 
 ## Contract
 
 This slice defines one canonical widened-suite promotion contract:
 
-1. the widened canonical manifest MAY expose the nested portable Ruby suite
-   descriptor
+1. the widened canonical manifest MAY expose the nested portable descriptor for
+   grammar `ruby`
 2. that nested Ruby descriptor uses the current nested Ruby roles `analysis`,
    `matching`, `discovered_surfaces`, `delegated_child_operations`,
    `delegated_child_review_transport`, `delegated_child_review_state`, and

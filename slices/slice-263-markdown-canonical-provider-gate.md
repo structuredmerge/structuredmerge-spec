@@ -2,14 +2,14 @@
 
 ## Goal
 
-Define the remaining blocker before `markdown_portable` can be promoted into a
-canonical suite set.
+Define the remaining blocker before the base portable descriptor for grammar
+`markdown` can be promoted into a canonical suite set.
 
 ## Contract
 
-1. `markdown_portable` SHOULD NOT be promoted into a canonical suite set until
-   a later slice chooses the canonical provider or provider-selection rule for
-   Markdown family contexts
+1. the base portable descriptor for grammar `markdown` SHOULD NOT be promoted
+   into a canonical suite set until a later slice chooses the canonical
+   provider or provider-selection rule for Markdown family contexts
 2. that later slice SHOULD define whether canonical Markdown review/default/
    replay uses one native provider identity, one substrate identity, or an
    explicit provider-selection rule that remains portable across hosts

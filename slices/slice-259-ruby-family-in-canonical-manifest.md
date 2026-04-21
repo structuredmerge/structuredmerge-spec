@@ -2,8 +2,9 @@
 
 ## Goal
 
-Admit the Ruby family into the canonical shared conformance manifest without
-yet promoting nested delegated Ruby behavior into the canonical suite set.
+Admit the base Ruby portable descriptor into the canonical shared conformance
+manifest without yet promoting nested delegated Ruby behavior into the canonical
+suite set.
 
 ## Contract
 
@@ -18,6 +19,6 @@ This slice defines one canonical-manifest widening contract:
 ## Notes
 
 - This slice widens the canonical manifest to the current non-nested portable
-  Ruby surface only.
+  Ruby descriptor only.
 - Nested delegated Ruby review/default/replay behavior remains family-scoped
   until a later slice promotes it explicitly.
