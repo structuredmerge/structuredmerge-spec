@@ -18,9 +18,9 @@ PROVIDERS = {
         "go": [Path("go/goldmarkmerge/fixtures_integration_test.go")],
         "rust": [Path("rust/crates/pulldown-cmark-merge/tests/fixtures.rs")],
         "ruby": [
-            Path("structuredmerge-ruby/gems/commonmarker-merge/spec/fixtures_integration_spec.rb"),
-            Path("structuredmerge-ruby/gems/kramdown-merge/spec/fixtures_integration_spec.rb"),
-            Path("structuredmerge-ruby/gems/markly-merge/spec/fixtures_integration_spec.rb"),
+            Path("ruby/gems/commonmarker-merge/spec/fixtures_integration_spec.rb"),
+            Path("ruby/gems/kramdown-merge/spec/fixtures_integration_spec.rb"),
+            Path("ruby/gems/markly-merge/spec/fixtures_integration_spec.rb"),
         ],
     },
     "toml_provider": {
@@ -28,15 +28,15 @@ PROVIDERS = {
         "go": [Path("go/pigeontomlmerge/fixtures_integration_test.go")],
         "rust": [Path("rust/crates/pest-toml-merge/tests/fixtures.rs")],
         "ruby": [
-            Path("structuredmerge-ruby/gems/citrus-toml-merge/spec/fixtures_integration_spec.rb"),
-            Path("structuredmerge-ruby/gems/parslet-toml-merge/spec/fixtures_integration_spec.rb"),
+            Path("ruby/gems/citrus-toml-merge/spec/fixtures_integration_spec.rb"),
+            Path("ruby/gems/parslet-toml-merge/spec/fixtures_integration_spec.rb"),
         ],
     },
     "yaml_provider": {
         "typescript": [Path("typescript/packages/js-yaml-merge/test/fixtures.integration.test.ts")],
         "go": [Path("go/goccygoyamlmerge/fixtures_integration_test.go")],
         "rust": [Path("rust/crates/yaml-serde-merge/tests/fixtures.rs")],
-        "ruby": [Path("structuredmerge-ruby/gems/psych-merge/spec/fixtures_integration_spec.rb")],
+        "ruby": [Path("ruby/gems/psych-merge/spec/fixtures_integration_spec.rb")],
     },
     "typescript_provider": {
         "typescript": [Path("typescript/packages/typescript-compiler-merge/test/fixtures.integration.test.ts")],
@@ -54,7 +54,7 @@ PROVIDERS = {
         "typescript": [],
         "go": [],
         "rust": [],
-        "ruby": [Path("structuredmerge-ruby/gems/prism-merge/spec/fixtures_integration_spec.rb")],
+        "ruby": [Path("ruby/gems/prism-merge/spec/fixtures_integration_spec.rb")],
     },
 }
 

@@ -49,7 +49,7 @@ HOSTS = {
         ],
     },
     "ruby": {
-        "path": Path("structuredmerge-ruby/gems/ast-merge/spec/fixtures_integration_spec.rb"),
+        "path": Path("ruby/gems/ast-merge/spec/fixtures_integration_spec.rb"),
         "key_patterns": [
             r'diagnostics_fixture\("([^"]+)"\)',
         ],
