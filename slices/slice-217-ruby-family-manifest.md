@@ -6,6 +6,7 @@ The initial Ruby family suite includes:
 
 - `analysis`
 - `matching`
+- `merge`
 - `discovered_surfaces`
 - `delegated_child_operations`
 

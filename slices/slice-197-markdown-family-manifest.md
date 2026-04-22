@@ -9,8 +9,8 @@ Expose the Markdown family through a dedicated conformance manifest.
 This slice defines one Markdown family manifest contract:
 
 1. the manifest exposes the Markdown family feature profile fixture,
-2. it maps the family roles `analysis` and `matching` to the shared Markdown
-   fixtures,
+2. it maps the family roles `analysis`, `matching`, and `merge` to the shared
+   Markdown fixtures,
 3. it MAY define one portable suite descriptor over those roles.
 
 ## Notes
