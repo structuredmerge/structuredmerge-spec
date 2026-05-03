@@ -11,7 +11,10 @@ This slice defines one shared CRISPR example parity-report surface:
 
 1. the report names the concrete example scenario being checked,
 2. the report records whether the scenario is reproduced,
-3. the report may carry implementation notes about remaining gaps.
+3. the report may carry implementation notes about remaining gaps,
+4. the report may distinguish reference-example parity from backend-specific
+   implementation details when multiple parsers can satisfy the same family
+   behavior.
 
 ## Notes
 
