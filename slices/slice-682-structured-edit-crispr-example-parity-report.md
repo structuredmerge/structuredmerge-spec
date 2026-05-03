@@ -19,4 +19,4 @@ This slice defines one shared CRISPR example parity-report surface:
 ## Notes
 
 - This slice provides an explicit migration target from legacy examples into
-  the new setup.
+  the new setup, including parser-plural Ruby and Markdown family parity.
