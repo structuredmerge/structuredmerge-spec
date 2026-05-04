@@ -1,4 +1,4 @@
-`ast-merge` MUST provide a delegated child apply-plan helper.
+# `ast-merge` MUST provide a delegated child apply-plan helper.
 
 Given:
 - a family name, and
