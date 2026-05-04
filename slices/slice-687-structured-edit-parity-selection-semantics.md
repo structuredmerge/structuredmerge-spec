@@ -9,11 +9,13 @@ parity scenarios.
 
 This slice defines one shared parity-selection semantics surface:
 
-1. a portable selection descriptor may state selector kind and family-level
-   intent,
+1. a structured edit request may carry a portable target-selection descriptor,
+2. the descriptor may state selector kind and family-level intent,
 2. the descriptor may capture comment-anchored and section-branch selection
    semantics without binding to a single parser backend,
-3. the descriptor is meant to reduce reliance on metadata-only parity notes.
+3. the descriptor is optional and does not change existing request shape when
+   absent,
+4. the descriptor is meant to reduce reliance on metadata-only parity notes.
 
 ## Notes
 
