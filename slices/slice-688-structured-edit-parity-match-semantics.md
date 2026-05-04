@@ -9,11 +9,13 @@ scenarios.
 
 This slice defines one shared parity-match semantics surface:
 
-1. a portable match descriptor may state family-level start and end boundary
-   intent,
-2. the descriptor may capture comment-owned and section-branch payload
+1. a structured edit request may carry a portable target-match descriptor,
+2. the descriptor may state family-level start and end boundary intent,
+3. the descriptor may capture comment-owned and section-branch payload
    semantics without binding to a single parser backend,
-3. the descriptor is meant to reduce reliance on metadata-only parity notes.
+4. the descriptor is optional and does not change existing request shape when
+   absent,
+5. the descriptor is meant to reduce reliance on metadata-only parity notes.
 
 ## Notes
 
