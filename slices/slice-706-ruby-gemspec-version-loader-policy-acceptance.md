@@ -14,7 +14,7 @@ This slice covers single-file version-loader policy:
    `Kernel.load` expression directly into `spec.version`,
 3. older Ruby floors keep or insert a `gem_version` preamble and set
    `spec.version = gem_version`,
-4. project identity and runtime context derivation remain wrapper
+4. package identity and runtime context derivation remain wrapper
    responsibilities.
 
 ## Notes

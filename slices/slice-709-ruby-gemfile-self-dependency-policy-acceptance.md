@@ -10,18 +10,18 @@ dependency declarations that would make a gem depend on itself.
 This slice covers single-file self-dependency cleanup for Gemfile-like Ruby
 source:
 
-1. project identity is supplied by wrapper-provided `project_facts`,
+1. package identity is supplied by wrapper-provided `facts`,
 2. active `gem` calls whose first argument matches the supplied gem name are
    deleted across top-level and nested Ruby contexts,
 3. commented dependency examples and unrelated dependency declarations are
    preserved,
-4. native policy execution fails closed with `configuration_error` when project
+4. native policy execution fails closed with `configuration_error` when package
    identity is missing,
-5. project identity derivation remains a wrapper responsibility.
+5. package identity derivation remains a wrapper responsibility.
 
 ## Notes
 
 - This slice uses canonical `delete` semantics. It does not introduce a
   `remove` operation alias.
-- Native tools own deterministic deletion once a wrapper supplies project
+- Native tools own deterministic deletion once a wrapper supplies package
   identity; wrappers own discovery of that identity.
