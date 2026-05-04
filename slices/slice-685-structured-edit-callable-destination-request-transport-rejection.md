@@ -1,8 +1,8 @@
-# Slice 685: Structured Edit Callable Destination Request Transport Rejection
+# Slice 685: Structured Edit Request Transport Rejection
 
 ## Goal
 
-Standardize rejection for unsupported callable-destination request envelopes.
+Standardize rejection for unsupported structured edit request envelopes.
 
 ## Shared Behavior
 
@@ -14,4 +14,5 @@ This slice defines one shared rejection surface:
 
 ## Notes
 
-- This slice hardens the transport layer introduced in slice 684.
+- This slice hardens the generic request transport layer introduced in slice
+  684.
