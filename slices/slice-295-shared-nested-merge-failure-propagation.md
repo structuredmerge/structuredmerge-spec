@@ -1,3 +1,5 @@
+# Slice 295: Shared Nested Merge Failure Propagation
+
 `ast-merge` shared nested-merge execution MUST preserve failure boundaries from
 the orchestration stages.
 

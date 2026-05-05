@@ -1,3 +1,5 @@
+# Slice 245: Ruby Delegated Child Apply Plan
+
 `ruby-merge` MUST apply the shared delegated child apply-plan helper to
 accepted delegated child groups discovered from Ruby documentation surfaces,
 such as YARD `@example` blocks.

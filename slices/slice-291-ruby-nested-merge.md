@@ -1,3 +1,5 @@
+# Slice 291: Ruby Nested Merge
+
 `ruby-merge` MUST support an end-to-end nested merge that combines:
 
 - baseline parent Ruby merge, and

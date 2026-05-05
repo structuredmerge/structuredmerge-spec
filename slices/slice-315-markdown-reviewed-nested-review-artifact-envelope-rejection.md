@@ -1,3 +1,5 @@
+# Slice 315: Markdown Reviewed Nested Review Artifact Envelope Rejection
+
 `markdown-merge` MUST reject reviewed nested review artifact envelopes whose
 transport identity does not match the expected review artifact kind or version.
 

@@ -1,3 +1,5 @@
+# Slice 299: Ruby Reviewed Nested Merge
+
 `ruby-merge` MUST provide a reviewed nested-merge entrypoint that consumes:
 
 - parent template Ruby source,

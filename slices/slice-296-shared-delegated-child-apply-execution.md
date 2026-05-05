@@ -1,3 +1,5 @@
+# Slice 296: Shared Delegated Child Apply Execution
+
 `ast-merge` MUST provide a shared delegated-child apply execution helper that
 consumes:
 
