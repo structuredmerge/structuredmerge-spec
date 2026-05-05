@@ -1,3 +1,5 @@
+# Slice 289: Ruby Delegated Child Apply Output
+
 `ruby-merge` MUST reconstruct Ruby source from accepted delegated child
 outputs.
 

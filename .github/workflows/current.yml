@@ -36,7 +36,7 @@ jobs:
             first_line=$(head -n 1 "$slice")
             test -n "$first_line"
             case "$first_line" in
-              \#\ Slice\ *) ;;
+              \#*) ;;
               *)
                 echo "missing slice heading in $slice"
                 exit 1

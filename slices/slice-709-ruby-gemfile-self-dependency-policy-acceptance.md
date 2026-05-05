@@ -24,5 +24,5 @@ files:
 
 - This slice uses canonical `delete` semantics. It does not introduce a
   `remove` operation alias.
-- Wrapper orchestration still decides which Gemfile-like paths receive this
-  policy.
+- Native tools own deterministic deletion once wrappers supply project
+  identity; wrappers own identity discovery and path selection.

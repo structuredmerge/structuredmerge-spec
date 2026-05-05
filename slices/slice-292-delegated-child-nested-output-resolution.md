@@ -1,3 +1,5 @@
+# Slice 292: Delegated Child Nested Output Resolution
+
 `ast-merge` MUST resolve nested child outputs keyed by delegated child surface
 address into:
 

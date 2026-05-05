@@ -23,5 +23,5 @@ This slice covers single-file self-dependency cleanup for Ruby Appraisals files:
 
 - This slice uses canonical `delete` semantics. It does not introduce a
   `remove` operation alias.
-- Wrapper orchestration still decides which Appraisals-like paths receive this
-  policy.
+- Native tools own deterministic deletion once wrappers supply project
+  identity; wrappers own identity discovery and Appraisals path selection.

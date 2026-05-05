@@ -1,22 +1,22 @@
-# Slice 707: Project Facts Runtime Context
+# Slice 707: Runtime Facts Context
 
 ## Goal
 
-Define a provider-neutral runtime-context handoff for project facts supplied by
-wrappers, so native content recipe policies can consume resolver and project
+Define a provider-neutral runtime-context handoff for runtime facts supplied by
+wrappers, so native content recipe policies can consume resolver and external
 metadata without owning discovery.
 
 ## Shared Behavior
 
 This slice covers external fact handoff for native policies:
 
-1. wrappers may provide a `project_facts` object in `runtime_context`,
+1. wrappers may provide a `facts` object in `runtime_context`,
 2. each fact has a stable `fact_id`, `subject_kind`, `subject`, `value`,
    `source`, and `confidence`,
 3. native policies may consume supplied facts deterministically,
 4. native policies fail closed with `configuration_error` when a required fact
    is missing,
-5. fact discovery, resolver execution, and project metadata derivation remain
+5. fact discovery, resolver execution, and external metadata derivation remain
    wrapper responsibilities.
 
 ## Notes

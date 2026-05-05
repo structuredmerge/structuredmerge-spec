@@ -1,3 +1,5 @@
+# Slice 293: Delegated Child Nested Output Rejection
+
 `ast-merge` MUST reject nested child outputs that reference a delegated child
 surface address that does not exist in the current delegated child operations.
 

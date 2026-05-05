@@ -1,3 +1,5 @@
+# Slice 312: Ruby Reviewed Nested Review Artifact Rejection
+
 `ruby-merge` MUST reject reviewed nested review artifacts that do not carry a
 reviewed nested execution payload for `ruby`.
 

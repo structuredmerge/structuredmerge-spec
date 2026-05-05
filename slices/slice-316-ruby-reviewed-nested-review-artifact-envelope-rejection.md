@@ -1,3 +1,5 @@
+# Slice 316: Ruby Reviewed Nested Review Artifact Envelope Rejection
+
 `ruby-merge` MUST reject reviewed nested review artifact envelopes whose
 transport identity does not match the expected review artifact kind or version.
 

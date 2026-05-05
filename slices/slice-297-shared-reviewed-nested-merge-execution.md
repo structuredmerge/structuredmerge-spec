@@ -1,3 +1,5 @@
+# Slice 297: Shared Reviewed Nested Merge Execution
+
 `ast-merge` MUST provide a shared reviewed nested-merge execution helper that
 consumes delegated child review state instead of raw nested child outputs.
 

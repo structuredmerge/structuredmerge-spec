@@ -1,3 +1,5 @@
+# Slice 294: Shared Nested Merge Execution
+
 `ast-merge` MUST provide a shared nested-merge execution helper that
 orchestrates:
 

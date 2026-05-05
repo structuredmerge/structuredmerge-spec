@@ -22,4 +22,5 @@ This slice covers single-file Ruby-version appraisal pruning:
 
 - This slice uses canonical `delete` semantics. It does not introduce a
   `remove` operation alias.
-- Wrapper orchestration still decides how `min_ruby` is derived.
+- Native tools own version comparison and deterministic deletion once wrappers
+  supply `min_ruby`; wrappers own minimum Ruby discovery.

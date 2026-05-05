@@ -1,3 +1,5 @@
+# Slice 288: Markdown Delegated Child Apply Output
+
 `markdown-merge` MUST reconstruct Markdown source from accepted delegated child
 outputs.
 

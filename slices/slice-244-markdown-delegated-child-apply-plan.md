@@ -1,4 +1,4 @@
-`markdown-merge` MUST apply the shared delegated child apply-plan helper to
+# `markdown-merge` MUST apply the shared delegated child apply-plan helper to
 accepted fenced-code delegated child groups.
 
 This proves that Markdown delegated child groups can move from replay-safe

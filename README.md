@@ -1,51 +1,44 @@
-# Merge Spec Workspace
+# StructuredMerge Spec
 
-This directory is the working area for language-neutral merge specifications and
-cross-language conformance planning.
+Language-neutral specification work for StructuredMerge.
 
-Current intent:
+StructuredMerge defines portable rules, result shapes, diagnostics, and review/replay vocabulary for tools that merge structured documents. The spec is designed to be consumed by multiple peer implementations rather than owned by any one language runtime.
 
-- Treat [MERGE_RULESET_INFORMATIONAL_DRAFT_01.md](/home/pboling/src/kettle-rb/spec/MERGE_RULESET_INFORMATIONAL_DRAFT_01.md)
-  as the only active merge draft.
-- Use this directory for stable, implementation-facing summaries that help keep
-  Ruby, TypeScript, Rust, and Go implementations aligned.
-- Keep conformance fixtures language-neutral so each implementation can run the
-  same corpus.
+Project links:
 
-Initial files:
+- Website: <https://structuredmerge.org>
+- Spec summary: <https://structuredmerge.org/spec.html>
+- Conformance model: <https://structuredmerge.org/conformance.html>
+- Shared fixtures: <https://github.com/structuredmerge/structuredmerge-fixtures>
+- Launch implementations: [Go](https://github.com/structuredmerge/structuredmerge-go), [TypeScript](https://github.com/structuredmerge/structuredmerge-typescript), [Rust](https://github.com/structuredmerge/structuredmerge-rust), [Ruby](https://github.com/structuredmerge/structuredmerge-ruby)
 
-- `merge-lexicon.md` - portable terminology snapshot derived from the active draft
-- `conformance-matrix.md` - MVP capability matrix across language stacks
-- `slices/slice-01-foundation.md` - first shared cross-language implementation slice
-- `slices/slice-02-diagnostics-and-results.md` - portable diagnostic and result contract
-- `slices/slice-03-text-analysis.md` - planned text-analysis slice
-- `slices/slice-04-json-parse.md` - planned JSON and JSONC parse slice
-- `slices/slice-05-text-similarity.md` - planned text-similarity slice
-- `slices/slice-06-parser-adapters.md` - planned parser adapter contract slice
-- `slices/slice-07-json-structure.md` - planned JSON structural analysis slice
-- `slices/slice-08-json-owner-matching.md` - planned JSON owner matching slice
-- `slices/slice-09-json-merge-resolution.md` - planned JSON merge-resolution slice
-- `slices/slice-10-text-merge-resolution.md` - planned text merge-resolution slice
-- `slices/slice-11-text-block-matching.md` - planned text block matching slice
-- `slices/slice-12-text-match-driven-merge.md` - planned text match-driven merge slice
-- `slices/slice-132-backend-ownership-boundary.md` - backend hosting boundary between `tree-haver` and family libraries
-- `slices/slice-133-family-substrate-layer.md` - parser-agnostic family substrate seam
+## Core documents
 
-Non-goals for this directory:
+- `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — active informational draft for the merge ruleset vocabulary.
+- `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
+- `conformance-matrix.md` — current capability and alignment matrix across language implementations.
+- `IMPLEMENTATION_STATUS.md` — launch-readiness snapshot for the four peer implementation repos.
+- `LORA_MERGE.md` — secondary application note for merge-like workflows above specialized backends.
 
-- Replacing the active draft
-- Language-specific package planning
-- Templating/package-scaffold implementation details
+## Slices
 
-Tooling:
+The `slices/` directory breaks the contract into implementation-facing increments. Early slices cover foundation types, diagnostics/results, text analysis, JSON/JSONC parsing, similarity, parser adapters, structural analysis, owner matching, and merge resolution. Later slices capture backend and family substrate boundaries.
 
-- `tools/ast_merge_fixture_key_parity.py` - reports shared `ast-merge` diagnostic
-  fixture-key coverage across TypeScript, Go, Rust, and Ruby host tests.
-- `tools/family_package_fixture_key_parity.py` - reports family-package fixture
-  slice coverage across TypeScript, Go, Rust, and Ruby host tests.
-- `tools/provider_package_fixture_key_parity.py` - reports provider-package
-  fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
-- `tools/provider_matching_assertion_audit.py` - reports whether provider
-  matching-fixture tests assert unmatched paths as well as matched pairs.
-- `tools/provider_backend_override_audit.py` - reports whether provider
-  packages test unsupported backend override rejection across hosts.
+## Relationship to fixtures
+
+The spec names the vocabulary and expected shapes. The fixture corpus turns that vocabulary into runnable cases that each implementation can consume. A behavior is portable only when it can be expressed through the shared contract and exercised by shared fixtures.
+
+## Non-goals
+
+- Defining one universal merge algorithm.
+- Treating one language implementation as canonical.
+- Storing language-specific package planning here.
+- Replacing review with silent automatic conflict resolution.
+
+## Tooling
+
+- `tools/ast_merge_fixture_key_parity.py` — reports shared diagnostic fixture-key coverage across TypeScript, Go, Rust, and Ruby host tests.
+- `tools/family_package_fixture_key_parity.py` — reports family-package fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
+- `tools/provider_package_fixture_key_parity.py` — reports provider-package fixture slice coverage across TypeScript, Go, Rust, and Ruby host tests.
+- `tools/provider_matching_assertion_audit.py` — reports whether provider matching-fixture tests assert unmatched paths as well as matched pairs.
+- `tools/provider_backend_override_audit.py` — reports whether provider packages test unsupported backend override rejection across hosts.

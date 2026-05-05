@@ -1,3 +1,5 @@
+# Slice 298: Markdown Reviewed Nested Merge
+
 `markdown-merge` MUST provide a reviewed nested-merge entrypoint that consumes:
 
 - parent template Markdown source,
