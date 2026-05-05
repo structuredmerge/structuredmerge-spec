@@ -1,25 +1,26 @@
-# Slice 711: Ruby Appraisals Min-Ruby Prune Policy Acceptance
+# Slice 711: Ruby Appraisals Minimum Ruby Prune Policy Acceptance
 
 ## Goal
 
-Define provider-neutral native policy behavior for deleting Appraisals entries
-whose Ruby-version appraisal is below a supplied minimum Ruby version.
+Define provider-neutral native policy behavior for deleting Ruby-version
+Appraisals blocks that are below a supplied minimum Ruby version.
 
 ## Shared Behavior
 
-This slice covers deterministic Appraisals pruning:
+This slice covers single-file Ruby-version appraisal pruning:
 
-1. `min_ruby` is supplied by wrapper-provided runtime context,
-2. appraisal blocks whose names encode Ruby versions below `min_ruby` are
+1. `min_ruby` is supplied by wrapper/runtime context,
+2. `appraise` blocks named `ruby-X-Y` whose version is below `min_ruby` are
    deleted,
-3. non-Ruby-version appraisals and Ruby-version appraisals at or above
-   `min_ruby` are preserved,
-4. native policy execution fails closed with `configuration_error` when
-   `min_ruby` is missing,
-5. minimum Ruby discovery remains a wrapper responsibility.
+3. Ruby appraisal blocks at or above `min_ruby` are preserved,
+4. non-Ruby appraisal blocks are preserved,
+5. runs of excessive blank lines caused by pruning are normalized,
+6. native policy execution fails closed with `configuration_error` when
+   `min_ruby` is missing.
 
 ## Notes
 
-- This slice uses canonical `delete` semantics.
-- Native tools own version comparison and deterministic deletion after the
-  wrapper supplies `min_ruby`.
+- This slice uses canonical `delete` semantics. It does not introduce a
+  `remove` operation alias.
+- Native tools own version comparison and deterministic deletion once wrappers
+  supply `min_ruby`; wrappers own minimum Ruby discovery.

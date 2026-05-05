@@ -3,23 +3,25 @@
 ## Goal
 
 Define provider-neutral native policy behavior for deleting active Appraisals
-dependency declarations that would make a gem depend on itself.
+`gem` declarations that would make a project depend on itself.
 
 ## Shared Behavior
 
 This slice covers single-file self-dependency cleanup for Ruby Appraisals files:
 
-1. package identity is supplied by wrapper-provided `facts`,
-2. active `gem` calls inside `appraise` blocks whose first argument matches the
-   supplied gem name are deleted,
-3. unrelated appraisal blocks, unrelated dependencies, and comments are
-   preserved,
-4. native policy execution fails closed with `configuration_error` when package
-   identity is missing,
-5. package identity derivation remains a wrapper responsibility.
+1. project identity is supplied by wrapper-provided `project_facts`,
+2. active `gem` calls inside `appraise` block bodies whose first argument
+   matches the supplied gem name are deleted,
+3. multiple appraise blocks and multiple matching declarations in one block are
+   handled,
+4. appraisal comments, appraisal block structure, and unrelated gem
+   declarations are preserved,
+5. native policy execution fails closed with `configuration_error` when project
+   identity is missing.
 
 ## Notes
 
-- This slice uses canonical `delete` semantics.
-- Appraisals file discovery and package identity derivation remain wrapper
-  responsibilities.
+- This slice uses canonical `delete` semantics. It does not introduce a
+  `remove` operation alias.
+- Native tools own deterministic deletion once wrappers supply project
+  identity; wrappers own identity discovery and Appraisals path selection.
