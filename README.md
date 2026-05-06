@@ -16,8 +16,6 @@ Project links:
 
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — active informational draft for the merge ruleset vocabulary.
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
-- `conformance-matrix.md` — current capability and alignment matrix across language implementations.
-- `IMPLEMENTATION_STATUS.md` — launch-readiness snapshot for the four peer implementation repos.
 - `LORA_MERGE.md` — secondary application note for merge-like workflows above specialized backends.
 
 ## Slices
@@ -27,6 +25,13 @@ The `slices/` directory breaks the contract into implementation-facing increment
 ## Relationship to fixtures
 
 The spec names the vocabulary and expected shapes. The fixture corpus turns that vocabulary into runnable cases that each implementation can consume. A behavior is portable only when it can be expressed through the shared contract and exercised by shared fixtures.
+
+## Implementation Alignment
+
+Implementation status is represented by runnable fixture coverage, slice plans,
+and package tests in the implementation repositories. This repo should not carry
+a static product-status document; those documents age poorly and drift away from
+the actual product surfaces.
 
 ## Non-goals
 
