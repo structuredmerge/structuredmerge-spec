@@ -14,7 +14,7 @@ Secondary planning inputs:
 
 - `AST_MERGE_SPEC_ALIGNMENT_TODOS.md`
 - `REMOVAL_MODE.md`
-- `LICENSE_TEMPLATE_PLAN.md`
+- `LICENSE planning notes` (for downstream packaging/licensing context)
 
 ## Core Terms
 
