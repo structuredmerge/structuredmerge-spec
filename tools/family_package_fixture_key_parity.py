@@ -20,10 +20,10 @@ FAMILIES = {
         "ruby": Path("ruby/gems/tree_haver/spec/fixtures_integration_spec.rb"),
     },
     "text": {
-        "typescript": Path("typescript/packages/text-merge/test/fixtures.integration.test.ts"),
-        "go": Path("go/textmerge/fixtures_integration_test.go"),
-        "rust": Path("rust/crates/text-merge/tests/fixtures.rs"),
-        "ruby": Path("ruby/gems/text-merge/spec/fixtures_integration_spec.rb"),
+        "typescript": Path("typescript/packages/plain-merge/test/fixtures.integration.test.ts"),
+        "go": Path("go/plainmerge/fixtures_integration_test.go"),
+        "rust": Path("rust/crates/plain-merge/tests/fixtures.rs"),
+        "ruby": Path("ruby/gems/plain-merge/spec/fixtures_integration_spec.rb"),
     },
     "json": {
         "typescript": Path("typescript/packages/json-merge/test/fixtures.integration.test.ts"),

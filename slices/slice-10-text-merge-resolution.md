@@ -2,18 +2,18 @@
 
 ## Goal
 
-Define the first end-to-end text merge-resolution contract.
+Define the first end-to-end plain text merge-resolution contract.
 
 ## Planned Scope
 
-- blockwise merge over slice-03 text analysis
+- blockwise merge over slice-03 plain text analysis
 - destination-wins behavior for aligned blocks
 - preservation of trailing unmatched blocks
 - deterministic rendered output for fixture comparison
 
 ## Shared Behavior
 
-This slice defines a deliberately small text merge rule:
+This slice defines a deliberately small plain text merge rule:
 
 1. analyze template and destination into normalized blocks
 2. align blocks by position

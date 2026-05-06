@@ -16,7 +16,7 @@ Included:
 - package/crate/module placeholders for:
   - tree-sitter adapter
   - merge core
-  - text merge
+  - plain text merge
   - JSON merge
 - placeholder exported surface for each package
 
@@ -34,7 +34,7 @@ Every language family should agree on the same first four library boundaries:
 
 1. `tree-haver`
 2. `ast-merge`
-3. `text-merge`
+3. `plain-merge`
 4. `json-merge`
 
 This slice succeeds when all three language families:

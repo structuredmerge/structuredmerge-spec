@@ -11,7 +11,7 @@ without weakening exact-match semantics.
 - run one greedy refinement pass only on unmatched blocks
 - compute refined scores from content, length, and relative-position similarity
 - keep exact and refined matches distinct in the observable result
-- drive text merge from the combined exact-plus-refined match set
+- drive plain text merge from the combined exact-plus-refined match set
 
 ## Shared Behavior
 

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Replace positional text merge with a merge rule driven by validated block
+Replace positional plain text merge with a merge rule driven by validated block
 matching.
 
 ## Planned Scope
@@ -14,7 +14,7 @@ matching.
 
 ## Shared Behavior
 
-This slice defines a match-driven text merge rule:
+This slice defines a match-driven plain text merge rule:
 
 1. match blocks using slice-11 exact normalized matching
 2. emit destination blocks in destination order

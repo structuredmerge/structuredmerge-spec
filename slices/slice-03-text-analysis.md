@@ -32,6 +32,6 @@ language implementations should be able to reproduce.
 
 ## Intended Outputs
 
-- portable text analysis type in all three language families
+- portable plain text analysis type in all three language families
 - first real fixture-driven behavior beyond placeholder contracts
 - deterministic block analysis from identical input in all languages

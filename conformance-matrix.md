@@ -9,18 +9,18 @@ stack. It is intentionally smaller than the full Ruby surface area.
 |---|---|---|---|---|
 | Shared diagnostic/result contracts | Existing | Slice 02 | Slice 02 | Slice 02 |
 | Tree-sitter runtime wrapper | Existing | Planned | Planned | Planned |
-| Text analysis contract | Existing | Slice 03 | Slice 03 | Slice 03 |
+| Plain text analysis contract | Existing | Slice 03 | Slice 03 | Slice 03 |
 | JSON and JSONC parse contract | Existing | Slice 04 | Slice 04 | Slice 04 |
 | Text similarity contract | Existing | Slice 05 | Slice 05 | Slice 05 |
 | Parser adapter contract | Existing | Slice 06 | Slice 06 | Slice 06 |
 | JSON structural analysis contract | Existing | Slice 07 | Slice 07 | Slice 07 |
 | JSON owner matching contract | Existing | Slice 08 | Slice 08 | Slice 08 |
 | JSON merge-resolution contract | Existing | Slice 09 | Slice 09 | Slice 09 |
-| Text merge-resolution contract | Existing | Slice 10 | Slice 10 | Slice 10 |
+| Plain text merge-resolution contract | Existing | Slice 10 | Slice 10 | Slice 10 |
 | Text block matching contract | Existing | Slice 11 | Slice 11 | Slice 11 |
 | Text match-driven merge contract | Existing | Slice 12 | Slice 12 | Slice 12 |
 | Text content-refined matching contract | Existing | Slice 13 | Slice 13 | Slice 13 |
-| Text analysis and merge | Existing | MVP target | MVP target | MVP target |
+| Plain text analysis and merge | Existing | MVP target | MVP target | MVP target |
 | JSON merge | Existing | MVP target | MVP target | MVP target |
 | JSONC comments | Existing | MVP target | MVP target | MVP target |
 | Strict handling of trailing commas | Existing | MVP target | MVP target | MVP target |
@@ -62,14 +62,14 @@ All implementations should eventually share:
 
 - Slice 01: foundation and monorepo shape
 - Slice 02: diagnostic and result contracts
-- Slice 03: text analysis contracts
+- Slice 03: plain text analysis contracts
 - Slice 04: JSON and JSONC parse contracts
 - Slice 05: text similarity contracts
 - Slice 06: parser adapter contracts
 - Slice 07: JSON structural analysis contracts
 - Slice 08: JSON owner matching contracts
 - Slice 09: JSON merge-resolution contracts
-- Slice 10: text merge-resolution contracts
+- Slice 10: plain text merge-resolution contracts
 - Slice 11: text block matching contracts
 - Slice 12: text match-driven merge contracts
 - Slice 13: text content-refined matching contracts

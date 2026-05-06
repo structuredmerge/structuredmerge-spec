@@ -22,7 +22,7 @@ Project links:
 
 ## Slices
 
-The `slices/` directory breaks the contract into implementation-facing increments. Early slices cover foundation types, diagnostics/results, text analysis, JSON/JSONC parsing, similarity, parser adapters, structural analysis, owner matching, and merge resolution. Later slices capture backend and family substrate boundaries.
+The `slices/` directory breaks the contract into implementation-facing increments. Early slices cover foundation types, diagnostics/results, plain text analysis, JSON/JSONC parsing, similarity, parser adapters, structural analysis, owner matching, and merge resolution. Later slices capture backend and family substrate boundaries.
 
 ## Relationship to fixtures
 
