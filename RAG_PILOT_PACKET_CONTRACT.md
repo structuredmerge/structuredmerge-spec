@@ -51,6 +51,7 @@ The initial deliverables are:
 - `upserts_jsonl`: chunks that should be embedded or re-embedded,
 - `deletes_jsonl`: stale chunk IDs that should be removed,
 - `ingest_report`: report metadata.
+- `rag_pilot_packet`: artifact metadata for the packet itself, when materialized.
 
 Each JSONL deliverable should include:
 
@@ -67,6 +68,10 @@ Each JSONL deliverable should include:
 
 Empty streams may have `available: false` when no artifact was materialized, but
 they should still report `line_count` and `byte_size`.
+
+The `rag_pilot_packet` deliverable should include its `artifact_id`,
+`content_hash`, `byte_size`, and `available` flag so customers can verify the
+packet artifact they received.
 
 ## Adapter Handoff
 
