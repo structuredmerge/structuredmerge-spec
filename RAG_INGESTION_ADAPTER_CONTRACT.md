@@ -177,6 +177,16 @@ A vector-store adapter SHOULD:
 
 The adapter SHOULD NOT re-embed chunks listed only in `touched`.
 
+## Initial Adapter Targets
+
+The generic JSONL target is the default adapter target. It uses
+`upserts_jsonl`, `deletes_jsonl`, chunk `id`, chunk `text`, and metadata fields
+already present in chunk rows.
+
+The first concrete database target is pgvector/PostgreSQL. Producers SHOULD
+describe pgvector table and column names in the pilot packet, but they are not
+required to connect to PostgreSQL or write embeddings directly.
+
 ## Audit Expectations
 
 The hosted control plane SHOULD retain:

@@ -81,16 +81,52 @@ The first adapter handoff shape is:
 
 ```json
 {
+  "default_target": "generic_jsonl",
   "upsert_source": "deliverables.upserts_jsonl",
   "delete_source": "deliverables.deletes_jsonl",
   "stable_id_field": "id",
   "text_field": "text",
-  "skip_touched_chunks": true
+  "skip_touched_chunks": true,
+  "targets": {}
 }
 ```
 
 Adapters should embed rows from `upserts_jsonl`, delete IDs from
 `deletes_jsonl`, and avoid re-embedding chunks that are only listed as touched.
+
+### `generic_jsonl`
+
+The default target is `generic_jsonl`. It describes source paths and row fields
+without assuming a vendor-specific vector database.
+
+```json
+{
+  "upsert_source": "deliverables.upserts_jsonl",
+  "delete_source": "deliverables.deletes_jsonl",
+  "delete_id_field": "id",
+  "upsert_id_field": "id",
+  "text_field": "text",
+  "metadata_fields": ["ordinal", "content_hash", "start_byte", "end_byte"]
+}
+```
+
+### `pgvector_postgres`
+
+The first concrete database target is `pgvector_postgres`. This is a handoff
+shape, not a requirement that the producer connect to PostgreSQL.
+
+```json
+{
+  "extension": "vector",
+  "table": "structuredmerge_chunks",
+  "id_column": "id",
+  "embedding_column": "embedding",
+  "text_column": "text",
+  "metadata_column": "metadata",
+  "delete_statement": "DELETE FROM structuredmerge_chunks WHERE id = ANY($1)",
+  "upsert_statement": "INSERT INTO structuredmerge_chunks (id, embedding, text, metadata) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, text = EXCLUDED.text, metadata = EXCLUDED.metadata"
+}
+```
 
 ## Relationship To Ingest Report
 
