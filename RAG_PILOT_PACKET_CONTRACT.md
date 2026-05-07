@@ -113,7 +113,8 @@ without assuming a vendor-specific vector database.
 ### `pgvector_postgres`
 
 The first concrete database target is `pgvector_postgres`. This is a handoff
-shape, not a requirement that the producer connect to PostgreSQL.
+shape, not a requirement that the producer connect to PostgreSQL. The detailed
+load-plan shape is `structuredmerge.pgvector_plan.v1`.
 
 ```json
 {
