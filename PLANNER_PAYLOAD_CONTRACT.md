@@ -84,6 +84,7 @@ not apply decisions from another account or from an unauthenticated context.
 - `conflict_count`
 - `diagnostic_count`
 - `chunk_count`
+- `change_count`
 - `metrics`
 - `valid`
 
