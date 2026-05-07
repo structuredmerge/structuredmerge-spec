@@ -54,6 +54,8 @@ The initial deliverables are:
 - `rag_pilot_packet`: artifact metadata for the packet itself, when materialized.
 - `rag_pilot_summary`: customer-readable Markdown summary artifact, when
   materialized.
+- `pgvector_plan`: pgvector SQL/load-plan metadata, when materialized.
+- `pgvector_queue`: pgvector-specific embedding queue JSONL, when materialized.
 
 Each JSONL deliverable should include:
 

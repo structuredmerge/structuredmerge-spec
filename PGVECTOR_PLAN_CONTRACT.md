@@ -46,9 +46,36 @@ Sources point back to the RAG pilot packet deliverables:
 ```json
 {
   "upserts_jsonl": "deliverables.upserts_jsonl",
-  "deletes_jsonl": "deliverables.deletes_jsonl"
+  "deletes_jsonl": "deliverables.deletes_jsonl",
+  "pgvector_queue": "deliverables.pgvector_queue"
 }
 ```
+
+## Queue Rows
+
+`pgvector_queue` is JSONL. Each row is ready for an embedding service to consume:
+
+```json
+{
+  "id": "chunk:0:sha256:...",
+  "text": "chunk text",
+  "content_hash": "sha256:...",
+  "metadata": {
+    "ordinal": 0,
+    "content_hash": "sha256:...",
+    "start_byte": 0,
+    "end_byte": 12
+  }
+}
+```
+
+After embedding, the service should bind:
+
+- `$1`: `id`
+- `$2`: generated embedding vector
+- `$3`: `text`
+- `$4`: `metadata`
+- `$5`: `content_hash`
 
 ## Embedding Boundary
 
