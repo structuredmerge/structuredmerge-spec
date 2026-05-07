@@ -16,6 +16,7 @@ owns model selection and vector generation.
   "table": "structuredmerge_chunks",
   "extension": "vector",
   "setup_sql": [],
+  "indexing": {},
   "delete_sql": "...",
   "upsert_sql": "...",
   "sources": {},
@@ -33,7 +34,19 @@ owns model selection and vector generation.
 - `CREATE EXTENSION IF NOT EXISTS vector`
 - table creation for chunk id, embedding, text, metadata, content hash, and
   update timestamp
-- an optional vector index suitable for the chosen distance operator
+
+Vector index creation is deferred until the embedding provider has chosen a
+fixed vector dimension. PostgreSQL can store variable-width `vector` values, but
+pgvector HNSW indexes need an indexed dimension. The initial plan therefore
+keeps writable table setup in `setup_sql` and exposes an index template in
+`indexing`:
+
+```json
+{
+  "status": "deferred_until_embedding_dimensions_known",
+  "template": "CREATE INDEX IF NOT EXISTS structuredmerge_chunks_embedding_idx ON structuredmerge_chunks USING hnsw ((embedding::vector({dimensions})) vector_cosine_ops)"
+}
+```
 
 `delete_sql` should delete removed chunk IDs before upserts.
 
