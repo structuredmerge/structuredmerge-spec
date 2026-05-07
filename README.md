@@ -18,6 +18,7 @@ Project links:
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
 - `LORA_MERGE.md` — secondary application note for merge-like workflows above specialized backends.
 - `RAG_INGESTION_ADAPTER_CONTRACT.md` — JSONL/delta/metric contract for stable RAG ingestion handoffs.
+- `RAG_PILOT_PACKET_CONTRACT.md` — v1 customer pilot packet for RAG ingestion deliverables.
 - `PLANNER_PAYLOAD_CONTRACT.md` — v1 payload contract for AI planners and future MCP bindings.
 - `PATCH_ARTIFACT_CONTRACT.md` — v1 patch artifact contract for non-mutating apply results.
 

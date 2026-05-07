@@ -1,0 +1,92 @@
+# RAG Pilot Packet Contract
+
+`structuredmerge.rag_pilot_packet.v1` is the customer-facing packet for a RAG
+ingestion pilot. It packages the stable-ingestion result, vector-store JSONL
+deliverables, artifact verification, and adapter handoff instructions into one
+auditable object.
+
+## Shape
+
+```json
+{
+  "schema": "structuredmerge.rag_pilot_packet.v1",
+  "job": {},
+  "summary": {},
+  "metrics": {},
+  "manifest": {},
+  "deliverables": {},
+  "adapter_handoff": {},
+  "artifact_verification": {}
+}
+```
+
+Fields:
+
+- `schema`: literal contract identifier.
+- `job`: compact job identity, status, account, operation, hashes, and
+  timestamps.
+- `summary`: small pilot-facing metrics for executive and operator review.
+- `metrics`: full ingest metrics from the RAG ingestion adapter contract.
+- `manifest`: chunk delta manifest from the ingest result.
+- `deliverables`: JSONL streams and report metadata available to the customer.
+- `adapter_handoff`: field and source names a vector-store adapter should use.
+- `artifact_verification`: hash/size verification for stored artifacts.
+
+## Summary
+
+The summary should include:
+
+- `chunk_count`
+- `unchanged_chunk_percentage`
+- `embedding_invalidation_count`
+- `requires_reembedding`
+
+`requires_reembedding` is true when the invalidation count is greater than zero.
+
+## Deliverables
+
+The initial deliverables are:
+
+- `chunks_jsonl`: every stable chunk,
+- `upserts_jsonl`: chunks that should be embedded or re-embedded,
+- `deletes_jsonl`: stale chunk IDs that should be removed,
+- `ingest_report`: report metadata.
+
+Each JSONL deliverable should include:
+
+```json
+{
+  "kind": "upserts_jsonl",
+  "artifact_id": "uuid",
+  "content_hash": "sha256:...",
+  "line_count": 2,
+  "byte_size": 200,
+  "available": true
+}
+```
+
+Empty streams may have `available: false` when no artifact was materialized, but
+they should still report `line_count` and `byte_size`.
+
+## Adapter Handoff
+
+The first adapter handoff shape is:
+
+```json
+{
+  "upsert_source": "deliverables.upserts_jsonl",
+  "delete_source": "deliverables.deletes_jsonl",
+  "stable_id_field": "id",
+  "text_field": "text",
+  "skip_touched_chunks": true
+}
+```
+
+Adapters should embed rows from `upserts_jsonl`, delete IDs from
+`deletes_jsonl`, and avoid re-embedding chunks that are only listed as touched.
+
+## Relationship To Ingest Report
+
+The ingest report is a technical report for one ingest job. The RAG pilot packet
+is the customer/pilot handoff wrapper around that report plus artifact metadata
+and adapter instructions.
