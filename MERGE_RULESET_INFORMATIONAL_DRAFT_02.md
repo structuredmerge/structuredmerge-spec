@@ -144,13 +144,17 @@ Common node roles include:
 - `comment`
 - `delimiter`
 - `separator`
-- `synthetic`
+- `virtual`
 - `error`
 - `opaque`
 
 A node role describes how a node participates in ownership, matching,
 attachment, rendering, and fallback behavior. It does not require all parser
 backends to expose identical node classes.
+
+Implementations that already expose `synthetic` as a local term SHOULD map it
+to `virtual` at the portable ruleset boundary unless a profile explicitly
+declares a narrower meaning for `synthetic`.
 
 ### 5.1b Atomic Node
 
