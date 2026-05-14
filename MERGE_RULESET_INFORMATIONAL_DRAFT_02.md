@@ -511,6 +511,23 @@ one viable parser or source-analysis stack. The provider boundary SHOULD expose
 normalized tree, diagnostic, source-span, and render-support information rather
 than parser-private objects alone.
 
+When a provider internally retains parser-native objects for reparsing,
+incremental edit projection, source preservation, or backend-local rendering,
+those objects remain implementation detail. The portable surface is the
+normalized tree plus declared capabilities, diagnostics, and result metadata.
+
+Parser-specific information that is useful to downstream provider-aware tools
+MAY be transported as namespaced metadata on normalized nodes or related
+sidecar records. Generic ruleset interpretation and portable merge behavior
+MUST NOT depend on metadata whose namespace is not part of the declared portable
+contract. Such metadata is an opaque transport surface unless a family profile
+explicitly standardizes its meaning.
+
+Normalized tree nodes MAY therefore be progressively enhanced by parser
+capability. Unsupported optional node features SHOULD be represented by stable
+default values, `null` values, empty collections, or explicit unsupported-feature
+markers rather than by requiring a second parser-native tree shape.
+
 ### 5.14d.3 Native Parser Backend
 
 A provider backend that obtains syntax or semantic information from a parser
@@ -1418,6 +1435,8 @@ A conforming ruleset consumer:
 25. If an explicit backend requirement is present, a consumer **MUST NOT** silently use a different backend.
 26. If node-role, atomic-node, or child-group declarations are present, a consumer **MUST** either honor them or surface an unsupported-capability diagnostic.
 27. If source fragment retention or render strategy affects the observable merge result, a consumer **SHOULD** expose that capability through feature-profile or diagnostic reporting.
+28. If parser-specific node metadata is exposed, a consumer **MUST** treat namespaced metadata as opaque unless that namespace is part of the declared portable contract.
+29. A provider that retains parser-native objects internally **SHOULD** project portable parser value into the normalized tree surface rather than requiring downstream consumers to inspect parser-native object shapes.
 
 ## 13. Implementation and Adoption Considerations
 
