@@ -45,5 +45,9 @@ Ruby `kettle-jem` now:
 - excludes configured partial sections from default README preservation;
 - ships packaged example partials for its own README.
 
+The packaged `kettle-jem` partials carry the first pass of migrated tool docs:
+configuration shape, strategies, token substitution, freeze blocks, merge
+recipe routing, workflow options, runtime controls, and plugin registration.
+
 Other packages can use the same config shape to opt into managed README
 section bodies without losing the default safety of empty manual sections.
