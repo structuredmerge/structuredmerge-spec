@@ -1551,7 +1551,6 @@ prior-art-driven implementation direction explicit.
 
 Major changes include:
 
-- treating Draft 01 as a published baseline and Draft 02 as the active revision,
 - adding backend references, provider backends, native parser backends, and
   source-preserving backends to the vocabulary,
 - adding node roles, atomic nodes, signatures, and child groups as
@@ -1560,9 +1559,7 @@ Major changes include:
 - adding optional `backend`, `node_role`, `atomic`, `child_group`, and
   `render_strategy` directives,
 - clarifying that richer tree semantics do not require one mandated PCS,
-  change-set, or three-way tree-merge intermediate representation,
-- keeping executable names, package-manager symlinks, and git-driver attribute
-  names outside the merge ruleset specification.
+  change-set, or three-way tree-merge intermediate representation.
 
 ## Appendix A. Minimal Ruleset Grammar
 
