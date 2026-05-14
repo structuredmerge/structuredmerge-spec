@@ -14,7 +14,8 @@ Project links:
 
 ## Core documents
 
-- `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — active informational draft for the merge ruleset vocabulary.
+- `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md` — active informational draft for the merge ruleset vocabulary.
+- `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — published baseline retained for stable reference.
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
 - `LORA_MERGE.md` — secondary application note for merge-like workflows above specialized backends.
 - `RAG_INGESTION_ADAPTER_CONTRACT.md` — JSONL/delta/metric contract for stable RAG ingestion handoffs.

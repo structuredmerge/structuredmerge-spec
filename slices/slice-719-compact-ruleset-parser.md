@@ -10,7 +10,7 @@ are not the canonical ruleset syntax described by the draft.
 ## Contract
 
 Each core `ast-merge` implementation should parse compact ruleset files that use
-the syntax described in `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md`, Appendix A.
+the syntax described in `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md`, Appendix A.
 
 The initial parser contract is intentionally small:
 

@@ -1,14 +1,14 @@
 # Merge Lexicon
 
 This file is a practical lexicon snapshot for implementation work. It is not a
-replacement for `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md`; it is a short,
+replacement for `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md`; it is a short,
 implementation-oriented bridge document derived from it.
 
 ## Source Of Truth
 
 Primary source:
 
-- `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md`
+- `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md`
 
 Secondary planning inputs:
 
