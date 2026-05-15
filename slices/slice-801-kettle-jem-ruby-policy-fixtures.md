@@ -55,10 +55,9 @@ The active Ruby `kettle-jem` runner already has partial coverage:
 - Appraisals templates merge `appraise` blocks by name, preserve
   destination-only blocks, remove active package self-dependencies, and prune
   `ruby-X-Y` blocks below the gemspec minimum Ruby floor.
-
-The following fixture expectation remains implementation work:
-
-- Machine-readable per-step reports for these policy operations.
+- Recipe step reports include `ruby_template_policy` metadata describing the
+  policy operations applied for Gemfile, gemspec, and Appraisals template
+  application.
 
 ## Porting Rule
 
