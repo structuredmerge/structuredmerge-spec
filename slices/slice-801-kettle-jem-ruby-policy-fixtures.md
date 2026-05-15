@@ -45,13 +45,13 @@ The active Ruby `kettle-jem` runner already has partial coverage:
 
 - Ruby-family template files route through `Kettle::Jem.merge_config_template_source`.
 - Gemfiles use the Ruby merge layer for declaration convergence.
+- Gemfile-like template output removes active package self-dependencies and old
+  `appraisal` conflict declarations after merge.
 - Gemspec templates preserve selected destination assignments and dependency
   lines.
 
 The following fixture expectations remain implementation work:
 
-- Kettle/Jem-level Gemfile cleanup for self-dependencies and old `appraisal`
-  conflicts during template application.
 - Appraisals-specific recipe policy for self-dependency and minimum-Ruby
   pruning in the active `kettle-jem` template path.
 - Gem specification receiver harmonization beyond `spec.` receiver lines.
