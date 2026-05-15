@@ -49,13 +49,15 @@ The active Ruby `kettle-jem` runner already has partial coverage:
   `appraisal` conflict declarations after merge.
 - Gemspec templates preserve selected destination assignments and dependency
   lines.
+- Gemspec preserved destination lines are normalized to the template block
+  receiver when the destination uses a different `Gem::Specification` block
+  parameter.
 - Appraisals templates merge `appraise` blocks by name, preserve
   destination-only blocks, remove active package self-dependencies, and prune
   `ruby-X-Y` blocks below the gemspec minimum Ruby floor.
 
-The following fixture expectations remain implementation work:
+The following fixture expectation remains implementation work:
 
-- Gem specification receiver harmonization beyond `spec.` receiver lines.
 - Machine-readable per-step reports for these policy operations.
 
 ## Porting Rule
