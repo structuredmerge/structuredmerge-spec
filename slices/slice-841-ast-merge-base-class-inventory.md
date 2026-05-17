@@ -7,23 +7,26 @@ StructuredMerge contracts before porting any class names or helpers.
 
 ## Contract
 
-The active substrate does not restore the old base-class hierarchy as portable
-API. The portable API is fixture suites, normalized tree/provider contracts,
-matching reports, structured edit requests, execution reports, profile
-promotion reports, and review/replay envelopes.
+The old Ruby base-class hierarchy is not a portable cross-language API, but it
+does contain format-neutral Ruby provider substrate needed by active provider
+gems. The portable API remains fixture suites, normalized tree/provider
+contracts, matching reports, structured edit requests, execution reports,
+profile promotion reports, and review/replay envelopes. Ruby provider packages
+may depend on restored `ast-merge` helper classes when those helpers prevent
+provider-local forks of merge orchestration, comments/layout handling, freeze
+directives, debug provenance, result tracking, and partial-template behavior.
 
 Classification:
 
-- old `Runtime`, `Ruleset`, unresolved/review-state support: replaced by active
+- old `Runtime`, `Ruleset`, unresolved/review-state support: keep active
   structured execution, compact ruleset, profile, review-state, and replay
-  fixtures;
+  contracts;
 - old `SmartMergerBase`, `ConflictResolverBase`, `FileAnalyzable`,
-  `MergeResultBase`, `EmitterBase`, and `NodeWrapperBase`: not portable
-  requirements; may be reintroduced only as Ruby adapter conveniences if a real
-  Ruby package needs them;
-- old `FreezeNodeBase`, `Freezable`, and `BlockDirective`: behavior belongs in
-  freeze/comment fixtures and adapters, not as a copied base class first;
+  `MergeResultBase`, `EmitterBase`, `NodeWrapperBase`, partial-template helpers,
+  match/refiner scaffolding, and debug helpers: restore as Ruby provider
+  substrate in active `ast-merge` where format-neutral;
+- old `FreezeNodeBase`, `Freezable`, and `BlockDirective`: restore shared Ruby
+  helpers only behind freeze/comment directive fixtures and provider use;
 - old `MergerConfig`: replaced by explicit request/profile/policy fields;
-- old `DebugLogger`: replaced by structured diagnostics and report artifacts;
 - old RSpec support: replaced by fixture conformance, with Ruby-only helpers
   allowed locally when useful.
