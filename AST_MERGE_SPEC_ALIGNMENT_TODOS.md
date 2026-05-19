@@ -225,18 +225,18 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Rename and move detection
 
-- [ ] Add a rename-detection policy profile that can use:
+- [x] Add a rename-detection policy profile that can use:
   - body hash with owner-name normalization;
   - structural hash;
   - token similarity;
   - parent/scope similarity;
   - backend-native move metadata when available.
-- [ ] Add fixtures for clean rename-only changes.
+- [x] Add fixtures for clean rename-only changes.
 - [ ] Add fixtures for rename-plus-edit conflicts when both sides rename or edit
   the same owner in incompatible ways.
 - [ ] Add fixtures for moving a method between containers while preserving
   destination ordering policy.
-- [ ] Keep rename/move detection as an explicit capability, not an implicit
+- [x] Keep rename/move detection as an explicit capability, not an implicit
   always-on behavior.
 
 ### Interstitial and layout merge
