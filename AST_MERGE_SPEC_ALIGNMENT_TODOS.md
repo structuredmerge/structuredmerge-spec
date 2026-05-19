@@ -241,8 +241,8 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Interstitial and layout merge
 
-- [ ] Define interstitial-region merge rules separately from owner merge rules.
-- [ ] Add fixtures for import/use/require ordering where both branches add
+- [x] Define interstitial-region merge rules separately from owner merge rules.
+- [x] Add fixtures for import/use/require ordering where both branches add
   imports in nearby positions.
 - [ ] Add fixtures for comments between functions, including comments that are:
   - attached to the preceding owner;
