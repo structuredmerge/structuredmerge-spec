@@ -285,8 +285,8 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Fallback floor
 
-- [ ] Define a cross-runtime fallback policy that is observable and reportable.
-- [ ] Add fallback triggers for:
+- [x] Define a cross-runtime fallback policy that is observable and reportable.
+- [x] Add fallback triggers for:
   - binary input;
   - unsupported parser or backend;
   - parser returns no structural owners for non-empty source;
