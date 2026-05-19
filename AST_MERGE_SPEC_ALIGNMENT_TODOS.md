@@ -448,22 +448,22 @@ The work should run as repeated convergence cycles:
 
 ### Ruby prior-art classification
 
-- [ ] Inventory active Ruby `ast-merge` substrate classes and classify each as:
+- [x] Inventory active Ruby `ast-merge` substrate classes and classify each as:
   - portable merge contract;
   - Ruby reference implementation helper;
   - Ruby test/contributor convenience;
   - historical compatibility surface;
   - candidate for future extraction.
-- [ ] Inventory active Ruby `tree_haver` substrate classes and classify each as:
+- [x] Inventory active Ruby `tree_haver` substrate classes and classify each as:
   - portable parser/backend contract;
   - Ruby backend adapter helper;
   - security/path-validation policy;
   - runtime-local backend selection convenience;
   - historical compatibility surface.
-- [ ] Compare active Ruby `ast-merge` and `tree_haver` against `reference/`
+- [x] Compare active Ruby `ast-merge` and `tree_haver` against `reference/`
   read-only prior art and record anything not yet promoted into the active
   structuredmerge Ruby gems.
-- [ ] Decide which old Ruby base classes remain normative reference
+- [x] Decide which old Ruby base classes remain normative reference
   implementations:
   - `SmartMergerBase`;
   - `ConflictResolverBase`;
@@ -474,7 +474,7 @@ The work should run as repeated convergence cycles:
   - `MatchRefinerBase`;
   - `DiffMapperBase`;
   - `PartialTemplateMergerBase`.
-- [ ] Decide which Ruby `ast-merge` modules should become portable contract
+- [x] Decide which Ruby `ast-merge` modules should become portable contract
   surfaces rather than Ruby-only helpers:
   - comments and attachment;
   - layout/gap ownership;
@@ -486,7 +486,7 @@ The work should run as repeated convergence cycles:
   - node typing;
   - match refinement;
   - healing/repair policy.
-- [ ] Record any Ruby-only naming that should not leak into portable APIs, such
+- [x] Record any Ruby-only naming that should not leak into portable APIs, such
   as `SmartMerger`, `FileAnalysis`, or old RSpec shared-example terminology.
 
 ### Ruby reference pass
@@ -521,9 +521,9 @@ The work should run as repeated convergence cycles:
 
 ### Portable contract extraction
 
-- [ ] Convert Ruby-proven behavior into fixture roles rather than prose-only
+- [x] Convert Ruby-proven behavior into fixture roles rather than prose-only
   expectations.
-- [ ] Add source-family fixture roles for:
+- [x] Add source-family fixture roles for:
   - `source_region_analysis`;
   - `source_owner_matching`;
   - `source_interstitial_merge`;
@@ -532,7 +532,7 @@ The work should run as repeated convergence cycles:
   - `source_post_merge_validation`;
   - `source_conflict_report`;
   - `source_merge_driver_report`.
-- [ ] Add tree-haver fixture roles for:
+- [x] Add tree-haver fixture roles for:
   - backend reference;
   - backend capability;
   - node/span/source-fragment contract;
@@ -540,7 +540,7 @@ The work should run as repeated convergence cycles:
   - parser error tolerance;
   - backend availability;
   - edit projection capability.
-- [ ] Add ast-merge fixture roles for:
+- [x] Add ast-merge fixture roles for:
   - merge session;
   - decision record;
   - diagnostic record;
