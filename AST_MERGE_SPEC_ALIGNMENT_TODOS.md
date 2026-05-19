@@ -232,7 +232,7 @@ ruleset, fixture, review, and multi-runtime model.
   - parent/scope similarity;
   - backend-native move metadata when available.
 - [x] Add fixtures for clean rename-only changes.
-- [ ] Add fixtures for rename-plus-edit conflicts when both sides rename or edit
+- [x] Add fixtures for rename-plus-edit conflicts when both sides rename or edit
   the same owner in incompatible ways.
 - [ ] Add fixtures for moving a method between containers while preserving
   destination ordering policy.
