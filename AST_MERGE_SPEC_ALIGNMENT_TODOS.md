@@ -671,8 +671,8 @@ These should not be extracted immediately unless the interface stabilizes, but t
 
 ## Downstream gem audit backlog
 
-- [ ] Audit each `*-merge` gem for behavior that should be replaced by named shared features.
-- [ ] Build a matrix for each downstream gem covering:
+- [x] Audit each `*-merge` gem for behavior that should be replaced by named shared features.
+- [x] Build a matrix for each downstream gem covering:
   - owner selector
   - match key
   - attachment strategy
@@ -680,7 +680,7 @@ These should not be extracted immediately unless the interface stabilizes, but t
   - layout awareness
   - logical-owner behavior
   - render/source-shaper family
-- [ ] Use that matrix to decide what belongs in:
+- [x] Use that matrix to decide what belongs in:
   - shared substrate
   - per-format adapters
   - future conformance fixtures
