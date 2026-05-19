@@ -194,7 +194,7 @@ ruleset, fixture, review, and multi-runtime model.
   - child group;
   - blank-line region;
   - attachment.
-- [ ] Add one source-family fixture where two branches add independent functions
+- [x] Add one source-family fixture where two branches add independent functions
   to the same textual area and the expected result is clean.
 - [x] Add one source-family fixture where two branches add independent methods
   inside the same class or impl block and the expected result is clean through a
