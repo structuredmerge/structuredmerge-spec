@@ -218,9 +218,9 @@ ruleset, fixture, review, and multi-runtime model.
   - repeated trait/impl-like containers;
   - same-name methods in different visibility or namespace sections;
   - macro-generated or DSL-generated source owners.
-- [ ] Define confidence levels for source-owner matching, such as exact,
+- [x] Define confidence levels for source-owner matching, such as exact,
   structural, content-hash, token-similar, and unresolved.
-- [ ] Ensure match confidence is reported through the same diagnostic/reporting
+- [x] Ensure match confidence is reported through the same diagnostic/reporting
   surface as other merge decisions.
 
 ### Rename and move detection
