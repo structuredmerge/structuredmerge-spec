@@ -326,7 +326,7 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Conflict rendering and diagnostics
 
-- [ ] Define a portable conflict-kind vocabulary for source merges:
+- [x] Define a portable conflict-kind vocabulary for source merges:
   - both modified;
   - both added;
   - modify/delete;
@@ -335,11 +335,11 @@ ruleset, fixture, review, and multi-runtime model.
   - order-sensitive sibling additions;
   - interstitial conflict;
   - validation failure.
-- [ ] Add conflict complexity or risk metadata when a backend can classify the
+- [x] Add conflict complexity or risk metadata when a backend can classify the
   conflict as text-only, syntax-level, semantic-risk, or unknown.
-- [ ] Support enhanced conflict metadata for humans while preserving standard
+- [x] Support enhanced conflict metadata for humans while preserving standard
   conflict-marker compatibility for tools that require it.
-- [ ] Add audit/report fields for:
+- [x] Add audit/report fields for:
   - owner identity;
   - owner kind;
   - strategy chosen;
@@ -347,7 +347,7 @@ ruleset, fixture, review, and multi-runtime model.
   - fallback reason;
   - validation warnings;
   - conflict kind and scope.
-- [ ] Ensure diagnostics are stable enough to be used by review-state and replay
+- [x] Ensure diagnostics are stable enough to be used by review-state and replay
   workflows.
 
 ### Formatter integration
