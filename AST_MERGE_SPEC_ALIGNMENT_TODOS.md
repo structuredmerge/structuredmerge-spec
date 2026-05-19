@@ -98,10 +98,10 @@ The guiding principle is:
 
 ### Shared layout behavior
 
-- [ ] Expand the `Ast::Merge::Layout` namespace to cover more of the recurring blank-line ownership rules currently implemented ad hoc in leaf gems.
-- [ ] Make layout-aware behavior explicit for formats that have layout meaning but no comment surface.
-- [ ] Add shared tests for comment-free but layout-aware formats.
-- [ ] Decide which whitespace equivalences, if any, belong to named layout policies (for example, treating whitespace-only lines as blank-line matches in some formats) instead of letting the generic engine silently normalize them.
+- [x] Expand the `Ast::Merge::Layout` namespace to cover more of the recurring blank-line ownership rules currently implemented ad hoc in leaf gems.
+- [x] Make layout-aware behavior explicit for formats that have layout meaning but no comment surface.
+- [x] Add shared tests for comment-free but layout-aware formats.
+- [x] Decide which whitespace equivalences, if any, belong to named layout policies (for example, treating whitespace-only lines as blank-line matches in some formats) instead of letting the generic engine silently normalize them.
 
 ### Shared logical-owner behavior
 
