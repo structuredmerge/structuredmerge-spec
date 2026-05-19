@@ -368,15 +368,15 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Mergiraf/PCS lessons
 
-- [ ] Preserve the option for finer AST-node merge profiles when owner-level merge
+- [x] Preserve the option for finer AST-node merge profiles when owner-level merge
   is too coarse.
-- [ ] Model PCS-like or successor-based child ordering as a possible backend
+- [x] Model PCS-like or successor-based child ordering as a possible backend
   strategy under a declared merge surface.
-- [ ] Add fixtures where expression-level or argument-level structured merge is
+- [x] Add fixtures where expression-level or argument-level structured merge is
   useful and owner-level fallback would be too blunt.
-- [ ] Add fixtures where AST-level reconstruction would be risky because
+- [x] Add fixtures where AST-level reconstruction would be risky because
   whitespace, comments, or conflict marker placement become ambiguous.
-- [ ] Keep the public contract at the ruleset/fixture level so implementations
+- [x] Keep the public contract at the ruleset/fixture level so implementations
   can choose entity-level, AST-level, line-level, or hybrid algorithms.
 
 ### VCS and tool integration
