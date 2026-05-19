@@ -168,6 +168,267 @@ The shared comment language is already one of the strongest pieces of alignment 
 - [x] Make `prism-merge` expose and assert a concrete shared feature profile.
 - [ ] Add terminology migration tests so old names are either rejected cleanly or supported temporarily through a compatibility layer.
 
+## Prior-art adoption backlog
+
+This backlog tracks the pieces we should absorb from Weave, Mergiraf, and
+related structured-merge work. The goal is not to clone any one architecture.
+The goal is to combine the strongest prior art with StructuredMerge's own
+ruleset, fixture, review, and multi-runtime model.
+
+### Source-region model
+
+- [ ] Define a portable source-region shape that can represent alternating:
+  - structural owner regions, such as functions, classes, methods, impl blocks,
+    object members, and module declarations;
+  - interstitial regions, such as imports, leading comments, blank-line gaps,
+    separators, and file headers/footers.
+- [ ] Add fixture cases proving that source-region extraction preserves:
+  - entity content;
+  - leading/trailing comments attached to an owner;
+  - blank-line ownership between sibling owners;
+  - file-header and file-footer regions;
+  - trailing newline state.
+- [ ] Decide how source-region identity maps to existing terms:
+  - logical owner;
+  - merge surface;
+  - child group;
+  - blank-line region;
+  - attachment.
+- [ ] Add one source-family fixture where two branches add independent functions
+  to the same textual area and the expected result is clean.
+- [ ] Add one source-family fixture where two branches add independent methods
+  inside the same class or impl block and the expected result is clean through a
+  child-group merge.
+- [ ] Add one source-family fixture where two branches touch the same owner body
+  and the expected result delegates to an intra-owner merge rather than a global
+  source-file conflict.
+
+### Matching and identity
+
+- [ ] Define a source-owner identity profile covering:
+  - owner kind;
+  - owner name;
+  - parent/container scope;
+  - backend-provided structural identity when available;
+  - content-derived fallback identity when structural identity is ambiguous.
+- [ ] Add duplicate-owner fixtures proving that repeated names are matched 1:1
+  with ordered cursors or an equivalent stable pairing model.
+- [ ] Add ambiguous-identity fixtures for:
+  - anonymous closures or lambdas;
+  - repeated trait/impl-like containers;
+  - same-name methods in different visibility or namespace sections;
+  - macro-generated or DSL-generated source owners.
+- [ ] Define confidence levels for source-owner matching, such as exact,
+  structural, content-hash, token-similar, and unresolved.
+- [ ] Ensure match confidence is reported through the same diagnostic/reporting
+  surface as other merge decisions.
+
+### Rename and move detection
+
+- [ ] Add a rename-detection policy profile that can use:
+  - body hash with owner-name normalization;
+  - structural hash;
+  - token similarity;
+  - parent/scope similarity;
+  - backend-native move metadata when available.
+- [ ] Add fixtures for clean rename-only changes.
+- [ ] Add fixtures for rename-plus-edit conflicts when both sides rename or edit
+  the same owner in incompatible ways.
+- [ ] Add fixtures for moving a method between containers while preserving
+  destination ordering policy.
+- [ ] Keep rename/move detection as an explicit capability, not an implicit
+  always-on behavior.
+
+### Interstitial and layout merge
+
+- [ ] Define interstitial-region merge rules separately from owner merge rules.
+- [ ] Add fixtures for import/use/require ordering where both branches add
+  imports in nearby positions.
+- [ ] Add fixtures for comments between functions, including comments that are:
+  - attached to the preceding owner;
+  - attached to the following owner;
+  - standalone interstitial content.
+- [ ] Add fixtures for blank-line-only changes where the merge must preserve the
+  declared owner of whitespace instead of normalizing globally.
+- [ ] Add fixtures for file-header and file-footer edits.
+- [ ] Decide when interstitial conflicts should be rendered as file-level
+  conflicts versus scoped conflicts around nearby owners.
+
+### Nested/container merge
+
+- [ ] Promote container member merging to a source-family child-group profile.
+- [ ] Add fixtures for:
+  - TypeScript class methods;
+  - Rust impl items;
+  - Go methods/functions grouped by receiver or file section;
+  - Ruby methods under visibility sections;
+  - object/map-like source constructs where order may or may not matter.
+- [ ] Declare which child groups are ordered, unordered, or policy-ordered.
+- [ ] Require commutative child-group behavior to be declared by ruleset or
+  family profile; do not infer commutativity from syntax alone.
+- [ ] Add scoped-conflict fixtures where only one child member conflicts inside a
+  larger clean container merge.
+
+### Non-commutative construct safety
+
+- [ ] Add negative fixtures for Python decorators proving that independent
+  decorator additions are not automatically clean unless a rule declares safe
+  ordering.
+- [ ] Add negative fixtures for TypeScript/JavaScript decorators and annotations
+  where order or stacking can affect behavior.
+- [ ] Add fixtures for ordered middleware, callback, before/after hook, and macro
+  stacks where syntactic adjacency is semantically meaningful.
+- [ ] Define a rule vocabulary for declared commutativity, left-preferred order,
+  right-preferred order, destination-order preservation, and conflict-on-order.
+- [ ] Ensure unsafe unordered merges produce diagnostics that explain the specific
+  order-sensitive construct.
+
+### Fallback floor
+
+- [ ] Define a cross-runtime fallback policy that is observable and reportable.
+- [ ] Add fallback triggers for:
+  - binary input;
+  - unsupported parser or backend;
+  - parser returns no structural owners for non-empty source;
+  - both branches create a file from an empty base;
+  - excessive duplicate identities;
+  - timeout or resource budget exceeded;
+  - backend diagnostics above the accepted severity threshold.
+- [ ] Add a "never worse than baseline" comparison mode for merge drivers:
+  compare structured output against the configured baseline merge and fall back
+  when structured output produces more or broader conflicts.
+- [ ] Define the baseline merge provider as a runtime integration point rather
+  than hardcoding `git merge-file` into portable semantics.
+- [ ] Add fixtures proving fallback activation is reported with reason, scope,
+  selected baseline, and whether any structured result was discarded.
+- [ ] Add negative fixtures proving fallback does not silently widen the merge
+  semantics for cases outside its declared scope.
+
+### Post-merge validation
+
+- [ ] Define a post-merge validation phase that is separate from merge planning
+  and rendering.
+- [ ] Add validation checks for:
+  - merged output reparses successfully when both inputs parsed successfully;
+  - all cleanly resolved owners appear in output;
+  - expected owner count does not drop unexpectedly;
+  - unchanged significant lines are not lost;
+  - branch-added significant lines are not lost;
+  - output length is within policy-defined sanity bounds;
+  - conflict-marker shape is compatible with the host VCS/tool.
+- [ ] Make every validation failure produce either:
+  - fallback to the configured baseline;
+  - a scoped conflict;
+  - a hard diagnostic failure.
+- [ ] Add fixtures for silent-data-loss prevention.
+- [ ] Add implementation hooks so validation can be strict in CI and more
+  permissive in exploratory tooling only when explicitly configured.
+
+### Conflict rendering and diagnostics
+
+- [ ] Define a portable conflict-kind vocabulary for source merges:
+  - both modified;
+  - both added;
+  - modify/delete;
+  - rename/rename;
+  - rename/modify;
+  - order-sensitive sibling additions;
+  - interstitial conflict;
+  - validation failure.
+- [ ] Add conflict complexity or risk metadata when a backend can classify the
+  conflict as text-only, syntax-level, semantic-risk, or unknown.
+- [ ] Support enhanced conflict metadata for humans while preserving standard
+  conflict-marker compatibility for tools that require it.
+- [ ] Add audit/report fields for:
+  - owner identity;
+  - owner kind;
+  - strategy chosen;
+  - match confidence;
+  - fallback reason;
+  - validation warnings;
+  - conflict kind and scope.
+- [ ] Ensure diagnostics are stable enough to be used by review-state and replay
+  workflows.
+
+### Formatter integration
+
+- [ ] Treat formatters as optional post-merge adapters, not as proof of semantic
+  correctness.
+- [ ] Add a formatter policy vocabulary:
+  - no formatter;
+  - validate-only;
+  - format-after-clean-merge;
+  - format-after-fallback;
+  - formatter failure is warning;
+  - formatter failure is hard error.
+- [ ] Add fixtures proving a formatter may repair whitespace without changing
+  ownership, conflict scope, or validation semantics.
+- [ ] Keep formatter execution outside portable fixture expectations unless the
+  fixture explicitly opts into a formatter profile.
+
+### Mergiraf/PCS lessons
+
+- [ ] Preserve the option for finer AST-node merge profiles when owner-level merge
+  is too coarse.
+- [ ] Model PCS-like or successor-based child ordering as a possible backend
+  strategy under a declared merge surface.
+- [ ] Add fixtures where expression-level or argument-level structured merge is
+  useful and owner-level fallback would be too blunt.
+- [ ] Add fixtures where AST-level reconstruction would be risky because
+  whitespace, comments, or conflict marker placement become ambiguous.
+- [ ] Keep the public contract at the ruleset/fixture level so implementations
+  can choose entity-level, AST-level, line-level, or hybrid algorithms.
+
+### VCS and tool integration
+
+- [ ] Define a merge-driver integration contract for Git.
+- [ ] Define a merge-tool integration contract for Jujutsu.
+- [ ] Support host-provided marker length and standard marker modes.
+- [ ] Support optional enhanced markers when the host can tolerate them.
+- [ ] Add audit artifact output for merge-driver runs.
+- [ ] Add timeout/resource-budget configuration that cannot silently hang a VCS
+  operation.
+- [ ] Add clear diagnostics for skipped structured merge, fallback activation,
+  and driver/tool invocation errors.
+
+### Multi-runtime implementation plan
+
+- [ ] Add source-region, fallback, validation, and conflict-report fixture roles
+  to the source-family manifests.
+- [ ] Implement the source-region model first in the runtime with the strongest
+  parser support, then port through Go, Rust, TypeScript, and Ruby with the same
+  fixtures.
+- [ ] Keep backend-specific tree-sitter, native-parser, and AST-library behavior
+  behind provider feature profiles.
+- [ ] Add conformance gates that distinguish:
+  - required portable behavior;
+  - backend-restricted behavior;
+  - experimental prior-art parity behavior;
+  - runtime-local integration behavior.
+- [ ] Add benchmark scenarios for false-conflict reduction without allowing
+  benchmark wins to bypass fallback and validation requirements.
+
+### Prior-art documentation
+
+- [ ] Add a short source-family prior-art note summarizing what is adopted from
+  Weave:
+  - owner/interstitial region model;
+  - explicit fallback floor;
+  - post-merge validation;
+  - confidence-scored matching;
+  - scoped nested container merge.
+- [ ] Add a short source-family prior-art note summarizing what is adopted from
+  Mergiraf:
+  - fine-grained AST matching as an optional profile;
+  - successor/PCS-style child ordering as a backend strategy;
+  - commutative parent handling only when declared;
+  - rendering and conflict-marker compatibility concerns.
+- [ ] Document explicit non-goals:
+  - do not make entity-level merge the only architecture;
+  - do not treat formatter output as semantic validation;
+  - do not mark order-sensitive constructs clean by default;
+  - do not hide fallback or validation failures.
+
 ## Things that may need to move out of `ast-merge`
 
 These should not be extracted immediately unless the interface stabilizes, but they are good candidates to avoid future bloat.
