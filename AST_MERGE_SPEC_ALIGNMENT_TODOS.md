@@ -44,13 +44,13 @@ The guiding principle is:
 
 ### Corruption-healing boundary
 
-- [ ] Define a separate corruption-healing layer that sits above core merge semantics and can be switched or configured independently.
+- [x] Define a separate corruption-healing layer that sits above core merge semantics and can be switched or configured independently.
 - [x] Introduce the first explicit healing policy seam in `prism-merge` for duplicate template-owned leading-prefix recovery, with `:heal`, `:warn`, `:error`, and `:skip` modes.
 - [x] Propagate the initial corruption policy through recursive body merges and partial-template merge entry points so nested merges respect the same handling mode.
 - [x] Extract the shared healing-policy contract into `ast-merge` as `Ast::Merge::Healer` so mode normalization and heal/warn/error/skip control flow are shared instead of reimplemented per merge gem.
 - [x] Extract the repeated overlap-filter control flow into `Ast::Merge::Healer.filter_items` so downstream gems can share the same conditional-heal filtering contract instead of cloning it at each call site.
 - [x] Gate removed-owner/orphan-rehoming overlap in `prism-merge` behind the same policy seam so comment-promotion cleanup does not silently define ownership semantics.
-- [ ] Classify current duplicate-collapse, dedup, rehoming, and ownership-repair logic as either:
+- [x] Classify current duplicate-collapse, dedup, rehoming, and ownership-repair logic as either:
   - normative merge behavior
   - corruption recovery for historical outputs
   - ambiguous cases that need explicit policy names
@@ -59,16 +59,16 @@ The guiding principle is:
   - `warn`
   - `error`
   - `skip`
-- [ ] Ensure the default shared runtime can operate without corruption healing for clean inputs and performance-sensitive callers.
-- [ ] Add tests that prove the same input can be handled under different corruption policies without changing the core structural analysis contract.
-- [ ] Make the no-generic-cleanup boundary explicit in shared behavior and specs: preserve owned oddities such as trailing spaces or whitespace-only lines unless a ruleset/format-specific merge policy explicitly defines a different equivalence or rendering rule.
+- [x] Ensure the default shared runtime can operate without corruption healing for clean inputs and performance-sensitive callers.
+- [x] Add tests that prove the same input can be handled under different corruption policies without changing the core structural analysis contract.
+- [x] Make the no-generic-cleanup boundary explicit in shared behavior and specs: preserve owned oddities such as trailing spaces or whitespace-only lines unless a ruleset/format-specific merge policy explicitly defines a different equivalence or rendering rule.
 - [x] Classify `prism-merge` postlude handling as analysis metadata rather than a live healing seam; current EOF/postlude preservation is structurally separate from the overlap-repair paths already gated.
 - [x] Classify final blank-line normalization as a real output-repair pass rather than a conservative no-op safety net; instrumentation shows it mutates runtime outputs, even though the current suite still passes when it is disabled.
 - [x] Remove the final blank-line normalization post-pass from `prism-merge` so spacing drift is no longer silently repaired after emission.
 - [x] Tighten permissive spacing specs to assert exact preserved blank-line runs where preference and ownership already determine the intended output.
 - [x] Fix destination-only sibling gap truncation in `prism-merge` so a node does not pre-emit one blank line from a repeated destination gap owned by the next sibling.
 - [x] Add regression coverage that destination-owned whitespace-only lines are preserved across node gaps, comment-only gaps, and EOF/postlude output instead of being normalized away.
-- [ ] Trace any remaining spacing drift back to leading-gap, trailing-gap, or orphan-gap ownership instead of reintroducing global cleanup.
+- [x] Trace any remaining spacing drift back to leading-gap, trailing-gap, or orphan-gap ownership instead of reintroducing global cleanup.
 
 ### Ruleset-driven merge declarations
 
