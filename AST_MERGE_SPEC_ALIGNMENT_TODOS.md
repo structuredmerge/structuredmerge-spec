@@ -429,6 +429,222 @@ ruleset, fixture, review, and multi-runtime model.
   - do not mark order-sensitive constructs clean by default;
   - do not hide fallback or validation failures.
 
+## Ruby-first convergence and cross-runtime catch-up
+
+The active Ruby stack has much more implementation surface than the Go, Rust,
+and TypeScript stacks because it inherited mature prior art from the old Ruby
+libraries. That is useful, but it also creates a drift risk: Ruby class names
+and convenience APIs can accidentally become the architecture unless we first
+classify which behavior is portable.
+
+The work should run as repeated convergence cycles:
+
+1. inventory Ruby behavior,
+2. promote portable behavior into spec fixtures and shared contracts,
+3. make Ruby conform to the fixture-backed contract,
+4. port the contract into Go, Rust, and TypeScript,
+5. use gaps in the non-Ruby runtimes to refine the contract,
+6. repeat.
+
+### Ruby prior-art classification
+
+- [ ] Inventory active Ruby `ast-merge` substrate classes and classify each as:
+  - portable merge contract;
+  - Ruby reference implementation helper;
+  - Ruby test/contributor convenience;
+  - historical compatibility surface;
+  - candidate for future extraction.
+- [ ] Inventory active Ruby `tree_haver` substrate classes and classify each as:
+  - portable parser/backend contract;
+  - Ruby backend adapter helper;
+  - security/path-validation policy;
+  - runtime-local backend selection convenience;
+  - historical compatibility surface.
+- [ ] Compare active Ruby `ast-merge` and `tree_haver` against `reference/`
+  read-only prior art and record anything not yet promoted into the active
+  structuredmerge Ruby gems.
+- [ ] Decide which old Ruby base classes remain normative reference
+  implementations:
+  - `SmartMergerBase`;
+  - `ConflictResolverBase`;
+  - `MergeResultBase`;
+  - `FileAnalyzable`;
+  - `NodeWrapperBase`;
+  - `EmitterBase`;
+  - `MatchRefinerBase`;
+  - `DiffMapperBase`;
+  - `PartialTemplateMergerBase`.
+- [ ] Decide which Ruby `ast-merge` modules should become portable contract
+  surfaces rather than Ruby-only helpers:
+  - comments and attachment;
+  - layout/gap ownership;
+  - freeze/frozen regions;
+  - unresolved review state;
+  - delegated child operations;
+  - structured edit planning;
+  - trailing group ordering;
+  - node typing;
+  - match refinement;
+  - healing/repair policy.
+- [ ] Record any Ruby-only naming that should not leak into portable APIs, such
+  as `SmartMerger`, `FileAnalysis`, or old RSpec shared-example terminology.
+
+### Ruby reference pass
+
+- [ ] Make Ruby the first runtime to implement the prior-art backlog only where
+  it already has the deepest substrate.
+- [ ] Add Ruby fixtures before adding new Ruby APIs, especially for:
+  - source regions;
+  - interstitial layout ownership;
+  - nested child groups;
+  - fallback floor;
+  - post-merge validation;
+  - diagnostics and audit records.
+- [ ] Use Ruby `tree_haver` to prove the parser/backend contract needed by
+  source-region extraction:
+  - stable node spans;
+  - source fragments;
+  - comments when backend supports them;
+  - parser diagnostics;
+  - backend capability reports;
+  - backend selection context.
+- [ ] Use Ruby `ast-merge` to prove the merge orchestration contract:
+  - analysis object;
+  - match/refinement phase;
+  - conflict resolver phase;
+  - result object;
+  - render/emission phase;
+  - unresolved review state;
+  - structured diagnostics.
+- [ ] Keep each Ruby implementation change tied to a fixture role so the other
+  runtimes have a target independent of Ruby class structure.
+
+### Portable contract extraction
+
+- [ ] Convert Ruby-proven behavior into fixture roles rather than prose-only
+  expectations.
+- [ ] Add source-family fixture roles for:
+  - `source_region_analysis`;
+  - `source_owner_matching`;
+  - `source_interstitial_merge`;
+  - `source_child_group_merge`;
+  - `source_fallback_floor`;
+  - `source_post_merge_validation`;
+  - `source_conflict_report`;
+  - `source_merge_driver_report`.
+- [ ] Add tree-haver fixture roles for:
+  - backend reference;
+  - backend capability;
+  - node/span/source-fragment contract;
+  - comment extraction capability;
+  - parser error tolerance;
+  - backend availability;
+  - edit projection capability.
+- [ ] Add ast-merge fixture roles for:
+  - merge session;
+  - decision record;
+  - diagnostic record;
+  - unresolved case;
+  - replay bundle;
+  - delegated child operation;
+  - validation failure;
+  - fallback activation.
+- [ ] For every Ruby-only feature that is not portable yet, add one of:
+  - a fixture role;
+  - a backend-restricted role;
+  - an explicit non-portable note;
+  - a retirement task.
+
+### Cross-runtime catch-up lanes
+
+- [ ] Run Go, Rust, and TypeScript catch-up by shared contract layer, not by gem
+  or package name.
+- [ ] Lane 1: parser/backend substrate parity.
+  - node identity and spans;
+  - source fragment extraction;
+  - backend registry/reference;
+  - backend selection context;
+  - diagnostics;
+  - capability reports.
+- [ ] Lane 2: core merge contract parity.
+  - parse result shape;
+  - merge result shape;
+  - decision records;
+  - diagnostics;
+  - feature profiles;
+  - policy references.
+- [ ] Lane 3: owner/region analysis parity.
+  - owner regions;
+  - interstitial regions;
+  - logical owners;
+  - blank-line ownership;
+  - source-region reconstruction metadata.
+- [ ] Lane 4: matching and ordering parity.
+  - scoped owner matching;
+  - duplicate owner cursors;
+  - match confidence;
+  - child group policies;
+  - trailing group/order policy.
+- [ ] Lane 5: conflict/fallback/validation parity.
+  - fallback activation report;
+  - baseline merge provider interface;
+  - post-merge validation;
+  - conflict kind vocabulary;
+  - audit/report records.
+- [ ] Lane 6: advanced orchestration parity.
+  - nested/delegated child merge;
+  - review-state replay;
+  - structured edit operation triad;
+  - merge-driver/tool integration.
+
+### Runtime-specific ordering
+
+- [ ] Ruby order:
+  1. classify active/reference prior art;
+  2. normalize Ruby substrate names to spec vocabulary;
+  3. implement source-region fixtures;
+  4. implement fallback and validation fixtures;
+  5. implement nested child-group/source owner fixtures;
+  6. expose audit/report details;
+  7. trim or quarantine Ruby-only legacy surfaces.
+- [ ] Rust order:
+  1. extend `tree-haver` substrate structs to match Ruby-backed fixtures;
+  2. extend `ast-merge` contract structs for source regions and validation;
+  3. implement source-family fixtures for Rust source first;
+  4. use Weave as local Rust prior art only where it agrees with the portable
+     fixture contract;
+  5. add merge-driver/tool behavior after core contracts pass.
+- [ ] TypeScript order:
+  1. extend contract interfaces and fixture readers;
+  2. add source-region and owner matching for TypeScript source;
+  3. add diagnostics/audit parity;
+  4. add optional compiler-backed provider behavior as backend-restricted
+     fixtures;
+  5. avoid regex/string source logic where AST/provider support exists.
+- [ ] Go order:
+  1. extend tree-haver and ast-merge structs for fixture parity;
+  2. use Go native parser/DST providers to prove source-region extraction;
+  3. add owner/interstitial/child-group fixtures;
+  4. add fallback and validation reports;
+  5. add merge-driver integration after portable output shape stabilizes.
+
+### Drift controls
+
+- [ ] Add a cross-runtime capability matrix that reports which runtime satisfies
+  each portable fixture role.
+- [ ] Add a Ruby-reference column, but do not let Ruby-only helper classes count
+  as portable conformance.
+- [ ] Require every new Ruby feature in `ast-merge` or `tree_haver` to declare
+  whether it is:
+  - portable contract work;
+  - Ruby reference implementation work;
+  - backend/provider-specific work;
+  - packaging/testing convenience.
+- [ ] Reject cross-runtime ports that only mimic Ruby API shape without passing
+  fixture-backed behavior.
+- [ ] Keep `reference/` read-only and treat it as prior-art evidence, not an
+  implementation target.
+
 ## Things that may need to move out of `ast-merge`
 
 These should not be extracted immediately unless the interface stabilizes, but they are good candidates to avoid future bloat.
@@ -471,28 +687,71 @@ These should not be extracted immediately unless the interface stabilizes, but t
 
 ## Suggested implementation order
 
-1. Rename old `synthetic` read-strategy terms to `portable_write` terms.
-2. Refactor `Comment::SupportStyle`, `Ruleset::Config`, and `FileAnalyzable` to use the new names.
-3. Add shared tests covering the renamed vocabulary and compatibility behavior.
-4. Define the corruption-healing boundary so recovery heuristics do not get mistaken for normative shared merge behavior.
-5. Audit existing healing call sites and classify them by policy family.
-6. Build a downstream feature matrix for the merge gems.
-7. Extract the next shared behavior layer from that matrix:
-   - owner selectors
-   - attachment strategies
-   - logical-owner policies
-   - layout-aware behavior
-8. Split `Ruleset::Config` internally if needed into parser/model/translator responsibilities.
-9. Only then decide what should leave `ast-merge` as a separate runtime or fixture artifact.
+1. Finish any remaining vocabulary cleanup around old `synthetic`
+   read-strategy terms and decide whether compatibility aliases remain.
+2. Classify active Ruby and read-only reference prior art so Ruby's richer stack
+   becomes an intentional reference implementation rather than an accidental
+   portability contract.
+3. Define the corruption-healing boundary so recovery heuristics do not get
+   mistaken for normative shared merge behavior.
+4. Build a Ruby feature matrix for `ast-merge`, `tree_haver`, and downstream
+   merge gems:
+   - owner selectors;
+   - match keys;
+   - attachment strategies;
+   - comment style;
+   - layout awareness;
+   - logical-owner behavior;
+   - render/source-shaper family;
+   - fallback/repair policy;
+   - validation and diagnostics.
+5. Promote Ruby-proven behavior into source-family, ast-merge, and tree-haver
+   fixture roles before changing Go, Rust, or TypeScript.
+6. Make Ruby pass the new fixtures first, using Ruby's richer substrate to prove
+   the intended behavior and expose any missing contract details.
+7. Port the fixture-backed contracts across Go, Rust, and TypeScript in lanes:
+   - parser/backend substrate parity;
+   - core merge contract parity;
+   - owner/region analysis parity;
+   - matching and ordering parity;
+   - conflict/fallback/validation parity;
+   - advanced orchestration parity.
+8. Add cross-runtime capability matrix reporting so gaps stay visible and are
+   not hidden behind package-local claims.
+9. Extract the next shared behavior layer only after at least Ruby plus one
+   non-Ruby runtime prove the fixture-backed contract.
+10. Only then decide what should leave `ast-merge` as a separate runtime or
+    fixture artifact.
 
 ## First concrete code targets
 
+- `ast-merge/lib/ast/merge/smart_merger_base.rb`
+- `ast-merge/lib/ast/merge/conflict_resolver_base.rb`
+- `ast-merge/lib/ast/merge/merge_result_base.rb`
+- `ast-merge/lib/ast/merge/file_analyzable.rb`
+- `ast-merge/lib/ast/merge/node_wrapper_base.rb`
+- `ast-merge/lib/ast/merge/emitter_base.rb`
+- `ast-merge/lib/ast/merge/match_refiner_base.rb`
+- `ast-merge/lib/ast/merge/layout/`
+- `ast-merge/lib/ast/merge/comment/`
+- `ast-merge/lib/ast/merge/runtime/`
+- `tree_haver/lib/tree_haver/base/`
+- `tree_haver/lib/tree_haver/contracts.rb`
+- `tree_haver/lib/tree_haver/backend_registry.rb`
+- `tree_haver/lib/tree_haver/backend_context.rb`
 - `ast-merge/lib/ast/merge/comment/support_style.rb`
 - `ast-merge/lib/ast/merge/ruleset/config.rb`
-- `ast-merge/lib/ast/merge/file_analyzable.rb`
 - `ast-merge/spec/ast/merge/ruleset/config_spec.rb`
 - `ast-merge/spec/ast/merge/file_analyzable_spec.rb`
 - `ast-merge/spec/support/fictive_language_harness.rb`
+- `spec/slices/`
+- `fixtures/`
+- `go/astmerge/`
+- `go/treehaver/`
+- `rust/crates/ast-merge/`
+- `rust/crates/tree-haver/`
+- `typescript/packages/ast-merge/`
+- `typescript/packages/tree-haver/`
 
 ## Success criteria
 
