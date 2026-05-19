@@ -119,11 +119,11 @@ The guiding principle is:
 
 The shared comment language is already one of the strongest pieces of alignment work. The next step is to make it less like a shared convenience API and more like a reference implementation of the spec vocabulary.
 
-- [ ] Review `Ast::Merge::Comment::{Capability, Region, Attachment, Augmenter, RegionMergePolicy}` against the current draft terminology.
-- [ ] Decide whether any of these types should move out of the `Comment` namespace into a more general merge-model namespace.
-- [ ] Ensure comment support is modeled as one axis of merge behavior, not the dominant axis.
-- [ ] Add shared behavior for comment-free formats so the abstraction does not imply comments are always central.
-- [ ] Document which comment abstractions are normative to the reference implementation and which are local implementation details.
+- [x] Review `Ast::Merge::Comment::{Capability, Region, Attachment, Augmenter, RegionMergePolicy}` against the current draft terminology.
+- [x] Decide whether any of these types should move out of the `Comment` namespace into a more general merge-model namespace.
+- [x] Ensure comment support is modeled as one axis of merge behavior, not the dominant axis.
+- [x] Add shared behavior for comment-free formats so the abstraction does not imply comments are always central.
+- [x] Document which comment abstractions are normative to the reference implementation and which are local implementation details.
 
 ## Runtime simplification targets
 
