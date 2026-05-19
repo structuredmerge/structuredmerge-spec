@@ -248,7 +248,7 @@ ruleset, fixture, review, and multi-runtime model.
   - attached to the preceding owner;
   - attached to the following owner;
   - standalone interstitial content.
-- [ ] Add fixtures for blank-line-only changes where the merge must preserve the
+- [x] Add fixtures for blank-line-only changes where the merge must preserve the
   declared owner of whitespace instead of normalizing globally.
 - [ ] Add fixtures for file-header and file-footer edits.
 - [ ] Decide when interstitial conflicts should be rendered as file-level
