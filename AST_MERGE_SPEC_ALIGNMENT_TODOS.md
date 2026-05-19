@@ -294,7 +294,7 @@ ruleset, fixture, review, and multi-runtime model.
   - excessive duplicate identities;
   - timeout or resource budget exceeded;
   - backend diagnostics above the accepted severity threshold.
-- [ ] Add a "never worse than baseline" comparison mode for merge drivers:
+- [x] Add a "never worse than baseline" comparison mode for merge drivers:
   compare structured output against the configured baseline merge and fall back
   when structured output produces more or broader conflicts.
 - [x] Define the baseline merge provider as a runtime integration point rather
