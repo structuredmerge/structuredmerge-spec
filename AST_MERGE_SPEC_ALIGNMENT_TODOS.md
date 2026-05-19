@@ -381,14 +381,14 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### VCS and tool integration
 
-- [ ] Define a merge-driver integration contract for Git.
-- [ ] Define a merge-tool integration contract for Jujutsu.
-- [ ] Support host-provided marker length and standard marker modes.
-- [ ] Support optional enhanced markers when the host can tolerate them.
-- [ ] Add audit artifact output for merge-driver runs.
-- [ ] Add timeout/resource-budget configuration that cannot silently hang a VCS
+- [x] Define a merge-driver integration contract for Git.
+- [x] Define a merge-tool integration contract for Jujutsu.
+- [x] Support host-provided marker length and standard marker modes.
+- [x] Support optional enhanced markers when the host can tolerate them.
+- [x] Add audit artifact output for merge-driver runs.
+- [x] Add timeout/resource-budget configuration that cannot silently hang a VCS
   operation.
-- [ ] Add clear diagnostics for skipped structured merge, fallback activation,
+- [x] Add clear diagnostics for skipped structured merge, fallback activation,
   and driver/tool invocation errors.
 
 ### Multi-runtime implementation plan
