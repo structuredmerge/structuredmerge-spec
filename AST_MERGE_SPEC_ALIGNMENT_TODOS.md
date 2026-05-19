@@ -111,9 +111,9 @@ The guiding principle is:
 
 ### Shared renderer / source-shaper behavior
 
-- [ ] Audit recurring emitter/source-shaping logic across merge gems.
-- [ ] Determine what can become a shared renderer contract versus what remains format-specific.
-- [ ] Align emitter terminology with the draft’s `render` directive language.
+- [x] Audit recurring emitter/source-shaping logic across merge gems.
+- [x] Determine what can become a shared renderer contract versus what remains format-specific.
+- [x] Align emitter terminology with the draft’s `render` directive language.
 
 ## Comment model follow-up
 
