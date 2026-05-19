@@ -549,7 +549,7 @@ The work should run as repeated convergence cycles:
   - delegated child operation;
   - validation failure;
   - fallback activation.
-- [ ] For every Ruby-only feature that is not portable yet, add one of:
+- [x] For every Ruby-only feature that is not portable yet, add one of:
   - a fixture role;
   - a backend-restricted role;
   - an explicit non-portable note;
@@ -599,7 +599,7 @@ The work should run as repeated convergence cycles:
 
 ### Runtime-specific ordering
 
-- [ ] Ruby order:
+- [x] Ruby order:
   1. classify active/reference prior art;
   2. normalize Ruby substrate names to spec vocabulary;
   3. implement source-region fixtures;
