@@ -205,7 +205,7 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Matching and identity
 
-- [ ] Define a source-owner identity profile covering:
+- [x] Define a source-owner identity profile covering:
   - owner kind;
   - owner name;
   - parent/container scope;
