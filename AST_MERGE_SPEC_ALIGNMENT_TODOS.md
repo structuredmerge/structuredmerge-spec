@@ -352,18 +352,18 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Formatter integration
 
-- [ ] Treat formatters as optional post-merge adapters, not as proof of semantic
+- [x] Treat formatters as optional post-merge adapters, not as proof of semantic
   correctness.
-- [ ] Add a formatter policy vocabulary:
+- [x] Add a formatter policy vocabulary:
   - no formatter;
   - validate-only;
   - format-after-clean-merge;
   - format-after-fallback;
   - formatter failure is warning;
   - formatter failure is hard error.
-- [ ] Add fixtures proving a formatter may repair whitespace without changing
+- [x] Add fixtures proving a formatter may repair whitespace without changing
   ownership, conflict scope, or validation semantics.
-- [ ] Keep formatter execution outside portable fixture expectations unless the
+- [x] Keep formatter execution outside portable fixture expectations unless the
   fixture explicitly opts into a formatter profile.
 
 ### Mergiraf/PCS lessons
