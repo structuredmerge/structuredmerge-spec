@@ -177,12 +177,12 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Source-region model
 
-- [ ] Define a portable source-region shape that can represent alternating:
+- [x] Define a portable source-region shape that can represent alternating:
   - structural owner regions, such as functions, classes, methods, impl blocks,
     object members, and module declarations;
   - interstitial regions, such as imports, leading comments, blank-line gaps,
     separators, and file headers/footers.
-- [ ] Add fixture cases proving that source-region extraction preserves:
+- [x] Add fixture cases proving that source-region extraction preserves:
   - entity content;
   - leading/trailing comments attached to an owner;
   - blank-line ownership between sibling owners;
