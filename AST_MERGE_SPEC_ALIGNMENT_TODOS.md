@@ -256,15 +256,15 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Nested/container merge
 
-- [ ] Promote container member merging to a source-family child-group profile.
+- [x] Promote container member merging to a source-family child-group profile.
 - [ ] Add fixtures for:
   - TypeScript class methods;
   - Rust impl items;
   - Go methods/functions grouped by receiver or file section;
   - Ruby methods under visibility sections;
   - object/map-like source constructs where order may or may not matter.
-- [ ] Declare which child groups are ordered, unordered, or policy-ordered.
-- [ ] Require commutative child-group behavior to be declared by ruleset or
+- [x] Declare which child groups are ordered, unordered, or policy-ordered.
+- [x] Require commutative child-group behavior to be declared by ruleset or
   family profile; do not infer commutativity from syntax alone.
 - [ ] Add scoped-conflict fixtures where only one child member conflicts inside a
   larger clean container merge.
