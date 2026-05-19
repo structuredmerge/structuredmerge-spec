@@ -320,7 +320,7 @@ ruleset, fixture, review, and multi-runtime model.
   - fallback to the configured baseline;
   - a scoped conflict;
   - a hard diagnostic failure.
-- [ ] Add fixtures for silent-data-loss prevention.
+- [x] Add fixtures for silent-data-loss prevention.
 - [x] Add implementation hooks so validation can be strict in CI and more
   permissive in exploratory tooling only when explicitly configured.
 
