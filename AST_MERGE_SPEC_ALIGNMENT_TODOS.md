@@ -306,9 +306,9 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Post-merge validation
 
-- [ ] Define a post-merge validation phase that is separate from merge planning
+- [x] Define a post-merge validation phase that is separate from merge planning
   and rendering.
-- [ ] Add validation checks for:
+- [x] Add validation checks for:
   - merged output reparses successfully when both inputs parsed successfully;
   - all cleanly resolved owners appear in output;
   - expected owner count does not drop unexpectedly;
@@ -316,12 +316,12 @@ ruleset, fixture, review, and multi-runtime model.
   - branch-added significant lines are not lost;
   - output length is within policy-defined sanity bounds;
   - conflict-marker shape is compatible with the host VCS/tool.
-- [ ] Make every validation failure produce either:
+- [x] Make every validation failure produce either:
   - fallback to the configured baseline;
   - a scoped conflict;
   - a hard diagnostic failure.
 - [ ] Add fixtures for silent-data-loss prevention.
-- [ ] Add implementation hooks so validation can be strict in CI and more
+- [x] Add implementation hooks so validation can be strict in CI and more
   permissive in exploratory tooling only when explicitly configured.
 
 ### Conflict rendering and diagnostics
