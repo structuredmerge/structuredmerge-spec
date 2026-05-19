@@ -137,6 +137,27 @@ Active-only files:
    - then one non-Ruby runtime to shake out contract assumptions;
    - then the remaining runtimes.
 
+## Source-Region Identity Mapping
+
+Source regions are the portable source-family read model. They should not be
+named after Ruby implementation classes.
+
+| Source-region field | Existing term | Mapping decision |
+| --- | --- | --- |
+| `address` | logical owner | Stable logical-owner address for structural owner regions. Interstitial regions may reference adjacent owner addresses through `previous_owner` and `next_owner`. |
+| `region_kind: "owner"` | merge surface | The region is an owned merge surface when its body can be matched, delegated, merged, or reported independently. |
+| `child_regions` | child group | A container owner's ordered child group. Each child region remains an owner or interstitial region with its own identity and span. |
+| `region_kind: "interstitial"` | blank-line region / layout region | Layout, comments, imports, separators, headers, and footers that sit between owners. The region identity is positional and adjacency-aware. |
+| `attached_comments` | attachment | Comments that are semantically attached to the next owner for matching and movement, while still preserved in the owner's source span. |
+| `match_key` | owner identity | Runtime-local owner key used for matching. Portable reports should also expose address, owner kind, and confidence when matching is ambiguous. |
+| `span` and `content` | source fragment | The exact source range and bytes/characters needed to reconstruct without global cleanup. |
+
+Two constraints follow from this mapping:
+
+- interstitial regions are first-class merge inputs, not formatting debris;
+- child-group merge policies should operate on source-region sequences rather
+  than on parser-specific node wrappers.
+
 ## Immediate Burn-Down Decisions
 
 - The old Ruby base class names remain valid Ruby reference implementation

@@ -188,7 +188,7 @@ ruleset, fixture, review, and multi-runtime model.
   - blank-line ownership between sibling owners;
   - file-header and file-footer regions;
   - trailing newline state.
-- [ ] Decide how source-region identity maps to existing terms:
+- [x] Decide how source-region identity maps to existing terms:
   - logical owner;
   - merge surface;
   - child group;
