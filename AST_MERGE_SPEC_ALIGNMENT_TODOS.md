@@ -72,10 +72,10 @@ The guiding principle is:
 
 ### Ruleset-driven merge declarations
 
-- [ ] Introduce a clearer mapping layer between ruleset directives and runtime behavior.
-- [ ] Make the runtime treat `read`, `attach`, `capability`, and `logical_owner` as first-class declarative inputs rather than loosely related metadata.
-- [ ] Add a single place where ruleset terms are translated into merge-facing runtime objects.
-- [ ] Ensure the translation layer can support comment-free formats cleanly, not just comment-heavy formats.
+- [x] Introduce a clearer mapping layer between ruleset directives and runtime behavior.
+- [x] Make the runtime treat `read`, `attach`, `capability`, and `logical_owner` as first-class declarative inputs rather than loosely related metadata.
+- [x] Add a single place where ruleset terms are translated into merge-facing runtime objects.
+- [x] Ensure the translation layer can support comment-free formats cleanly, not just comment-heavy formats.
 
 ### Shared owner-selection behavior
 
@@ -141,16 +141,16 @@ The shared comment language is already one of the strongest pieces of alignment 
   - `Ast::Merge::Ruleset::Parser`
   - `Ast::Merge::Ruleset::SupportStyleResolver`
 
-- [ ] Decide whether the current `Config` class is now the long-term normalized model, or whether a distinct `Ruleset::Model` / `Ruleset::Definition` value object should replace it.
+- [x] Decide whether the current `Config` class is now the long-term normalized model, or whether a distinct `Ruleset::Model` / `Ruleset::Definition` value object should replace it.
 
-- [ ] Reduce bidirectional coupling between:
+- [x] Reduce bidirectional coupling between:
   - ruleset parsing
   - comment support style construction
   - file analysis helpers
 
 - [x] Centralize support-style translation so `Ruleset::SupportStyleResolver` is the shared bridge for both ruleset parsing and file-analysis helper flows.
 
-- [ ] Prefer named feature objects or policy objects over scattered booleans and symbols where the spec vocabulary is stabilizing.
+- [x] Prefer named feature objects or policy objects over scattered booleans and symbols where the spec vocabulary is stabilizing.
 - [x] Introduce an initial shared `Ruleset::FeatureProfile` value object and expose it through `FileAnalyzable`.
 
 ## Shared tests and conformance work
