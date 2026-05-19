@@ -211,7 +211,7 @@ ruleset, fixture, review, and multi-runtime model.
   - parent/container scope;
   - backend-provided structural identity when available;
   - content-derived fallback identity when structural identity is ambiguous.
-- [ ] Add duplicate-owner fixtures proving that repeated names are matched 1:1
+- [x] Add duplicate-owner fixtures proving that repeated names are matched 1:1
   with ordered cursors or an equivalent stable pairing model.
 - [ ] Add ambiguous-identity fixtures for:
   - anonymous closures or lambdas;
