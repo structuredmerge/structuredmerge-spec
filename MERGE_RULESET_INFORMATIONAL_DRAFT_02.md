@@ -152,9 +152,9 @@ A node role describes how a node participates in ownership, matching,
 attachment, rendering, and fallback behavior. It does not require all parser
 backends to expose identical node classes.
 
-Implementations that already expose `synthetic` as a local term SHOULD map it
-to `virtual` at the portable ruleset boundary unless a profile explicitly
-declares a narrower meaning for `synthetic`.
+Portable rulesets MUST use `virtual` for parser-independent constructed nodes.
+Implementations MAY still use local implementation terms internally, but the
+portable ruleset boundary does not define compatibility aliases for them.
 
 ### 5.1b Atomic Node
 

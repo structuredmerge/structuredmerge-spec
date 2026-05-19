@@ -28,7 +28,7 @@ The guiding principle is:
 - [x] Update `FileAnalyzable#comment_support_style` and `#shared_comment_support_style` to use the new names.
 - [x] Update spec fixtures and harnesses to use the new terms.
 - [x] Keep the word `synthetic` in targeted inline comments only where it explains the actual architecture, not the public contract.
-- [ ] Decide how long to retain compatibility aliases for the old `synthetic` terminology in runtime code and ruleset parsing.
+- [x] Remove compatibility aliases for the old `synthetic` terminology in runtime code and ruleset parsing.
 
 ### Terminology separation
 
