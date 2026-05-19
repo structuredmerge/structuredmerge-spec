@@ -297,7 +297,7 @@ ruleset, fixture, review, and multi-runtime model.
 - [ ] Add a "never worse than baseline" comparison mode for merge drivers:
   compare structured output against the configured baseline merge and fall back
   when structured output produces more or broader conflicts.
-- [ ] Define the baseline merge provider as a runtime integration point rather
+- [x] Define the baseline merge provider as a runtime integration point rather
   than hardcoding `git merge-file` into portable semantics.
 - [ ] Add fixtures proving fallback activation is reported with reason, scope,
   selected baseline, and whether any structured result was discarded.
