@@ -301,7 +301,7 @@ ruleset, fixture, review, and multi-runtime model.
   than hardcoding `git merge-file` into portable semantics.
 - [x] Add fixtures proving fallback activation is reported with reason, scope,
   selected baseline, and whether any structured result was discarded.
-- [ ] Add negative fixtures proving fallback does not silently widen the merge
+- [x] Add negative fixtures proving fallback does not silently widen the merge
   semantics for cases outside its declared scope.
 
 ### Post-merge validation
