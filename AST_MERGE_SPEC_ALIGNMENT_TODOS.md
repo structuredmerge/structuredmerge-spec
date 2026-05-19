@@ -88,13 +88,13 @@ The guiding principle is:
 
 ### Shared attachment behavior
 
-- [ ] Audit downstream gems for one-off implementations of:
+- [x] Audit downstream gems for one-off implementations of:
   - `layout_only`
   - `tracker_layout_merge`
   - `augmenter_preferred_tracker_layout`
   - `normalize_tracked_layout_merge`
-- [ ] Move recurring attachment strategy orchestration fully into shared code where possible.
-- [ ] Ensure attachment strategies can be selected by named behavior rather than per-gem method folklore.
+- [x] Move recurring attachment strategy orchestration fully into shared code where possible.
+- [x] Ensure attachment strategies can be selected by named behavior rather than per-gem method folklore.
 
 ### Shared layout behavior
 
