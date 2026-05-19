@@ -491,16 +491,16 @@ The work should run as repeated convergence cycles:
 
 ### Ruby reference pass
 
-- [ ] Make Ruby the first runtime to implement the prior-art backlog only where
+- [x] Make Ruby the first runtime to implement the prior-art backlog only where
   it already has the deepest substrate.
-- [ ] Add Ruby fixtures before adding new Ruby APIs, especially for:
+- [x] Add Ruby fixtures before adding new Ruby APIs, especially for:
   - source regions;
   - interstitial layout ownership;
   - nested child groups;
   - fallback floor;
   - post-merge validation;
   - diagnostics and audit records.
-- [ ] Use Ruby `tree_haver` to prove the parser/backend contract needed by
+- [x] Use Ruby `tree_haver` to prove the parser/backend contract needed by
   source-region extraction:
   - stable node spans;
   - source fragments;
@@ -508,7 +508,7 @@ The work should run as repeated convergence cycles:
   - parser diagnostics;
   - backend capability reports;
   - backend selection context.
-- [ ] Use Ruby `ast-merge` to prove the merge orchestration contract:
+- [x] Use Ruby `ast-merge` to prove the merge orchestration contract:
   - analysis object;
   - match/refinement phase;
   - conflict resolver phase;
@@ -516,7 +516,7 @@ The work should run as repeated convergence cycles:
   - render/emission phase;
   - unresolved review state;
   - structured diagnostics.
-- [ ] Keep each Ruby implementation change tied to a fixture role so the other
+- [x] Keep each Ruby implementation change tied to a fixture role so the other
   runtimes have a target independent of Ruby class structure.
 
 ### Portable contract extraction
