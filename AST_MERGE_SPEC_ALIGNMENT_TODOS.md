@@ -410,20 +410,20 @@ ruleset, fixture, review, and multi-runtime model.
 
 ### Prior-art documentation
 
-- [ ] Add a short source-family prior-art note summarizing what is adopted from
+- [x] Add a short source-family prior-art note summarizing what is adopted from
   Weave:
   - owner/interstitial region model;
   - explicit fallback floor;
   - post-merge validation;
   - confidence-scored matching;
   - scoped nested container merge.
-- [ ] Add a short source-family prior-art note summarizing what is adopted from
+- [x] Add a short source-family prior-art note summarizing what is adopted from
   Mergiraf:
   - fine-grained AST matching as an optional profile;
   - successor/PCS-style child ordering as a backend strategy;
   - commutative parent handling only when declared;
   - rendering and conflict-marker compatibility concerns.
-- [ ] Document explicit non-goals:
+- [x] Document explicit non-goals:
   - do not make entity-level merge the only architecture;
   - do not treat formatter output as semantic validation;
   - do not mark order-sensitive constructs clean by default;
