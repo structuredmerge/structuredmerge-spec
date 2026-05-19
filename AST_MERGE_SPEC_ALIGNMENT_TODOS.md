@@ -79,12 +79,12 @@ The guiding principle is:
 
 ### Shared owner-selection behavior
 
-- [ ] Extract shared owner-selector helpers where the same owner-selection shapes recur across merge gems.
-- [ ] Distinguish:
+- [x] Extract shared owner-selector helpers where the same owner-selection shapes recur across merge gems.
+- [x] Distinguish:
   - shared default owner selector behavior
   - explicit owner selector behavior
   - logical-owner selectors
-- [ ] Reduce one-off owner-selection code in downstream gems where the behavior is really a named ruleset feature.
+- [x] Reduce one-off owner-selection code in downstream gems where the behavior is really a named ruleset feature.
 
 ### Shared attachment behavior
 
