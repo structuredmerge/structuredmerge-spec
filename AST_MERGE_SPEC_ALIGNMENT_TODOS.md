@@ -32,13 +32,13 @@ The guiding principle is:
 
 ### Terminology separation
 
-- [ ] Separate clearly in code and docs between:
+- [x] Separate clearly in code and docs between:
   - parser capability
   - merge capability
   - support style / write model
   - ruleset capability declaration
-- [ ] Audit whether `Comment::Capability` and `Comment::SupportStyle` names still match the spec direction, or whether one should be renamed to something closer to `ReadModel`, `WriteModel`, or `MergeRealization`.
-- [ ] Add a concise glossary comment near the relevant classes so the codebase reflects the same distinctions as the draft.
+- [x] Audit whether `Comment::Capability` and `Comment::SupportStyle` names still match the spec direction, or whether one should be renamed to something closer to `ReadModel`, `WriteModel`, or `MergeRealization`.
+- [x] Add a concise glossary comment near the relevant classes so the codebase reflects the same distinctions as the draft.
 
 ## Shared behavior to push down into `ast-merge`
 
