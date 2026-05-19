@@ -196,7 +196,7 @@ ruleset, fixture, review, and multi-runtime model.
   - attachment.
 - [ ] Add one source-family fixture where two branches add independent functions
   to the same textual area and the expected result is clean.
-- [ ] Add one source-family fixture where two branches add independent methods
+- [x] Add one source-family fixture where two branches add independent methods
   inside the same class or impl block and the expected result is clean through a
   child-group merge.
 - [ ] Add one source-family fixture where two branches touch the same owner body
