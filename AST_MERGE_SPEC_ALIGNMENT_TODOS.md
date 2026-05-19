@@ -155,18 +155,18 @@ The shared comment language is already one of the strongest pieces of alignment 
 
 ## Shared tests and conformance work
 
-- [ ] Add shared examples that assert ruleset-term behavior, not just implementation-local method behavior.
+- [x] Add shared examples that assert ruleset-term behavior, not just implementation-local method behavior.
 - [x] Add shared example coverage for the initial feature-profile surface.
-- [ ] Build conformance fixtures around:
+- [x] Build conformance fixtures around:
   - owner selection
   - match keys
   - attachment strategies
   - logical-owner behavior
   - layout-aware behavior
   - comment-free formats
-- [ ] Make at least one downstream merge gem prove each named feature through shared examples.
+- [x] Make at least one downstream merge gem prove each named feature through shared examples.
 - [x] Make `prism-merge` expose and assert a concrete shared feature profile.
-- [ ] Add terminology migration tests so old names are either rejected cleanly or supported temporarily through a compatibility layer.
+- [x] Add terminology migration tests so old names are either rejected cleanly or supported temporarily through a compatibility layer.
 
 ## Prior-art adoption backlog
 
