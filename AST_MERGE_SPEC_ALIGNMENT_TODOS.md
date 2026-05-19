@@ -105,9 +105,9 @@ The guiding principle is:
 
 ### Shared logical-owner behavior
 
-- [ ] Formalize logical-owner handling as a first-class shared substrate, not just a ruleset parser concept.
-- [ ] Identify current downstream logical-owner-like cases and move their preservation/removal rules toward a common abstraction.
-- [ ] Add shared runtime hooks for “preserve if referenced” and similar logical-owner policies.
+- [x] Formalize logical-owner handling as a first-class shared substrate, not just a ruleset parser concept.
+- [x] Identify current downstream logical-owner-like cases and move their preservation/removal rules toward a common abstraction.
+- [x] Add shared runtime hooks for “preserve if referenced” and similar logical-owner policies.
 
 ### Shared renderer / source-shaper behavior
 
