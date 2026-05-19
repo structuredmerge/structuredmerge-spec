@@ -299,7 +299,7 @@ ruleset, fixture, review, and multi-runtime model.
   when structured output produces more or broader conflicts.
 - [x] Define the baseline merge provider as a runtime integration point rather
   than hardcoding `git merge-file` into portable semantics.
-- [ ] Add fixtures proving fallback activation is reported with reason, scope,
+- [x] Add fixtures proving fallback activation is reported with reason, scope,
   selected baseline, and whether any structured result was discarded.
 - [ ] Add negative fixtures proving fallback does not silently widen the merge
   semantics for cases outside its declared scope.
