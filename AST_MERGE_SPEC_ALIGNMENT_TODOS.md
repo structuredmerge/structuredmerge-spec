@@ -596,6 +596,12 @@ The work should run as repeated convergence cycles:
   - review-state replay;
   - structured edit operation triad;
   - merge-driver/tool integration.
+- [ ] Propagate managed-block replacement from ad hoc string index/rindex logic
+  to parser-backed AST CRISPR-style selectors in non-Ruby implementations.
+  Ruby now uses `ast-crispr-ruby-prism` for Gemfile comment-delimited generated
+  blocks and `ast-crispr-markdown-markly` for Markdown HTML-comment blocks.
+  Go `kettlegomodder` still has analogous marker replacement logic; audit Rust
+  and TypeScript for the same pattern before declaring slice 717 portable.
 
 ### Runtime-specific ordering
 
