@@ -40,12 +40,18 @@ never semantic equivalence. Ambiguous admission is excluded rather than guessed.
 Neighbor order is SHA-256 of `seed + NUL + case_id`, then case ID. Selection
 reports every changed path, inferred capability, direct case, sentinel, neighbor
 population, ordering algorithm, seed, selected ID, exclusion, and unsupported
-operation. `merge3` and `metamorphic` are executable; `diff` remains
+operation. `merge2`, `merge3`, and `metamorphic` are executable; `diff` remains
 selection-only. Budgets are explicit and are never silently extended.
 
 ## Paired execution and classification
 
 Each selected case is materialized beneath the gem-local `tmp/` directory.
+For `merge2`, the runner compares an explicitly named `template.overwrite`
+baseline with the selected provider's `merge2(incoming, current)` operation.
+The overwrite baseline returns the exact incoming bytes and intentionally
+demonstrates loss of current-owned content; it is not represented as Git or as
+a structural merge tool.
+
 For `merge3`, the runner executes `git merge-file -p ours base theirs`, then
 the installed `ast-merge-git` executable with the case's exact provider
 selector. The candidate process runs from the materialized Git working

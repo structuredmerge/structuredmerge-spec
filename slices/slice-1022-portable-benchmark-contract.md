@@ -30,7 +30,7 @@ References MUST identify the owning corpus and path/object ID; a reference is
 never permission to fetch during a run.
 
 Case IDs describe behavior, not an implementation. A case declares one
-operation: `diff`, `merge3`, `history_replay`, or `metamorphic`. The operation
+operation: `diff`, `merge2`, `merge3`, `history_replay`, or `metamorphic`. The operation
 envelopes are versioned independently under the common major version.
 
 ## Case contracts
@@ -43,6 +43,19 @@ and optional source region. Reports MUST represent precision and recall with
 the exact `true_positive`, `false_positive`, and `false_negative` edit-unit ID
 sets as well as their derived ratios. A producer MUST state the unit matching
 rule; a single undifferentiated "diff accuracy" number is invalid.
+
+### Directional two-way merge
+
+A `merge2` case supplies exact `incoming` and `current` bytes. Incoming is the
+template or policy-owned revision; current is the existing destination. The
+case records incoming additions, current-owned values and regions, expected
+output, acceptable equivalence, and preservation policy. Role names are
+semantic and MUST NOT be reversed or inferred from argument order.
+
+`merge2` measures directional templating behavior. It is not a substitute for
+`merge3`, and a runner MUST NOT synthesize a base or report a `merge2` result as
+three-way evidence. A paired naive baseline MAY overwrite current with incoming
+when its adapter identity and data-loss behavior remain explicit.
 
 ### Three-way merge
 
