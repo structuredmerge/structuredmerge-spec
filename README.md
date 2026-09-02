@@ -46,6 +46,9 @@ Project links:
   traits, TreeHaver selection, and in-process/host provider architecture.
 - `slices/slice-1031-host-provider-boundary-lifecycle.md` — coarse Alef host
   dispatch, registration, ownership, cancellation, and teardown rules.
+- `slices/slice-1034-ruby-golden-master-baseline.md` — pinned Ruby release
+  revision, dependency-lock evidence, callable behavior entry points, and known
+  defects excluded from portable authority.
 
 ## Slices
 
