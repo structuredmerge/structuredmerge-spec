@@ -30,6 +30,8 @@ Project links:
 - `PATCH_ARTIFACT_CONTRACT.md` — v1 patch artifact contract for non-mutating apply results.
 - `slices/slice-1024-normalized-parse-analysis-boundary.md` — versioned
   TreeHaver parse and analysis transport derived from Ruby behavior.
+- `slices/slice-1025-versioned-merge-operation-envelopes.md` — serialized
+  `analyze`, `diff2`, directional `merge2`, and base-aware `merge3` envelopes.
 
 ## Slices
 
