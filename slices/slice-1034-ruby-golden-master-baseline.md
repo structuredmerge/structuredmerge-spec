@@ -53,6 +53,15 @@ are evidence for lifecycle requirements, not end-user merge operations.
 - Format/provider gems register implementations and must enter parsing through
   TreeHaver.
 
+Loading the 22 released merge/provider entry files at the pinned revision
+registers 20 providers without load errors. The observed registry is retained
+as a fixture, rather than inferred from gem names. It includes generic workflow
+providers, parser-specific backend providers, byte/text workflows, and the ZIP
+workflow. It does not contain a generic Ruby workflow, a generic YAML workflow,
+or an RBS provider advertising a TSLP backend. Those absences are coverage
+observations requiring review; this slice does not decide whether each is an
+intentional unsupported state or a Ruby defect.
+
 ### Two-way templating
 
 - Format-specific `SmartMerger` classes consume incoming/template and current
