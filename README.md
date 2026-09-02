@@ -42,6 +42,8 @@ Project links:
 - `slices/slice-1029-provider-contract-snapshot-manifest.md` — admission,
   provenance, replay, and native-extension requirements for representative
   provider snapshots.
+- `slices/slice-1030-rust-kernel-provider-traits.md` — object-safe Rust kernel
+  traits, TreeHaver selection, and in-process/host provider architecture.
 
 ## Slices
 
