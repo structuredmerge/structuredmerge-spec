@@ -34,6 +34,8 @@ Project links:
   `analyze`, `diff2`, directional `merge2`, and base-aware `merge3` envelopes.
 - `slices/slice-1026-capability-negotiation.md` — deterministic merge-provider
   and TreeHaver parser-backend capability negotiation.
+- `slices/slice-1027-source-preservation-byte-evidence.md` — exact byte-region
+  evidence and hard source-preservation invariants for rendered operations.
 
 ## Slices
 
