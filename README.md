@@ -53,6 +53,9 @@ Project links:
   ownership map separating shared ast-merge mechanics, family substrates,
   parser providers, and adapter layers, with current drift risks called out for
   review.
+- `slices/slice-1036-tree-haver-registration-metadata.md` — exact backend,
+  language-registration, parser-requirement, selection, snapshot, and candidate
+  trace metadata for the single `TreeHaver.parser_for` boundary.
 
 ## Slices
 
