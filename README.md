@@ -39,6 +39,9 @@ Project links:
 - `slices/slice-1028-stable-diagnostic-conflict-serialization.md` — stable
   diagnostic causality and structured conflict alternatives, localization, and
   resolution.
+- `slices/slice-1029-provider-contract-snapshot-manifest.md` — admission,
+  provenance, replay, and native-extension requirements for representative
+  provider snapshots.
 
 ## Slices
 
