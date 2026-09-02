@@ -56,6 +56,9 @@ Project links:
 - `slices/slice-1036-tree-haver-registration-metadata.md` — exact backend,
   language-registration, parser-requirement, selection, snapshot, and candidate
   trace metadata for the single `TreeHaver.parser_for` boundary.
+- `slices/slice-1037-ruby-known-defect-expectations.md` — pending Ruby defect
+  evidence that remains outside golden-master authority until explicitly
+  resolved and reviewed for portable promotion.
 
 ## Slices
 
