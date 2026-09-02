@@ -36,6 +36,9 @@ Project links:
   and TreeHaver parser-backend capability negotiation.
 - `slices/slice-1027-source-preservation-byte-evidence.md` — exact byte-region
   evidence and hard source-preservation invariants for rendered operations.
+- `slices/slice-1028-stable-diagnostic-conflict-serialization.md` — stable
+  diagnostic causality and structured conflict alternatives, localization, and
+  resolution.
 
 ## Slices
 
