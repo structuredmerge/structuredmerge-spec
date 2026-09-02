@@ -37,6 +37,13 @@ never semantic equivalence. Ambiguous admission is excluded rather than guessed.
    map; and
 3. a bounded deterministic neighbor sample from the remaining cases.
 
+`nightly` selects the complete admitted corpus without external competitors.
+`competitive` selects the complete admitted corpus and enables only explicitly
+configured, pinned competitor adapters. A profile therefore declares both its
+selection mode (`sentinels`, `affected`, or `all`) and competitor policy
+(`none` or `configured`); providing a competitor executable outside the
+`competitive` profile is an error rather than an implicit sweep.
+
 Neighbor order is SHA-256 of `seed + NUL + case_id`, then case ID. Selection
 reports every changed path, inferred capability, direct case, sentinel, neighbor
 population, ordering algorithm, seed, selected ID, exclusion, and unsupported
@@ -96,6 +103,13 @@ identity. No persistent cache is introduced. A deterministic rerun compares
 correctness records with runtime removed; runtime is never used to vote on
 correctness.
 
+Cold correctness runs may distribute independent cases across 1-32 worker
+processes. The requested count, actual worker PIDs, and deterministic
+corpus-order reduction are run evidence. A separate binary-safe JSONL adapter
+serves repeated operations from one long-lived Ruby process for performance
+measurement only. Persistent-process output is never assigned a correctness
+classification and cannot alter a correctness gate.
+
 ## Family CI calibration
 
 The Ruby family CI executes the `dev` profile on every push and pull request.
@@ -125,9 +139,9 @@ an aggregate quality claim.
 The corpus pins Mergiraf source revision
 `13b813c02da9511c7433131aed142473ffe62d52`, version `0.18.0`, GPL-3.0-only
 reference-only reuse posture, Rust 1.91.0 toolchain, build command, merge3-only
-operation coverage, and supported dialects. Competitive execution is optional
-and requires an explicit `--mergiraf PATH`; no binary or vendor source is
-embedded in the corpus.
+operation coverage, and supported dialects. Competitive execution is optional,
+requires the `competitive` profile and an explicit `--mergiraf PATH`; no binary
+or vendor source is embedded in the corpus.
 
 The runner verifies the reported version, records the binary SHA-256 and path,
 executes the same exact base/ours/theirs bytes with bounded child-process
@@ -145,8 +159,10 @@ ranking or aggregate quality claim.
 
 ## CLI
 
-`ast-merge-git benchmark validate|select|run|report --corpus PATH` emits JSON.
-`select`, `run`, and `report` accept `--profile micro|dev` and repeatable
-`--changed-path PATH`; `run` and `report` accept an installed `--driver` and an
-optional pinned `--mergiraf PATH`. Network and external services are denied by
-contract.
+`ast-merge-git benchmark validate|select|run|report|performance --corpus PATH`
+emits JSON. Selection commands accept
+`--profile micro|dev|nightly|competitive` and repeatable `--changed-path PATH`.
+`run` and `report` accept an installed `--driver`, `--workers COUNT`, and an
+optional pinned `--mergiraf PATH` under `competitive`. `performance` accepts
+`--iterations COUNT` and emits performance evidence without quality
+classification. Network and external services are denied by contract.
