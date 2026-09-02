@@ -174,13 +174,18 @@ The mandatory outcome matrix is:
 
 | Outcome | Meaning | Quality treatment |
 | --- | --- | --- |
-| `correct_clean` | Correct clean result under declared equivalence | effectiveness success |
+| `correct_clean` | Correct result under the declared equivalence or expected-diagnostic contract | effectiveness success |
 | `false_conflict` | Conflict emitted where a clean result was required | effectiveness failure |
 | `true_conflict` | Conflict emitted where intentional conflict was required | safety/effectiveness success |
 | `false_auto_merge` | Clean result where conflict was required, or incompatible edits were silently combined | non-compensable safety failure |
 | `error` | Adapter/runner failed or timed out | reliability failure |
 | `unsupported` | Capability honestly not implemented | coverage only by default |
 | `excluded_ambiguous` | Admission excludes the case or oracle is ambiguous | not scoreable |
+
+An `expected.outcome` of `error` is a negative-input contract, not permission
+for an arbitrary process failure. It is `correct_clean` only when the adapter
+returns a categorized expected diagnostic, such as `parse_error`. A crash,
+timeout, missing result, or uncategorized nonzero exit remains `error`.
 
 `excluded_ambiguous` MUST NOT enter any numerator or denominator.
 `unsupported` MUST NOT enter quality denominators under `coverage_only`.
@@ -193,13 +198,16 @@ Performance MUST NOT offset safety.
 
 Paired runs identify base and candidate raw result IDs for the same case and
 report dimension-specific deltas. Correctness deltas are transitions in the
-outcome matrix, preservation deltas compare policy violations, and performance
-deltas include only comparable warm/cold state, environment, and repetitions.
-Missing or incomparable pairs remain explicit.
+outcome matrix. Preservation deltas separately identify proven violations and
+required properties that remain unverified; neither is reclassified as a
+false auto-merge. Performance deltas include only comparable warm/cold state,
+environment, and repetitions. Missing or incomparable pairs remain explicit.
 
-The aggregate hard gate is non-compensable: one eligible
-`false_auto_merge` fails the safety gate. No count of correct cases, formatting
-preservation, speedup, unsupported cases, or excluded cases can clear it.
+The aggregate hard gate composes independent non-compensable gates. One
+eligible `false_auto_merge` fails safety. One candidate preservation violation
+or unverified required property fails preservation. One unexpected candidate
+adapter/runner error fails reliability. No count of correct cases, speedup,
+unsupported cases, or excluded cases can clear any failed gate.
 
 ## Canonical fixture
 

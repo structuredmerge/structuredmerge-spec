@@ -77,7 +77,11 @@ Outcomes are the Slice 1022 matrix: `correct_clean`, `false_conflict`,
 `true_conflict`, `false_auto_merge`, `error`, `unsupported`, and
 `excluded_ambiguous`. A clean result where conflict is required is always
 `false_auto_merge`; parse validity, formatting, speed, and other successes
-cannot compensate. One eligible false auto-merge fails the safety gate.
+cannot compensate. A categorized rejection of an input whose oracle expects a
+parse error is `correct_clean`; an uncategorized process failure remains
+`error`. Semantic equivalence and source preservation are evaluated
+independently, so preservation failures do not masquerade as false
+auto-merges.
 
 ## Report and cache identity
 
@@ -102,8 +106,10 @@ repository, full revision, and corpus path; CI verifies the detached checkout
 before execution.
 
 The aggregate JSON report is retained as a CI artifact and a concise
-non-scalar summary is written to the job summary. CI fails for runner errors,
-timeouts, or the existing non-compensable candidate false-auto-merge gate.
+non-scalar summary is written to the job summary. CI fails for unexpected
+candidate runner errors or timeouts, the non-compensable candidate
+false-auto-merge gate, or a candidate preservation violation or unverified
+required preservation property.
 Performance observations, competitor outcomes, unsupported coverage, and
 aggregate effectiveness counts do not independently gate during calibration.
 This `dev` execution establishes stable artifact and variance history before a
