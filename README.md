@@ -1,8 +1,13 @@
 # StructuredMerge Spec
 
-Language-neutral specification work for StructuredMerge.
+Portable specification work for StructuredMerge, derived from the canonical
+Ruby implementation and expressed for additional runtimes to consume.
 
-StructuredMerge defines portable rules, result shapes, diagnostics, and review/replay vocabulary for tools that merge structured documents. The spec is designed to be consumed by multiple peer implementations rather than owned by any one language runtime.
+StructuredMerge defines portable rules, result shapes, diagnostics, and
+review/replay vocabulary for tools that merge structured documents. The mature
+Ruby implementation is the behavioral golden master. Other runtimes consume
+these contracts and must prove parity for every capability they claim; their
+historical behavior is not an independent source of authority.
 
 Project links:
 
@@ -23,6 +28,8 @@ Project links:
 - `PGVECTOR_PLAN_CONTRACT.md` — v1 pgvector/PostgreSQL load-plan contract for RAG chunks.
 - `PLANNER_PAYLOAD_CONTRACT.md` — v1 payload contract for AI planners and future MCP bindings.
 - `PATCH_ARTIFACT_CONTRACT.md` — v1 patch artifact contract for non-mutating apply results.
+- `slices/slice-1024-normalized-parse-analysis-boundary.md` — versioned
+  TreeHaver parse and analysis transport derived from Ruby behavior.
 
 ## Slices
 
@@ -42,7 +49,7 @@ the actual product surfaces.
 ## Non-goals
 
 - Defining one universal merge algorithm.
-- Treating one language implementation as canonical.
+- Replacing the Ruby golden master with a lowest-common-denominator abstraction.
 - Storing language-specific package planning here.
 - Replacing review with silent automatic conflict resolution.
 
