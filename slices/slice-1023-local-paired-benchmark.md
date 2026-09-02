@@ -108,7 +108,9 @@ processes. The requested count, actual worker PIDs, and deterministic
 corpus-order reduction are run evidence. A separate binary-safe JSONL adapter
 serves repeated operations from one long-lived Ruby process for performance
 measurement only. Persistent-process output is never assigned a correctness
-classification and cannot alter a correctness gate.
+classification and cannot alter a correctness gate. Performance evidence
+separately records process spawn, adapter execution, JSONL/IPC harness overhead,
+round-trip time, and the startup/loading first request.
 
 ## Family CI calibration
 
