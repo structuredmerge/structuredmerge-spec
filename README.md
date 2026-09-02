@@ -32,6 +32,8 @@ Project links:
   TreeHaver parse and analysis transport derived from Ruby behavior.
 - `slices/slice-1025-versioned-merge-operation-envelopes.md` — serialized
   `analyze`, `diff2`, directional `merge2`, and base-aware `merge3` envelopes.
+- `slices/slice-1026-capability-negotiation.md` — deterministic merge-provider
+  and TreeHaver parser-backend capability negotiation.
 
 ## Slices
 
