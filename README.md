@@ -49,6 +49,10 @@ Project links:
 - `slices/slice-1034-ruby-golden-master-baseline.md` — pinned Ruby release
   revision, dependency-lock evidence, callable behavior entry points, and known
   defects excluded from portable authority.
+- `slices/slice-1035-ruby-merge-behavior-ownership.md` — released Ruby
+  ownership map separating shared ast-merge mechanics, family substrates,
+  parser providers, and adapter layers, with current drift risks called out for
+  review.
 
 ## Slices
 
