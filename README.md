@@ -44,6 +44,8 @@ Project links:
   provider snapshots.
 - `slices/slice-1030-rust-kernel-provider-traits.md` — object-safe Rust kernel
   traits, TreeHaver selection, and in-process/host provider architecture.
+- `slices/slice-1031-host-provider-boundary-lifecycle.md` — coarse Alef host
+  dispatch, registration, ownership, cancellation, and teardown rules.
 
 ## Slices
 
