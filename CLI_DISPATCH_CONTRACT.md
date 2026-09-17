@@ -59,3 +59,18 @@ whether supplied by `--require-profile-status` or the
 merge writes; they must not lower a required status to `available`. Recognizing
 a status does not establish promotion authority: existing profile evidence and
 enforcement still determine whether execution is permitted.
+
+## Report destination separation
+
+Before merge-driver writes, its report destination must be distinct from every
+input and the selected output (current by default), including in check-only mode.
+Existing filesystem identity, not just path spelling, determines collisions:
+symlink and hard-link aliases are rejected. For a new destination, resolve its
+existing parent directory and compare the final filename. An unresolvable or
+inaccessible identity fails closed rather than assuming the paths are distinct.
+Rejection emits stderr and exits 2 without modifying sources or the merge output.
+
+This preflight assumes a stable filesystem. It does not provide locking against
+concurrent path replacement, transactional report/output writes, or recovery
+from partial filesystem writes. Those guarantees require separate implementation
+and fault-injection evidence; successful collision tests do not establish them.
