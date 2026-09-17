@@ -21,6 +21,8 @@ Project links:
 
 - `CLI_DISPATCH_CONTRACT.md` — canonical kernel command dispatch and the retained
   positional benchmark compatibility exception.
+- `CONFLICT_REVIEW_PLACEMENT.md` — source-backed marker placement for present and
+  absent conflict alternatives, without claiming merged output.
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md` — active informational draft for the merge ruleset vocabulary.
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — published baseline retained for stable reference.
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
