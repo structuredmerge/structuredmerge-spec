@@ -19,6 +19,8 @@ Project links:
 
 ## Core documents
 
+- `TYPED_CAPABILITY_MANIFEST_CONTRACT.md` — explicit typed kernel profile and
+  parser observations, separate from full workflow-provider negotiation.
 - `CLI_DISPATCH_CONTRACT.md` — canonical kernel command dispatch and the retained
   positional benchmark compatibility exception.
 - `CONFLICT_REVIEW_PLACEMENT.md` — source-backed marker placement for present and
