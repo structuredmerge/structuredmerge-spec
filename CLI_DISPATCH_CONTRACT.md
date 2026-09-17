@@ -71,6 +71,28 @@ inaccessible identity fails closed rather than assuming the paths are distinct.
 Rejection emits stderr and exits 2 without modifying sources or the merge output.
 
 This preflight assumes a stable filesystem. It does not provide locking against
-concurrent path replacement, transactional report/output writes, or recovery
-from partial filesystem writes. Those guarantees require separate implementation
-and fault-injection evidence; successful collision tests do not establish them.
+concurrent path replacement; successful collision tests do not establish that.
+
+## Staged merge-driver writes
+
+Both executable names stage output and report bytes in temporary files in each
+destination's directory, finish writing and syncing those files, then replace
+the report followed by the output. Check-only mode never stages output.
+Staging failures leave existing destinations unchanged and exit 3. A report
+commit failure leaves the output unchanged. Normal error handling removes
+uncommitted temporary files, including after an injected partial staging write.
+
+Replacement is atomic per file, not a transaction across report and output.
+If the output commit fails after the report commit, the report may already
+describe the computed merge result. Its `ok` and `exit_code` describe that result,
+not proof of an output write; `output_commit_verified` is always false. The actual
+process exits 3 on an I/O failure. Consumers must inspect the process exit status.
+
+Existing regular-file destinations keep their permission bits; existing symlinks
+are followed to their canonical target. Directories, dangling symlinks, and
+read-only destinations fail closed. Newly created destinations use private
+temporary-file permissions. Replacement changes the inode: other hard links
+retain their old content, and preservation of ownership, ACLs, extended attributes,
+or other inode metadata is not guaranteed. Parent-directory write permission is
+required. There is no concurrent-writer locking, multi-file rollback, or
+power-loss durability guarantee (parent directories are not synced).
