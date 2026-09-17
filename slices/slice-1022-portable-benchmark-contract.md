@@ -185,7 +185,9 @@ The mandatory outcome matrix is:
 Exit status 1 alone does not prove
 a conflict: a candidate must emit a complete conflict marker region (opening,
 separator and closing markers) or a categorized diagnostic beginning
-`EXECUTABLE: merge_conflict: CODE: MESSAGE`. An unexplained exit 1, including a
+`EXECUTABLE: merge_conflict: MESSAGE` (optionally with a separate `CODE:` before
+the nonempty message). Preserve existing adapters that omit a distinct code.
+An unexplained exit 1, including a
 runtime startup failure, is `error` even when the oracle expects a conflict.
 This is evidence of reported conflict, not authentication of its correctness;
 conflict localization and semantic checks remain separate obligations.

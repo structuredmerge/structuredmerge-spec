@@ -42,3 +42,20 @@ argument forwarding, inherited streams/environment/cwd, numeric exit status,
 Unix signal termination, missing/non-executable targets, invalid names and the
 legacy-versus-canonical routing distinction. OS-specific tests prove only the
 targets on which they execute; publication and default-driver approval are separate.
+
+## Merge-driver argument safety
+
+Both executable names reject a missing or empty value for `--ancestor`,
+`--current`, `--other`, `--path-name`, `--output`, `--report`, `--profile`,
+`--require-profile-status`, and `--fallback`. A following long option is not a
+value. These errors produce a diagnostic on stderr, exit 2, and no merge output
+write; they must not silently reuse positional sources or default to overwriting
+the current file. A filename beginning with `--` must be expressed as a relative
+path such as `./--name` or an absolute path when used as an option value.
+
+Required promotion status accepts only `available`, `recommended`, or `default`,
+whether supplied by `--require-profile-status` or the
+`smorg.requireProfileStatus` attribute. Unknown values fail with exit 2 before
+merge writes; they must not lower a required status to `available`. Recognizing
+a status does not establish promotion authority: existing profile evidence and
+enforcement still determine whether execution is permitted.
