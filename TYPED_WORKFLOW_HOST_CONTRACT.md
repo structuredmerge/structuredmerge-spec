@@ -3,7 +3,10 @@
 This is the initial in-process Rust boundary in `structuredmerge-core`, built on
 the merge-provider registry and TreeHaver selector. It is not a separate host
 package, a JSON-string facade, or a claim that host-owned semantics moved to Rust.
-Ruby/Python generation and installed-runtime validation remain open.
+Alef generates Ruby/Python bindings for this boundary. Isolated installed
+artifact tests exercise LibCST/Psych analysis over prepared two-operation
+batches, source identity, typed results and shared callback cancellation.
+These are boundary checks, not native merge parity or publication approval.
 
 ## Responsibilities and transport
 
@@ -73,8 +76,8 @@ boundary failure.
 
 ## Remaining gates
 
-Alef-generated Ruby/Python trait bridges, native provider implementations,
-installed artifact tests, host availability, versioned parser profiles,
+Independently packaged native workflow providers, broader installed-runtime
+coverage, host availability, versioned parser profiles,
 family-default dispatch, allowed delegation and full portable batch/capability
 conformance remain open. Callback thread affinity, active-runtime shutdown and
 broader concurrency/stress guarantees are not established by Rust trait bounds.
