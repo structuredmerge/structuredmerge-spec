@@ -182,6 +182,14 @@ The mandatory outcome matrix is:
 | `unsupported` | Capability honestly not implemented | coverage only by default |
 | `excluded_ambiguous` | Admission excludes the case or oracle is ambiguous | not scoreable |
 
+Exit status 1 alone does not prove
+a conflict: a candidate must emit a complete conflict marker region (opening,
+separator and closing markers) or a categorized diagnostic beginning
+`EXECUTABLE: merge_conflict: CODE: MESSAGE`. An unexplained exit 1, including a
+runtime startup failure, is `error` even when the oracle expects a conflict.
+This is evidence of reported conflict, not authentication of its correctness;
+conflict localization and semantic checks remain separate obligations.
+
 An `expected.outcome` of `error` is a negative-input contract, not permission
 for an arbitrary process failure. It is `correct_clean` only when the adapter
 returns a categorized expected diagnostic, such as `parse_error`. A crash,
