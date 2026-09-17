@@ -67,8 +67,9 @@ probing. The existing language preference lists are not a substitute for such a
 profile catalog. This source-free engine is not the complete portable capability
 envelope, a host availability check, delegation, or actual workflow execution.
 
-The typed facade must connect its `WorkflowHost` and Rust executors to this
-merge-provider registry and reuse this selection layer. It must complete
+The Rust typed facade now connects explicit `WorkflowHost` batch execution to
+this registry and selection layer; see `TYPED_WORKFLOW_HOST_CONTRACT.md`.
+Generated bindings and unified Rust-executor registration remain open. It must complete
 parser-profile negotiation, allowed delegation, request/result validation,
 explicit execution ownership, cancellation and binding-runtime lifecycle rules.
 The existing explicitly selected kernel profiles remain unchanged meanwhile.
