@@ -54,9 +54,22 @@ cannot yet change family selection because this foundation performs no selection
 
 ## Remaining gates
 
+The kernel's source-free selection layer now filters merge declarations and
+negotiates their parser requirements through TreeHaver before ranking eligible
+providers. Explicit IDs are hard constraints; family-only queries admit only
+workflow-role providers. Ranking is explicit match, descending priority, stable
+ID. Both immutable snapshots and all attempted parser reports remain associated
+with the decision. TreeHaver constraints are conjunctive with existing application
+restrictions and apply equally to parser observations and dispatch.
+
+Versioned parser-profile requirements remain unsupported and fail closed before
+probing. The existing language preference lists are not a substitute for such a
+profile catalog. This source-free engine is not the complete portable capability
+envelope, a host availability check, delegation, or actual workflow execution.
+
 The typed facade must connect its `WorkflowHost` and Rust executors to this
-merge-provider registry. It must implement capability filtering, deterministic
-ranking, TreeHaver negotiation, allowed delegation, request/result validation,
+merge-provider registry and reuse this selection layer. It must complete
+parser-profile negotiation, allowed delegation, request/result validation,
 explicit execution ownership, cancellation and binding-runtime lifecycle rules.
 The existing explicitly selected kernel profiles remain unchanged meanwhile.
 
