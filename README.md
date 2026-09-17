@@ -19,6 +19,8 @@ Project links:
 
 ## Core documents
 
+- `CLI_DISPATCH_CONTRACT.md` — canonical kernel command dispatch and the retained
+  positional benchmark compatibility exception.
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md` — active informational draft for the merge ruleset vocabulary.
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — published baseline retained for stable reference.
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
