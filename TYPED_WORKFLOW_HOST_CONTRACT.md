@@ -76,10 +76,19 @@ boundary failure.
 
 ## Remaining gates
 
+Installed Linux CPython 3.14.2/MRI 4.0.6 tests verify registry retention across GC,
+release after retirement, reentrant replacement/removal, stale-generation
+rejection, and in-flight snapshot identity. Sixteen overlapping calls on four
+host-created threads preserve caller context. Cross-thread cancellation discards
+late host results, and bounded subprocess tests verify exit with registered,
+retired and cancelled-and-drained hosts. These are synchronous host-thread and
+cooperative-drain observations, not guarantees inferred from Rust trait bounds.
+
 Independently packaged native workflow providers, broader installed-runtime
 coverage, host availability, versioned parser profiles,
 family-default dispatch, allowed delegation and full portable batch/capability
-conformance remain open. Callback thread affinity, active-runtime shutdown and
-broader concurrency/stress guarantees are not established by Rust trait bounds.
+conformance remain open. Foreign Rust-thread dispatch, abrupt VM teardown with
+active callbacks, other runtimes/platforms and broader concurrency/stress
+guarantees remain unproven.
 Existing explicit kernel profiles remain unchanged, with no default promotion
 or prototype publication requirement.
