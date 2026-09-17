@@ -19,6 +19,8 @@ Project links:
 
 ## Core documents
 
+- `MERGE_PROVIDER_REGISTRY_CONTRACT.md` — merge-behavior registration and immutable
+  snapshots, distinct from parser registration and full capability negotiation.
 - `TYPED_CAPABILITY_MANIFEST_CONTRACT.md` — explicit typed kernel profile and
   parser observations, separate from full workflow-provider negotiation.
 - `CLI_DISPATCH_CONTRACT.md` — canonical kernel command dispatch and the retained
