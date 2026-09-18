@@ -9,10 +9,15 @@ replaces, Slices 1020 (Git roles), 1022/1023 (benchmark exchanges), 1025 (typed
 operations), 1028 (diagnostics) and 1032 (artifact/provider availability).
 
 The requirements below describe the target, not an assertion that existing
-executables conform. In particular the current kernel lacks the version/report
+executables conform. In particular the current kernel lacks the general report
 and provider-aware introspection surface, and retains legacy default full-file
 conflict rendering. These are migration gaps, not normative defaults. Existing
 benchmark adapters and compatibility entry points remain until migrated.
+The version identity command is implemented locally for both kernel executable
+names. Its `cli_contract` identifies the target protocol, not a conformance or
+release-approval claim. Package and kernel versions refer to the actual built
+executable and linked kernel; a compatibility alias retains its own executable
+name. Extra arguments fail with exit 2, and output-write failures exit 3.
 
 ### Command surface
 
@@ -141,7 +146,7 @@ such as `cloud` designate product command groups. Dispatch does not confer parse
 or merge authority on either class.
 
 Built-in commands take precedence over executables on PATH: `merge-driver`,
-`diff-driver`, `conflicts`, `languages`, `git`, `help`, help flags, and the explicit
+`diff-driver`, `conflicts`, `languages`, `git`, `help`, help flags, `--version`, and the explicit
 `benchmark-provider-session`, `benchmark-provider-diff`,
 `benchmark-provider-merge2`, `benchmark-provider-merge3` commands.
 
