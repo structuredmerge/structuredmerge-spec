@@ -95,6 +95,23 @@ The only selectable state is `available`. `compiled`, `manifest_only`,
 `unregistered`, `unhealthy`, `asset_missing`, `incompatible`, and `retired` are
 observable states but are not selectable.
 
+### Loaded asset identity
+
+Verified asset state MUST describe the bytes associated with the parser's actual
+loaded handle, not merely a currently matching file at a configured pathname.
+Cached libraries can outlive file replacement, removal, registry destruction,
+and search-path changes. Evidence follows the retained loaded object across
+those events; it MUST NOT be reconstructed by rehashing the current pathname.
+
+The parser's intended loading interface owns this evidence. If it cannot expose
+a trustworthy binding between verified bytes and the loaded object, that asset
+identity remains unverified. A successful availability probe, grammar ABI,
+language name, or package version MUST NOT substitute for it. Static grammars
+require build-attested linked identity rather than a fabricated library path.
+Preflight pins the loaded identity and execution rejects mismatch or stale
+evidence without parser substitution. This requirement does not authorize a
+second parser loader or implicit acquisition in the CLI.
+
 ## Selection
 
 Parser selection remains exclusively in TreeHaver. The kernel passes language,

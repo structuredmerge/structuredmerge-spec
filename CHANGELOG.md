@@ -19,3 +19,5 @@
 - Require pre-dispatch parser pinning for compiled workflow batches while preserving requested-selection provenance and distinguishing semantic dialects from parser queries.
 
 - Specify source-free workflow selection observations, shared query validation, snapshot lifetime, cooperative budgets, and their separation from authenticated availability and preflight authorization.
+
+- Add explicit loaded-grammar identity requirements: verified evidence follows the retained parser object rather than a current cache pathname, through the parser loading interface.
