@@ -25,8 +25,8 @@ Project links:
   source preparation, validation and remaining binding/runtime gates.
 - `TYPED_CAPABILITY_MANIFEST_CONTRACT.md` — explicit typed kernel profile and
   parser observations, separate from full workflow-provider negotiation.
-- `CLI_DISPATCH_CONTRACT.md` — canonical kernel command dispatch and the retained
-  positional benchmark compatibility exception.
+- `CLI_DISPATCH_CONTRACT.md` — shared command grammar, selectors, reports,
+  process/file safety, external dispatch and the positional benchmark exception.
 - `CONFLICT_REVIEW_PLACEMENT.md` — source-backed marker placement for present and
   absent conflict alternatives, without claiming merged output.
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_02.md` — active informational draft for the merge ruleset vocabulary.
