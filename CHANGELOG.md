@@ -9,3 +9,5 @@
 - Document optional compiled typed-kernel provider declarations in CLI version JSON, distinct from authenticated manifests and runtime availability.
 
 - Define exact-byte conflict-review reports, malformed-marker errors, read-only behavior, and the distinction between Git framing and semantic conflict evidence.
+
+- Specify owned, scope-specific CLI Git configuration steps, safe undo, bounded lookups, and explicit incomplete driver-setup reporting.

@@ -160,6 +160,49 @@ not a claim of full Git attribute resolution. These are explicit limits, not
 permission to truncate or silently ignore malformed framing. Source bytes and
 attributes are never rewritten by review.
 
+### Git installation ownership and reporting
+
+Installation JSON uses `command: git.install`, canonical adapter failures and
+ordered `git_install.steps` with action, target and status. Status distinguishes
+`planned`, `succeeded`, `failed` and `not_run`. A partial multi-file failure must
+retain completed steps; it must not report blanket success or silently claim
+rollback. Input/policy rejection exits 2; filesystem or output failures exit 3.
+Legacy top-level installation-report keys may remain as compatibility aliases.
+
+Check and dry-run do not create capture files, directories or configuration.
+Duplicate singleton flags and conflicting `--check`/`--undo` or
+`--check`/`--dry-run` combinations reject before planning. Undo with dry-run is
+supported. Undo may remove only exact recognized installer-owned sections,
+never unmarked lines merely because their text matches a generated setting.
+Edited, duplicate or unknown-version sections require explicit user resolution.
+Preserve bytes outside owned sections, including comments, blank lines, CRLF and
+missing final newlines. If later user content relies on an owned newline for
+separation from an unterminated original line, retain the separator on undo.
+
+The current kernel installer retains scoped legacy components: local writes
+managed `.gitattributes`; global writes managed diff configuration at Git's last
+reported `GIT_CONFIG_GLOBAL` location (including an explicit override); include-file
+writes a managed fragment beside Git's resolved repository configuration and
+adds an absolute quoted include without replacing other entries. Linked worktrees
+use that shared configuration location. Git must support the relevant location
+queries; unavailable queries reject, not guessed paths. Builtin-diff never installs
+`cat` as an external diff command; it still requires local attribute setup.
+
+These scoped steps are not complete typed-driver setup or runtime-health proof.
+Reports explicitly retain `setup_complete`, `driver_configuration_verified` and
+`default_approved` as false and describe the component limits. Provider-aware
+driver generation and authority gates remain separate. Configuration checks prove
+the recognized owned section exists, not that later Git precedence rules or every
+consumer resolve to that setting.
+
+Current safety bounds are 1 MiB per UTF-8 configuration target, bounded Git lookup
+output and ten-second lookup deadlines. Symlink targets and an aliased managed
+include directory are rejected; the hard-link guard is currently Unix-specific.
+Each file write is staged and atomically
+replaced; include fragments are installed before references and references are
+removed before fragment retirement. This is not a multi-file transaction,
+cross-process filesystem lease, or a guarantee of ACL/xattr/inode preservation.
+
 Exit 0 means successful completion (and a clean merge write unless check-only).
 Exit 1 means validated unresolved conflict, or a requested read-only change check
 (`diff --exit-code`, merge check-only/exit-code, conflict review/exit-code).
