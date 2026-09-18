@@ -13,3 +13,5 @@
 - Specify owned, scope-specific CLI Git configuration steps, safe undo, bounded lookups, and explicit incomplete driver-setup reporting.
 
 - Define Git absent-side token normalization and diff-only zero-byte JSON owner semantics without relaxing merge or analyze policy.
+
+- Specify unified compiled/host workflow inventory, immutable compiled identities, and explicit kernel-owned batch execution without default authority.

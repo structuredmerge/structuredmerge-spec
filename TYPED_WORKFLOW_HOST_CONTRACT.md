@@ -50,6 +50,27 @@ Passing transport validation does not prove the callback's semantic claims.
 
 ## Budgets, results and control
 
+### Compiled-provider batches
+
+The same registry also retains compiled kernel executors. An explicit compiled
+batch requires its implemented profile and matching profile-owned parser
+language, dialect and parse options. All requests and query constraints are
+validated before probes. It captures the same provider/parser snapshots used by
+host batches and negotiates every item before semantic execution. It then calls
+the existing native kernel operation engines, preserving their typed results.
+Results are checked against the original validated inputs and negotiated parser
+identity; a changed selection fails, never silently substitutes a result.
+
+Kernel batches report `execution_owner: kernel`, always with
+`approved_as_default: false`. Request/source and response-byte budgets and shared
+execution control remain enforced. This is not host callback invocation: each
+kernel operation owns parsing and output verification through TreeHaver, and
+there is no fabricated prepared-host batch. Probes are observations, not leases;
+parser liveness can still change between negotiation and execution. This boundary
+does not claim authenticated availability or a stale-snapshot preflight protocol.
+
+### Host callback validation
+
 `WorkflowLimits` bounds operation count, encoded request/prepared-callback bytes,
 encoded callback-response bytes and parser resources. Input bytes are cumulative
 across operations; parser node/diagnostic limits retain TreeHaver semantics.

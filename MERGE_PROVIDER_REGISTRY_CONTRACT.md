@@ -69,7 +69,23 @@ envelope, a host availability check, delegation, or actual workflow execution.
 
 The Rust typed facade now connects explicit `WorkflowHost` batch execution to
 this registry and selection layer; see `TYPED_WORKFLOW_HOST_CONTRACT.md`.
-Generated bindings and unified Rust-executor registration remain open. It must complete
+The facade's registry now seeds the eight compiled common-operation providers
+with kernel executor handles, alongside subsequently registered host handles.
+Their descriptors come from the compiled profile inventory and are normalized
+by the same registry. Initialization neither registers parsers nor probes/loads
+grammars. Compiled IDs cannot be registered, replaced or retired through host
+mutation APIs; attempts fail without advancing the registry generation.
+Inventory callers must find providers by ID, not assume the first or only entry
+is their host. Generation starts after compiled registration, not at zero.
+
+Explicit compiled batches use the existing native operation engines and report
+`kernel` execution ownership. Host batches retain `host` ownership. The common
+single-operation facade also resolves implemented compiled profiles against this
+registry, while retaining its existing result/selector contract. It does not
+infer parser queries or execute arbitrary hosts; use the explicit batch boundary
+for those. Neither route grants default approval.
+
+It must still complete
 parser-profile negotiation, allowed delegation, request/result validation,
 explicit execution ownership, cancellation and binding-runtime lifecycle rules.
 The existing explicitly selected kernel profiles remain unchanged meanwhile.
