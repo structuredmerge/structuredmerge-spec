@@ -60,6 +60,30 @@ reports for its remaining manifest, health and staleness gates.
 
 ### Execution
 
+The additive `execute_workflow_batch_at_registry` and controlled variant accept
+`WorkflowRegistryExpectation`: provider generation/digest and parser
+generation/digest, using the identities exposed by selection reports. They
+capture the normal execution snapshots and require all four values to match
+before probes, source parsing or workflow callbacks. Mismatch returns
+`workflow.registry_stale`, including unregister/re-register cycles with identical
+descriptors. The request and expectation share a combined serialized request
+budget; cancellation is checked before registry validation and execution.
+
+After acceptance, the same captured handles feed normal validation, negotiation
+and execution. Later registry changes affect later calls, not the in-flight
+batch. This does not promise an atomic transaction across the two registries or
+cancel an accepted batch when a registration is subsequently retired. Existing
+unguarded APIs retain their behavior.
+
+This guard constrains registry state only. Expectations are caller input, not
+authenticated authority; they do not pin an artifact, policy, selected backend,
+probe result, host health or loaded grammar digest. Normal negotiation and its
+execution-time backend pin still apply. This API MUST NOT be represented as
+successful Slice 1032 preflight or used to bypass its other requirements.
+Generations are meaningful only within the originating registry instance.
+Expectations are process-local concurrency checks, not replay protection across
+process restarts or independent registries with equal declarations/counters.
+
 - Registration obtains the descriptor outside locks and caches it in the
   `ast-merge` registry. Duplicate IDs fail. Replacement/removal require the
   observed generation. Inventory does not invoke callbacks.
