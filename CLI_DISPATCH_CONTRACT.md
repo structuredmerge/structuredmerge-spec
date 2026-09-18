@@ -30,6 +30,17 @@ the build environment is unverified; absent identity remains null/unknown.
 attestation mechanism exists. The object is optional for compatible version
 producers and does not satisfy artifact integrity, availability or default gates.
 
+Kernel version JSON may also contain `compiled_providers`, using
+`structuredmerge.compiled-provider-inventory/v1`. This source-free declaration
+contains the typed common-operation kernel's workflow descriptors, cached-only
+parser descriptors and operation profiles, derived from the linked kernel.
+Its scope is not all legacy/benchmark CLI behavior. Workflow descriptors use
+`provider_id`; parser descriptors use `id`. Native-extension requirements do not
+imply that a corresponding host parser is bundled, registered or healthy.
+Construction does not register/probe providers or load grammars, and
+`runtime_availability_checked` is false. This optional build-tool input is not
+the signed artifact manifest, runtime availability report, or `languages` result.
+
 ### Command surface
 
 | Invocation | Required behavior |
