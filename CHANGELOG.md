@@ -11,3 +11,5 @@
 - Define exact-byte conflict-review reports, malformed-marker errors, read-only behavior, and the distinction between Git framing and semantic conflict evidence.
 
 - Specify owned, scope-specific CLI Git configuration steps, safe undo, bounded lookups, and explicit incomplete driver-setup reporting.
+
+- Define Git absent-side token normalization and diff-only zero-byte JSON owner semantics without relaxing merge or analyze policy.

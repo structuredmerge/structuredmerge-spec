@@ -101,6 +101,19 @@ Only OLD-FILE and NEW-FILE are source files. PATH and prefixes are display
 metadata, never files to read. Unsupported encodings and binary inputs must be
 reported by the selected contract, never lossy-decoded.
 
+In the seven/nine-argument Git protocol only, the exact source token `/dev/null`
+denotes zero bytes for the corresponding before/after role. Normalize it in
+memory; do not open a device, create a temporary source, or infer absence from
+hash/mode metadata, a missing file, or a path alias. Ordinary two-file invocation
+and merge sources retain regular-file validation. The empty source still passes
+through the selected kernel operation with its ordinary digest/encoding evidence;
+the adapter does not synthesize an added/deleted diff or bypass parser policy.
+The kernel JSON exact-owner diff treats a successfully parsed zero-byte native
+document as an empty owner set, whether supplied by Git or a regular empty file.
+The nonempty side retains native owner spans and added/deleted classification;
+two zero-byte sides compare cleanly. This does not broaden JSON analyze/merge
+inputs, equate whitespace with absence, or bypass backend/dialect validation.
+
 ### Results, writes and process exits
 
 Machine reports are UTF-8 JSON, terminated by a newline, with no human preamble.
