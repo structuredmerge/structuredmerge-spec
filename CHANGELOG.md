@@ -15,3 +15,5 @@
 - Define Git absent-side token normalization and diff-only zero-byte JSON owner semantics without relaxing merge or analyze policy.
 
 - Specify unified compiled/host workflow inventory, immutable compiled identities, and explicit kernel-owned batch execution without default authority.
+
+- Require pre-dispatch parser pinning for compiled workflow batches while preserving requested-selection provenance and distinguishing semantic dialects from parser queries.

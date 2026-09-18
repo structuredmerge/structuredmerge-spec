@@ -54,12 +54,19 @@ Passing transport validation does not prove the callback's semantic claims.
 
 The same registry also retains compiled kernel executors. An explicit compiled
 batch requires its implemented profile and matching profile-owned parser
-language, dialect and parse options. All requests and query constraints are
+language, dialect and parse options. Semantic workflow dialects map to parser
+languages (for example JSONC to `json5`); the compiled native engines query
+TreeHaver with no separate parser dialect. A non-null parser dialect rejects
+rather than being silently discarded. All requests and query constraints are
 validated before probes. It captures the same provider/parser snapshots used by
 host batches and negotiates every item before semantic execution. It then calls
 the existing native kernel operation engines, preserving their typed results.
-Results are checked against the original validated inputs and negotiated parser
-identity; a changed selection fails, never silently substitutes a result.
+The negotiated backend ID becomes a conjunctive TreeHaver service constraint for
+input parsing and output verification. If that backend becomes unavailable,
+execution fails without probing or executing an alternate backend. The original
+request's explicit/policy selection fields are not rewritten to simulate a pin.
+Results are also checked against the original validated inputs and negotiated
+identity; this postcondition is not a substitute for constraining dispatch.
 
 Kernel batches report `execution_owner: kernel`, always with
 `approved_as_default: false`. Request/source and response-byte budgets and shared
