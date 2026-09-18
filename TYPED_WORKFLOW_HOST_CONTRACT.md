@@ -27,6 +27,39 @@ Passing transport validation does not prove the callback's semantic claims.
 
 ## Dispatch
 
+### Source-free selection observations
+
+`workflow_selection_reports(queries, limits)` and its controlled variant expose
+the existing `MergeSelectionRequest`/`MergeSelectionReport` selector through the
+typed facade. They accept no source documents and never parse, merge, render,
+or invoke a workflow callback. TreeHaver parser probes are still callbacks:
+their registered policy may load/acquire grammars. Offline callers must register
+cached-only providers; these APIs are not implicit permission for CLI preflight
+to acquire assets.
+
+One workflow snapshot and one parser snapshot serve the entire query batch.
+Every query and compiled-profile parser constraint is validated before any
+probe, using the same validation as workflow execution. `WorkflowLimits` bounds
+query count and serialized request/response sizes; shared execution control is
+checked throughout. Empty responses also obey the response-byte budget.
+Response-size checks bound accepted/accumulated reports, not arbitrary native
+callback allocations or intermediate selector allocation. Deadlines remain
+cooperative, not a way to preempt a blocked callback.
+
+Reports preserve candidate ordering/rejections and both generations/digests.
+An absent or ineligible provider yields an unselected report; malformed requests,
+limits and control failures return `CoreError`. Registry changes during a probe
+affect later calls, not later queries in the captured batch. No availability
+cache or lease is created, and the report cannot authorize a future execution.
+
+These are source-free selection observations, not the complete Slice 1026
+portable envelope or Slice 1032 authenticated availability/preflight evidence.
+They do not verify artifact/asset signatures, workflow health, source-specific
+support or default authority. CLI language availability must not substitute these
+reports for its remaining manifest, health and staleness gates.
+
+### Execution
+
 - Registration obtains the descriptor outside locks and caches it in the
   `ast-merge` registry. Duplicate IDs fail. Replacement/removal require the
   observed generation. Inventory does not invoke callbacks.

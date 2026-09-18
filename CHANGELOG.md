@@ -17,3 +17,5 @@
 - Specify unified compiled/host workflow inventory, immutable compiled identities, and explicit kernel-owned batch execution without default authority.
 
 - Require pre-dispatch parser pinning for compiled workflow batches while preserving requested-selection provenance and distinguishing semantic dialects from parser queries.
+
+- Specify source-free workflow selection observations, shared query validation, snapshot lifetime, cooperative budgets, and their separation from authenticated availability and preflight authorization.
