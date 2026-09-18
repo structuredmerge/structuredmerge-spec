@@ -130,6 +130,36 @@ identity into a merge-provider identity. Errors before kernel execution have a
 null operation_result; never invent a successful envelope. Reserved fields cannot
 be shadowed by extensions. Unknown compatible fields are forwarded, not discarded.
 
+### Conflict-review evidence
+
+`conflicts diff --json` uses `command: conflicts.diff` and a
+`structuredmerge.conflict-review/v1` object under `conflict_review`. Its `source`
+is the exact source descriptor (byte length, lowercase SHA-256, encoding, BOM and
+line-ending metadata). Ordered regions carry a whole `range` and `ours`, optional
+`base`, and `theirs` half-open byte ranges into that same source. Whole ranges
+include marker lines; alternatives exclude them. An absent base is null, not an
+invented empty ancestor. An explicitly empty alternative is a zero-width range.
+Line numbers in human output are one-based; byte offsets are zero-based.
+
+The review records marker framing, not language semantics, merge execution,
+resolution authority or provider availability. `semantic_conflicts_verified`
+remains false, and `operation_result`, `availability` and `git_install` are null.
+Human and JSON views use the same review. Recognized but incomplete, nested or
+misordered markers fail with exit 2 and no partial successful review. Once
+arguments are valid, JSON errors carry canonical adapter diagnostics and null
+`conflict_review`. Invalid invocation syntax emits no JSON. Output-write failure
+exits 3; the embedded exit code does not attest subsequent transport success.
+
+The kernel implementation recognizes exact configured-width merge/diff3 marker
+lines, including diff3/zdiff3 base framing, LF/CRLF, UTF-8 BOM and absent final
+newline. Marker-like text may be literal source; no language parser is used to
+establish semantic conflict status. Its bounded local implementation accepts
+regular UTF-8 inputs up to 8 MiB, at most 10,000 regions and marker widths 1–128.
+It currently retains the existing local `.gitattributes` marker-size reader,
+not a claim of full Git attribute resolution. These are explicit limits, not
+permission to truncate or silently ignore malformed framing. Source bytes and
+attributes are never rewritten by review.
+
 Exit 0 means successful completion (and a clean merge write unless check-only).
 Exit 1 means validated unresolved conflict, or a requested read-only change check
 (`diff --exit-code`, merge check-only/exit-code, conflict review/exit-code).
