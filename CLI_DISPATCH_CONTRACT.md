@@ -19,6 +19,17 @@ release-approval claim. Package and kernel versions refer to the actual built
 executable and linked kernel; a compatibility alias retains its own executable
 name. Extra arguments fail with exit 2, and output-write failures exit 3.
 
+Version JSON may additionally include a `build` object with
+`schema: structuredmerge.cli-build/v1`: compiler/build-system-emitted target,
+host, Cargo profile/optimization/debug settings, Cargo feature environment flags,
+target features, and source identity. These are embedded build inputs, never
+runtime checkout discovery. Cargo feature flags are package-scoped, not a
+transitive provider/capability inventory. An explicit source revision/state from
+the build environment is unverified; absent identity remains null/unknown.
+`provenance_verified` and `source.verified` are false until a separate trusted
+attestation mechanism exists. The object is optional for compatible version
+producers and does not satisfy artifact integrity, availability or default gates.
+
 ### Command surface
 
 | Invocation | Required behavior |
