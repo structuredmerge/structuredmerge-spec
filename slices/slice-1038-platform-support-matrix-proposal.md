@@ -198,6 +198,21 @@ The adapter is therefore independently motivated but **not a prerequisite** for
 shipping the platform feature, since generation from facts requires no YAML
 editing at all.
 
+### Tracking
+
+Both findings are tracked as issues in `structuredmerge-ruby` so the evidence
+and the intended fix are not lost when this work is punted. These are cross-repo
+references from this `structuredmerge-spec` document:
+
+- structuredmerge/structuredmerge-ruby#73 (bug) —
+  `ensure_yaml_top_level_sequence_items` corrupts flow sequences into unparseable
+  YAML; reachable today via the live `plugins:` caller. Carries the verbatim
+  five-case reproduction.
+- structuredmerge/structuredmerge-ruby#74 (enhancement) — build
+  `ast-crispr-yaml-psych` with nested-owner support and layout ownership,
+  retiring the bespoke YAML stack. Carries the measured scale of that stack and
+  the nested-layout gap evidence.
+
 ## Data model (kettle-rb, PENDING vocabulary)
 
 Mirror `Kettle::Rb::GemFloors`, which already solves this problem class —
@@ -274,4 +289,5 @@ and updated correctly on re-template.
 7. Specs cover matrix generation without network access, using the injectable
    fetcher pattern.
 8. The `ensure_yaml_top_level_sequence_items` inline-flow-sequence corruption is
-   fixed or recorded as a known defect with a reproduction.
+   fixed or recorded as a known defect with a reproduction. Tracked as
+   structuredmerge/structuredmerge-ruby#73.
