@@ -13,9 +13,9 @@ It exists because the platform column of `kettle-jem/RRRRrb-Matrix.md` was never
 replicated into `Kettle::Rb::CompatMatrix`, and because destinations currently
 have no way to declare which OS platforms they support.
 
-Status: **proposal, design in progress.** The config contract and detection
-heuristic below are decided. The platform vocabulary and per-version evidence are
-PENDING research and must not be invented; see "Open items".
+Status: **proposal, research complete.** The config contract, detection heuristic,
+and platform vocabulary are settled. Evidence is in
+`slice-1038-platform-support-evidence.md`. Not yet implemented.
 
 ## Evidence for the gap
 
@@ -257,19 +257,67 @@ It becomes a generated token derived from the same platform-support data, so it
 cannot drift from CI again. The adjacent badge row IS already template-managed
 and updated correctly on re-template.
 
-## Open items (PENDING research, must not be invented)
+## Open items — RESOLVED by research
 
-1. Canonical OS-platform vocabulary — RubyGems `Gem::Platform` strings
-   (`arm64-darwin`, `aarch64-linux`, `x64-mingw-ucrt`, …) versus Bundler
-   `platforms:` DSL symbols versus GitHub runner labels, and whether an
-   authoritative mapping exists.
-2. GitHub runner labels and architecture per label, with deprecation dates —
-   specifically which label was actually ARM64, and when `macos-latest`
-   transitioned from Intel to ARM64.
-3. Per-version MRI evidence: which versions have prebuilt `arm64-darwin`
-   binaries, which have Windows installers, official EOL windows.
-4. JRuby and TruffleRuby per-version platform support, including Linux ARM64 and
-   TruffleRuby's known CI constraints.
+The platform vocabulary and per-version evidence were pending research. That
+research is complete and is recorded in full, with citations, in
+`slice-1038-platform-support-evidence.md`. The findings that constrain this
+design:
+
+1. **There are three existing platform vocabularies, and ours is a fourth.**
+   Gemfile DSL `platforms:` symbols (`mri`, `jruby`, `windows`, ...) select a
+   *Ruby implementation*; `Gem::Platform` strings (`x86_64-linux`,
+   `arm64-darwin`, ...) select an *OS/architecture*; GitHub runner labels
+   (`ubuntu-24.04-arm`, `macos-15-intel`) select *CI hardware*. The gemfile(5)
+   man page explicitly warns the first two must not be conflated, and
+   `linux`/`macos`/`windows` are **not valid** Gemfile DSL symbols — `Bundler::DSL`
+   raises for them. Our `platforms:` config key names a fourth thing: CI OS
+   families. That is defensible, since it selects runner labels rather than gem
+   platforms, but it must ship an explicit mapping to runner labels and must
+   never be passed to `bundle lock --add-platform` or a Gemfile DSL without
+   translation.
+2. **No authoritative runner-label → `Gem::Platform` mapping exists.** The correct
+   programmatic approach is to run `ruby -e 'puts Gem::Platform.local'` on each
+   runner rather than hardcode a table. Any derived mapping in the generated
+   matrix must be labelled as convention, not fact.
+3. **The old matrix column was wrong in a verifiable way.** `macos-12` was never
+   ARM64 — no `macos-12-arm64` image ever existed, and ARM64 XL labels existed
+   only for macOS 13. So "ARM64 & MacOS 12" named a combination that never
+   occurred. `macos-latest` became ARM64 during the April–May 2024 macOS 14
+   migration. This confirms the weak-evidence characterization precisely rather
+   than merely restating it.
+4. **Linux ARM64 CI is free for public repos** (`ubuntu-22.04-arm`,
+   `ubuntu-24.04-arm`, `ubuntu-26.04-arm`; GA 2025-08-07, private repos from
+   2026-01-29). The old matrix had no way to express this at all, so it is new
+   capability rather than corrected data.
+5. **`macos-latest` is floating and therefore not reproducible** — it silently
+   changed both OS version and CPU architecture on GitHub's schedule. A generated
+   matrix should record which label it used and on what date, so a support claim
+   stays interpretable later. Pinning avoids drift but rots: `macos-14` retires
+   2026-11-02 with brownouts through October 2026.
+6. **TruffleRuby has never shipped a Windows build** (zero Windows assets across
+   all 66 releases; `setup-ruby` hard-fails). The destination tier table's
+   "Unsupported" for TruffleRuby/Windows can now be evidenced rather than
+   asserted, and `windows` must be excluded from TruffleRuby lanes by
+   construction rather than by convention.
+7. **Do not prune the `ruby` platform when TruffleRuby is enabled.** TruffleRuby
+   forces `Gem.platforms = [Gem::Platform::RUBY]` and Bundler unconditionally adds
+   it, so a matrix that includes TruffleRuby must retain the pure-Ruby variant.
+8. **RubyGems 4.1 introduces content-addressable (Ruby-ABI-specific) gems** named
+   by SHA-256 prefix instead of platform. A matrix keyed purely on
+   `name-version-platform.gem` strings will need to account for these, so the data
+   model should not hardcode that filename shape.
+
+## Fleet exposure (verified 2026-10-09)
+
+No kettle-jem-templated Ruby gem pins `macos-14`, so the retirement on
+2026-11-02 and its October brownouts do not affect this fleet. The packaged
+template uses the floating `macos-latest` label
+(`current.yml.example:48`), and `grep -rl 'macos-14' lib/` in kettle-jem returns
+nothing. A workspace-wide scan excluding `vendor/`, `tmp/`, `.git/`, and
+`bundler/gems` found only two files pinning it:
+`structuredmerge/structuredmerge/.github/workflows/{current,publish}.yml`, whose
+workflows are generated by the third-party Alef tool and are out of scope here.
 
 ## Acceptance criteria
 
