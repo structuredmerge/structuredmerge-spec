@@ -6,8 +6,8 @@ This slice proposes first-class OS-platform support for the CI matrix, as a new
 configuration feature spanning two gems:
 
 - `kettle-rb` — owns the platform evidence data (source of truth);
-- `kettle-jem` — owns the config key, repo-evidence detection, workflow OS-matrix
-  pruning, and README tier-table generation.
+- `kettle-jem` — owns the config key, repo-evidence detection, generation of the
+  workflow OS matrix from facts, and README tier-table generation.
 
 It exists because the platform column of `kettle-jem/RRRRrb-Matrix.md` was never
 replicated into `Kettle::Rb::CompatMatrix`, and because destinations currently
@@ -38,18 +38,49 @@ Verified against source at time of writing:
    version: `prune_github_workflow_matrix_by_min_ruby` (`jem.rb:8957`) driven by
    `prune_workflow_matrix_item?` (`jem.rb:9108`).
 
-## Pruning target is narrow
+## Generation, not pruning
 
-Exactly one packaged workflow carries an OS matrix:
+An earlier draft of this slice specified pruning OS entries from the workflow
+matrix. That was wrong and is retracted: `current.yml` is configured
+`strategy: accept_template`, so it is replaced wholesale rather than merged.
+There is no destination matrix to prune. The platform aspect of the workflow is
+generated from facts and copied wholesale.
 
-- `current.yml.example` uses `runs-on: ${{ matrix.os }}` with `include:` entries
-  for `ubuntu-latest`, `macos-latest`, `windows-latest`, plus `if:` guards on
-  `matrix.os`.
+The precedent already exists in `kettle-jem`:
+`github_actions_push_branches_yaml` (`jem.rb:20026`) builds a YAML block from
+facts and splices it into three generated workflows (`jem.rb:19727`, `19793`,
+`19939`). A platform-derived OS matrix is the same shape. Per-profile workflow
+variants are also established practice, via
+`shim/.github/workflows/current.yml.example` (`jem.rb:291`).
 
-Every other packaged workflow is Linux-only by construction. The three generated
-workflows (`jem.rb:19743`, `19809`, `19955`) hardcode `runs-on: ubuntu-latest`,
-and all versioned engine workflows are Linux-only. So the initial feature prunes
-one workflow's matrix, which keeps it small and reviewable.
+The actual defect is that `current.yml.example` is statically token-substituted
+and never code-generated: the OS entries are literal `os: ubuntu-latest`,
+`os: macos-latest`, and `os: windows-latest` at lines 42, 48, and 54. The
+platform set is therefore hardcoded in the template, which is why no destination
+can change it.
+
+Only `current.yml` carries an OS matrix. Every other packaged workflow is
+Linux-only by construction: the three generated workflows (`jem.rb:19743`,
+`19809`, `19955`) hardcode `runs-on: ubuntu-latest`, and all versioned engine
+workflows are Linux-only.
+
+### Scope of what must be generated
+
+Windows is not only a matrix entry. Dropping it must also handle:
+
+- `if: matrix.os != 'windows-latest'` (`current.yml.example:99`), which becomes
+  tautological and should be omitted rather than emitted always-true;
+- the Windows-only step at lines 102-106, omitted entirely;
+- cache keys interpolating `${{matrix.os}}` (lines 93-96), which stay correct
+  unchanged.
+
+Separate latent defect, in scope to fix as a side effect: line 106 hardcodes
+`run: ruby -rbundler/setup bin/turbo_tests2` in the packaged template. That is
+correct for `turbo_tests2` and wrong for any other destination that enables
+Windows. Generating from facts should emit the destination's own executable.
+
+Consequence: this feature does **not** require nested-owner YAML editing, and
+therefore does not require the `psych-merge` nested layout work described below.
 
 ## Config contract (DECIDED)
 
@@ -75,7 +106,7 @@ platforms:
   default" semantics.
 - Values are the canonical OS-platform vocabulary, PENDING confirmation against
   RubyGems/Bundler platform identifiers so the same tokens can serve config,
-  matrix data, and workflow pruning without a translation table.
+  matrix data, and workflow generation without a translation table.
 
 ## Bootstrap detection (DECIDED)
 
@@ -100,18 +131,72 @@ so it is not a constant.
 Detection must also recognise the `matrix.os` indirection, since the OS lives in
 the matrix `include:` list rather than in `runs-on:`.
 
-### Missing implementation precedent
+### Sequence insertion already exists, and has a live defect
 
-Injection into an existing config is a real gap that must be closed. There is no
-helper for inserting a YAML **block sequence**: `insert_yaml_scalar_after_path`
-(`jem.rb:12900`) writes only `key: value` scalars, and `engines:` is never
-injected when absent — it is only read, with `DEFAULT_ENGINES` as the fallback.
+An earlier draft of this slice claimed no helper exists for inserting a YAML
+block sequence. That was wrong and is retracted.
+`ensure_yaml_top_level_sequence_items` (`jem.rb:12946`) already appends a missing
+top-level key with block items and adds missing items to an existing sequence. It
+is used today for `plugins:` (`jem.rb:6888`).
 
-`migrate_readme_logo_config` (`jem.rb:12741-12772`) is the closest precedent: it
-reads existing values, migrates a legacy form, and inserts a missing key via
-`insert_yaml_scalar_after_path`. The platform key needs the same control flow but
-a new sequence-insertion helper, since `platforms:` is a block list like
-`engines:`.
+The helper is still not usable as-is, because it corrupts inline flow sequences.
+Verified by extracting and running the method:
+
+```
+input:  engines:
+          - ruby
+        platforms: [linux]
+
+output: engines:
+          - ruby
+        platforms: [linux]
+        - macos          <- Psych::SyntaxError: did not find expected key
+
+result: "did not find expected key while parsing a block"
+```
+
+It inserts block-style items after a flow-style sequence. The
+`rescue Psych::Exception` does not catch it, because the corruption occurs on
+write rather than on parse. This is reachable independently of the platform
+feature: any destination with an inline `plugins: [...]` or `engines: [...]`
+list gets an unparseable config on the next re-template. It should be recorded as
+a known defect and fixed regardless of how the platform work proceeds.
+
+A second limitation for this feature: when the key is absent it appends at end of
+file (`jem.rb:12956-12959`) and emits no documentation comment. The packaged
+config documents every key with a preceding comment block, so an injected
+`platforms:` must carry its own documentation and land adjacent to `engines:`,
+which it documents by analogy. `migrate_readme_logo_config`
+(`jem.rb:12741-12772`) is the precedent for that read/migrate/insert control
+flow.
+
+### Adapter scoping
+
+These two limitations are the concrete consumer for `ast-crispr-yaml-psych`, not
+workflow matrix pruning. The adapter is justified by documented-sequence
+insertion into existing config plus migrating the other config-editing methods
+off the bespoke YAML stack in `jem.rb`, whose scale is the real argument:
+
+- 38 methods matching `/yaml/i`;
+- 25 `gsub(/\n{3,}/, "\n\n")` blank-line collapse workarounds;
+- 81 line-index surgery sites (`lines.insert`, `lines[i] =`, `remove_indexes`);
+- 8 raw `Psych::` call sites.
+
+The 25 blank-line collapses are the same defect class centralized in
+`Ast::Merge::StructuralEdit::BlankLineSupport`, scattered across call sites and
+collapsing after the fact instead of respecting ownership.
+`Ast::Merge::Layout::Gap#effective_controller` (`layout/gap.rb:130`) already
+provides the machinery they substitute for.
+
+Scope boundary: structural editing only. Some of the 38 methods are genuinely
+`kettle-jem` policy rather than YAML editing and should stay — `build_yaml_block`
+for checksums, `coverage_thresholds_from_yaml_workflow`, and
+`assert_no_unresolved_template_tokens_in_yaml_values`. Migrating those would make
+this a far larger change than the platform feature justifies.
+
+The adapter is therefore independently motivated but **not a prerequisite** for
+shipping the platform feature, since generation from facts requires no YAML
+editing at all.
 
 ## Data model (kettle-rb, PENDING vocabulary)
 
@@ -177,11 +262,16 @@ and updated correctly on re-template.
    Windows applies only when declared.
 2. Re-templating a repo with existing Windows CI jobs detects and preserves
    `windows` in the injected value.
-3. `current.yml` OS matrix is pruned to the declared platforms, and its
-   `if: matrix.os` guards stay coherent after pruning.
-4. Platform evidence lives in generated `kettle-rb` data with per-claim
+3. `current.yml` is generated with an OS matrix matching the declared platforms,
+   and the Windows-only `if: matrix.os` guards and step are emitted only when
+   Windows is declared, so no tautological condition survives.
+4. The generated Windows step invokes the destination's own executable rather than
+   a hardcoded `bin/turbo_tests2`.
+5. Platform evidence lives in generated `kettle-rb` data with per-claim
    provenance; no hand-edited matrix.
-5. The README tier table is generated from the same data and matches the pruned
+6. The README tier table is generated from the same data and matches the generated
    workflows.
-6. Specs cover the matrix pruning without network access, using the injectable
+7. Specs cover matrix generation without network access, using the injectable
    fetcher pattern.
+8. The `ensure_yaml_top_level_sequence_items` inline-flow-sequence corruption is
+   fixed or recorded as a known defect with a reproduction.
