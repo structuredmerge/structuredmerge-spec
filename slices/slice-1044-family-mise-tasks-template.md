@@ -4,7 +4,7 @@
 `mise.toml` tasks) without depending on kettle-jem, using the shared
 templating seam (ast-template) and the generic editing tool (ast-crispr).
 
-Status: **proposal** (2026-10-17).
+Status: **implemented** (2026-10-17). Primitive in kettle-family (`Kettle::Family::MiseTasks`), `kettle-family mise-tasks` CLI (`--clean`, `--task-file`), managed-file baseline template shipped, kettle-jem config registration via psych-merge (keep_destination, destination-preference). Validated end-to-end against real mise on a family-root canary. YAML v1 scope: single-entry registration under the existing top-level `files:` mapping; nested YAML owner editing remains out of scope.
 
 ## Goal
 
