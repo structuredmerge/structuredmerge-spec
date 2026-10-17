@@ -5,7 +5,14 @@ extracted contract surface: **token application** — how a templating engine
 substitutes tokens in template content and polices tokens that survive
 substitution.
 
-Status: **proposal** (2026-10-16).
+Status: **implemented** (2026-10-17). ast-template `TokenApplication`:
+structuredmerge/structuredmerge-ruby `c391d1243`; kettle-jem delegation:
+`d87990772` (suite verified green against the local engine — 742 examples,
+the only failures being the pre-existing nomono floor-sync debt fixed
+separately in `a9c7f03b7`). Conformance fixtures: structuredmerge/fixtures
+`c1f9b29`. The kettle-jem floor (`ast-template >= 7.1.11`) is unresolvable
+until the family wave bumps and publishes 7.1.11 — the documented mid-cycle
+sequencing state; local kettle-jem bundles unblock at `mise run bump patch`.
 
 ## Scope
 
