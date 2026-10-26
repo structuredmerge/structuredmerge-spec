@@ -23,3 +23,5 @@
 - Add explicit loaded-grammar identity requirements: verified evidence follows the retained parser object rather than a current cache pathname, through the parser loading interface.
 
 - Define explicit registry-state expectations for workflow execution, including stale rejection, captured-handle semantics and separation from authenticated asset preflight.
+
+- Specify the opt-in ingest-observation and deletion-authority companion with source-byte and processing provenance (plans #12, #2, #3); no runtime support claimed.
