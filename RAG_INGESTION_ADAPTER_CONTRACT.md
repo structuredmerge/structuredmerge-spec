@@ -7,6 +7,14 @@ Initial private contract for the StructuredMerge RAG ingestion pilot.
 This contract describes the boundary between StructuredMerge ingest output and a
 downstream embedding/vector-store pipeline.
 
+## Optional observation companion
+
+[INGEST_OBSERVATION_CONTRACT.md](INGEST_OBSERVATION_CONTRACT.md) proposes a
+separate opt-in evidence/deletion-authority boundary (slice 1045). It does not
+change this result shape, legacy IDs or export strings. Legacy-only consumers
+must not claim to enforce its scope/completeness guarantees. Runtime adoption
+requires separate conformance and scoped-storage work.
+
 ## Goals
 
 The adapter contract MUST make it possible to:

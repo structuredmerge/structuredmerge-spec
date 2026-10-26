@@ -7,6 +7,14 @@ This contract is intentionally not an embedding contract. StructuredMerge owns
 stable chunks, deltas, source artifacts, and SQL shape. The embedding service
 owns model selection and vector generation.
 
+## Optional observation companion
+
+[INGEST_OBSERVATION_CONTRACT.md](INGEST_OBSERVATION_CONTRACT.md) proposes
+opt-in scope, provenance and deletion-authority verification before effects.
+It does not change this SQL plan or establish that ID-only deletes enforce
+document scope. Adapter/storage migration and atomic application are separate
+gates; legacy consumers remain unchanged.
+
 ## Shape
 
 ```json

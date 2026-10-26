@@ -33,6 +33,8 @@ Project links:
 - `MERGE_RULESET_INFORMATIONAL_DRAFT_01.md` — published baseline retained for stable reference.
 - `merge-lexicon.md` — portable terminology snapshot derived from the active draft.
 - `LORA_MERGE.md` — secondary application note for merge-like workflows above specialized backends.
+- `INGEST_OBSERVATION_CONTRACT.md` — proposed opt-in observation evidence and
+  deletion-authority companion; slice 1045 is spec/fixture-only, not runtime support.
 - `RAG_INGESTION_ADAPTER_CONTRACT.md` — JSONL/delta/metric contract for stable RAG ingestion handoffs.
 - `RAG_PILOT_PACKET_CONTRACT.md` — v1 customer pilot packet for RAG ingestion deliverables.
 - `PGVECTOR_PLAN_CONTRACT.md` — v1 pgvector/PostgreSQL load-plan contract for RAG chunks.
