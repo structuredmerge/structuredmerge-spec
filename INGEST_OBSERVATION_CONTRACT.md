@@ -51,6 +51,16 @@ A prior inventory is an exact JSON object with `scope`, `revision_ref`, and `chu
 
 An occurrence reference is `(scope, revision_ref, legacy chunk id, ordinal)`. Document identity, observation identity, source revision, projection revision, content digest and occurrence are distinct. Equal text in two documents may have identical hosted legacy IDs yet distinct scoped occurrences. Duplicate text in one revision remains multiple ordinal occurrences. Prepend/reorder does not establish copy/move intent or stable cross-revision occurrence continuity.
 
+## Document identity, namespace and rename/alias semantics
+
+`workspace_id` names a document namespace owned by an account/workspace boundary outside this contract; nothing here authenticates ownership. Within one workspace, `document_id` is the canonical immutable document identity and `source_id` is a source-system reference to it. One document may be reachable under several `source_id` values over its lifetime (rename, mount path, sync folder move); the set of valid aliases is trusted external context, never payload-asserted.
+
+Because verification matches the full scope exactly (no prefix, wildcard or alias resolution), a renamed source is a **new observation scope**: its first observation is an initial delivery with null expected prior, even though `document_id` is unchanged. Continuity across a rename is established only by externally trusted alias evidence binding both `source_id` values to the same `document_id` in that workspace; an `extensions` entry asserting a rename is opaque metadata and authorizes nothing. A prior inventory whose scope differs from the envelope scope rejects (named reason `prior`), including when a consumer has mistakenly carried the old scope's trusted head into the new scope.
+
+Namespaces are disjoint: the same `source_id` and `document_id` in two workspaces are two documents with independent heads, observations and revision chains. Equal chunk text under two scopes produces equal content digests and possibly equal hosted legacy IDs, but distinct occurrences; deletion targets are always scoped and never cross a scope boundary by content or ID equality. Whether equal content may share an embedding is an embedding-policy decision (plans #10), not identity.
+
+Adoption prerequisites for existing adapters: legacy ID schemes (including ordinals and source-ref-bearing IDs) are carried into prior inventories verbatim — never renumbered, rescoped or normalized on adoption. Storage predicates that look chunks up or delete them by bare legacy ID (without full scope) must be proven scope-complete before applying authorized deletions, or the adapter must refuse opt-in application; a bare legacy ID is not an occurrence and must not be used as a cross-scope delete key. Duplicate IDs or ordinals within one prior inventory reject (named reason `delta`).
+
 ## Processing proof
 
 The exact `processing-json` object has `schema: "structuredmerge.ingest-processing/v1"`, `normalizer`, `chunker`, `hash`, `parser` and `legacy_schema_ref`. Each normalizer/chunker is an object with nonempty `id`, `version` and explicit object `config` (including an empty object when no options apply). `hash` is exactly `{ "algorithm": "sha256", "domain": "chunk-text-utf8" }` in this version. `legacy_schema_ref` must equal the companion's legacy schema reference.
@@ -91,7 +101,7 @@ Timestamps use RFC 3339 UTC `YYYY-MM-DDTHH:MM:SS[.fraction]Z`. `source_at` is so
 
 ## Shared validation and remaining gates
 
-Shared cases live in `diagnostics/slice-1045-ingest-observation-deletion-authority/contract.json` in the fixtures repository, exercised by `python3 tools/validate_ingest_observations.py` and validator unit tests. These are designed contract examples, not captured runtime outputs. Invalid cases must fail for a named reason, not simply parse as JSON.
+Shared cases live in `diagnostics/slice-1045-ingest-observation-deletion-authority/contract.json` and `diagnostics/slice-1046-document-identity-occurrence-scoping/contract.json` in the fixtures repository, exercised by `python3 tools/validate_ingest_observations.py` and validator unit tests. These are designed contract examples, not captured runtime outputs. Invalid cases must fail for a named reason, not simply parse as JSON.
 
 Coverage includes both dialects, repeated equal chunks, distinct document scopes, ordinal prepend/reorder without lineage, source whitespace/newline preservation, changed processing/same bytes, complete-empty authority, non-authoritative partial/interrupted/unknown/empty, explicit tombstones, mismatched scope/prior, missing/unavailable source or processing proof, idempotent/conflicting retries and late prior rejection.
 
