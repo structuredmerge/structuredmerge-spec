@@ -26,7 +26,7 @@ Digests prove bytes, not authenticity or permission. Producer names, finalizatio
 
 ## Required payload
 
-All fields below are required (explicit null where stated); no omitted-field defaults:
+All fields below are required (explicit null where stated); no omitted-field defaults. The sole exception is `revision_parents`, whose omission is a distinct declared state (ancestry not declared), not a default:
 
 | Field | Meaning |
 | --- | --- |
@@ -46,6 +46,7 @@ All fields below are required (explicit null where stated); no omitted-field def
 | `deletion` | Object with `mode`, `authority_ref`, `targets`. |
 | `evidence_refs` | Array of nonempty immutable pointers to available merge decision/preservation/role evidence; empty explicitly means none supplied. These pointers assert no full incorporation coverage or lineage. |
 | `extensions` | Object for opaque namespaced metadata, retained exactly in payload bytes. |
+| `revision_parents` | Optional. Duplicate-free array of nonempty declared parent revision references for this `revision_ref`. Absent means ancestry is **not declared** (uncertainty retained); `[]` means declared root; nonempty means declared parents which MUST include `expected_prior_revision_ref` when that is non-null. See revision ancestry. |
 
 A prior inventory is an exact JSON object with `scope`, `revision_ref`, and `chunks`. Each chunk is exactly `{ "id": <legacy ID>, "ordinal": <nonnegative integer>, "content_hash": <digest> }`. IDs and ordinals are unique within this inventory; equal content digests at different ordinals are valid. Verify its descriptor, full scope and expected revision. A resolver must validate that this immutable inventory is the trusted current prior for this scope, not merely accept a self-asserted historical snapshot. The supplied legacy delta must use that same prior. Unknown prior/head rejects advancement; a late unexpected prior rejects without effects.
 
@@ -60,6 +61,16 @@ Because verification matches the full scope exactly (no prefix, wildcard or alia
 Namespaces are disjoint: the same `source_id` and `document_id` in two workspaces are two documents with independent heads, observations and revision chains. Equal chunk text under two scopes produces equal content digests and possibly equal hosted legacy IDs, but distinct occurrences; deletion targets are always scoped and never cross a scope boundary by content or ID equality. Whether equal content may share an embedding is an embedding-policy decision (plans #10), not identity.
 
 Adoption prerequisites for existing adapters: legacy ID schemes (including ordinals and source-ref-bearing IDs) are carried into prior inventories verbatim — never renumbered, rescoped or normalized on adoption. Storage predicates that look chunks up or delete them by bare legacy ID (without full scope) must be proven scope-complete before applying authorized deletions, or the adapter must refuse opt-in application; a bare legacy ID is not an occurrence and must not be used as a cross-scope delete key. Duplicate IDs or ordinals within one prior inventory reject (named reason `delta`).
+
+## Revision ancestry and merge-role links
+
+`revision_ref` identities are immutable and opaque. Ancestry is **declared, not inferred**: the optional `revision_parents` array records the producer's declared parent revisions for the current `revision_ref`. Absence of the field is not a claim of root or of anything else — it means ancestry was not declared, and verifiers retain that uncertainty rather than inventing edges. `[]` is an explicit root claim and is contradictory with a non-null `expected_prior_revision_ref`. Version counters, sequence numbers and storage delta bases are not ancestry; ordering is never implied by reference form.
+
+Validation rules (named reason `ancestry`): parents are nonempty strings, duplicate-free, and never include the current `revision_ref` itself. When `expected_prior_revision_ref` is non-null it MUST appear among the declared parents — that is the verified chain edge. Every other declared parent is an assertion retained as **declared but unverified**: an unresolvable or external parent reference is kept verbatim, never resolved into an edge nor rejected. A declared root (`[]`) with a non-null expected prior rejects, as does a declared ancestry that omits the verified prior. Late or out-of-order deliveries still reject on the existing `precondition` check regardless of what ancestry they declare; ancestry never overrides preconditions, and stale source timestamps never override either.
+
+A nonempty parent set beyond the chain edge records a merge. Merge roles bind to declared parent revision references, never to request IDs, transport labels or AST parents: `merge3` roles (`base`, `ours`, `theirs`) and `merge2` roles (`incoming`, `current`) map onto the declared parents of the result revision without relabeling the revision references themselves. Role assignment may be carried as namespaced `extensions` metadata (opaque to this contract); a role name is not a revision identity and authorizes nothing here. Durable role-link storage beyond the declaration is deferred with the ledger design (plans #6, #7).
+
+Content-equal revisions with distinct provenance are distinct revisions: identical inventory bytes or chunk sets never collapse two `revision_ref` values, and a fresh observation may advance to a new revision whose content equals its prior (declared parent) — identity follows the revision reference and its declared ancestry, not the digest.
 
 ## Processing proof
 
@@ -101,8 +112,8 @@ Timestamps use RFC 3339 UTC `YYYY-MM-DDTHH:MM:SS[.fraction]Z`. `source_at` is so
 
 ## Shared validation and remaining gates
 
-Shared cases live in `diagnostics/slice-1045-ingest-observation-deletion-authority/contract.json` and `diagnostics/slice-1046-document-identity-occurrence-scoping/contract.json` in the fixtures repository, exercised by `python3 tools/validate_ingest_observations.py` and validator unit tests. These are designed contract examples, not captured runtime outputs. Invalid cases must fail for a named reason, not simply parse as JSON.
+Shared cases live in `diagnostics/slice-1045-ingest-observation-deletion-authority/contract.json`, `diagnostics/slice-1046-document-identity-occurrence-scoping/contract.json` and `diagnostics/slice-1047-revision-ancestry-merge-roles/contract.json` in the fixtures repository, exercised by `python3 tools/validate_ingest_observations.py` and validator unit tests. These are designed contract examples, not captured runtime outputs. Invalid cases must fail for a named reason, not simply parse as JSON.
 
-Coverage includes both dialects, repeated equal chunks, distinct document scopes, ordinal prepend/reorder without lineage, source whitespace/newline preservation, changed processing/same bytes, complete-empty authority, non-authoritative partial/interrupted/unknown/empty, explicit tombstones, mismatched scope/prior, missing/unavailable source or processing proof, idempotent/conflicting retries and late prior rejection.
+Coverage includes both dialects, repeated equal chunks, distinct document scopes, ordinal prepend/reorder without lineage, source whitespace/newline preservation, changed processing/same bytes, complete-empty authority, non-authoritative partial/interrupted/unknown/empty, explicit tombstones, mismatched scope/prior, missing/unavailable source or processing proof, idempotent/conflicting retries, late prior rejection, rename as fresh scope, namespace disjointness, and declared ancestry (linear chain, multi-parent merge, external/unknown parent retained, missing/self/duplicate/root-contradiction rejections, content-equal distinct revisions).
 
 Remaining separate approval/work: adapter selection and real conformance, trusted evidence resolution/authentication, scoped storage migration and atomic ordering, immutable revision/replay persistence, embedding policy, reference retention/expiry and staged opt-in rollback. No issue is closed by this spec/fixture increment.
